@@ -1,0 +1,332 @@
+<div class="m-header page-width">
+    <div class="m-desktop-header-container">
+        <!-- Left Menu Items (first 3) -->
+        <nav class="m-header-nav m-header-nav--left">
+            {% assign menu_items = linklists[section.settings.menu].links %}
+            {% for link in menu_items limit: 3 %}
+                <div class="m-header-nav__wrapper">
+                    <a href="{{ link.url }}" class="m-header-nav__item{% if link.links.size > 0 %} m-header-nav__item--has-dropdown{% endif %}">
+                        {{ link.title }}
+                    </a>
+                    
+                    {% if link.links.size > 0 %}
+                        <div class="m-header-dropdown">
+                            <div class="m-header-dropdown__inner">
+                                {% for sublink in link.links %}
+                                    <a href="{{ sublink.url }}" class="m-header-dropdown__item">
+                                        {{ sublink.title }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </nav>
+
+        <!-- Center Logo -->
+        <div class="m-header-logo">
+            <a href="{{ routes.root_url }}" class="m-header-logo__link">
+                {% if settings.logo %}
+                    {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                    {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                    {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+                    {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+                    
+                    {{- settings.logo | image_url: width: 600 | image_tag:
+                        class: 'm-header-logo__image',
+                        alt: logo_alt,
+                        loading: 'lazy',
+                        width: settings.logo_width,
+                        height: logo_height,
+                        sizes: sizes,
+                        widths: widths
+                    -}}
+                {% else %}
+                    <span class="m-header-logo__text">{{ shop.name }}</span>
+                {% endif %}
+            </a>
+        </div>
+
+        <!-- Right Menu Items (items 4-6) -->
+        <nav class="m-header-nav m-header-nav--right">
+            {% assign menu_items = linklists[section.settings.menu].links %}
+            {% for link in menu_items offset: 3 limit: 3 %}
+                <div class="m-header-nav__wrapper">
+                    <a href="{{ link.url }}" class="m-header-nav__item{% if link.links.size > 0 %} m-header-nav__item--has-dropdown{% endif %}">
+                        {{ link.title }}
+                    </a>
+                    
+                    {% if link.links.size > 0 %}
+                        <div class="m-header-dropdown">
+                            <div class="m-header-dropdown__inner">
+                                {% for sublink in link.links %}
+                                    <a href="{{ sublink.url }}" class="m-header-dropdown__item">
+                                        {{ sublink.title }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </nav>
+    </div>
+</div>
+
+<style>
+.m-desktop-header-section {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    box-shadow: 1px 4px 2px 1px rgba(77, 77, 77, 0.15);
+    position: relative;
+}    
+
+.m-header {
+    width: 100%;
+}
+
+.m-desktop-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    position: relative;
+    gap: 40px;
+}
+
+.m-header-nav {
+    display: flex;
+    gap: 20px 45px;
+    flex: 1;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.m-header-nav--left {
+    justify-content: flex-start;
+}
+
+.m-header-nav--right {
+    justify-content: center;
+}
+
+/* Wrapper for each navigation item and its dropdown */
+.m-header-nav__wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.m-header-nav__item {
+    text-decoration: none;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    color: #151515;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.m-header-nav__item:hover {
+    color: #666;
+}
+
+
+
+/* Dropdown container */
+.m-header-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+/* Show dropdown on hover */
+.m-header-nav__wrapper:hover .m-header-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Dropdown inner container */
+.m-header-dropdown__inner {
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    padding: 8px 0;
+}
+
+/* Add a small triangle pointer */
+.m-header-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #e5e5e5;
+}
+
+.m-header-dropdown::after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+/* Dropdown items */
+.m-header-dropdown__item {
+    display: block;
+    padding: 10px 10px;
+    color: #151515;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    {% comment %} text-transform: uppercase; {% endcomment %}
+    transition: all 0.2s ease;
+}
+
+.m-header-dropdown__item:hover {
+    background-color: #F2E7DB;
+    color: #78686F;
+    padding-left: 14px;
+}
+
+/* Adjust dropdown position for right-side navigation */
+.m-header-nav--right .m-header-dropdown {
+    right: 0;
+    left: auto;
+    transform: none;
+}
+
+.m-header-nav--right .m-header-nav__wrapper:hover .m-header-dropdown {
+    transform: translateY(0);
+}
+
+.m-header-nav--right .m-header-dropdown::before,
+.m-header-nav--right .m-header-dropdown::after {
+    right: 20px;
+    left: auto;
+    transform: none;
+}
+
+.m-header-logo {
+}
+
+.m-header-logo__link {
+    display: block;
+    text-decoration: none;
+}
+
+.m-header-logo__image {
+    width: 22vw;
+    display: block;
+    height: auto;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.m-header-logo__text {
+}
+
+{% comment %} @media only screen and (max-width: 1600px) {
+    .m-desktop-header-section {
+        min-height: 120px;
+        padding-top: 50px;
+    }
+} {% endcomment %}
+
+/* Ensure dropdowns work well on larger screens */
+@media only screen and (min-width: 1200px) {
+    .m-header-dropdown__inner {
+        min-width: 220px;
+    }
+    
+    .m-header-dropdown__item {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Add some spacing to prevent dropdown from closing immediately */
+.m-header-nav__wrapper::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: transparent;
+}
+
+@media only screen and (min-width: 1440px) {
+    .d-smaller-desk {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1439px) and (min-width: 990px) {
+    .m-header-logo {
+        display: none;
+    }
+    .m-desktop-header-container {
+        justify-content: center;
+    }
+    .m-header-nav--left {
+        justify-content: flex-end;
+        flex: unset;
+    }
+    .m-header-nav--right {
+        justify-content: flex-start;
+        flex: unset;
+    }
+    .m-desktop-header-section {
+        padding-top: 6.5vw;
+    }
+    .d-smaller-desk .header__heading-logo {
+        width: 20vw;
+    }
+}
+</style>
+
+{% schema %}
+{
+    "name": "Desktop header",
+    "class": "m-desktop-header-section d-only",
+    "settings": [
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu",
+            "info": "Select a menu with 6 items. First 3 will appear on the left, last 3 on the right of the logo. Menu items with sub-items will show dropdowns on hover."
+        }
+    ],
+    "presets": [
+        {
+            "name": "Desktop header"
+        }
+    ]
+}
+{% endschema %}

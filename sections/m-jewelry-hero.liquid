@@ -1,0 +1,262 @@
+<div class="m-jewelry-hero">
+  <div class="m-jewelry-hero-body">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.description }}</p>
+    <div class="m-jewelry-hero-btns">
+      {% if section.settings.btn_link_1 %}
+        <a class="m-jewelry-hero-primary-btn" href="{{ section.settings.btn_link_1 }}">{{ section.settings.btn_text_1 }}</a>
+      {% endif %}
+      {% if section.settings.btn_link_2 %}
+        <a class="m-jewelry-hero-secondary-btn" href="{{ section.settings.btn_link_2 }}">{{ section.settings.btn_text_2 }}</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 %}
+{% assign overlay_rgba  = section.settings.overlay_color | color_modify: 'alpha', overlay_alpha %}
+
+<style>
+.m-jewelry-hero-section {
+  width: 100%;
+  {% comment %} background: linear-gradient(0deg, rgba(233, 193, 177, 0.44) 0%, rgba(233, 193, 177, 0.44) 100%), url({{ section.settings.desktop_image | img_url: 'master' }}) lightgray 50% / cover no-repeat; {% endcomment %}
+  background:
+      linear-gradient(0deg, {{ overlay_rgba }} 0%, {{ overlay_rgba }} 100%),
+      url({{ section.settings.desktop_image | img_url: 'master' }}) center/cover no-repeat;
+  background-color: lightgray; /* fallback while image loads */
+  background-position: center;
+  padding: 180px 25%;
+}
+.m-jewelry-hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.m-jewelry-hero-body {
+  width: 380px;
+  {% comment %} padding-top: 75px; {% endcomment %}
+}
+.m-jewelry-hero h1 {
+  color: {{ section.settings.font_color }};
+  font-family: Legitima;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: left;
+  margin: 0;
+  margin-bottom: 14px;
+}
+.m-jewelry-hero p {
+  color: {{ section.settings.font_color }};
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+  margin-bottom: 18px;
+}
+.m-jewelry-hero .m-jewelry-hero-btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14.5px;
+}
+.m-jewelry-hero-btns a {
+  border-radius: 10px;
+  padding: 14px 70px;
+  font-family: Montserrat;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  text-decoration: none;
+  display: block;
+}
+.m-jewelry-hero-primary-btn {
+  border: 1px solid #000;
+  background: rgba(255, 255, 255, 0.50);
+  color: #303030;
+}
+.m-jewelry-hero-secondary-btn {
+  border: 1px solid #000;
+  background: #2c2c2c;
+  color: #f5f5f5;
+}
+
+{% comment %} @media screen and (min-width: 1440px) and (max-width: 1920px) {
+  .m-jewelry-hero h1 {
+    font-size: 2.5vw;
+  }
+  .m-jewelry-hero p {
+    font-size: 1vw;
+  }
+  .m-jewelry-hero-btns a {
+    border-radius: 10px;
+    padding: 0.5vw 2.5vw;
+    font-family: Montserrat;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 90%;
+    text-decoration: none;
+    display: block;
+  }
+} {% endcomment %}
+
+@media only screen and (max-width: 1440px) {
+  .m-jewelry-hero-body {
+    width: 320px;
+  }
+  .m-jewelry-hero h1 {
+    font-size: 36px;
+  }
+  .m-jewelry-hero p {
+    font-size: 14.4px;
+  }
+  .m-jewelry-hero-btns a {
+    border-radius: 10px;
+    padding: 7px 35px;
+    font-family: Montserrat;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 90%;
+    text-decoration: none;
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 749px) {
+  .m-jewelry-hero-section {
+    width: 100%;
+    {% if section.settings.mobile_image == blank %}
+      background:
+      linear-gradient(0deg, {{ overlay_rgba }} 0%, {{ overlay_rgba }} 100%),
+      url({{ section.settings.desktop_image | image_url: width: 3840 }}) center/cover no-repeat;
+      background-color: lightgray; /* fallback while image loads */
+      {% comment %} background: linear-gradient(0deg, rgba(233, 193, 177, 0.44) 0%, rgba(233, 193, 177, 0.44) 100%), url({{ section.settings.desktop_image | img_url: 'master' }}) lightgray 50% / cover no-repeat; {% endcomment %}
+    {% else %}
+      background:
+      linear-gradient(0deg, {{ overlay_rgba }} 0%, {{ overlay_rgba }} 100%),
+      url({{ section.settings.mobile_image | image_url: width: 3840 }}) center/cover no-repeat;
+      background-color: lightgray; /* fallback while image loads */
+      {% comment %} background: linear-gradient(0deg, rgba(233, 193, 177, 0.44) 0%, rgba(233, 193, 177, 0.44) 100%), url({{ section.settings.mobile_image | img_url: 'master' }}) lightgray 50% / cover no-repeat; {% endcomment %}
+    {% endif %}
+    background-position: center;
+    padding: 80px 20px;
+  }
+  .m-jewelry-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .m-jewelry-hero-body {
+    width: 100%;
+    text-align: center;
+    min-width: unset;
+    max-width: 320px;
+    padding-top: 0px;
+  }
+  .m-jewelry-hero h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .m-jewelry-hero p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .m-jewelry-hero .m-jewelry-hero-btns {
+    gap: 10px;
+    justify-content: center;
+  }
+  .m-jewelry-hero-btns a {
+    padding: 7px 35px;
+    font-size: 13px;
+  }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Jewelry landing hero",
+  "tag": "section",
+  "class": "m-jewelry-hero-section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Font color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Background overlay color",
+      "default": "#E9C1B1"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 44
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Background Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "btn_text_1",
+      "label": "Button Label 1"
+    },
+    {
+      "type": "url",
+      "id": "btn_link_1",
+      "label": "Button Link 1"
+    },
+    {
+      "type": "text",
+      "id": "btn_text_2",
+      "label": "Button Label 2"
+    },
+    {
+      "type": "url",
+      "id": "btn_link_2",
+      "label": "Button Link 2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Jewelry landing hero",
+    }
+  ]
+}
+{% endschema %}

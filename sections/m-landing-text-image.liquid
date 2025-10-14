@@ -1,0 +1,207 @@
+<div class="m-landing-image-text">
+	<div class="m-landing-image-text-text">
+		<h2>{{ section.settings.heading }}</h2>
+		<h4>{{ section.settings.subheading }}</h4>
+		<p>{{ section.settings.description }}</p>
+
+		<a href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
+	</div>
+
+	<div class="m-landing-image-text-image"></div>
+</div>
+
+<style>
+#shopify-section-{{section.id }} .m-landing-image-text-section {
+	width: 100%;
+}
+#shopify-section-{{section.id }} .m-landing-image-text {
+	width: 100%;
+	display: flex;
+	align-items: stretch;
+}
+#shopify-section-{{section.id }} .m-landing-image-text-text {
+	width: 45%;
+	background: var(--Primary-Light, #F8F6F2);
+	padding: 100px 40px;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#shopify-section-{{section.id }} .m-landing-image-text-text h2 {
+	color: #594242;
+	/* Heading/Extra Large */
+	font-family: Legitima;
+	font-size: 55px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 100%; /* 64px */
+    margin: 0;
+	margin-bottom: 40px;
+    max-width: 737px;
+}
+#shopify-section-{{section.id }} .m-landing-image-text-text h4 {
+	color: #594242;
+	/* Subheading/Large */
+	font-family: Montserrat;
+	font-size: 23px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 110%; /* 35.2px */
+	margin: 0;
+	margin-bottom: 40px;
+    max-width: 737px;
+}
+#shopify-section-{{section.id }} .m-landing-image-text-text p {
+	color: #78686F;
+	font-family: Montserrat;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 140%; /* 33.6px */
+	margin: 0;
+	margin-bottom: 40px;
+    max-width: 737px;
+}
+#shopify-section-{{section.id }} .m-landing-image-text-text a {
+	display: block;
+	text-decoration: none;
+	border-radius: 19.173px;
+    background: var(--Primary-Accent, #78686F);
+    color: #FFF;
+	font-family: Montserrat;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 140%; /* 42.276px */
+    padding: 15px 40px;
+    width: fit-content;
+}
+#shopify-section-{{section.id }} .m-landing-image-text-image {
+    {% if section.settings.image_left %}
+    order: -1;
+    {% endif %}    
+	display: block !important;
+	width: 55%;
+	background-image: url({{ section.settings.back_image | img_url: 'master' }});
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 680px;
+}
+
+@media only screen and (max-width: 1600px) {
+    #shopify-section-{{section.id }} .m-landing-image-text-text {
+        width: 50%;
+        padding: 60px 30px;
+    }
+    #shopify-section-{{section.id }} .m-landing-image-text-text h2 {
+        font-size: 55px;
+        margin-bottom: 40px;
+    }
+    #shopify-section-{{section.id }} .m-landing-image-text-text h4 {
+        font-size: 23px;
+        margin-bottom: 40px;
+    }
+    #shopify-section-{{section.id }} .m-landing-image-text-text p {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+    #shopify-section-{{section.id }} .m-landing-image-text-text a {
+        font-size: 20px;
+        padding: 15px 40px;
+    }
+    #shopify-section-{{section.id }} .m-landing-image-text-image {
+        width: 50%;
+        height: 650px;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+	#shopify-section-{{section.id }} .m-landing-image-text-section {
+		width: 100%;
+	}
+	#shopify-section-{{section.id }} .m-landing-image-text {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	#shopify-section-{{section.id }} .m-landing-image-text-text {
+		width: 100%;
+		padding: 40px 20px;
+	}
+	#shopify-section-{{section.id }} .m-landing-image-text-text h2 {
+		font-size: 36px;
+		margin-bottom: 30px;
+	}
+	#shopify-section-{{section.id }} .m-landing-image-text-text h4 {
+		font-size: 18px;
+		margin-bottom: 30px;
+	}
+	#shopify-section-{{section.id }} .m-landing-image-text-text p {
+		font-size: 18px;
+		margin-bottom: 20px;
+	}
+	#shopify-section-{{section.id }} .m-landing-image-text-text a {
+	    padding: 15px 40px;
+	    font-size: 16px;
+	    font-weight: 500;
+	}
+	#shopify-section-{{section.id }} .m-landing-image-text-image {
+		display: block !important;
+		height: 350px;
+		width: 100%;
+        order: -1;
+	}	
+}
+
+</style>
+
+{% schema %}
+{
+	"name": "Landing page image text",
+	"tag": "section",
+	"class": "m-landing-image-text-section",
+	"settings": [
+		{
+			"type": "checkbox",
+			"id": "image_left",
+			"label": "Image left"
+		},
+		{
+			"type": "image_picker",
+			"id": "back_image",
+			"label": "Background image"
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading"
+		},
+		{
+			"type": "text",
+			"id": "subheading",
+			"label": "Subheading"
+		},
+		{
+			"type": "richtext",
+			"id": "description",
+			"label": "Description"
+		},
+        {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button text"
+        },
+        {
+            "type": "url",
+            "id": "btn_link",
+            "label": "Button link"
+        }
+	],
+    "presets": [
+        {
+            "name": "Landing page image text"
+        }
+    ]
+}
+{% endschema %}

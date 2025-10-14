@@ -1,0 +1,246 @@
+<div class="m-landing-cols">
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.subheading }}</p>
+
+    <div class="m-landing-cols-wrap">
+        {% for block in section.blocks %}
+            <div class="m-landing-col">
+                <img src="{{ block.settings.image | img_url: 'master' }}">
+                <h3>{{ block.settings.title }}</h3>
+                <p>{{ block.settings.text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a class="m-landing-btn" href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
+</div>
+
+<style>
+.m-landing-columns-section {
+    width: 100%;
+    padding: 100px 160px;
+    background: #fff;
+}
+.m-landing-cols {
+    max-width: 1600px;
+    margin: auto;
+    text-align: center;
+}
+.m-landing-cols>h2 {
+    color: #2E2E2E;
+    text-align: center;
+    font-family: Legitima;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 72px */
+    margin: 0;
+}
+.m-landing-cols>p {
+    color: #878787;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 33.6px */
+    margin: 0;
+}
+.m-landing-cols-wrap {
+    width: 100%;
+    display: flex;
+    gap: 120px;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 58px;
+    margin-bottom: 58px;
+}
+.m-landing-col {
+    display: block;
+    max-width: 450px;
+    width: calc(33% - 80px);
+}
+.m-landing-col img {
+    display: block;
+    width: 100%;
+    margin-bottom: 33px;
+}
+.m-landing-col h3 {
+    color: var(--Darker-Accent, #69575F);
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 110%; /* 35.2px */
+    font-variant: all-small-caps;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 9px;
+}
+.m-landing-col p {
+    color: rgba(21, 21, 21, 0.50);
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 26.4px */
+    margin: 0;
+}
+.m-landing-cols>a {
+    display: block;
+    border-radius: 19.173px;
+    background: var(--Primary-Accent, #78686F);
+    padding: 15px 40px;
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 42.276px */
+    width: fit-content;
+    text-decoration: none;
+    margin: auto;
+}
+
+@media only screen and (max-width: 1600px) {
+    .m-landing-columns-section {
+        width: 100%;
+        padding: 80px 40px;
+        background: #fff;
+    }
+    .m-landing-cols>h2 {
+        font-size: 48px;
+    }
+    .m-landing-cols>p {
+        font-size: 16px;
+    }
+    .m-landing-cols-wrap {
+        display: flex;
+        gap: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .m-landing-col {
+        display: block;
+        width: calc(33% - 20px);
+    }
+    .m-landing-col img {
+        margin-bottom: 20px;
+    }
+    .m-landing-col h3 {
+        font-size: 23px;
+        margin-bottom: 9px;
+    }
+    .m-landing-col p {
+        font-size: 16px;
+        margin: 0;
+    }
+    .m-landing-cols>a {
+        padding: 15px 40px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .m-landing-columns-section {
+        width: 100%;
+        padding: 40px 20px;
+    }
+    .m-landing-cols>h2 {
+        font-size: 36px;
+    }
+    .m-landing-cols>p {
+        font-size: 16px;
+    }
+    .m-landing-cols-wrap {
+        gap: 30px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .m-landing-col {
+        width: 100%;
+    }
+    .m-landing-col img {
+        margin-bottom: 20px;
+    }
+    .m-landing-col h3 {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+    .m-landing-col p {
+        font-size: 16px;
+        margin: 0;
+    }
+    .m-landing-cols>a {
+        padding: 15px 40px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Landing page columns",
+  "tag": "section",
+  "class": "m-landing-columns-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Landing page columns"
+    }
+  ]
+}
+{% endschema %}

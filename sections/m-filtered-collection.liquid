@@ -1,0 +1,283 @@
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<div class="m-collection-2">
+  <div class="m-collection-2-image" onclick="document.location='{{ section.settings.collection.url }}';"></div>
+
+  <div class="m-collection-2-body">
+    <h2><a href="{{ section.settings.collection.url }}">{{ section.settings.heading }}</a></h2>
+
+    <div class="m-collection-2-slider-wrap">
+      <div class="m-collection-2-slider-left">{% render 'icon-left-arrow' %}</div>
+
+      <div class="m-collection-2-slider">
+        {%- comment -%}
+          TYPE FILTER — single or multi mode (checkboxes)
+          Canonical types: ring, earring, bracelet, bangle, necklace, pendant, watch, wedding band, engagement ring
+        {%- endcomment -%}
+
+        {%- assign bar = '|' -%}
+        {%- assign mode = section.settings.type_filter_mode | default: 'single' | downcase -%}
+
+        {%- assign selected_types_join = '' -%}
+
+        {%- if mode == 'single' -%}
+          {%- assign s = section.settings.type_filter | default: 'all' | downcase | strip -%}
+          {%- if s contains 'wedding band' -%}
+            {%- assign s = 'wedding band' -%}
+          {%- elsif s contains 'engagement ring' -%}
+            {%- assign s = 'engagement ring' -%}
+          {%- elsif s contains 'earring' -%}
+            {%- assign s = 'earring' -%}
+          {%- elsif s contains 'bracelet' -%}
+            {%- assign s = 'bracelet' -%}
+          {%- elsif s contains 'bangle' -%}
+            {%- assign s = 'bangle' -%}
+          {%- elsif s contains 'necklace' and s contains 'pendant' -%}
+            {%- assign s = 'necklace & pendant' -%}
+          {%- elsif s contains 'necklace' -%}
+            {%- assign s = 'necklace' -%}
+          {%- elsif s contains 'pendant' -%}
+            {%- assign s = 'pendant' -%}
+          {%- elsif s contains 'watch' -%}
+            {%- assign s = 'watch' -%}
+          {%- elsif s contains 'ring' -%}
+            {%- assign s = 'ring' -%}
+          {%- endif -%}
+
+          {%- if s != blank and s != 'all' -%}
+            {%- capture selected_types_join -%}{{ bar }}{{ s }}{{ bar }}{%- endcapture -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- comment -%} MULTI: gather checked boxes {%- endcomment -%}
+          {%- assign picks = '' -%}
+          {%- if section.settings.type_ring %}{%- capture picks -%}{{ picks }}|ring|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_earring %}{%- capture picks -%}{{ picks }}|earring|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_bracelet %}{%- capture picks -%}{{ picks }}|bracelet|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_bangle %}{%- capture picks -%}{{ picks }}|bangle|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_necklace %}{%- capture picks -%}{{ picks }}|necklace|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_pendant %}{%- capture picks -%}{{ picks }}|pendant|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_watch %}{%- capture picks -%}{{ picks }}|watch|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_wedding_band %}{%- capture picks -%}{{ picks }}|wedding band|{%- endcapture -%}{%- endif -%}
+          {%- if section.settings.type_engagement_ring %}{%- capture picks -%}{{ picks }}|engagement ring|{%- endcapture -%}{%- endif -%}
+          {%- assign selected_types_join = picks -%}
+        {%- endif -%}
+
+        {%- assign want_type = false -%}
+        {%- if selected_types_join != '' -%}{%- assign want_type = true -%}{%- endif -%}
+
+        {%- assign shown = 0 -%}
+
+        {%- if want_type == false -%}
+          {%- for product in section.settings.collection.products limit: 10 -%}
+            {% render 'm-product-card', product: product %}
+          {%- endfor -%}
+        {%- else -%}
+          {%- comment -%} handle “necklace & pendant” in single mode as OR {%- endcomment -%}
+          {%- assign also_necklace = false -%}
+          {%- assign also_pendant = false -%}
+          {%- if mode == 'single' and selected_types_join contains '|necklace & pendant|' -%}
+            {%- assign also_necklace = true -%}
+            {%- assign also_pendant = true -%}
+          {%- endif -%}
+
+          {% paginate section.settings.collection.products by 250 %}
+            {%- for product in section.settings.collection.products -%}
+              {%- assign ok = true -%}
+
+              {%- comment -%} normalize product.type and map to canonical tokens {%- endcomment -%}
+              {%- assign pt = product.type | downcase | strip -%}
+              {%- assign pt = pt
+                | replace: ' and ', ' & '
+                | replace: ', ', ' & '
+                | replace: ',', ' & '
+              -%}
+              {%- assign pt = pt
+                | replace: 'rings','ring'
+                | replace: 'earrings','earring'
+                | replace: 'bracelets','bracelet'
+                | replace: 'bangles','bangle'
+                | replace: 'necklaces','necklace'
+                | replace: 'pendants','pendant'
+                | replace: 'watches','watch'
+                | replace: 'bands','band'
+              -%}
+              {%- assign pt_tokens = pt | split: ' & ' -%}
+
+              {%- assign canon_join = '' -%}
+              {%- for t in pt_tokens -%}
+                {%- assign t1 = t | strip -%}
+                {%- assign canon = '' -%}
+                {%- if t1 contains 'wedding band' -%}{%- assign canon = 'wedding band' -%}
+                {%- elsif t1 contains 'engagement ring' -%}{%- assign canon = 'engagement ring' -%}
+                {%- elsif t1 contains 'earring' -%}{%- assign canon = 'earring' -%}
+                {%- elsif t1 contains 'bracelet' -%}{%- assign canon = 'bracelet' -%}
+                {%- elsif t1 contains 'bangle' -%}{%- assign canon = 'bangle' -%}
+                {%- elsif t1 contains 'necklace' -%}{%- assign canon = 'necklace' -%}
+                {%- elsif t1 contains 'pendant' -%}{%- assign canon = 'pendant' -%}
+                {%- elsif t1 contains 'watch' -%}{%- assign canon = 'watch' -%}
+                {%- elsif t1 contains 'ring' -%}{%- assign canon = 'ring' -%}{%- endif -%}
+                {%- if canon != '' -%}
+                  {%- assign needle = bar | append: canon | append: bar -%}
+                  {%- unless canon_join contains needle -%}
+                    {%- capture canon_join -%}{{ canon_join }}{{ needle }}{%- endcapture -%}
+                  {%- endunless -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- assign type_match = false -%}
+
+              {%- if also_necklace or also_pendant -%}
+                {%- if also_necklace -%}
+                  {%- assign need = bar | append: 'necklace' | append: bar -%}
+                  {%- if canon_join contains need -%}{%- assign type_match = true -%}{%- endif -%}
+                {%- endif -%}
+                {%- if also_pendant -%}
+                  {%- assign need = bar | append: 'pendant' | append: bar -%}
+                  {%- if canon_join contains need -%}{%- assign type_match = true -%}{%- endif -%}
+                {%- endif -%}
+              {%- else -%}
+                {%- assign sel_clean = selected_types_join | remove: bar -%}
+                {%- assign sel_list = sel_clean | split: bar -%}
+                {%- assign sel_list = selected_types_join | split: bar -%}
+                {%- for need in sel_list -%}
+                  {%- assign n = need | strip -%}
+                  {%- if n != '' -%}
+                    {%- assign needle = bar | append: n | append: bar -%}
+                    {%- if canon_join contains needle -%}
+                      {%- assign type_match = true -%}
+                      {%- break -%} {# <-- OR logic: match any selected type #}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+              {%- endif -%}
+
+              {%- if type_match == false -%}{%- assign ok = false -%}{%- endif -%}
+
+              {%- if ok -%}
+                {% render 'm-product-card', product: product %}
+                {%- assign shown = shown | plus: 1 -%}
+                {%- if shown >= 10 -%}{%- break -%}{%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {% endpaginate %}  
+
+          {%- if shown == 0 -%}
+            <div class="m-collection-2-empty">No products found for the selected type(s).</div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+
+      <div class="m-collection-2-slider-right">{% render 'icon-right-arrow' %}</div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* styles unchanged from your version */
+#shopify-section-{{ section.id }}.m-collection-2-section { width:100%; {% if section.settings.back_color %}background: {{ section.settings.back_color }};{% endif %} }
+#shopify-section-{{ section.id }} .m-collection-2 { display:flex; align-items:stretch; justify-content:space-between; gap:0; }
+#shopify-section-{{ section.id }} .m-collection-2-image {
+  width:43%; display:block !important;
+  background-image:url({{ section.settings.image | img_url: 'master' }}); background-size:cover; background-position:center; background-repeat:no-repeat; cursor:pointer;
+  {% unless section.settings.image_left %}order:1;{% endunless %}
+}
+#shopify-section-{{ section.id }} .m-collection-2-body { width:57%; height:100%; padding:50px; }
+.fine-jewelry #shopify-section-{{ section.id }} .m-collection-2-image { width:30%; }
+.fine-jewelry #shopify-section-{{ section.id }} .m-collection-2-body { width:70%; }
+#shopify-section-{{ section.id }} .m-collection-2-body>h2 { color:#333; font-family:Legitima; font-size:44px; font-weight:500; margin:0 0 30px; }
+#shopify-section-{{ section.id }} .m-collection-2-body>h2 a { text-decoration:none; color:#333; }
+#shopify-section-{{ section.id }} .m-collection-2-body>h2 a:hover { color:#69575f; }
+#shopify-section-{{ section.id }} .m-collection-2-slider-wrap { position:relative; }
+#shopify-section-{{ section.id }} .m-collection-2-slider-left { position:absolute; left:-25px; z-index:1; top:50%; transform:translateY(-50%); cursor:pointer; }
+#shopify-section-{{ section.id }} .m-collection-2-slider-right { position:absolute; right:-25px; z-index:1; top:50%; transform:translateY(-50%); cursor:pointer; }
+#shopify-section-{{ section.id }} .m-collection-2-slider .slick-track { display:flex !important; }
+#shopify-section-{{ section.id }} .m-collection-2-slider .slick-slide { height:inherit !important; }
+
+@media (max-width:1440px){
+  .fine-jewelry #shopify-section-{{ section.id }} .m-collection-2-image, #shopify-section-{{ section.id }} .m-collection-2-image { width:30%; }
+  .fine-jewelry #shopify-section-{{ section.id }} .m-collection-2-body, #shopify-section-{{ section.id }} .m-collection-2-body { width:70%; padding:30px 37.5px; }
+  .fine-jewelry #shopify-section-{{ section.id }} .m-collection-2-body>h2, #shopify-section-{{ section.id }} .m-collection-2-body>h2 { font-size:34px; line-height:110%; margin-bottom:10px; }
+}
+@media (max-width:990px){
+  #shopify-section-{{ section.id }} .m-collection-2 { display:flex; flex-wrap:wrap; }
+  #shopify-section-{{ section.id }} .m-collection-2-image { width:100%; height:100vw; background-position:top; order:-1; }
+  #shopify-section-{{ section.id }} .m-collection-2-body { width:100%; padding:25px; }
+  #shopify-section-{{ section.id }} .m-collection-2-body>h2 { font-size:32px; margin-bottom:20px; }
+}
+</style>
+
+<script>
+$(document).ready(function(){
+  $('#shopify-section-{{ section.id }} .m-collection-2-slider').slick({
+    slidesToScroll: 1,
+    variableWidth: true,
+    infinite: true,
+    arrows: true,
+    dots: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    prevArrow: '#shopify-section-{{ section.id }} .m-collection-2-slider-left',
+    nextArrow: '#shopify-section-{{ section.id }} .m-collection-2-slider-right'
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Filtered collection",
+  "class": "m-collection-2-section",
+  "tag": "section",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+
+    {
+      "type": "select",
+      "id": "type_filter_mode",
+      "label": "Type filter mode",
+      "default": "single",
+      "options": [
+        { "value": "single", "label": "Single select" },
+        { "value": "multi", "label": "Multi-select (checkboxes)" }
+      ]
+    },
+
+    { "type": "select", "id": "type_filter", "label": "Type (single-select)", "default": "all",
+      "options": [
+        { "value": "all", "label": "All" },
+        { "value": "engagement ring", "label": "Engagement Ring" },
+        { "value": "wedding band", "label": "Wedding Band" },
+        { "value": "ring", "label": "Ring" },
+        { "value": "earring", "label": "Earring" },
+        { "value": "bracelet", "label": "Bracelet" },
+        { "value": "bangle", "label": "Bangle" },
+        { "value": "necklace", "label": "Necklace" },
+        { "value": "pendant", "label": "Pendant" },
+        { "value": "necklace & pendant", "label": "Necklace & Pendant" },
+        { "value": "watch", "label": "Watch" }
+      ]
+    },
+
+    { "type": "header", "content": "Type (multi-select checkboxes)" },
+    { "type": "checkbox", "id": "type_ring", "label": "Ring", "default": false },
+    { "type": "checkbox", "id": "type_earring", "label": "Earring", "default": false },
+    { "type": "checkbox", "id": "type_bracelet", "label": "Bracelet", "default": false },
+    { "type": "checkbox", "id": "type_bangle", "label": "Bangle", "default": false },
+    { "type": "checkbox", "id": "type_necklace", "label": "Necklace", "default": false },
+    { "type": "checkbox", "id": "type_pendant", "label": "Pendant", "default": false },
+    { "type": "checkbox", "id": "type_watch", "label": "Watch", "default": false },
+    { "type": "checkbox", "id": "type_wedding_band", "label": "Wedding Band", "default": false },
+    { "type": "checkbox", "id": "type_engagement_ring", "label": "Engagement Ring", "default": false },
+
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "image_left", "label": "Image left", "default": true },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "color", "id": "back_color", "label": "Background color" }
+  ],
+  "presets": [
+    { "name": "Filtered collection" }
+  ]
+}
+{% endschema %}

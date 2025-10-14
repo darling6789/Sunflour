@@ -1,0 +1,470 @@
+<div class="m-featured-product">
+  <div class="m-featured-product-des">
+    <h2>{{ section.settings.title }}</h2>
+    <div class="m-featured-product-description">{{ section.settings.description }}</div>
+    <div class="m-featured-product-des-btn-group">
+      {% if section.settings.product != blank %}
+        <button>Add to Cart</button>
+      {% endif %}
+
+      {% if section.settings.link %}
+        <a href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="m-featured-product-image">
+    <img src="{{ section.settings.image | img_url: 'master' }}">
+  </div>
+
+  <div class="m-featured-product-collection">
+    <h3>{{ section.settings.collection_heading }}</h3>
+
+    <div class="m-featured-product-slider-wrap">
+      <div class="m-featured-product-slider-left">{% render 'icon-left-arrow' %}</div>
+      <div class="m-featured-product-slider">
+
+        {%- comment -%}
+          Collect selected product types from checkboxes (OR logic).
+          If none are selected, we don't filter by type.
+          Also exclude sold-out products.
+        {%- endcomment -%}
+        {%- assign sel_join = '' -%}
+        {%- if section.settings.type_engagement_ring %}{%- assign sel_join = sel_join | append: '|engagement ring|' -%}{%- endif -%}
+        {%- if section.settings.type_wedding_band %}{%- assign sel_join = sel_join | append: '|wedding band|' -%}{%- endif -%}
+        {%- if section.settings.type_womens_wedding_band %}{%- assign sel_join = sel_join | append: "|women's wedding band|" -%}{%- endif -%}
+        {%- if section.settings.type_fashion_ring %}{%- assign sel_join = sel_join | append: '|fashion ring|' -%}{%- endif -%}
+        {%- if section.settings.type_ring %}{%- assign sel_join = sel_join | append: '|ring|' -%}{%- endif -%}
+
+        {%- if section.settings.type_earring %}{%- assign sel_join = sel_join | append: '|earring|' -%}{%- endif -%}
+        {%- if section.settings.type_gold_earring %}{%- assign sel_join = sel_join | append: '|gold earring|' -%}{%- endif -%}
+        {%- if section.settings.type_diamond_earring %}{%- assign sel_join = sel_join | append: '|diamond earring|' -%}{%- endif -%}
+        {%- if section.settings.type_gem_earring %}{%- assign sel_join = sel_join | append: '|gem earring|' -%}{%- endif -%}
+
+        {%- if section.settings.type_bracelet %}{%- assign sel_join = sel_join | append: '|bracelet|' -%}{%- endif -%}
+        {%- if section.settings.type_bangle %}{%- assign sel_join = sel_join | append: '|bangle|' -%}{%- endif -%}
+
+        {%- if section.settings.type_necklace %}{%- assign sel_join = sel_join | append: '|necklace|' -%}{%- endif -%}
+        {%- if section.settings.type_pendant %}{%- assign sel_join = sel_join | append: '|pendant|' -%}{%- endif -%}
+
+        {%- if section.settings.type_watch %}{%- assign sel_join = sel_join | append: '|watch|' -%}{%- endif -%}
+
+        {%- assign want_type = false -%}
+        {%- if sel_join != '' -%}{%- assign want_type = true -%}{%- endif -%}
+
+        {%- assign shown = 0 -%}
+
+        {%- for f_product in section.settings.collection.products limit: 300 -%}
+          {%- assign ok = true -%}
+
+          {%- if f_product.available == false -%}
+            {%- assign ok = false -%}
+          {%- endif -%}
+
+          {%- if ok and want_type -%}
+            {%- comment -%}
+              Normalize product.type → tokens (split on "&", ",", "and"),
+              singularize basic plurals, then OR-match against selection.
+            {%- endcomment -%}
+            {%- assign pt = f_product.type | downcase | strip -%}
+            {%- assign pt = pt
+              | replace: ' and ', ' & '
+              | replace: ',', ' & '
+              | replace: ', ', ' & '
+            -%}
+            {%- assign raw_tokens = pt | split: ' & ' -%}
+
+            {%- assign canon = '|' -%}
+            {%- for t in raw_tokens -%}
+              {%- assign t1 = t | strip
+                | replace: 'rings','ring'
+                | replace: 'earrings','earring'
+                | replace: 'necklaces','necklace'
+                | replace: 'pendants','pendant'
+                | replace: 'bracelets','bracelet'
+                | replace: 'watches','watch'
+                | replace: 'bangles','bangle'
+              -%}
+              {%- if t1 != '' -%}
+                {%- assign canon = canon | append: t1 | append: '|' -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- assign type_match = false -%}
+            {%- assign sel_parts = sel_join | split: '|' -%}
+            {%- for key in sel_parts -%}
+              {%- if key != '' -%}
+                {%- assign needle = '|' | append: key | append: '|' -%}
+                {%- if canon contains needle -%}
+                  {%- assign type_match = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if type_match == false -%}{%- assign ok = false -%}{%- endif -%}
+          {%- endif -%}
+
+          {%- if ok -%}
+            {% render 'm-product-card', product: f_product %}
+            {%- assign shown = shown | plus: 1 -%}
+            {%- if shown >= 10 -%}{%- break -%}{%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if shown == 0 -%}
+          <div class="m-featured-product-empty">No available products found{% if want_type %} for the selected type(s){% endif %}.</div>
+        {%- endif -%}
+      </div>
+      <div class="m-featured-product-slider-right">{% render 'icon-right-arrow' %}</div>
+    </div>
+
+    <a href="{{ section.settings.collection.url }}">{{ section.settings.col_text }}</a>
+  </div>
+</div>
+
+<style>
+#shopify-section-{{ section.id }}.m-featured-product-section {
+  background: {{  section.settings.back_color }};
+  width: 100%;
+  padding: 100px 100px 80px;
+}
+#shopify-section-{{ section.id }} .m-featured-product {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+#shopify-section-{{ section.id }} .m-featured-product-des {
+  width: 30%;
+  max-width: 430px;
+}
+#shopify-section-{{ section.id }} .m-featured-product-des h2 {
+  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  font-family: Legitima;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  margin: 0;
+  margin-bottom: 30px;
+}
+#shopify-section-{{ section.id }} .m-featured-product-description p {
+  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  margin: 0;
+  margin-bottom: 30px;
+}
+#shopify-section-{{ section.id }} .m-featured-product-des-btn-group {
+  max-width: 275px;
+}
+#shopify-section-{{ section.id }} .m-featured-product-des button {
+  outline: none;
+  border-radius: 1.6px;
+  border: var(--stroke-weight-1, 1px) solid #151515;
+  padding: 12.48px 17px 13.52px 17px;
+  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  text-align: center;
+  font-family: var(--font-family-Font-2, Montserrat);
+  font-size: 15.4px;
+  font-style: normal;
+  font-weight: var(--font-weight-500, 500);
+  line-height: 23px;
+  margin-bottom: 7px;
+  width: 275px;
+  background: transparent;
+}
+#shopify-section-{{ section.id }} .m-featured-product-des-btn-group a {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  text-align: center;
+  font-family: var(--font-family-Font-2, Montserrat);
+  font-size: 15.4px;
+  font-style: normal;
+  font-weight: var(--font-weight-500, 500);
+  line-height: 150%;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+#shopify-section-{{ section.id }} .m-featured-product-image {
+  width: 35%;
+  max-width: 500px;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#shopify-section-{{ section.id }} .m-featured-product-image img {
+  width: 100%;
+  display: block;
+  margin: auto;
+}
+#shopify-section-{{ section.id }} .m-featured-product-collection {
+  flex: 1;
+  width: 30%;
+}
+#shopify-section-{{ section.id }} .m-featured-product-collection>h3 {
+  color: #333;
+  font-family: Legitima;
+  font-size: 34px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 140%;
+  margin: 0;
+  margin-bottom: 10px;
+}
+#shopify-section-{{ section.id }} .m-featured-product-slider-wrap {
+  position: relative;
+}
+#shopify-section-{{ section.id }} .m-featured-product-slider-left {
+  position: absolute;
+  left: -25px;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+#shopify-section-{{ section.id }} .m-featured-product-slider-right {
+  position: absolute;
+  right: -25px;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+#shopify-section-{{ section.id }} .m-featured-product-slider {
+
+}
+#shopify-section-{{ section.id }} .m-featured-product-slider .slick-track {
+  display: flex !important;
+}
+#shopify-section-{{ section.id }} .m-featured-product-slider .slick-slide {
+  height: inherit !important;
+}
+#shopify-section-{{ section.id }} .m-featured-product-collection>a {
+  color: #333;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  display: block;
+  margin-top: 18px;
+}
+
+/* ==== Responsive (restored from your previous CSS) ==== */
+@media only screen and (max-width: 1919px) {
+  #shopify-section-{{ section.id }} .m-featured-product-collection>h3 { font-size: 1.8vw; }
+}
+
+@media only screen and (max-width: 1440px) {
+  #shopify-section-{{ section.id }}.m-featured-product-section {
+    width: 100%;
+    padding: 88px 27px 94px 115px;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-des {
+    width: 30%;
+    max-width: 430px;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-des h2 {
+    color: var(--M3-sys-light-high-contrast-shadow, #000);
+    font-family: Legitima;
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%;
+    margin: 0;
+    margin-bottom: 22.5px;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-description p {
+    color: var(--M3-sys-light-high-contrast-shadow, #000);
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin: 0;
+    margin-bottom: 22.5px;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-des-btn-group { max-width: 200px; }
+  #shopify-section-{{ section.id }} .m-featured-product-des button {
+    outline: none;
+    border-radius: 1.6px;
+    border: var(--stroke-weight-1, 1px) solid #151515;
+    padding: 9px 12px;
+    color: var(--M3-sys-light-high-contrast-shadow, #000);
+    text-align: center;
+    font-family: var(--font-family-Font-2, Montserrat);
+    font-size: 11.55px;
+    font-style: normal;
+    font-weight: var(--font-weight-500, 500);
+    line-height: 17.25px;
+    margin-bottom: 5px;
+    width: 200px;
+    background: transparent;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-des-btn-group a {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: var(--M3-sys-light-high-contrast-shadow, #000);
+    text-align: center;
+    font-family: var(--font-family-Font-2, Montserrat);
+    font-size: 11.55px;
+    font-style: normal;
+    font-weight: var(--font-weight-500, 500);
+    line-height: 17.25px;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-image {
+    width: 35%;
+    max-width: 500px;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-image img { width: 100%; display: block; margin: auto; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection { flex: 1; width: 30%; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection>h3 {
+    color: #333;
+    font-family: Legitima;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 140%;
+    margin: 0;
+    margin-bottom: 7px;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-slider-wrap { position: relative; }
+  #shopify-section-{{ section.id }} .m-featured-product-slider-left {
+    position: absolute; left: -25px; z-index: 1; top: 50%; transform: translateY(-50%); cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-slider-right {
+    position: absolute; right: -25px; z-index: 1; top: 50%; transform: translateY(-50%); cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-slider .slick-track { display: flex !important; }
+  #shopify-section-{{ section.id }} .m-featured-product-slider .slick-slide { height: inherit !important; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection>a {
+    color: #333; font-family: Montserrat; font-size: 13.5px; font-style: italic; font-weight: 500; line-height: normal;
+    text-decoration-line: underline; text-decoration-style: solid; text-decoration-skip-ink: none;
+    text-decoration-thickness: auto; text-underline-offset: auto; text-underline-position: from-font;
+    display: block; margin-top: 3px;
+  }
+}
+
+@media only screen and (max-width: 990px) {
+  #shopify-section-{{ section.id }}.m-featured-product-section { padding: 60px 30px; }
+  #shopify-section-{{ section.id }} .m-featured-product { align-items: center; flex-wrap: wrap; gap: 40px; }
+  #shopify-section-{{ section.id }} .m-featured-product-des { width: calc(50% - 20px); max-width: unset; }
+  #shopify-section-{{ section.id }} .m-featured-product-des-btn-group { max-width: 275px; }
+  #shopify-section-{{ section.id }} .m-featured-product-des button { width: 275px; }
+  #shopify-section-{{ section.id }} .m-featured-product-image { width: calc(50% - 20px); max-width: unset; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection { flex: 1; width: 100%; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection>h3 { font-size: 24px; }
+}
+
+@media only screen and (max-width: 749px) {
+  #shopify-section-{{ section.id }}.m-featured-product-section { padding: 60px 20px; }
+  #shopify-section-{{ section.id }} .m-featured-product { align-items: center; flex-wrap: wrap; gap: 40px; }
+  #shopify-section-{{ section.id }} .m-featured-product-des { width: 100%; max-width: unset; }
+  #shopify-section-{{ section.id }} .m-featured-product-des h2 { font-size: 32px; margin-bottom: 30px; }
+  #shopify-section-{{ section.id }} .m-featured-product-description p { font-size: 14px; margin-bottom: 20px; }
+  #shopify-section-{{ section.id }} .m-featured-product-des-btn-group { max-width: 275px; margin: auto; }
+  #shopify-section-{{ section.id }} .m-featured-product-des button {
+    padding: 10px 15px; font-size: 14px; line-height: 120%; margin: auto; margin-bottom: 7px; display: block; width: 200px;
+  }
+  #shopify-section-{{ section.id }} .m-featured-product-des-btn-group a { font-size: 14px; line-height: 150%; }
+  #shopify-section-{{ section.id }} .m-featured-product-image { width: 100%; max-width: 400px; margin: auto; order: -1; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection { width: 100%; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection>h3 { font-size: 20px; line-height: 140%; margin: 0 0 10px; }
+  #shopify-section-{{ section.id }} .m-featured-product-collection>a { font-size: 16px; margin-top: 12px; }
+}
+</style>
+
+<script>
+$(document).ready(function(){
+  $('#shopify-section-{{ section.id }} .m-featured-product-slider').slick({
+    slidesToScroll: 1,
+    variableWidth: true,
+    infinite: true,
+    arrows: true,
+    dots: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    prevArrow: '.m-featured-product-slider-left',
+    nextArrow: '.m-featured-product-slider-right'
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Custom featured product",
+  "tag": "section",
+  "class": "m-featured-product-section",
+  "settings": [
+    { "type": "color", "id": "back_color", "label": "Section background color", "default": "#eceef2" },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "title", "label": "Title" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "text", "id": "link_text", "label": "Link text" },
+    { "type": "url", "id": "link", "label": "Link" },
+
+    { "type": "text", "id": "collection_heading", "label": "Collection heading" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+
+    { "type": "header", "content": "Type filters (check one or more for OR matching)" },
+    { "type": "checkbox", "id": "type_engagement_ring", "label": "Engagement Ring", "default": false },
+    { "type": "checkbox", "id": "type_wedding_band", "label": "Wedding Band", "default": false },
+    { "type": "checkbox", "id": "type_womens_wedding_band", "label": "Women's Wedding Band", "default": false },
+    { "type": "checkbox", "id": "type_fashion_ring", "label": "Fashion Ring", "default": false },
+    { "type": "checkbox", "id": "type_ring", "label": "Ring", "default": false },
+
+    { "type": "checkbox", "id": "type_earring", "label": "Earring", "default": false },
+    { "type": "checkbox", "id": "type_gold_earring", "label": "Gold Earring", "default": false },
+    { "type": "checkbox", "id": "type_diamond_earring", "label": "Diamond Earring", "default": false },
+    { "type": "checkbox", "id": "type_gem_earring", "label": "Gem Earring", "default": false },
+
+    { "type": "checkbox", "id": "type_bracelet", "label": "Bracelet", "default": false },
+    { "type": "checkbox", "id": "type_bangle", "label": "Bangle", "default": false },
+
+    { "type": "checkbox", "id": "type_necklace", "label": "Necklace", "default": false },
+    { "type": "checkbox", "id": "type_pendant", "label": "Pendant", "default": false },
+
+    { "type": "checkbox", "id": "type_watch", "label": "Watch", "default": false },
+
+    { "type": "text", "id": "col_text", "label": "Collection link text" }
+  ],
+  "presets": [
+    { "name": "Custom featured product" }
+  ]
+}
+{% endschema %}

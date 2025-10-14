@@ -1,0 +1,360 @@
+<div class="m-landing-testi">
+  <h4>{{ section.settings.subheading }}</h4>
+  <h2>{{ section.settings.heading }}</h2>
+
+  <div class="m-landing-testi-slider">
+    {% for block in section.blocks %}
+      <div class="m-landing-testi-block">
+        <div class="m-landing-testi-photo-wrap">
+          {% if block.settings.image %}
+            <img
+              class="m-landing-testi-photo"
+              src="{{ block.settings.image | image_url: width: 200 }}"
+              srcset="{{ block.settings.image | image_url: width: 100 }} 1x, {{ block.settings.image | image_url: width: 200 }} 2x"
+              sizes="100px"
+              alt="{{ block.settings.name | escape }} headshot"
+              loading="lazy"
+              width="100"
+              height="100"
+            >
+          {% else %}
+            <div class="m-landing-testi-photo m-landing-testi-photo--placeholder" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="40" height="40" role="img" focusable="false">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 20a8 8 0 0 1 16 0"></path>
+              </svg>
+            </div>
+          {% endif %}
+        </div>
+        <div class="m-landing-testi-des">
+          <p>{{ block.settings.review }}</p>
+
+          <div class="m-landing-testi-des-bottom">
+            <div class="m-landing-testi-des-bottom-left">
+              <h3>{{ block.settings.name }}</h3>
+              {% comment %} <h4>{{ block.settings.job }}</h4> {% endcomment %}
+            </div>
+
+            <div class="m-landing-testi-des-bottom-image">
+              <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="26.6667" cy="27.027" r="26.6667" fill="#3E3D40"/>
+                <g clip-path="url(#clip0_638_2130)">
+                <path d="M37.3285 23.1644C37.3285 23.162 37.3288 23.1595 37.3288 23.1571C37.3288 20.2075 35.0552 17.8164 32.2505 17.8164C29.4457 17.8164 27.1722 20.2074 27.1722 23.1571C27.1722 26.1068 29.446 28.4978 32.2505 28.4978C32.8269 28.4978 33.3787 28.3921 33.895 28.206C32.7524 35.099 27.6412 39.5443 32.3792 35.8857C37.633 31.8288 37.3344 23.3201 37.3285 23.1644Z" fill="white"/>
+                <path d="M21.0784 28.4978C21.6548 28.4978 22.2066 28.3921 22.7231 28.2059C21.5803 35.0989 16.4691 39.5442 21.2071 35.8857C26.4609 31.8288 26.1623 23.3201 26.1564 23.1644C26.1564 23.162 26.1567 23.1595 26.1567 23.1571C26.1567 20.2075 23.8831 17.8164 21.0784 17.8164C18.2736 17.8164 16.0001 20.2074 16.0001 23.1571C16.0001 26.1068 18.2739 28.4978 21.0784 28.4978Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_638_2130">
+                <rect width="21.3333" height="22.4355" fill="white" transform="translate(16 16.29)"/>
+                </clipPath>
+                </defs>
+              </svg>
+            </div>          
+          </div>
+          
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.m-landing-testi-section {
+  width: 100%;
+  padding-top: 85px;
+  padding-bottom: 85px;
+  background: #fff;
+}
+.m-landing-testi {
+  width: 100%;
+}
+.m-landing-testi>h4 {
+  color: #2E2E2E;
+  /* Caption/AllCaps/Semibold */
+  font-family: Montserrat;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%; /* 16.5px */
+  font-variant: all-small-caps;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0 20px;
+}
+.m-landing-testi>h2 {
+  color: #2E2E2E;
+    /* Heading/Extra Large */
+    font-family: Legitima;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 64px */
+    text-align: center;
+    margin: 0;
+    margin-bottom: 35px;
+    padding: 0 20px;
+}
+.m-landing-testi-slider {
+    
+}
+.m-landing-testi-block {
+	border-radius: 13.333px;
+	border: 1.333px solid #C2B7A4;
+	padding: 32px;
+	display: inline-flex !important;
+	align-items: center;
+	gap: 32px;
+    max-width: 670px;
+    margin-right: 40px;
+}
+.m-landing-testi-block>img {
+	width: 100px;
+	height: 100px;
+	flex-shrink: 0;
+	background: fill: rgba(0, 0, 0, 0.20);
+	display: block;
+}
+.m-landing-testi-des {
+	width: calc(100% - 132px);
+}
+.m-landing-testi-des>p {
+	color: #878787;
+	font-family: Montserrat;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 140%;
+	letter-spacing: 0.5px;
+	margin: 0;
+	margin-bottom: 16px;
+}
+.m-landing-testi-des-bottom {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	justify-content: space-between;
+}
+.m-landing-testi-des-bottom-left {
+	display: block;
+}
+.m-landing-testi-des-bottom-left h3 {
+  color: #011010;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: 0.2px;
+  margin: 0;
+  margin-bottom: 5px;
+}
+.m-landing-testi-des-bottom-left h4 {
+	color: #878787;
+	font-family: Montserrat;
+	font-size: 18.667px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 26.667px; /* 142.857% */
+	letter-spacing: 0.8px;
+	margin: 0;
+    text-align: left;
+}
+.m-landing-testi-des-bottom-image svg {
+	display: block;
+	fill: #3E3D40;
+	width: 50px;
+}
+.m-landing-testi-slider .slick-track
+{
+    display: flex !important;
+}
+.m-landing-testi-slider .slick-slide
+{
+    height: inherit !important;
+}
+.m-landing-testi-photo-wrap{
+  width:100px;
+  height:100px;
+  flex-shrink:0;
+  border-radius:50%;
+  overflow:hidden;                /* keeps the image perfectly circular */
+  {% comment %} background-color: rgba(60,60,60,0.20); /* ~20% mid gray */ {% endcomment %}
+  display:flex;                   /* centers placeholder svg */
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08) inset; /* subtle ring */
+  background: #78686F;
+}
+
+/* Image fills wrapper; apply requested opacity */
+.m-landing-testi-photo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  opacity:0.6;        /* set as requested; adjust if you want stronger/softer */
+}
+
+/* Placeholder inherits wrapper bg and stays centered */
+.m-landing-testi-photo--placeholder{
+  color: rgba(0,0,0,0.35);
+}
+
+@media only screen and (max-width: 1600px) {
+    .m-landing-testi>h2 {
+        font-size: 48px;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .m-landing-testi-section {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .m-landing-testi-photo-wrap{
+      width:100px;
+      height:100px;
+    }
+    .m-landing-testi {
+        width: 100%;
+    }
+    .m-landing-testi>h4 {
+        color: #2E2E2E;
+        /* Caption/AllCaps/Semibold */
+        font-family: Montserrat;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 110%; /* 16.5px */
+        font-variant: all-small-caps;
+        text-align: center;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    .m-landing-testi>h2 {
+        color: #2E2E2E;
+        /* Heading/Extra Large */
+        font-family: Legitima;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    .m-landing-testi-slider {
+        
+    }
+    .m-landing-testi-block {
+        padding: 20px;
+        gap: 20px;
+        max-width: 300px;
+        margin-right: 20px;
+        flex-direction: column;
+    }
+    .m-landing-testi-block>img {
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        background: fill: rgba(0, 0, 0, 0.20);
+        display: block;
+    }
+    .m-landing-testi-des {
+        width: 100%;
+    }
+    .m-landing-testi-des>p {
+        font-size: 16px;
+        line-height: 140%;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+    }
+    .m-landing-testi-des-bottom {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: space-between;
+    }
+    .m-landing-testi-des-bottom-left {
+        display: block;
+    }
+    .m-landing-testi-des-bottom-left h3 {
+        font-size: 18px;
+        line-height: 150%;
+        letter-spacing: 1px;
+        margin: 0;
+        margin-bottom: 5px;
+    }
+    .m-landing-testi-des-bottom-left h4 {
+        font-size: 16px;
+        line-height: 140%;
+        letter-spacing: 0.8px;
+        margin: 0;
+    }
+    .m-landing-testi-des-bottom-image svg {
+        display: block;
+        fill: #3E3D40;
+        width: 40px;
+    }
+}
+</style>
+
+
+<script>
+$(document).ready(function(){
+  $('.m-landing-testi-slider').slick({
+    slidesToScroll: 1,
+    variableWidth: true,
+    infinite: true,
+    arrows: false,
+    dots: true,
+    autoplay: false,
+    autoplaySpeed: 3000,
+    centerMode: true
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Landing page testimonial",
+  "tag": "section",
+  "class": "m-landing-testi-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review text"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing page testimonials"
+    }
+  ]
+}
+{% endschema %}

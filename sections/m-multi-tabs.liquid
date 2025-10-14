@@ -1,0 +1,591 @@
+<div class="m-multi-tabs" data-initial-index="0">
+  <div
+    class="m-multi-tabs__tablist"
+    role="tablist"
+    aria-label="{{ section.settings.heading | default: 'Tabs' | escape }}"
+  >
+    {%- for block in section.blocks -%}
+      {%- assign idx = forloop.index0 -%}
+      <button
+        id="tab-{{ idx }}"
+        class="m-multi-tabs__tab"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-{{ idx }}"
+        tabindex="-1"
+        {{ block.shopify_attributes }}
+      >
+        {{ block.settings.title | escape }}
+      </button>
+    {%- endfor -%}
+  </div>
+
+  <div class="m-multi-tabs__panels">
+    {%- for block in section.blocks -%}
+      {%- assign idx = forloop.index0 -%}
+      <div
+        id="panel-{{ idx }}"
+        class="m-multi-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="tab-{{ idx }}"
+        tabindex="0"
+        hidden
+      >
+        <div class="m-multi-tabs__panel-inner rte">
+          {% if block.type == 'description' %}
+            <div class="m-multi-tabs__panel-inner-content">
+                {{ block.settings.content }}
+
+            <table class="m-product-specs">
+              <tbody>
+              {%- for key_pair in product.metafields.custom -%}
+                {%- assign mf = key_pair[1] -%}
+                {%- if mf and mf != blank -%}
+
+                  {%- assign key = key_pair[0] -%}
+
+                  {%- comment %}
+                    Step 1: Normalize key -> underscores to spaces, add spaces before capitals
+                  {%- endcomment -%}
+                  {%- assign step1 = key | replace: '_', ' ' -%}
+                  {%- assign step2 = step1
+                    | replace: 'A', ' A'
+                    | replace: 'B', ' B'
+                    | replace: 'C', ' C'
+                    | replace: 'D', ' D'
+                    | replace: 'E', ' E'
+                    | replace: 'F', ' F'
+                    | replace: 'G', ' G'
+                    | replace: 'H', ' H'
+                    | replace: 'I', ' I'
+                    | replace: 'J', ' J'
+                    | replace: 'K', ' K'
+                    | replace: 'L', ' L'
+                    | replace: 'M', ' M'
+                    | replace: 'N', ' N'
+                    | replace: 'O', ' O'
+                    | replace: 'P', ' P'
+                    | replace: 'Q', ' Q'
+                    | replace: 'R', ' R'
+                    | replace: 'S', ' S'
+                    | replace: 'T', ' T'
+                    | replace: 'U', ' U'
+                    | replace: 'V', ' V'
+                    | replace: 'W', ' W'
+                    | replace: 'X', ' X'
+                    | replace: 'Y', ' Y'
+                    | replace: 'Z', ' Z'
+                  -%}
+
+                  {%- comment %}
+                    Step 2: Remove consecutive duplicate words (case-insensitive)
+                  {%- endcomment -%}
+                  {%- assign words = step2 | strip | downcase | split: ' ' -%}
+                  {%- assign dedup = '' -%}
+                  {%- assign prev = '' -%}
+                  {%- for w in words -%}
+                    {%- assign word = w | strip -%}
+                    {%- if word != '' and word != prev -%}
+                      {%- assign dedup = dedup | append: word | append: ' ' -%}
+                    {%- endif -%}
+                    {%- assign prev = word -%}
+                  {%- endfor -%}
+
+                  {%- comment %}
+                    Step 3: Title-case each word for display
+                  {%- endcomment -%}
+                  {%- assign final_label = '' -%}
+                  {%- assign parts = dedup | strip | split: ' ' -%}
+                  {%- for p in parts -%}
+                    {%- assign final_label = final_label | append: p | capitalize -%}
+                    {%- unless forloop.last -%}{%- assign final_label = final_label | append: ' ' -%}{%- endunless -%}
+                  {%- endfor -%}
+
+                  {%- comment %}
+                    Step 4: Format value (boolean → Yes/No, else → metafield_text)
+                  {%- endcomment -%}
+                  {%- assign raw_value = mf.value | downcase -%}
+                  {%- if raw_value == 'true' -%}
+                    {%- assign display_value = 'Yes' -%}
+                  {%- elsif raw_value == 'false' -%}
+                    {%- assign display_value = 'No' -%}
+                  {%- else -%}
+                    {%- assign display_value = mf | metafield_text -%}
+                  {%- endif -%}
+
+                  <tr class="product-specs__row">
+                    <td class="product-specs__cell product-specs__cell--label">{{ final_label }}</td>
+                    <td class="product-specs__cell product-specs__cell--value">{{ display_value }}</td>
+                  </tr>
+                {%- endif -%}
+              {%- endfor -%}
+              </tbody>
+            </table>
+
+            </div>
+          {% elsif block.type == 'reviews' %}  
+
+          {% elsif block.type == 'faq' %}  
+            <div class="m-faq">
+
+              {%- comment -%}
+              Find the first collection (among the product’s collections) that has a custom.faq
+              metaobject reference. Then read its JSON array of { question, answer } and render.
+              {%- endcomment -%}
+
+              {%- assign faq_entry = nil -%}
+              {%- for coll in product.collections -%}
+                {%- if coll.metafields.custom.faq and coll.metafields.custom.faq.value -%}
+                  {%- assign faq_entry = coll.metafields.custom.faq.value -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- assign faq_items = blank -%}
+              {%- if faq_entry -%}
+                {%- if faq_entry.items != blank -%}
+                  {%- assign faq_items = faq_entry.items.value -%}
+                {%- elsif faq_entry.faqs != blank -%}
+                  {%- assign faq_items = faq_entry.faqs.value -%}
+                {%- elsif faq_entry.content != blank -%}
+                  {%- assign faq_items = faq_entry.content.value -%}
+                {%- elsif faq_entry.data != blank -%}
+                  {%- assign faq_items = faq_entry.data.value -%}
+                {%- endif -%}
+              {%- endif -%}
+
+              {%- if faq_items and faq_items.size > 0 -%}
+                <div class="faqpage">
+                  {%- for item in faq_items -%}
+                    <div class="m-accordion-wrap">
+                      <div class="m-accordion" id="section{{ forloop.index }}">
+                        {{ item.question }}
+                        <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true" focusable="false">
+                            <path d="M16.0147 32.3913C15.1792 31.5558 15.1792 30.2011 16.0147 29.3656L23.0597 22.3206L16.0147 15.2756C15.1792 14.4401 15.1792 13.0854 16.0147 12.2499C16.8502 11.4144 18.2048 11.4144 19.0404 12.2499L27.5982 20.8078C28.4337 21.6433 28.4337 22.9979 27.5982 23.8334L19.0404 32.3913C18.2048 33.2268 16.8502 33.2268 16.0147 32.3913Z" fill="#69575F"/>
+                          </svg>
+                        </span>
+                      </div>
+                      <div class="container">
+                        <div class="content">
+                          <p>{{ item.answer }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+            </div>
+
+          {% endif %}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ 'jquery_accordion.js' | asset_url }}" defer></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.m-accordion').accordion({
+    defaultOpen: 'section1',
+    cookieName: 'accordion_nav'
+    });
+});
+</script>
+<style>
+.m-faq-section {
+  width: 100%;
+  padding: 50px 40px;
+  background: #fff;
+}
+.m-faq {
+  text-align: left;
+}
+.m-faq .faqpage {
+  max-width: 838px;
+  margin: auto;
+}
+.m-faq h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #594242;
+  text-align: center;
+  font-family: Legitima;
+  font-size: 45px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+}
+.m-faq>p {
+  color: #78686F;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 15px auto;
+}
+.m-faq .m-accordion-wrap {
+  border-bottom: #78686F80 2px solid;
+}
+.m-faq .m-accordion {
+    margin: 0;
+    padding:20px 0;
+    border: none;
+    color: var(--NotBlack, #151515);
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    position:relative;
+    cursor: pointer;
+    padding-right: 40px;
+}
+.m-faq .m-accordion-open {
+    
+}
+.m-faq .m-accordion-open span {
+    display:block;
+    position:absolute;
+    right:3px;
+    top:10px;
+}
+.m-faq .m-accordion-open span svg {
+    transform: rotate(90deg);
+    transition: 0.2s;
+}
+.m-faq .m-accordion-open span {
+}
+.m-faq .m-accordion-close span {
+    display:block;
+    position:absolute;
+    right:3px;
+    top:10px;
+}
+.m-faq .m-accordion-close span svg {
+    transition: 0.2s;
+}
+.m-faq .faqpage div.container {
+    padding:0;
+    margin:0;
+}
+.m-faq .faqpage div.container {
+    max-width:100%;
+}
+.m-faq .faqpage div.content {
+    margin: 0;
+    color: var(--NotBlack, #151515);
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    opacity: 0.6;
+}
+.m-faq .faqpage div.content ul {
+    padding:0;
+    margin:0;
+    padding:3px;
+}
+.m-faq .faqpage div.content p {
+    padding:0;
+    margin:3px 0 10px;
+    padding:3px;
+}
+.m-faq .faqpage div.content ul li {
+    list-style-position:inside;
+    line-height:25px;
+}
+
+@media only screen and (max-width: 749px) {
+  .m-faq-section {
+    padding: 40px 20px;
+  }
+  .m-faq .faqpage {
+    max-width: 100%;
+    margin: auto;
+  }
+  .m-faq h2 {
+    margin-bottom: 15px;
+    font-size: 32px;
+  }
+  .m-faq>p {
+    font-size: 14px;
+    margin: 10px auto;
+  }
+  .m-faq .m-accordion-wrap {
+    border-bottom: #78686F80 1px solid;
+  }
+  .m-faq .m-accordion {
+      padding:20px 0;
+      font-size: 16px;
+  }
+  .m-faq .m-accordion svg {
+      width: 20px;
+  }
+  .m-faq .m-accordion-open span {
+      position:absolute;
+      right:3px;
+      top:10px;
+  }
+  .m-faq .m-accordion-close span {
+      display:block;
+      position:absolute;
+      right:3px;
+      top:10px;
+  }
+  .m-faq .faqpage div.container {
+      padding:0;
+      margin:0;
+  }
+  .m-faq .faqpage div.container {
+      max-width:100%;
+  }
+  .m-faq .faqpage div.content {
+      font-size: 14px;
+  }
+  .m-faq .faqpage div.content ul {
+      padding:0;
+      margin:0;
+      padding:3px;
+  }
+  .m-faq .faqpage div.content p {
+      padding:0;
+      margin:3px 0 10px;
+      padding:3px;
+  }
+  .m-faq .faqpage div.content ul li {
+      list-style-position:inside;
+      line-height:25px;
+  }
+}
+</style>
+<style>
+  .m-multi-tabs-section {
+    margin-top: 62px;
+    background: #FFF;
+  }
+  .m-multi-tabs__tablist {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .m-multi-tabs__tab {
+    padding: 14px 16px;
+    cursor: pointer;
+    font: inherit;
+    width: 50%;
+    color: rgba(21, 21, 21, 0.65);
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 21px */
+    border: none;
+    border-right: 1px solid rgba(21, 21, 21, 0.10);
+    background: var(--Primary-Light, #F8F6F2);
+  }
+  .m-multi-tabs__tablist>.m-multi-tabs__tab:last-child {
+    border-right: none;
+  }
+  .m-multi-tabs__tab[aria-selected="true"] {
+    color: var(--NotBlack, #151515);
+    text-align: center;
+    /* Body/Medium/Semibold */
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 22.4px */
+    border-right: none;
+    background: #fff;
+  }
+  .m-multi-tabs__panel-inner {
+    padding: 50px 40px;
+    max-width: 1000px;
+    text-align: center;
+    margin: auto;
+  }
+  .m-multi-tabs__panels { display: grid; }
+  .m-multi-tabs__panel { min-height: 12rem; padding: .5rem 0; }
+  .m-multi-tabs__panel-inner h3 {
+    color: #151515;
+    text-align: center;
+    font-family: Legitima;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 30px;
+  }
+  .m-multi-tabs__panel-inner-content {
+    color: #151515;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 22.4px */
+    text-align: left;
+  }
+  .m-product-specs { 
+    display: flex;
+    width: 100%;
+    max-width: 496px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-collapse:collapse;
+    margin: auto;
+    margin-top: 50px;
+  }
+  .m-product-specs tbody {
+    width: 100%;
+  }
+  .m-product-specs tbody tr {
+    width: 100%;
+  }
+  .m-product-specs tbody>tr.product-specs__row {
+    background: #fff;
+  }
+  .m-product-specs tbody>tr.product-specs__row:nth-child(even) {
+    background: rgba(248, 246, 242, 0.50);
+  }
+  .m-product-specs tbody td {
+    color: #151515;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 15.6px */
+    padding: 10px 12px;
+    width: 35%;
+    border: 1px solid #15151555;
+    text-transform: capitalize;
+  }
+  .m-product-specs tbody tr>td:last-child {
+    width: 65%;
+  }
+
+  @media only screen and (max-width: 749px) {
+    .m-multi-tabs-section {
+        margin-top: 62px;
+        background: #FFF;
+    }
+    .m-multi-tabs__tablist {
+        display: flex;
+        justify-content: center;
+        gap: 0;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .m-multi-tabs__tab {
+        padding: 12px 10px;
+        width: 50%;
+        font-size: 14px;
+    }
+    .m-multi-tabs__tab[aria-selected="true"] {
+        font-size: 14px;
+    }
+    .m-multi-tabs__panel-inner {
+        padding: 40px 20px;
+        max-width: 100%;
+    }
+    .m-multi-tabs__panel-inner h3 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+    .m-multi-tabs__panel-inner-content {
+        font-size: 14px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const root = document.currentScript.closest('.m-multi-tabs-section').querySelector('.m-multi-tabs');
+    if (!root) return;
+
+    const tabs = Array.from(root.querySelectorAll('.m-multi-tabs__tab'));
+    const panels = Array.from(root.querySelectorAll('.m-multi-tabs__panel'));
+
+    function activate(index) {
+      tabs.forEach((t, i) => {
+        const selected = i === index;
+        t.setAttribute('aria-selected', selected);
+        t.tabIndex = selected ? 0 : -1;
+      });
+      panels.forEach((p, i) => {
+        p.hidden = i !== index;
+      });
+      root.dataset.activeIndex = index;
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => activate(i));
+    });
+
+    activate(0);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom multi tabs",
+  "tag": "section",
+  "class": "m-multi-tabs-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "description",
+      "name": "Description",
+      "settings": [
+        { 
+            "type": "text", 
+            "id": "title", 
+            "label": "Title" 
+        },
+        { "type": "richtext", 
+          "id": "content", 
+          "label": "Content"
+        }
+      ]
+    },
+    {
+        "type": "reviews",
+        "name": "Reviews",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            }
+        ]
+    },
+    {
+        "type": "faq",
+        "name": "FAQs",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            }
+        ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom multi tabs"
+    }
+  ]
+}
+{% endschema %}

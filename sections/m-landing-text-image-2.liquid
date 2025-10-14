@@ -1,0 +1,173 @@
+<div class="m-landing-image-text-2">
+	<div class="m-landing-image-text-2-text">
+		<p>{{ section.settings.description }}</p>
+		<h2>{{ section.settings.heading }}</h2>		
+
+		<a href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
+	</div>
+
+	<div class="m-landing-image-text-2-image"></div>
+</div>
+
+<style>
+.m-landing-image-text-2-section {
+	width: 100%;
+}
+.m-landing-image-text-2 {
+	width: 100%;
+	display: flex;
+	align-items: stretch;
+}
+.m-landing-image-text-2-text {
+	width: 60%;
+	background: var(--Primary-Light, #F8F6F2);
+	padding: 160px 100px;
+    background: var(--Primary-Accent, #78686F);
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.m-landing-image-text-2-text h2 {
+	color: var(--Primary-Light, #F8F6F2);
+	font-family: Legitima;
+	font-size: 55px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 100%; /* 67px */
+	margin: 0;
+	margin-bottom: 40px;
+    max-width: 700px;
+}
+.m-landing-image-text-2-text p {
+	color: var(--Primary-Light, #F8F6F2);
+	font-family: Montserrat;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 148%; /* 50.32px */
+	margin: 0;
+	margin-bottom: 40px;
+    max-width: 666px;
+}
+.m-landing-image-text-2-text a {
+	display: block;
+	text-decoration: none;
+	border-radius: 19.173px;
+	background: var(--Primary-Light, #F8F6F2);
+    color: #78686F;
+	font-family: Montserrat;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 140%; /* 42.276px */
+    width: fit-content;
+    padding: 15px 40px;
+}
+.m-landing-image-text-2-image {
+	display: block !important;
+	width: 40%;
+	background-image: url({{ section.settings.back_image | img_url: 'master' }});
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 657px;
+}
+
+@media only screen and (max-width: 1600px) {
+    .m-landing-image-text-2-text {
+        width: 50%;
+        padding: 60px 40px;
+    }
+    .m-landing-image-text-2-text h2 {
+        font-size: 55px;
+        margin-bottom: 40px;
+    }
+    .m-landing-image-text-2-text p {
+        font-size: 16px;
+        margin-bottom: 40px;
+        max-width: 666px;
+    }
+    .m-landing-image-text-2-text a {
+        border-radius: 19.173px;
+        font-size: 20px;
+        padding: 15px 40px;
+    }
+    .m-landing-image-text-2-image {
+        width: 50%;
+        height: 600px;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+	.m-landing-image-text-2-section {
+		width: 100%;
+	}
+	.m-landing-image-text-2 {
+	 	flex-wrap: wrap;
+	}
+	.m-landing-image-text-2-text {
+		width: 100%;
+		padding: 40px 20px;
+	}
+	.m-landing-image-text-2-text h2 {
+		font-size: 36px;
+		margin-bottom: 30px;
+	}
+	.m-landing-image-text-2-text p {
+		font-size: 18px;
+		margin-bottom: 30px;
+	}
+	.m-landing-image-text-2-text a {
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 140%; /* 42.276px */
+		padding: 15px 40px;
+	}
+	.m-landing-image-text-2-image {
+        order: -1;
+		width: 100%;
+		height: 350px;
+	}
+}
+
+</style>
+
+{% schema %}
+{
+	"name": "Landing page image text 2",
+	"tag": "section",
+	"class": "m-landing-image-text-2-section",
+	"settings": [
+		{
+			"type": "image_picker",
+			"id": "back_image",
+			"label": "Background image"
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading"
+		},
+		{
+			"type": "richtext",
+			"id": "description",
+			"label": "Description"
+		},
+        {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button text"
+        },
+        {
+            "type": "url",
+            "id": "btn_link",
+            "label": "Button link"
+        }
+	],
+    "presets": [
+        {
+            "name": "Landing page image text 2"
+        }
+    ]
+}
+{% endschema %}

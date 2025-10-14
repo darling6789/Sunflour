@@ -1,0 +1,106 @@
+<div class="m-footer-icons">
+    {% for block in section.blocks %}
+        <a class="m-footer-icon-wrap" href="{{ block.settings.link }}" target="_blank">
+            <img class="m-footer-icon" src="{{ block.settings.image | img_url: 'master' }}">
+        </a>
+    {% endfor %}
+</div>
+
+<style>
+.m-footer-icons-section {
+    background: #151515;
+    padding: 15px 40px 20px;
+}
+.m-footer-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+}
+.m-footer-icon-wrap {
+    line-height: 0;
+    display: block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-decoration: none;
+    line-height: 0;
+}
+.m-footer-icon {
+    display: block;
+    max-height: 50px;
+    width: auto;
+}
+
+@media only screen and (max-width: 1440px) {
+    .m-footer-icons-section {
+        background: #151515;
+        padding: 11px 40px 15px;
+    }
+    .m-footer-icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 20px;
+    }
+    .m-footer-icon-wrap {
+        line-height: 0;
+        display: block;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-decoration: none;
+        line-height: 0;
+    }
+    .m-footer-icon {
+        display: block;
+        max-height: 37.5px;
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .m-footer-icons-section {
+        padding: 15px 20px;
+    }
+    .m-footer-icon-wrap {
+        padding: 0;
+    }
+}
+
+</style>
+
+{% schema %}
+{
+    "name": "Custom footer icons",
+    "class": "m-footer-icons-section",
+    "tag": "section",
+    "settings": [
+    ],
+    "blocks": [
+        {
+            "type": "icon",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Custom footer icons"
+        }
+    ]
+}
+{% endschema %}

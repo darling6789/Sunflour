@@ -1,0 +1,417 @@
+<div class="m-services">
+  <div class="m-services-des">
+    <h2 id="service-title">
+      {{ shop.metaobjects.services['watch-repair'].title }} Services
+    </h2>
+    <div id="service-content">
+      {{ shop.metaobjects.services['watch-repair'].content | metafield_tag }}
+    </div>
+  </div>
+
+  <div class="m-services-form">
+    <h3 id="form-heading">
+      Schedule Appointment for {{ shop.metaobjects.services['watch-repair'].title }}
+    </h3>
+
+    <div class="m-services-form-container">
+      <!-- Service Dropdown -->
+      <div class="form-field">
+        <label for="service-select">Service Type</label>
+        <select id="service-select">
+          {% for service in shop.metaobjects.services.values %}
+            <option value="{{ service.system.handle }}"
+              {% if service.system.handle == 'watch-repair' %}selected{% endif %}>
+              {{ service.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Desired Date & Time -->
+      <div class="form-field">
+        <label for="appointment-date">Desired Date &amp; Time</label>
+        <input type="datetime-local" id="appointment-date" name="contact[appointment_date]">
+      </div>
+
+      <!-- Contact Form -->
+      <form method="post" action="/contact#contact_form">
+        <div class="form-field">
+          <label for="first_name">First Name</label>
+          <input type="text" id="first_name" name="contact[first_name]" placeholder="First Name" required>
+        </div>
+
+        <div class="form-field">
+          <label for="last_name">Last Name</label>
+          <input type="text" id="last_name" name="contact[last_name]" placeholder="Last Name" required>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="contact[email]" placeholder="Email Address" required>
+        </div>
+
+        <div class="form-field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="contact[phone]" placeholder="Phone Number">
+        </div>
+
+        <div class="form-field">
+          <label for="service_request">Service Request</label>
+          <textarea id="service_request" name="contact[body]" rows="3" placeholder="I am interested in watch repairs services and would like to setup an appointment."></textarea>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+.m-services-section {
+	background-color: {{ section.settings.back_color }};
+	padding: 50px 150px;
+	width: 100%;
+}
+.m-services {
+	max-width: 1140px;
+	margin: auto;
+	display: flex;
+	gap: 100px;
+	align-items: flex-start;
+}
+.m-services-des {
+	width: calc(100% - 492px);
+}
+.m-services-des h2 {
+	color: #000;
+	text-align: center;
+	/* Heading/Large */
+	font-family: Legitima;
+	font-size: 44px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 100%; /* 44px */
+	margin: 0;
+	margin-bottom: 24px;
+}
+.m-services-des #service-content {
+	width: 100%;
+	color: #000;
+	font-family: Montserrat;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 140%; /* 19.6px */
+	margin: 0;
+}
+.m-services-form {
+	width: 440px;
+	padding: 0 32px;
+}
+.m-services-form h3 {
+	max-width: 252px;
+	color: var(--sds-color-text-brand-on-brand-tertiary);
+	text-align: center;
+	/* Heading/Small */
+	font-family: Legitima;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 110%; /* 26.4px */
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+.m-services-form-container {
+	width: 100%;
+	display: flex;
+	min-width: 320px;
+	padding: 24px 24px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+}
+.m-services-form-container .form-field {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+}
+.m-services-form-container form {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+}
+.m-services-form-container label {
+	color: var(--sds-color-text-default-default);
+	/* Heading/Extra Small */
+	font-family: Legitima;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 110%; /* 22px */
+}
+.m-services-form-container select, .m-services-form-container input, .m-services-form-container textarea {
+	color: var(--sds-color-text-default-default);
+	/* Body/Less Small */
+	font-family: Montserrat;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%; /* 16.8px */
+    width: 272px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    padding: 12px 16px;
+}
+.m-services-form-container input#appointment-date {
+    width: 100%;
+}
+.m-services-form-container button {
+    min-width: 272px;
+    background: #2c2c2c;
+    border: 1px solid #2c2c2c;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #f5f5f5;
+    /* Button Text/Small */
+    font-family: Montserrat;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 90%; /* 13.5px */
+}
+
+@media only screen and (max-width: 1439px) {
+    .m-services-section {
+        padding: 40px 40px;
+        width: 100%;
+    }
+    .m-services {
+        max-width: 100%;
+        margin: auto;
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+    }
+    .m-services-des {
+        width: calc(100% - 400px);
+    }
+    .m-services-des h2 {
+        color: #000;
+        text-align: center;
+        /* Heading/Large */
+        font-family: Legitima;
+        font-size: 34px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%; /* 44px */
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    .m-services-des #service-content {
+        width: 100%;
+        color: #000;
+        font-family: Montserrat;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%; /* 19.6px */
+        margin: 0;
+    }
+    .m-services-form {
+        width: 440px;
+        padding: 0 0px;
+    }
+    .m-services-form h3 {
+        max-width: 252px;
+        color: var(--sds-color-text-brand-on-brand-tertiary);
+        text-align: center;
+        /* Heading/Small */
+        font-family: Legitima;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 110%; /* 26.4px */
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+    .m-services-form-container {
+        width: 100%;
+        display: flex;
+        min-width: 320px;
+        padding: 24px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        border-radius: 8px;
+        border: 1px solid #d9d9d9;
+        background: #fff;
+    }
+    .m-services-form-container .form-field {
+        display: grid;
+        gap: 8px;
+        width: 100%;
+    }
+    .m-services-form-container form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .m-services-form-container label {
+        color: var(--sds-color-text-default-default);
+        /* Heading/Extra Small */
+        font-family: Legitima;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 110%; /* 22px */
+    }
+    .m-services-form-container select, .m-services-form-container input, .m-services-form-container textarea {
+        color: var(--sds-color-text-default-default);
+        /* Body/Less Small */
+        font-family: Montserrat;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%; /* 16.8px */
+        width: 272px;
+        border-radius: 8px;
+        border: 1px solid #d9d9d9;
+        background: #fff;
+        padding: 12px 16px;
+    }
+    .m-services-form-container input#appointment-date {
+        width: 100%;
+    }
+    .m-services-form-container button {
+        min-width: 272px;
+        background: #2c2c2c;
+        border: 1px solid #2c2c2c;
+        border-radius: 8px;
+        padding: 12px 16px;
+        color: #f5f5f5;
+        /* Button Text/Small */
+        font-family: Montserrat;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 90%; /* 13.5px */
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .m-services-section {
+        padding: 40px 20px;
+    }
+    .m-services {
+        gap: 40px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+    .m-services-des {
+        width: 100%;
+    }
+    .m-services-des h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+    .m-services-des #service-content {
+        font-size: 14px;
+        margin: 0;
+    }
+    .m-services-form {
+        margin: auto;
+        width: 440px;
+        padding: 0 0px;
+    }
+    .m-services-form h3 {
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+    .m-services-form-container {
+        min-width: 320px;
+        padding: 20px 20px;
+        gap: 16px;
+        border-radius: 8px;
+    }
+    .m-services-form-container .form-field {
+        display: grid;
+        gap: 8px;
+        width: 100%;
+    }
+    .m-services-form-container form {
+        gap: 16px;
+    }
+    .m-services-form-container label {
+        font-size: 16px;
+    }
+    .m-services-form-container select, .m-services-form-container input, .m-services-form-container textarea {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+    .m-services-form-container button {
+        min-width: 272px;
+        padding: 10px 12px;
+        color: #f5f5f5;
+        /* Button Text/Small */
+        font-size: 14px;
+        line-height: 90%; /* 13.5px */
+    }
+}
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const select = document.getElementById("service-select");
+    const title = document.getElementById("service-title");
+    const content = document.getElementById("service-content");
+    const formHeading = document.getElementById("form-heading");
+
+    // Store metaobject data in JSON
+    const services = {
+      {% for service in shop.metaobjects.services.values %}
+        "{{ service.system.handle }}": {
+          "title": {{ service.title | json }},
+          "content": {{ service.content | metafield_tag | json }}
+        },
+      {% endfor %}
+    };
+
+    select.addEventListener("change", function() {
+      const selected = this.value;
+      if (services[selected]) {
+        title.textContent = services[selected].title + " Services";
+        content.innerHTML = services[selected].content; // rich text preserved
+        formHeading.textContent = "Schedule Appointment for " + services[selected].title;
+      }
+    });
+  });
+</script>
+
+
+{% schema %}
+{
+    "name": "Services",
+    "tag": "section",
+    "class": "m-services-section",
+    "settings": [
+        {
+            "id": "back_color",
+            "type": "color",
+            "label": "Background color"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Services"
+        }
+    ]
+}
+{% endschema %}

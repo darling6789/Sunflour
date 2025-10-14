@@ -1,0 +1,179 @@
+<div class="m-image-back">
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.description }}</p>
+    <a class="m-btn" href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
+</div>
+
+<style>
+#shopify-section-{{ section.id }}.m-image-back-section {
+    width: 100%;
+    background-image: url({{ section.settings.image | img_url: 'master' }});
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 118px 106px;
+    height: 800px;
+}
+.m-image-back {
+    display: block;
+    width: fit-content;
+    padding: 40px;
+    background-color: #00000050;
+    background-blend-mode: color;
+}
+.m-image-back h2 {
+    color: var(--Primary-Light, #F8F6F2);
+    /* Heading/Large */
+    font-family: Legitima;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 44px */
+    margin: 0;
+    margin-bottom: 30px;
+}
+.m-image-back p {
+    color: var(--Primary-Light, #F8F6F2);
+    /* Body/Medium/Regular */
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 22.4px */
+    margin: 0;
+    margin-bottom: 30px;
+    max-width: 620px;
+}
+.m-image-back a.m-btn {
+    text-decoration: none;
+    display: block;
+    width: fit-content;
+    max-width: var(--width-275, 275px);
+    min-height: var(--height-50, 50px);
+    padding: 13px 25px;
+    color: var(--Primary-Light, #F8F6F2);
+    text-align: center;
+    font-family: var(--font-family-Font-2, Montserrat);
+    font-size: 15.4px;
+    font-style: normal;
+    font-weight: var(--font-weight-500, 500);
+    line-height: 23px; /* 149.351% */
+    border-radius: 1.6px;
+    border: var(--stroke-weight-1, 1px) solid #FFF;
+}
+
+@media only screen and (max-width: 1440px) {
+    #shopify-section-{{ section.id }}.m-image-back-section {
+
+    }
+    .m-image-back {
+        display: block;
+    }
+    .m-image-back h2 {
+        font-size: 34px;
+    }
+    .m-image-back p {
+        font-size: 14px;
+    }
+    .m-image-back a.m-btn {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    #shopify-section-{{ section.id }}.m-image-back-section {
+        padding: 40px 30px;
+        height: 500px;
+    }
+    .m-image-back {
+        display: block;
+    }
+    .m-image-back h2 {
+        font-size: 34px;
+        margin-bottom: 30px;
+    }
+    .m-image-back p {
+        font-size: 14px;
+        margin-bottom: 30px;
+        max-width: 620px;
+    }
+    .m-image-back a.m-btn {
+        display: block;
+        max-width: var(--width-275, 275px);
+        min-height: var(--height-50, 50px);
+        padding: 12px 15px;
+        font-size: 15px;
+        line-height: 120%;
+        border-radius: 1px;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }}.m-image-back-section {
+        padding: 40px 20px;
+        height: unset;
+    }
+    .m-image-back {
+        display: block;
+        padding: 20px;
+    }
+    .m-image-back h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+    .m-image-back p {
+        font-size: 16px;
+        margin-bottom: 20px;
+        max-width: 620px;
+        width: 100%;
+    }
+    .m-image-back a.m-btn {
+        max-width: var(--width-275, 275px);
+        min-height: var(--height-50, 50px);
+        padding: 12px 15px;
+        font-size: 15px;
+        line-height: 120%;
+        border-radius: 1px;
+    }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Custom image background",
+  "class": "m-image-back-section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button text"
+    },
+    {
+       "type": "url",
+       "id": "btn_link",
+       "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom image background"
+    }
+  ]
+}
+{% endschema %}

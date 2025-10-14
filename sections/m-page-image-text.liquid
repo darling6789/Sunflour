@@ -1,0 +1,126 @@
+<div class="m-page-image-text m-page">
+    <div class="m-page-image-text-text">
+        <h2>{{section.settings.heading }}</h2>
+        <div class="m-page-image-text-text-content">{{ section.settings.content }}</div>
+    </div>
+    <div class="m-page-image-text-image">
+        <img src="{{ section.settings.image | img_url: 'master' }}">
+    </div>
+</div>
+
+<style>
+.m-page-image-text-section {
+    width: 100%;
+    padding: 50px 40px;
+    background: #fff;
+}
+.m-page-image-text {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+.m-page-image-text-text {
+    width: calc(50% - 12px);
+}
+.m-page-image-text-text h2 {
+    color: #000;
+    /* Heading/Large */
+    font-family: Legitima;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 44px */
+    margin: 0;
+    margin-bottom: 24px;
+}
+.m-page-image-text-text .m-page-image-text-text-content p {
+    color: #000;
+    /* Body/Large/Regular */
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 25.2px */
+    margin-bottom: 0;
+}
+.m-page-image-text-image {
+    width: calc(50% - 12px);
+    display: block;
+}
+.m-page-image-text-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (max-width: 1440px) {
+    .m-page-image-text-text h2 {
+        font-size: 34px;
+    }
+    .m-page-image-text-text .m-page-image-text-text-content p {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .m-page-image-text-section {
+        width: 100%;
+        padding: 40px 20px;
+    }
+    .m-page-image-text {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .m-page-image-text-text {
+        width: 100%;
+    }
+    .m-page-image-text-text h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+    .m-page-image-text-text .m-page-image-text-text-content p {
+        font-size: 14px;
+    }
+    .m-page-image-text-image {
+        width: 100%;
+        display: block;
+    }
+    .m-page-image-text-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Custom page image text",
+  "tag": "section",
+  "class": "m-page-image-text-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom page image text"
+    }
+  ]
+}
+{% endschema %}

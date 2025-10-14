@@ -1,0 +1,944 @@
+<div id="diamond-search" class="diamond-search">
+    <header class="ds-header">
+        <h2>Choose Your Diamond</h2>
+        <div class="ds-meta" id="dsMeta"></div>
+    </header>
+
+    <div class="diamond-search-wrap">
+        <div class="filters">
+            <div class="pill-toggle" data-name="type" role="tablist" aria-label="Origin">
+                <button role="tab" data-value="lab" class="is-active"><span class="pill">Lab Grown</span></button>
+                <button role="tab" data-value="natural"><span class="pill">Natural</span></button>
+            </div>
+
+            <div class="filter-group" data-name="shape"><h4></h4><div class="filter-items"></div></div>
+            <div class="filter-group" data-name="color"><h4></h4><div class="filter-items"></div></div>
+            <div class="filter-group" data-name="clarity"><h4></h4><div class="filter-items"></div></div>
+            <div class="filter-group" data-name="cut"><h4></h4><div class="filter-items"></div></div>
+
+            <div class="ranges">
+                <!-- CARAT -->
+                <div class="range" id="caratRange" aria-label="Carat range">
+                    <label>Carat</label>
+                    <div class="range-controls">
+                    <input class="range-input min" type="number" step="0.01" value="0.25" data-name="caratMin" aria-label="Min carat">
+                    <div class="range-slider-wrap">
+                        <input class="range-slider min" type="range" min="0" max="10" step="0.01" value="0.25" aria-label="Carat slider min">
+                        <input class="range-slider max" type="range" min="0" max="10" step="0.01" value="10" aria-label="Carat slider max">
+                        <div class="range-track"></div>
+                    </div>
+                    <input class="range-input max" type="number" step="0.01" value="10" data-name="caratMax" aria-label="Max carat">
+                    </div>
+                </div>
+
+                <!-- PRICE -->
+                <div class="range" id="priceRange" aria-label="Price range">
+                    <label>Price</label>
+                    <div class="range-controls">
+                    <input class="range-input min" type="number" step="50" value="200" data-name="priceMin" aria-label="Min price">
+                    <div class="range-slider-wrap">
+                        <input class="range-slider min" type="range" min="0" max="100000" step="50" value="200" aria-label="Price slider min">
+                        <input class="range-slider max" type="range" min="0" max="100000" step="50" value="100000" aria-label="Price slider max">
+                        <div class="range-track"></div>
+                    </div>
+                    <input class="range-input max" type="number" step="50" value="100000" data-name="priceMax" aria-label="Max price">
+                    </div>
+                </div>
+            </div>
+
+            <button id="apply">Apply filters</button>
+        </div>
+        <div class="results">
+              <div class="results-bar">
+                <div class="results-meta"><span id="pageInfo"></span></div>
+                <div class="results-sort">
+                <label for="sort">Sort by</label>
+                <select id="sort">
+                    <option value="priceAsc">Price ↑</option>
+                    <option value="priceDesc">Price ↓</option>
+                    <option value="caratDesc">Carat ↓</option>
+                    <option value="caratAsc">Carat ↑</option>
+                    <option value="newest">Newest</option>
+                </select>
+                </div>
+            </div>
+
+            <div id="grid" class="grid"></div>
+            <div class="pager">
+                <button id="prev">Prev</button>
+                <span id="pageInfo"></span>
+                <button id="next">Next</button>
+            </div>
+            <div id="error" class="error" hidden></div>
+        </div>
+    </div>
+</div>
+
+<style>
+.diamond-search-section {
+    width: 100%;
+    padding: 100px 100px;
+}
+/* ====== Design tokens aligned to your collection section ====== */
+#shopify-section-{{ section.id }} #diamond-search {
+  --m-font-heading: Legitima, serif;
+  --m-font-body: Montserrat, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --m-text: #333;
+  --m-muted: #666;
+  --m-line: #e6e6e6;
+  --m-soft: #f7f7f7;
+  --m-accent: #69575f;
+  --m-accent-strong: #4f4146;
+  --m-radius: 10px;
+}
+#shopify-section-{{ section.id }} #diamond-search .diamond-search-wrap {
+  display: flex;
+  gap: 40px;
+}
+
+/* Typography align */
+#shopify-section-{{ section.id }} #diamond-search .ds-header h2 { 
+  font-family: var(--m-font-heading);
+  font-size: 44px;
+}
+#shopify-section-{{ section.id }} #diamond-search,
+#shopify-section-{{ section.id }} #diamond-search * {
+  font-family: var(--m-font-body);
+  color: var(--m-text);
+}
+
+/* ====== Filters panel visuals ====== */
+#shopify-section-{{ section.id }} #diamond-search .filters{
+  background: var(--m-soft);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-radius);
+  padding: 22px;
+  width: 30%;
+}
+
+/* Section meta text under title */
+#shopify-section-{{ section.id }} #diamond-search .ds-meta{
+  color: var(--m-muted);
+  font-size: 12px;
+}
+
+/* Sub-heads inside filter groups */
+#shopify-section-{{ section.id }} #diamond-search .filter-group h4{
+  color: var(--m-muted);
+  font-size: 12px;
+  font-weight: 600;
+  margin: 14px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Origin pills */
+#shopify-section-{{ section.id }} #diamond-search .pill-toggle{
+  display: flex; gap: 10px; margin-bottom: 12px;
+}
+#shopify-section-{{ section.id }} #diamond-search .pill-toggle button{ all: unset; cursor: pointer; }
+#shopify-section-{{ section.id }} #diamond-search .pill{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding: 7px 12px; border:1px solid var(--m-line); border-radius: 999px;
+  background:#fff; color: var(--m-muted); font-size: 12px;
+}
+#shopify-section-{{ section.id }} #diamond-search .pill-toggle button.is-active .pill{
+  color:#fff; background: var(--m-accent); border-color: var(--m-accent);
+}
+
+/* structure helpers for the new facet markup */
+#shopify-section-{{ section.id }} #diamond-search .filter-group {
+  border-top: 1px dashed var(--m-line);
+  padding-top: 12px;
+  margin-top: 10px;
+}
+#shopify-section-{{ section.id }} #diamond-search .filter-group h4 {
+  color: var(--m-muted);
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+#shopify-section-{{ section.id }} #diamond-search .filter-group .filter-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+#shopify-section-{{ section.id }} #diamond-search .filter-group .check {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+#shopify-section-{{ section.id }} #diamond-search .filter-group .check input {
+  width: 18px; height: 18px; accent-color: var(--m-accent);
+}
+
+#shopify-section-{{ section.id }} #diamond-search .ranges span{ align-self:center; color: var(--m-muted); font-size: 12px; }
+
+/* Sort */
+#shopify-section-{{ section.id }} #diamond-search .sort{ margin: 12px 0 8px; }
+#shopify-section-{{ section.id }} #diamond-search .sort label{ display:block; margin-bottom:6px; color: var(--m-muted); font-size:12px; }
+#shopify-section-{{ section.id }} #diamond-search .sort select{
+  width:100%; max-width:240px;
+  padding:10px 12px; border:1px solid var(--m-line); border-radius: 8px; background:#fff; font-size: 13px;
+}
+
+/* Apply button */
+#shopify-section-{{ section.id }} #diamond-search #apply{
+  width:100%; margin-top: 12px;
+  padding: 12px 16px; border-radius: 8px;
+  border:1px solid var(--m-accent); background: var(--m-accent);
+  color:#fff; font-weight:600; font-size: 13px; cursor:pointer; transition:.15s;
+
+  max-width: 240px;
+  display: block;
+  margin-bottom: 40px;
+}
+#shopify-section-{{ section.id }} #diamond-search #apply:hover{
+  background: var(--m-accent-strong); border-color: var(--m-accent-strong);
+}
+
+/* ====== Grid & cards ====== */
+#shopify-section-{{ section.id }} #diamond-search .grid{
+  display:grid; gap: 18px;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
+
+#shopify-section-{{ section.id }} #diamond-search .results {
+    width: calc(70% - 40px);
+}
+#shopify-section-{{ section.id }} .results .results-bar{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 12px;
+}
+#shopify-section-{{ section.id }} .results .results-meta{ color:#666; font-size:12px; }
+#shopify-section-{{ section.id }} .results .results-sort{ display:flex; align-items:center; gap:8px; }
+#shopify-section-{{ section.id }} .results .results-sort label{ color:#666; font-size:12px; }
+#shopify-section-{{ section.id }} .results .results-sort select{
+  padding:10px 12px; border:1px solid #e6e6e6; border-radius:8px; background:#fff; font-size:13px;
+}
+@media (min-width:1441px){
+  #shopify-section-{{ section.id }} #diamond-search .grid{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+}
+@media (max-width:1024px){
+  #shopify-section-{{ section.id }} #diamond-search .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width:749px){
+  #shopify-section-{{ section.id }} #diamond-search .grid{ grid-template-columns: 1fr; }
+  #shopify-section-{{ section.id }} #diamond-search .diamond-search-wrap {
+    flex-wrap: wrap;
+  }
+  #shopify-section-{{ section.id }} #diamond-search .diamond-search-wrap .filters {
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} #diamond-search .diamond-search-wrap .results {
+    width: 100%;
+  }
+}
+#shopify-section-{{ section.id }} #diamond-search .diamond-search-wrap {
+    flex-wrap: wrap;
+}
+
+#shopify-section-{{ section.id }} #diamond-search .card{
+  border:1px solid var(--m-line); border-radius: 8px; background:#fff;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .thumb{
+  aspect-ratio: 1 / 1; background:#f2f2f2;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .thumb img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .meta{
+  padding: 10px 12px 0 12px;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .meta .line{
+  color: var(--m-muted); font-size: 12px; margin: 2px 0;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .price{
+  font-size: 12px; font-weight: 600; color: var(--m-text); margin-top: 6px;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .actions{
+  display:flex; align-items:center; gap:10px;
+  padding: 10px 12px 12px; margin-top:auto;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding: 9px 12px; border-radius: 8px; text-decoration:none;
+  background: var(--m-text); color:#fff; font-weight:600; font-size:12px;
+}
+#shopify-section-{{ section.id }} #diamond-search .card .btn:hover{ background: var(--m-accent); }
+#shopify-section-{{ section.id }} #diamond-search .card .link{
+  color: var(--m-accent); font-size:12px; text-decoration: underline;
+}
+
+/* ====== Pager & error ====== */
+#shopify-section-{{ section.id }} #diamond-search .pager{
+  display:flex; align-items:center; justify-content:center; gap:12px; margin-top: 16px;
+}
+#shopify-section-{{ section.id }} #diamond-search .pager button{
+  border:1px solid var(--m-line); background:#fff; color:var(--m-text);
+  padding: 9px 12px; border-radius:8px; font-size: 13px; cursor:pointer;
+}
+#shopify-section-{{ section.id }} #diamond-search .pager button[disabled]{ opacity:.45; cursor:not-allowed; }
+#shopify-section-{{ section.id }} #diamond-search #pageInfo{ color: var(--m-muted); font-size: 12px; }
+
+#shopify-section-{{ section.id }} #diamond-search .error{
+  margin-top: 10px; color:#a40000; background:#fff1f1; border:1px solid #ffd9d9;
+  border-radius: 8px; padding: 10px 12px; font-size: 13px;
+}
+
+/* ====== Responsive tweaks to match your breakpoints ====== */
+@media only screen and (max-width: 1440px) {
+  .diamond-search-section {
+    padding: 40px 40px;
+  }
+  #shopify-section-{{ section.id }} #diamond-search .ds-header h2 { font-size: 34px; }
+}
+@media only screen and (max-width: 990px) {
+  .diamond-search-section {
+    padding: 40px 20px;
+  }
+  /* you already set wrap & widths in your CSS; we only adjust paddings if needed */
+  #shopify-section-{{ section.id }} #diamond-search .filters { padding: 18px; }
+}
+
+/* --- placeholder for items without images --- */
+#shopify-section-{{ section.id }} #diamond-search .card .thumb {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #f2f2f2;
+}
+
+#shopify-section-{{ section.id }} #diamond-search .card .thumb .no-image {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 14px;
+  color: #8a8a8a;
+  font-size: 12px;
+  line-height: 1.2;
+  border: 1px dashed var(--m-line);
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #fafafa, #fafafa 12px,
+      #f6f6f6 12px, #f6f6f6 24px
+    );
+}
+
+#shopify-section-{{ section.id }} #diamond-search .card .thumb .no-image::before {
+  content: "";
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  border-radius: 4px;
+  border: 2px solid #cfcfcf;
+  display: inline-block;
+  background:
+    linear-gradient(135deg, transparent 0 45%, #cfcfcf 45% 55%, transparent 55% 100%);
+  /* sits next to the text on narrow screens too */
+}
+
+/* shows the label whenever we swapped to the placeholder */
+#shopify-section-{{ section.id }} #diamond-search .thumb.no-image .no-img-label{
+  display:block;
+}
+#shopify-section-{{ section.id }} #diamond-search .thumb .no-img-label { display: none; }
+/* Dual range base */
+#shopify-section-{{ section.id }} #diamond-search .ranges {
+  display: grid; gap: 16px; margin: 12px 0 16px;
+}
+#shopify-section-{{ section.id }} #diamond-search .range label {
+  display:block; margin-bottom:8px; color: var(--m-muted); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+}
+#shopify-section-{{ section.id }} #diamond-search .range-controls {
+  display:grid; grid-template-columns: 110px 1fr 110px; gap:10px; align-items:center;
+}
+#shopify-section-{{ section.id }} #diamond-search .range-input {
+  width:100%; padding:10px 12px; border:1px solid var(--m-line); border-radius:8px; background:#fff; font-size:13px;
+}
+
+/* Overlapped sliders */
+#shopify-section-{{ section.id }} #diamond-search .range-slider-wrap {
+  position:relative; height:36px;
+}
+#shopify-section-{{ section.id }} #diamond-search .range-slider {
+  -webkit-appearance:none; appearance:none;
+  position:absolute; inset:0; width:100%; height:36px; background:transparent; pointer-events:auto;
+}
+#shopify-section-{{ section.id }} #diamond-search .range-track {
+  position:absolute; top:56%; left:0; right:0; height:6px; transform:translateY(-50%);
+  background: linear-gradient(90deg, #e6e6e6 0%, #e6e6e6 100%);
+  border-radius:4px;
+  display: block !important;
+}
+
+/* Slider thumbs (WebKit) */
+#shopify-section-{{ section.id }} #diamond-search .range-slider::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid var(--m-accent);
+  box-shadow:0 0 0 2px #fff; cursor:pointer; position:relative; z-index:2;
+}
+/* Slider thumbs (Firefox) */
+#shopify-section-{{ section.id }} #diamond-search .range-slider::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid var(--m-accent); cursor:pointer;
+}
+
+/* Mobile stack */
+@media (max-width:749px){
+  #shopify-section-{{ section.id }} #diamond-search .range-controls{
+    grid-template-columns: 1fr; gap:8px;
+  }
+}
+
+</style>
+
+
+<script>
+(() => {
+/* =======================
+   Display helpers & maps
+   ======================= */
+const CUT_FULL = {
+  'EX':'Excellent','EXCELLENT':'Excellent',
+  'VG':'Very Good','VERY GOOD':'Very Good',
+  'G':'Good','GOOD':'Good',
+  'F':'Fair','FAIR':'Fair',
+  'P':'Poor','POOR':'Poor',
+  'I':'Ideal','IDEAL':'Ideal',
+  'SUPER IDEAL':'Super Ideal'
+};
+const CUT_CARD = {
+  'EX':'EX','EXCELLENT':'EX',
+  'VG':'VG','VERY GOOD':'VG',
+  'G':'G','GOOD':'G',
+  'F':'F','FAIR':'F',
+  'P':'P','POOR':'P',
+  'I':'Ideal','IDEAL':'Ideal',
+  'SUPER IDEAL':'Super Ideal'
+};
+// Only show these in the Cut filter (order as listed)
+const CUT_FILTER_ALLOWED = ['IDEAL','EX','VG','G'];
+
+const CUT_ORDER = ['SUPER IDEAL','IDEAL','EX','VG','G','F','P'];
+
+const SHAPE_EXCLUDE = new Set(['BAGUETTE','PENTAGONAL','SHIELD','TRAPEZOID','TRILLIANT']);
+// Canonical → source variants; used for filter UI and query expansion
+const SHAPE_ALIASES = {
+  'CUSHION': ['CUSHION','CUSHION BRILLIANT']
+};
+
+const CLARITY_EXCLUDE = new Set(['VS2-SI1','VS-SI1']);
+const COLOR_EXCLUDE = new Set(['VIVID YELLOW']);
+
+const uc = v => (v ?? '').toString().trim().toUpperCase();
+const titleCase = s => (s ?? '').toLowerCase()
+  .split(/[\s_]+/).map(w => w ? w[0].toUpperCase()+w.slice(1) : '').join(' ');
+
+const cutFilterLabel = v => CUT_FULL[uc(v)] || titleCase(v);
+const cutCardLabel   = v => CUT_CARD[uc(v)] || v;
+const shapeLabel     = v => titleCase(v);
+
+/* =======================
+   State & element refs
+   ======================= */
+const API_BASE = '/apps/diamond-search/diamonds/search';
+const state = {
+  page: 1,
+  pageSize: 24,
+  type: 'lab',
+  sort: '',
+  shape: [],
+  color: [],
+  clarity: [],
+  cut: [],
+  caratMin: 0.25, caratMax: 10,
+  priceMin: 200,  priceMax: 100000,
+  facetsLoaded: false
+};
+
+const el = {
+  group: name => document.querySelector(`.filter-group[data-name="${name}"]`),
+  pillToggle: document.querySelector('.pill-toggle[data-name="type"]'),
+  // legacy numeric fields (fallback if sliders not present)
+  caratMin:  document.querySelector('input[data-name="caratMin"]'),
+  caratMax:  document.querySelector('input[data-name="caratMax"]'),
+  priceMin:  document.querySelector('input[data-name="priceMin"]'),
+  priceMax:  document.querySelector('input[data-name="priceMax"]'),
+  // dual range containers (optional)
+  caratRange: document.querySelector('#caratRange'),
+  priceRange: document.querySelector('#priceRange'),
+
+  sort: document.querySelector('#sort'),
+  grid: document.querySelector('#grid'),
+  prev: document.querySelector('#prev'),
+  next: document.querySelector('#next'),
+  pageInfo: document.querySelector('#pageInfo'),
+  apply: document.querySelector('#apply'),
+  error: document.querySelector('#error'),
+};
+
+/* =======================
+   Facet builder & updater
+   ======================= */
+function buildFacet(name, values) {
+  const g = el.group(name);
+  if (!g) return;
+
+  const titleEl = g.querySelector('h4') || (() => {
+    const h = document.createElement('h4'); g.prepend(h); return h;
+  })();
+  titleEl.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+
+  const wrap = g.querySelector('.filter-items') || (() => {
+    const d = document.createElement('div'); d.className = 'filter-items'; g.appendChild(d); return d;
+  })();
+
+  let items = Array.isArray(values) ? values.filter(Boolean) : [];
+
+  if (name === 'cut') {
+    // Normalize & limit to allowed; render in our preferred order
+    const available = new Set(items.map(v => {
+      const k = uc(v);
+      if (k === 'I') return 'IDEAL';
+      return k;
+    }));
+    const toRender = CUT_FILTER_ALLOWED.map(k => ({
+      value: k,
+      label: cutFilterLabel(k),
+      enabled: available.has(k)
+    }));
+    wrap.innerHTML = toRender.map(({value,label,enabled}) => `
+      <label class="check ${enabled ? '' : 'is-disabled'}">
+        <input type="checkbox" value="${value}" ${enabled ? '' : 'disabled'}>
+        <span>${label}</span>
+      </label>
+    `).join('');
+    return;
+  }
+
+  if (name === 'shape') {
+    // Exclude & merge Cushion Brilliant into Cushion
+    const canonSet = new Set();
+    for (const v of items) {
+      const k = uc(v);
+      if (SHAPE_EXCLUDE.has(k)) continue;
+      if (SHAPE_ALIASES['CUSHION'].includes(k)) {
+        canonSet.add('CUSHION');
+      } else {
+        canonSet.add(v);
+      }
+    }
+    const uniq = Array.from(canonSet).sort((a,b) => a.localeCompare(b));
+    wrap.innerHTML = uniq.map(v => {
+      const value = uc(v) === 'CUSHION' ? 'CUSHION' : v; // store Cushion canonically
+      return `
+        <label class="check">
+          <input type="checkbox" value="${value}">
+          <span>${shapeLabel(value)}</span>
+        </label>
+      `;
+    }).join('');
+    return;
+  }
+
+  if (name === 'clarity') {
+    const uniq = Array.from(new Set(items))
+      .filter(v => !CLARITY_EXCLUDE.has(uc(v)))
+      .sort((a,b) => a.localeCompare(b));
+    wrap.innerHTML = uniq.map(v => `
+      <label class="check">
+        <input type="checkbox" value="${v}">
+        <span>${v}</span>
+      </label>
+    `).join('');
+    return;
+  }
+
+  if (name === 'color') {
+    const uniq = Array.from(new Set(items))
+      .filter(v => !COLOR_EXCLUDE.has(uc(v)))
+      .sort((a,b) => a.localeCompare(b));
+    wrap.innerHTML = uniq.map(v => `
+      <label class="check">
+        <input type="checkbox" value="${v}">
+        <span>${v}</span>
+      </label>
+    `).join('');
+    return;
+  }
+
+  // default renderer
+  const uniq = Array.from(new Set(items)).sort((a,b) => a.localeCompare(b));
+  wrap.innerHTML = uniq.map(v => `
+    <label class="check">
+      <input type="checkbox" value="${v}">
+      <span>${v}</span>
+    </label>
+  `).join('');
+}
+
+/** Gray out options with zero availability under current filters */
+function updateFacetAvailability(facets) {
+  // Build available sets by name
+  const avail = {
+    shape: new Set(),
+    cut: new Set(),
+    color: new Set(),
+    clarity: new Set()
+  };
+
+  // shape availability (merge Cushion Brilliant → Cushion)
+  (facets.shape || []).forEach(v => {
+    const k = uc(v);
+    if (SHAPE_EXCLUDE.has(k)) return;
+    if (SHAPE_ALIASES['CUSHION'].includes(k)) {
+      avail.shape.add('CUSHION');
+    } else {
+      avail.shape.add(v);
+    }
+  });
+
+  // cut availability (normalize 'I' → 'IDEAL')
+  (facets.cut || []).forEach(v => {
+    const k = uc(v);
+    avail.cut.add(k === 'I' ? 'IDEAL' : k);
+  });
+
+  // color & clarity availability with exclusions applied
+  (facets.color || []).forEach(v => { if (!COLOR_EXCLUDE.has(uc(v))) avail.color.add(v); });
+  (facets.clarity || []).forEach(v => { if (!CLARITY_EXCLUDE.has(uc(v))) avail.clarity.add(v); });
+
+  // Toggle disabled on inputs not in availability sets
+  ['shape','cut','color','clarity'].forEach(name => {
+    const g = el.group(name);
+    if (!g) return;
+    g.querySelectorAll('label.check').forEach(lbl => {
+      const input = lbl.querySelector('input[type="checkbox"]');
+      if (!input) return;
+      const val = uc(input.value);
+      const isAvailable = avail[name].has(input.value) || avail[name].has(val);
+      input.disabled = !isAvailable;
+      lbl.classList.toggle('is-disabled', !isAvailable);
+      if (!isAvailable) input.checked = false; // optional: clear impossible selections
+    });
+  });
+}
+
+/* =======================
+   Read filters (dual-range aware)
+   ======================= */
+function readRange(container, fallbackMinEl, fallbackMaxEl, defMin, defMax) {
+  const c = container;
+  if (c) {
+    const minIn = c.querySelector('.range-input.min');
+    const maxIn = c.querySelector('.range-input.max');
+    if (minIn && maxIn) {
+      return [parseFloat(minIn.value || defMin), parseFloat(maxIn.value || defMax)];
+    }
+  }
+  return [
+    parseFloat((fallbackMinEl && fallbackMinEl.value) || defMin),
+    parseFloat((fallbackMaxEl && fallbackMaxEl.value) || defMax)
+  ];
+}
+
+function readFilters() {
+  const active = el.pillToggle?.querySelector('button.is-active');
+  state.type = active?.dataset.value || 'lab';
+
+  [state.caratMin, state.caratMax] = readRange(el.caratRange, el.caratMin, el.caratMax, 0.25, 10);
+  [state.priceMin, state.priceMax] = readRange(el.priceRange, el.priceMin, el.priceMax, 0, 100000);
+
+  state.sort = el.sort?.value || '';
+
+  ['shape','color','clarity','cut'].forEach(name => {
+    const group = el.group(name);
+    state[name] = group
+      ? [...group.querySelectorAll('.filter-items input:checked')].map(i => i.value)
+      : [];
+  });
+
+  // sanitize selections
+  state.shape = state.shape
+    .map(v => uc(v))
+    .filter(v => !SHAPE_EXCLUDE.has(v))
+    .map(v => (SHAPE_ALIASES['CUSHION'].includes(v) ? 'CUSHION' : v));
+  state.clarity = state.clarity.filter(v => !CLARITY_EXCLUDE.has(uc(v)));
+  state.color = state.color.filter(v => !COLOR_EXCLUDE.has(uc(v)));
+  state.cut = state.cut.map(v => (uc(v) === 'I' ? 'IDEAL' : uc(v)));
+}
+
+/* =======================
+   Fetch & query building
+   ======================= */
+function qs() {
+  const u = new URLSearchParams();
+  u.set('page', state.page);
+  u.set('pageSize', state.pageSize);
+  u.set('type', state.type);
+  if (state.sort) u.set('sort', state.sort);
+  u.set('caratMin', state.caratMin);
+  u.set('caratMax', state.caratMax);
+  u.set('priceMin', state.priceMin);
+  u.set('priceMax', state.priceMax);
+
+  // Expand shape aliases in query: Cushion → [Cushion, Cushion Brilliant]
+  const shapesToSend = new Set();
+  (state.shape || []).forEach(v => {
+    const key = uc(v);
+    if (SHAPE_ALIASES['CUSHION'] && key === 'CUSHION') {
+      SHAPE_ALIASES['CUSHION'].forEach(s => shapesToSend.add(s));
+    } else {
+      shapesToSend.add(v);
+    }
+  });
+  if (shapesToSend.size) u.set('shape', Array.from(shapesToSend).join(','));
+
+  ['color','clarity','cut'].forEach(n => {
+    if (state[n]?.length) u.set(n, state[n].join(','));
+  });
+
+  return u.toString();
+}
+
+async function fetchResults() {
+  el.error.hidden = true;
+  const url = `${API_BASE}?${qs()}`;
+  const r = await fetch(url, { headers: { 'Accept':'application/json' }});
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+/* =======================
+   Money & images
+   ======================= */
+function money(n) {
+  if (!n || n <= 0) return '—';
+  return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(n);
+}
+
+const PLACEHOLDER_IMG =
+  'data:image/svg+xml;utf8,' + encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="800">
+      <rect width="100%" height="100%" fill="#f2f3f5"/>
+      <g fill="none" stroke="#c5cbd3" stroke-width="18" stroke-linejoin="round" transform="translate(100,130)">
+        <path d="M120,0 H480 L600,160 300,560 0,160 Z"/>
+        <path d="M120,0 L300,560 L480,0 M0,160 L600,160 M200,160 L400,160"/>
+      </g>
+    </svg>
+  `);
+
+function wireImageFallbacks(scope=document) {
+  scope.querySelectorAll('img[data-fallback="1"]').forEach(img => {
+    if (img._fallbackWired) return;
+    img._fallbackWired = true;
+    const applyFallback = () => {
+      if (img.dataset.fallbackApplied) return;
+      img.dataset.fallbackApplied = '1';
+      img.src = PLACEHOLDER_IMG;
+      const t = img.closest('.thumb');
+      if (t) t.classList.add('no-image');
+    };
+    img.addEventListener('error', applyFallback, { passive: true });
+    if ('decode' in img) img.decode().catch(applyFallback);
+    else requestAnimationFrame(() => { if (!img.naturalWidth) applyFallback(); });
+  });
+}
+
+/* =======================
+   Render grid
+   ======================= */
+function renderGrid(items) {
+  el.grid.innerHTML = items.map(item => {
+    const shapeTxt = shapeLabel(item.shape || '');
+    const cutTxt   = cutCardLabel(item.cut || '—');
+    const colorTxt = item.color || '—';
+    const clarTxt  = item.clarity || '—';
+    const src = (item.images && item.images[0]) ? item.images[0] : PLACEHOLDER_IMG;
+
+    return `
+      <article class="card">
+        <div class="thumb">
+          <img data-fallback="1"
+               src="${src}"
+               loading="lazy"
+               alt="${shapeTxt} ${item.carat || ''}ct">
+        </div>
+        <div class="meta">
+          <div class="line"><strong>${shapeTxt}</strong> • ${item.carat?.toFixed?.(2) ?? item.carat} ct</div>
+          <div class="line">Color: ${colorTxt} • Clarity: ${clarTxt} • Cut: ${cutTxt}</div>
+          <div class="price">${money(item.priceRetail)}</div>
+        </div>
+        <div class="actions">
+          <a class="btn" href="/products/choose-setting?stock=${encodeURIComponent(item.stockNumber)}">Select Diamond</a>
+          ${item.certificate?.link ? `<a class="link" target="_blank" href="${item.certificate.link}">Cert</a>` : ''}
+        </div>
+      </article>
+    `;
+  }).join('');
+  wireImageFallbacks(el.grid);
+}
+
+/* =======================
+   Events
+   ======================= */
+function wirePills() {
+  el.pillToggle?.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      el.pillToggle.querySelectorAll('button').forEach(x => x.classList.remove('is-active'));
+      b.classList.add('is-active');
+      state.page = 1;
+      doSearch();
+    });
+  });
+}
+
+function wireEvents() {
+  el.apply?.addEventListener('click', () => {
+    state.page = 1;
+    readFilters();
+    doSearch();
+  });
+
+  el.sort?.addEventListener('change', () => {
+    state.page = 1;
+    readFilters();
+    doSearch();
+  });
+
+  el.prev?.addEventListener('click', () => { if (state.page > 1) { state.page--; doSearch(); }});
+  el.next?.addEventListener('click', () => { state.page++; doSearch(); });
+
+  // Auto-apply on facet ticks
+  document.addEventListener('change', (e) => {
+    if (e.target.closest('.filter-items')) {
+      state.page = 1; readFilters(); doSearch();
+    }
+  });
+}
+
+/* =======================
+   Search cycle
+   ======================= */
+async function doSearch() {
+  try {
+    readFilters();
+    const data = await fetchResults();
+
+    if (!state.facetsLoaded && data.facets) {
+      buildFacet('shape',   data.facets.shape   || []);
+      buildFacet('color',   data.facets.color   || []);
+      buildFacet('clarity', data.facets.clarity || []);
+      buildFacet('cut',     data.facets.cut     || []);
+      state.facetsLoaded = true;
+    }
+
+    // Always update availability (gray-out) based on facets of current filter
+    updateFacetAvailability(data.facets || {});
+
+    renderGrid(data.items || []);
+    const first = (state.page - 1) * state.pageSize + 1;
+    const last  = Math.min(state.page * state.pageSize, data.total || 0);
+    el.pageInfo.textContent = `${first}–${last} of ${data.total || 0}`;
+    el.prev.disabled = state.page <= 1;
+    el.next.disabled = state.page * state.pageSize >= (data.total || 0);
+
+    const meta = document.getElementById('dsMeta');
+    if (meta) meta.textContent = `${data.total || 0} diamonds • page ${state.page}`;
+  } catch (err) {
+    el.error.hidden = false;
+    el.error.textContent = `Error loading results: ${err.message}`;
+    console.error(err);
+  }
+}
+
+/* =======================
+   Dual range setup
+   ======================= */
+function initDualRange(containerSel, { min=0, max=100, step=1 } = {}) {
+  const wrap = document.querySelector(containerSel);
+  if (!wrap) return;
+
+  const inputMin  = wrap.querySelector('.range-input.min');
+  const inputMax  = wrap.querySelector('.range-input.max');
+  const sliderMin = wrap.querySelector('.range-slider.min');
+  const sliderMax = wrap.querySelector('.range-slider.max');
+  const track     = wrap.querySelector('.range-track');
+
+  [sliderMin, sliderMax].forEach(s => { s.min = min; s.max = max; s.step = step; });
+
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const toPct = v => ((v - min) / (max - min)) * 100;
+
+  function paint() {
+    const a = Number(sliderMin.value);
+    const b = Number(sliderMax.value);
+    const left = Math.min(a,b), right = Math.max(a,b);
+    track.style.background = `linear-gradient(90deg,
+      #e6e6e6 0%,
+      #e6e6e6 ${toPct(left)}%,
+      var(--m-accent) ${toPct(left)}%,
+      var(--m-accent) ${toPct(right)}%,
+      #e6e6e6 ${toPct(right)}%,
+      #e6e6e6 100%)`;
+  }
+  function syncFromSliders() {
+    let a = Number(sliderMin.value);
+    let b = Number(sliderMax.value);
+    if (a > b) [a,b] = [b,a];
+    inputMin.value = a; inputMax.value = b; paint();
+  }
+  function syncFromInputs() {
+    let a = clamp(Number(inputMin.value || min), min, max);
+    let b = clamp(Number(inputMax.value || max), min, max);
+    if (a > b) [a,b] = [b,a];
+    sliderMin.value = a; sliderMax.value = b; paint();
+  }
+
+  sliderMin.addEventListener('input', syncFromSliders);
+  sliderMax.addEventListener('input', syncFromSliders);
+  inputMin.addEventListener('change', syncFromInputs);
+  inputMax.addEventListener('change', syncFromInputs);
+
+  // initialize from current input values or bounds
+  syncFromInputs();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initDualRange('#caratRange', { min: 0, max: 10, step: 0.01 });
+  initDualRange('#priceRange', { min: 0, max: 100000, step: 50 });
+});
+
+/* =======================
+   Boot
+   ======================= */
+wirePills();
+wireEvents();
+doSearch();
+
+})();
+</script>
+
+
+{% schema %}
+{
+    "name": "Diamond picker",
+    "class": "diamond-search-section",
+    "tag": "section",
+    "presets": [
+        {
+            "name": "Diamond picker"
+        }
+    ]
+}
+{% endschema %}

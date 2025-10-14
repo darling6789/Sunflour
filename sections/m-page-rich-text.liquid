@@ -1,0 +1,126 @@
+<div class="m-page-rich-text m-page">
+    <h2>{{section.settings.heading }}</h2>
+    <div class="m-page-image-text-text-content">{{ section.settings.content }}</div>
+</div>
+
+<style>
+.m-page-rich-text-section {
+    width: 100%;
+    padding: 25px 40px;
+    background: #fff;
+}
+.m-page-rich-text {
+    width: 100%;
+}
+.m-page-rich-text h2 {
+    color: #000;
+    {% unless section.settings.heading_left %}
+    text-align: center;
+    {% endunless %}
+    /* Heading/Large */
+    font-family: Legitima;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 44px */
+    margin: 0;
+    margin-bottom: 24px;
+}
+.m-page-rich-text p {
+    color: #000;
+    /* Body/Large/Regular */
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 25.2px */
+}
+.m-page-rich-text h3 {
+    margin: 0;
+    margin-top: 75px;
+    color: #000;
+    font-family: Legitima;
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 47.6px */
+}
+.m-page-rich-text h3 em {
+    color: #000;
+    text-align: center;
+    font-family: Legitima;
+    font-size: 41px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 140%; /* 57.4px */
+    margin: 0;
+    display: block;
+}
+
+@media only screen and (max-width: 1440px) {
+  .m-page-rich-text h2 {
+    font-size: 34px;
+  }
+  .m-page-rich-text p {
+    font-size: 16px;
+  }
+  .m-page-image-text-text-content {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 749px) {
+    .m-page-rich-text-section {
+        width: 100%;
+        padding: 20px 20px;
+    }
+    .m-page-rich-text h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+    .m-page-rich-text p {
+        font-size: 14px;
+    }
+    .m-page-image-text-text-content {
+      font-size: 14px;
+    }  
+    .m-page-rich-text h3 {
+        margin-top: 40px;
+        font-size: 24px;
+    }
+    .m-page-rich-text h3 em {
+        font-size: 24px;
+    }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Custom page rich text",
+  "tag": "section",
+  "class": "m-page-rich-text-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_left",
+      "label": "Heading left"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom page rich text"
+    }
+  ]
+}
+{% endschema %}

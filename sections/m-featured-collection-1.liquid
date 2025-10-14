@@ -1,0 +1,193 @@
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<div class="m-collection-1">
+    <h2>{{ section.settings.heading }}</h2>
+
+    <div class="m-collection-1-slider-wrap">
+        <div class="m-collection-1-slider-left">{% render 'icon-left-arrow' %}</div>
+        <div class="m-collection-1-slider">
+            {% for product in section.settings.collection.products limit: 10 %}
+               {% render 'm-product-card', product: product %}
+            {% endfor %}
+        </div>
+        <div class="m-collection-1-slider-right">{% render 'icon-right-arrow' %}</div>
+    </div>
+
+    {% if section.settings.collection_link %}
+    <a class="m-collection-1-link" href="{{ section.settings.collection_link }}">{{ section.settings.collection_link_text }}</a>
+    {% endif %}
+</div>
+
+<style>
+#shopify-section-{{ section.id }}.m-collection-1-section {
+	width: 100%;
+	padding: 50px 50px;
+  background-color: {{ section.settings.back_color }};
+}
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1 {
+
+}
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>h2 {
+	color: #333;
+	font-family: Legitima;
+	font-size: 44px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	margin: 0;
+	margin-bottom: 30px;
+}
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-slider-wrap {
+	position: relative;
+}
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-slider-left {
+	position: absolute;
+    left: -25px;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-slider-right {
+	position: absolute;
+    right: -25px;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-slider {
+
+}
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-slider .slick-track
+{
+    display: flex !important;
+}
+
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-slider .slick-slide
+{
+    height: inherit !important;
+}
+
+#shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-link {
+    color: #333;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    display: block;
+    margin-top: 18px;
+}
+
+@media only screen and (max-width: 1440px) {
+  #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-section, .m-collection-1-section {
+    padding: 30px 37.5px;
+  }
+  #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>h2, .m-collection-1>h2 {
+    color: #333;
+    /* Heading/Medium */
+    font-family: Legitima;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 37.4px */
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-link {
+    color: #333;
+    font-family: Montserrat;
+    font-size: 13.5px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    display: block;
+    margin-top: 3px;
+  }
+}
+
+@media only screen and (max-width: 990px) {
+    #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-section {
+        padding: 40px 25px;
+    }
+    #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>h2 {
+        font-size: 32px;
+    }
+    #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-link {
+        font-size: 16px;
+        margin-top: 12px;
+    }
+}
+
+</style>
+
+<script>
+$(document).ready(function(){
+  $('.m-collection-1-slider').slick({
+    slidesToScroll: 1,
+    variableWidth: true,
+    infinite: true,
+    arrows: true,
+    dots: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    prevArrow: '.m-collection-1-slider-left',
+    nextArrow: '.m-collection-1-slider-right'
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Custom collection 1",
+  "class": "m-collection-1-section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "back_color",
+      "label": "Background color"
+    },
+    {
+      "type": "text",
+      "id": "collection_link_text",
+      "label": "Collection link text"
+    },
+    {
+      "type": "url",
+      "id": "collection_link",
+      "label": "Collection link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom collection 1"
+    }
+  ]
+}
+{% endschema %}

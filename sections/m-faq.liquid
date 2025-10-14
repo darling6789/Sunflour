@@ -1,0 +1,246 @@
+<div class="m-faq">
+  <h2>{{ section.settings.heading }}</h2>
+  <p>{{ section.settings.description }}</p>
+
+  <div class="faqpage">
+      {% for block in section.blocks %}
+      <div class="m-accordion-wrap">
+        <div class="m-accordion" id="section{{ forloop.index }}">{{ block.settings.question }}
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+              <path d="M16.0147 32.3913C15.1792 31.5558 15.1792 30.2011 16.0147 29.3656L23.0597 22.3206L16.0147 15.2756C15.1792 14.4401 15.1792 13.0854 16.0147 12.2499C16.8502 11.4144 18.2048 11.4144 19.0404 12.2499L27.5982 20.8078C28.4337 21.6433 28.4337 22.9979 27.5982 23.8334L19.0404 32.3913C18.2048 33.2268 16.8502 33.2268 16.0147 32.3913Z" fill="#69575F"/>
+            </svg>
+          </span>
+        </div>
+        <div class="container">
+            <div class="content">
+                <p>{{ block.settings.answer }}</p>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ 'jquery_accordion.js' | asset_url }}" defer></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.m-accordion').accordion({
+    defaultOpen: 'section1',
+    cookieName: 'accordion_nav'
+    });
+});
+</script>
+<style>
+.m-faq-section {
+  width: 100%;
+  padding: 120px 40px;
+  background: #fff;
+}
+.m-faq .faqpage {
+  max-width: 838px;
+  margin: auto;
+  margin-top: 50px;
+}
+.m-faq h2 {
+  text-align: center;
+  margin: 0;
+  margin-bottom: 15px;
+  color: #594242;
+  text-align: center;
+  font-family: Legitima;
+  font-size: 55px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  {% comment %} text-transform: uppercase; {% endcomment %}
+}
+.m-faq>p {
+  color: #78686F;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 15px auto;
+}
+.m-faq .m-accordion-wrap {
+  border-bottom: #78686F80 2px solid;
+}
+.m-faq .m-accordion {
+    margin: 0;
+    padding:20px 0;
+    border: none;
+    color: var(--NotBlack, #151515);
+    font-family: Montserrat;
+    font-size: 21.395px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    position:relative;
+    cursor: pointer;
+}
+.m-faq .m-accordion-open {
+    
+}
+.m-faq .m-accordion-open span {
+    display:block;
+    position:absolute;
+    right:3px;
+    top:10px;
+}
+.m-faq .m-accordion-open span svg {
+    transform: rotate(90deg);
+    transition: 0.2s;
+}
+.m-faq .m-accordion-open span {
+}
+.m-faq .m-accordion-close span {
+    display:block;
+    position:absolute;
+    right:3px;
+    top:10px;
+}
+.m-faq .m-accordion-close span svg {
+    transition: 0.2s;
+}
+.m-faq .faqpage div.container {
+    padding:0;
+    margin:0;
+}
+.m-faq .faqpage div.container {
+    max-width:100%;
+}
+.m-faq .faqpage div.content {
+    margin: 0;
+    color: var(--NotBlack, #151515);
+    font-family: Montserrat;
+    font-size: 16.046px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    opacity: 0.6;
+}
+.m-faq .faqpage div.content ul {
+    padding:0;
+    margin:0;
+    padding:3px;
+}
+.m-faq .faqpage div.content p {
+    padding:0;
+    margin:3px 0 10px;
+    padding:3px;
+}
+.m-faq .faqpage div.content ul li {
+    list-style-position:inside;
+    line-height:25px;
+}
+
+@media only screen and (max-width: 749px) {
+  .m-faq-section {
+    padding: 40px 20px;
+  }
+  .m-faq .faqpage {
+    max-width: 100%;
+    margin: auto;
+    margin-top: 40px;
+  }
+  .m-faq h2 {
+    margin-bottom: 15px;
+    font-size: 32px;
+  }
+  .m-faq>p {
+    font-size: 14px;
+    margin: 10px auto;
+  }
+  .m-faq .m-accordion-wrap {
+    border-bottom: #78686F80 1px solid;
+  }
+  .m-faq .m-accordion {
+      padding:20px 0;
+      font-size: 18px;
+  }
+  .m-faq .m-accordion svg {
+      width: 20px;
+  }
+  .m-faq .m-accordion-open span {
+      position:absolute;
+      right:3px;
+      top:10px;
+  }
+  .m-faq .m-accordion-close span {
+      display:block;
+      position:absolute;
+      right:3px;
+      top:10px;
+  }
+  .m-faq .faqpage div.container {
+      padding:0;
+      margin:0;
+  }
+  .m-faq .faqpage div.container {
+      max-width:100%;
+  }
+  .m-faq .faqpage div.content {
+      font-size: 14px;
+  }
+  .m-faq .faqpage div.content ul {
+      padding:0;
+      margin:0;
+      padding:3px;
+  }
+  .m-faq .faqpage div.content p {
+      padding:0;
+      margin:3px 0 10px;
+      padding:3px;
+  }
+  .m-faq .faqpage div.content ul li {
+      list-style-position:inside;
+      line-height:25px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Custom FAQs",
+  "tag": "section",
+  "class": "m-faq-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom FAQs"
+    }
+  ]
+}
+{% endschema %}

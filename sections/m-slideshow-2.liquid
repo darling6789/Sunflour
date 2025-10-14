@@ -1,0 +1,982 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.slide_height == 'adapt_image' and section.blocks.first.settings.image != blank -%}
+  {%- style -%}
+    @media screen and (max-width: 749px) {
+      #Slider-{{ section.id }}::before,
+      #Slider-{{ section.id }} .media::before,
+      #Slider-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+        padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
+        content: '';
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #Slider-{{ section.id }}::before,
+      #Slider-{{ section.id }} .media::before {
+        padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
+        content: '';
+        display: block;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+<slideshow-component
+  class="slider-mobile-gutter{% if section.settings.layout == 'grid' %} page-width{% endif %}{% if section.settings.show_text_below %} mobile-text-below{% endif %}"
+  role="region"
+  aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
+  aria-label="{{ section.settings.accessibility_info | escape }}"
+>
+  {%- if section.settings.auto_rotate and section.blocks.size > 1 -%}
+    <div class="slideshow__controls slideshow__controls--top slider-buttons{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
+      <button
+        type="button"
+        class="slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
+        {%- if section.settings.slider_visual == 'counter' -%}
+          <span class="slider-counter--current">1</span>
+          <span aria-hidden="true"> / </span>
+          <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+          <span class="slider-counter--total">{{ section.blocks.size }}</span>
+        {%- else -%}
+          <div class="slideshow__control-wrapper">
+            {%- for block in section.blocks -%}
+              <button
+                class="slider-counter__link slider-counter__link--{{ section.settings.slider_visual }} link"
+                aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                aria-controls="Slider-{{ section.id }}"
+              >
+                {%- if section.settings.slider_visual == 'numbers' -%}
+                  {{ forloop.index -}}
+                {%- else -%}
+                  <span class="dot"></span>
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <button
+        type="button"
+        class="slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+
+      {%- if section.settings.auto_rotate -%}
+        <button
+          type="button"
+          class="slideshow__autoplay slider-button{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}"
+          aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-pause.svg' | inline_asset_content -}}
+          </span>
+          <span class="svg-wrapper">
+            {{- 'icon-play.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div
+    class="slideshow banner banner--{{ section.settings.slide_height }} grid grid--1-col slider slider--everywhere{% if section.settings.show_text_below %} banner--mobile-bottom{% endif %}{% if section.blocks.first.settings.image == blank %} slideshow--placeholder{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+    id="Slider-{{ section.id }}"
+    aria-live="polite"
+    aria-atomic="true"
+    data-autoplay="{{ section.settings.auto_rotate }}"
+    data-speed="{{ section.settings.change_slides_speed }}"
+  >
+    {%- for block in section.blocks -%}
+      {%- comment -%}
+        SLIDE TYPE A — your original "slide"
+      {%- endcomment -%}
+      {%- if block.type == 'slide' -%}
+        <style>
+          #Slide-{{ section.id }}-{{ forloop.index }} .banner__media::after {
+            opacity: {{ block.settings.image_overlay_opacity | divided_by: 100.0 }};
+          }
+        </style>
+        <div
+          class="slideshow__slide grid__item grid--1-col slider__slide"
+          id="Slide-{{ section.id }}-{{ forloop.index }}"
+          {{ block.shopify_attributes }}
+          role="group"
+          aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+          aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+          tabindex="-1"
+        >
+          <div class="slideshow__media banner__media media{% if block.settings.image == blank %} placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
+            {%- if block.settings.image -%}
+              {%- liquid
+                assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
+                if section.settings.image_behavior == 'ambient'
+                  assign sizes = '120vw'
+                  assign widths = '450, 660, 900, 1320, 1800, 2136, 2400, 3600, 7680'
+                else
+                  assign sizes = '100vw'
+                  assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+                endif
+                assign fetch_priority = 'auto'
+                if section.index == 1
+                  assign fetch_priority = 'high'
+                endif
+              -%}
+              {%- if forloop.first -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 3840
+                  | image_tag: height: height, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                }}
+              {%- else -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 3840
+                  | image_tag: loading: 'lazy', height: height, sizes: sizes, widths: widths
+                }}
+              {%- endif -%}
+            {%- else -%}
+              {%- assign placeholder_slide = forloop.index | modulo: 2 -%}
+              {%- if placeholder_slide == 1 -%}
+                {{ 'hero-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- else -%}
+                {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          <div class="slideshow__text-wrapper slideshow__text-wrapper{{ block.id }} banner__content banner__content--{{ block.settings.box_align }} page-width{% if block.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
+            <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ block.settings.color_scheme }} gradient slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
+              {%- if block.settings.heading != blank -%}
+                <h2 class="banner__heading inline-richtext {{ block.settings.heading_size }}">
+                  {{ block.settings.heading }}
+                </h2>
+              {%- endif -%}
+              {%- if block.settings.subheading != blank -%}
+                <div class="banner__text rte">
+                  <p>{{ block.settings.subheading }}</p>
+                </div>
+              {%- endif -%}
+              {%- if block.settings.button_label != blank -%}
+                <div class="banner__buttons">
+                  <a
+                    {% if block.settings.link %}
+                      href="{{ block.settings.link }}"
+                    {% else %}
+                      role="link" aria-disabled="true"
+                    {% endif %}
+                    class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
+                  >
+                    {{- block.settings.button_label | escape -}}
+                  </a>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+
+        <style>
+          @media only screen and (max-width: 749px) {
+            .slideshow__text-wrapper{{ block.id }} {
+              background-color: {{ block.settings.back_color }};
+            }
+            .slideshow__text-wrapper{{ block.id }} h2.banner__heading, .slideshow__text-wrapper{{ block.id }} .banner__text p {
+              color: {{ block.settings.text_color }};
+            }
+            .slideshow__text-wrapper{{ block.id }} .banner__buttons a {
+              background-color: {{ block.settings.btn_color }};
+              color: {{ block.settings.btn_text_color }};
+            }
+          }
+        </style>
+
+      {%- elsif block.type == 'hero_composed' -%}
+      {%- comment -%}
+        SLIDE TYPE B — new “composed” hero with background + image + content
+      {%- endcomment -%}
+        <div
+          class="slideshow__slide grid__item grid--1-col slider__slide hero-composed hero-composed--{{ block.id }}"
+          id="Slide-{{ section.id }}-{{ forloop.index }}"
+          {{ block.shopify_attributes }}
+          role="group"
+          aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+          aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+          tabindex="-1"
+        >
+          <div class="hero-composed-inner" style="background-image: url({{ block.settings.image | img_url: 'master' }});">
+            <div class="hero-composed-des">
+              <h2>
+                <p class="hero-composed-text-1">{{ block.settings.text1 }}</p>
+                <p class="hero-composed-text-2">{{ block.settings.text2 }}</p>
+                <p class="hero-composed-text-3">{{ block.settings.text3 }}</p>
+                <p class="hero-composed-text-4">{{ block.settings.text4 }}</p>
+                <p class="hero-composed-text-5">{{ block.settings.text5 }}</p>
+              </h2>
+              <div class="hero-composed-btns">
+                {% if block.settings.btn_link_1 %}
+                  <a href="{{ block.settings.btn_link_1 }}">{{ block.settings.btn_text_1 }}</a>
+                {% endif %}
+                {% if block.settings.btn_link_2 %}
+                  <a href="{{ block.settings.btn_link_2 }}">{{ block.settings.btn_text_2 }}</a>
+                {% endif %}
+              </div>              
+            </div>
+            <div class="hero-composed-image" style="background-image: url({{ block.settings.image | img_url: 'master' }});">
+            </div>
+
+            <div class="hero-composed-corner">
+              <div class="hero-composed-corner-texts">
+                <h4 class="hero-composed-corner-heading">{{ block.settings.corner_text_1 }}</h4>
+                <h4>{{ block.settings.corner_text_2 }}</h4>
+              </div>
+              <div class="hero-composed-corner-prices">
+                <p class="hero-composed-corner-price">{{ block.settings.corner_price }}</p>
+                <p class="hero-composed-corner-compared-price">{{ block.settings.corner_compared_price }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          .hero-composed-corner h4 {
+            color: {{ block.settings.corner_color }};
+          }
+          .hero-composed-corner .hero-composed-corner-price {
+            color: {{ block.settings.corner_color }};
+          }
+          .hero-composed-corner .hero-composed-corner-compared-price {
+            color: {{ block.settings.corner_color }};
+          }
+
+          @media only screen and (max-width: 749px) {
+            .hero-composed-corner h4 {
+              color: {{ block.settings.corner_color_mob }};
+            }
+            .hero-composed-corner .hero-composed-corner-price {
+              color: {{ block.settings.corner_color_mob }};
+            }
+            .hero-composed-corner .hero-composed-corner-compared-price {
+              color: {{ block.settings.corner_color_mob }};
+            }
+          }
+        </style>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if section.blocks.size > 1 and section.settings.auto_rotate == false -%}
+    <div class="slideshow__controls slider-buttons{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
+      <button
+        type="button"
+        class="slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
+        {%- if section.settings.slider_visual == 'counter' -%}
+          <span class="slider-counter--current">1</span>
+          <span aria-hidden="true"> / </span>
+          <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+          <span class="slider-counter--total">{{ section.blocks.size }}</span>
+        {%- else -%}
+          <div class="slideshow__control-wrapper">
+            {%- for block in section.blocks -%}
+              <button
+                class="slider-counter__link slider-counter__link--{{ section.settings.slider_visual }} link"
+                aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                aria-controls="Slider-{{ section.id }}"
+              >
+                {%- if section.settings.slider_visual == 'numbers' -%}
+                  {{ forloop.index -}}
+                {%- else -%}
+                  <span class="dot"></span>
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <button
+        type="button"
+        class="slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+
+      {%- if section.settings.auto_rotate -%}
+        <button
+          type="button"
+          class="slideshow__autoplay slider-button{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}"
+          aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-pause.svg' | inline_asset_content -}}
+          </span>
+          <span class="svg-wrapper">
+            {{- 'icon-play.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</slideshow-component>
+
+{%- if request.design_mode -%}
+  <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+<style>
+.hero-composed {
+	width: 100%;
+}
+.hero-composed-inner {
+	width: 100%;
+	display: flex;
+	gap: 40px;
+}
+.hero-composed-des {
+	width: calc(50% - 40px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+  z-index: 2;
+}
+.hero-composed-des h2 {
+  margin: 0;
+  color: #151515;
+  text-align: center;
+}
+.hero-composed-text-1 {
+  font-style: italic;
+  font-family: var(--font-family-Font-4, Legitima);
+  font-size: 40px;
+  font-weight: var(--font-weight-500, 500);
+  line-height: var(--line-height-31_86, 31.86px);
+  margin: 0;
+  margin-bottom: 20px;
+}
+.hero-composed-text-2 {
+  font-size: 24px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.hero-composed-text-3 {
+  font-family: var(--font-family-Font-4, Legitima);
+  font-size: 55px;
+  font-weight: var(--font-weight-500, 500);
+  margin: 0;
+  margin-bottom: 10px;  
+}
+.hero-composed-text-4 {
+  font-size: 30px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.hero-composed-text-5 {
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+.hero-composed-des a {
+	display: block;
+	text-decoration: none;
+	width: 240px;
+	margin-top: 20px;
+  text-align: center;
+  border-radius: 4px;
+  background: #9C613A;
+  color: #FFF;
+  font-family: Montserrat;
+  font-size: 0.9vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  padding: 16px 32px;
+  min-width: unset;
+}
+.hero-composed-image {
+    width: 50%;
+    height: 41.3vw;
+    line-height: 0;
+    display: block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+}
+.hero-composed-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.hero-composed-corner {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	text-align: right;
+}
+.hero-composed-corner h4 {
+	font-size: 14px;
+	margin: 0;
+}
+.hero-composed-corner .hero-composed-corner-price {
+  font-family: var(--font-family-Font-4, Legitima);
+	font-size: 20px;
+	margin: 0;
+  line-height: 100%;
+}
+.hero-composed-corner .hero-composed-corner-compared-price {
+  font-family: var(--font-family-Font-4, Legitima);
+	font-size: 12px;
+  margin: 0;
+}
+
+@media screen and (min-width: 750px) and (max-width: 1199px) {
+    .hero-composed-des a {
+        border-radius: 4px;
+        background: #9C613A;
+        color: #FFF;
+        font-family: Montserrat;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+        padding: 8px 15px;
+        min-width: unset;
+        min-height: unset;
+        width: 200px;
+        margin-top: 10px;
+    }
+    .hero-composed-text-1 {
+      font-size: 36px;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    .hero-composed-text-2 {
+      font-size: 20px;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    .hero-composed-text-3 {
+      font-size: 48px;
+      font-weight: var(--font-weight-500, 500);
+      margin: 0;
+      margin-bottom: 10px;  
+    }
+    .hero-composed-text-4 {
+      font-size: 24px;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    .hero-composed-text-5 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+}
+@media only screen and (min-width: 750px) {
+    .hero-composed-inner {
+      background: linear-gradient(180deg, #eadbdb 0%, #f5eaea 35%, #ffffff 60%, #f1e6e6 100%) !important;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .hero-composed-inner {
+      flex-wrap: wrap;
+      height: 100%;
+      background-image: url(//www.marcrobinsonjewelers.com/cdn/shop/files/edited-pendant-worn-min.png?v=1757597504);
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-composed-des {
+      width: 100%;
+      position: absolute;
+      background: #ffffffaa;
+      left: 0;
+      bottom: 0;
+      padding: 40px 20px 45px;
+    }
+    .hero-composed-image {
+      display: none;
+      order: -1;
+      height: 84vw;
+      width: 100%;
+    }
+    .hero-composed-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 50px;
+    }
+    .hero-composed-des a {
+        border-radius: 4px;
+        font-size: 16px;
+        padding: 10px 10px;
+        width: fit-content;
+        margin-top: 10px;
+    }
+    .hero-composed-text-1 {
+      font-size: 28px;
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    .hero-composed-text-2 {
+      font-size: 18px;
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    .hero-composed-text-3 {
+      font-size: 32px;
+      margin-bottom: 5px;  
+    }
+    .hero-composed-text-4 {
+      font-size: 20px;
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    .hero-composed-text-5 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .banner--mobile-bottom .slideshow__text .button {
+      display: block;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 4px;
+      background: #9C613A;
+      color: #FFF;
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%;
+      font-size: 16px;
+      padding: 10px;
+      min-height: unset;
+      min-width: 240px;
+      margin-top: 10px;
+      width: fit-content;
+      border: none;
+      outline: none;
+    }
+    .banner--mobile-bottom .slideshow__text .button:before, .banner--mobile-bottom .slideshow__text .button:after {
+      box-shadow: none !important;
+      border: none;
+    }
+    .hero-composed-corner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      right: unset;
+      padding: 0 10px;
+      bottom: 0;
+    }
+    .hero-composed-corner-texts {
+      text-align: right;
+    }
+    .hero-composed-corner-prices {
+      text-align: left;
+    }
+    .hero-composed-corner h4 {
+      font-size: 11px;
+      line-height: 100%;
+    }
+    .hero-composed-corner h4.hero-composed-corner-heading {
+      font-size: 14px;
+      line-height: 100%;
+    }
+    .hero-composed-corner .hero-composed-corner-price {
+      font-size: 14px;
+      line-height: 100%;
+    }
+    .hero-composed-corner .hero-composed-corner-compared-price {
+      font-size: 11px;
+      line-height: 100%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .m-slide-section .slideshow__text-wrapper.banner__content {
+        max-width: unset;
+        padding-right: 0;
+    }
+    .m-slide-section .slideshow__text.banner__box {
+        padding: 0;
+        width: fit-content;
+        min-width: unset;
+        padding-right: 1vw;
+    }
+    .m-slide-section .banner__heading {
+        color: #000;
+        text-align: center;
+        width: 17vw;
+        font-family: Legitima;
+        font-size: 2vw;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+        margin-bottom: 5vw;
+    }    
+    .m-slide-section .banner__text p {
+        width: 17vw;
+        color: #000;
+        font-family: Montserrat;
+        font-size: 1vw;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+    }
+    .m-slide-section a.button {
+        border-radius: 4px;
+        background: #9C613A;
+        color: #FFF;
+        font-family: Montserrat;
+        font-size: 0.9vw;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+        padding: 16px 32px;
+        min-width: unset;
+    }
+    .m-slide-section a.button:before, .m-slide-section a.button:after {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1199px) {
+    .m-slide-section .slideshow__text-wrapper.banner__content {
+        max-width: unset;
+        padding-right: 0;
+    }
+    .m-slide-section .slideshow__text.banner__box {
+        padding: 0;
+        width: fit-content;
+        min-width: unset;
+        padding-right: 1vw;
+    }
+    .m-slide-section .banner__heading {
+        color: #000;
+        text-align: center;
+        width: 17vw;
+        font-family: Legitima;
+        font-size: 2vw;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+        margin-bottom: 20px;
+    }    
+    .m-slide-section .banner__text p {
+        width: 17vw;
+        color: #000;
+        font-family: Montserrat;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+    }
+    .m-slide-section a.button {
+        border-radius: 4px;
+        background: #9C613A;
+        color: #FFF;
+        font-family: Montserrat;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+        padding: 8px 15px;
+        min-width: unset;
+        min-height: unset;
+    }
+    .m-slide-section a.button:before, .m-slide-section a.button:after {
+        display: none;
+    }
+}
+@media screen and (min-width: 750px) and (max-width: 989px) {
+    .m-slide-section .slideshow__text.banner__box {
+        background: #ffffffee;
+        padding: 20px;
+        max-width: 400px;
+    }
+    .m-slide-section .slideshow__text-wrapper.banner__content {
+        justify-content: center;
+    }
+    .m-slide-section .slideshow__text-wrapper.banner__content {
+        max-width: unset;
+        padding: 0;
+    }
+    .m-slide-section .banner__heading {
+        width: 100%;
+    }    
+    .m-slide-section .banner__text p {
+        width: 100%;
+    }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Custom slideshow 2",
+  "tag": "section",
+  "class": "section m-slide-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        { "value": "full_bleed", "label": "t:sections.slideshow.settings.layout.options__1.label" },
+        { "value": "grid", "label": "t:sections.slideshow.settings.layout.options__2.label" }
+      ],
+      "default": "full_bleed",
+      "label": "t:sections.slideshow.settings.layout.label"
+    },
+    {
+      "type": "select",
+      "id": "slide_height",
+      "options": [
+        { "value": "adapt_image", "label": "t:sections.slideshow.settings.slide_height.options__1.label" },
+        { "value": "small", "label": "t:sections.slideshow.settings.slide_height.options__2.label" },
+        { "value": "medium", "label": "t:sections.slideshow.settings.slide_height.options__3.label" },
+        { "value": "large", "label": "t:sections.slideshow.settings.slide_height.options__4.label" }
+      ],
+      "default": "medium",
+      "label": "t:sections.slideshow.settings.slide_height.label"
+    },
+    {
+      "type": "select",
+      "id": "slider_visual",
+      "options": [
+        { "value": "dots", "label": "t:sections.slideshow.settings.slider_visual.options__2.label" },
+        { "value": "counter", "label": "t:sections.slideshow.settings.slider_visual.options__1.label" },
+        { "value": "numbers", "label": "t:sections.slideshow.settings.slider_visual.options__3.label" }
+      ],
+      "default": "counter",
+      "label": "t:sections.slideshow.settings.slider_visual.label"
+    },
+    { "type": "checkbox", "id": "auto_rotate", "label": "t:sections.slideshow.settings.auto_rotate.label", "default": false },
+    { "type": "range", "id": "change_slides_speed", "min": 3, "max": 9, "step": 2, "unit": "s", "label": "t:sections.slideshow.settings.change_slides_speed.label", "default": 5 },
+    {
+      "type": "select",
+      "id": "image_behavior",
+      "options": [
+        { "value": "none", "label": "t:sections.all.animation.image_behavior.options__1.label" },
+        { "value": "ambient", "label": "t:sections.all.animation.image_behavior.options__2.label" }
+      ],
+      "default": "none",
+      "label": "t:sections.all.animation.image_behavior.label"
+    },
+    { "type": "header", "content": "t:sections.slideshow.settings.mobile.content" },
+    { "type": "checkbox", "id": "show_text_below", "label": "t:sections.slideshow.settings.show_text_below.label", "default": true },
+    { "type": "header", "content": "t:sections.slideshow.settings.accessibility.content" },
+    { "type": "text", "id": "accessibility_info", "label": "t:sections.slideshow.settings.accessibility.label", "info": "t:sections.slideshow.settings.accessibility.info", "default": "t:sections.slideshow.settings.accessibility.default" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "t:sections.slideshow.blocks.slide.name",
+      "limit": 5,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "t:sections.slideshow.blocks.slide.settings.image.label" },
+        { "type": "range", "id": "image_overlay_opacity", "min": 0, "max": 100, "step": 10, "unit": "%", "label": "t:sections.slideshow.blocks.slide.settings.image_overlay_opacity.label", "default": 0 },
+        { "type": "header", "content": "t:sections.slideshow.blocks.slide.settings.header_text.content" },
+        { "type": "inline_richtext", "id": "heading", "default": "t:sections.slideshow.blocks.slide.settings.heading.default", "label": "t:sections.slideshow.blocks.slide.settings.heading.label" },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+            { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+            { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" },
+            { "value": "hxl", "label": "t:sections.all.heading_size.options__4.label" },
+            { "value": "hxxl", "label": "t:sections.all.heading_size.options__5.label" }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
+        },
+        { "type": "inline_richtext", "id": "subheading", "default": "t:sections.slideshow.blocks.slide.settings.subheading.default", "label": "t:sections.slideshow.blocks.slide.settings.subheading.label" },
+        { "type": "header", "content": "t:sections.slideshow.blocks.slide.settings.header_button.content" },
+        { "type": "text", "id": "button_label", "default": "t:sections.slideshow.blocks.slide.settings.button_label.default", "label": "t:sections.slideshow.blocks.slide.settings.button_label.label", "info": "t:sections.slideshow.blocks.slide.settings.button_label.info" },
+        { "type": "url", "id": "link", "label": "t:sections.slideshow.blocks.slide.settings.link.label" },
+        { "type": "checkbox", "id": "button_style_secondary", "label": "t:sections.slideshow.blocks.slide.settings.secondary_style.label", "default": false },
+        { "type": "header", "content": "t:sections.slideshow.blocks.slide.settings.header_layout.content" },
+        { "type": "checkbox", "id": "show_text_box", "label": "t:sections.slideshow.blocks.slide.settings.show_text_box.label", "default": true },
+        {
+          "type": "select",
+          "id": "box_align",
+          "options": [
+            { "value": "top-left", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__1.label" },
+            { "value": "top-center", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__2.label" },
+            { "value": "top-right", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__3.label" },
+            { "value": "middle-left", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__4.label" },
+            { "value": "middle-center", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__5.label" },
+            { "value": "middle-right", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__6.label" },
+            { "value": "bottom-left", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__7.label" },
+            { "value": "bottom-center", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__8.label" },
+            { "value": "bottom-right", "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__9.label" }
+          ],
+          "default": "middle-center",
+          "label": "t:sections.slideshow.blocks.slide.settings.box_align.label"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "options": [
+            { "value": "left", "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.option_1.label" },
+            { "value": "center", "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.option_2.label" },
+            { "value": "right", "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.option_3.label" }
+          ],
+          "default": "center",
+          "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.label"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment_mobile",
+          "options": [
+            { "value": "left", "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.options__1.label" },
+            { "value": "center", "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.options__2.label" },
+            { "value": "right", "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.options__3.label" }
+          ],
+          "default": "center",
+          "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.label"
+        },
+        { "type": "header", "content": "Colors on mobile" },
+        { "type": "color", "id": "back_color", "label": "Background color" },
+        { "type": "color", "id": "text_color", "label": "Text color" },
+        { "type": "color", "id": "btn_color", "label": "Button background color" },
+        { "type": "color", "id": "btn_text_color", "label": "Button text color" },
+        { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" }
+      ]
+    },
+    {
+      "type": "hero_composed",
+      "name": "Composed hero",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "back_image",
+          "label": "Background image"
+        },
+        {
+          "type": "text",
+          "id": "text1",
+          "label": "Heading text 1"
+        },
+        {
+          "type": "text",
+          "id": "text2",
+          "label": "Text 2"
+        },
+        {
+          "type": "text",
+          "id": "text3",
+          "label": "Text 3"
+        },
+        {
+          "type": "text",
+          "id": "text4",
+          "label": "Text 4"
+        },
+        {
+          "type": "text",
+          "id": "text5",
+          "label": "Text 5"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_1",
+          "label": "Button text 1"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_1",
+          "label": "Button link 1"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_2",
+          "label": "Button text 2"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_2",
+          "label": "Button link 2"
+        },
+        {
+          "type": "text",
+          "id": "corner_text_1",
+          "label": "Corner line 1"
+        },
+        {
+          "type": "text",
+          "id": "corner_text_2",
+          "label": "Corner line 2"
+        },
+        {
+          "type": "text",
+          "id": "corner_price",
+          "label": "Price"
+        },
+        {
+          "type": "text",
+          "id": "corner_compared_price",
+          "label": "Compared_at Price"
+        },
+        {
+          "type": "color",
+          "id": "corner_color",
+          "label": "Corner text color (Desktop)"
+        },
+        {
+          "type": "color",
+          "id": "corner_color_mob",
+          "label": "Corner text color (Mobile)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom slideshow 2",
+      "blocks": [
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

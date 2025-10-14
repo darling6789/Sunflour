@@ -1,0 +1,185 @@
+<div class="m-footer-social">
+    <div class="m-footer-copyright">
+        {{ section.settings.copyright }}
+    </div>
+    <div class="m-footer-divider"></div>
+    <div class="m-footer-social-list">
+        {%- if settings.social_instagram_link != blank -%}
+            <li class="list-social__item">
+                <a {% if settings.social_instagram_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_instagram_link }}"{% endif %} class="link link--text list-social__link icon-instagram">
+                    {%- render 'icon-instagram' -%}
+                    <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}
+        <li class="list-social__item">
+                <a href="{{ settings.social_facebook_link }}" class="link link--text list-social__link icon-facebook">
+                    {%- render 'icon-facebook' -%}
+                    <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+                </a>
+            </li>
+        {%- endif -%}        
+        {%- if settings.social_twitter_link != blank -%}
+            <li class="list-social__item">
+                <a {% if settings.social_twitter_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_twitter_link }}"{% endif %} class="link link--text list-social__link icon-twitter">
+                    {%- render 'icon-twitter' -%}
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.social_youtube_link != blank -%}
+            <li class="list-social__item">
+                <a {% if settings.social_youtube_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_youtube_link }}"{% endif %} class="link link--text list-social__link icon-youtube">
+                {%- render 'icon-youtube' -%}
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.social_pinterest_link != blank -%}
+            <li class="list-social__item">
+                <a {% if settings.social_pinterest_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_pinterest_link }}"{% endif %} class="link link--text list-social__link icon-pinterest">
+                    {%- render 'icon-pinterest' -%}
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.social_tiktok_link != blank -%}
+            <li class="list-social__item">
+                <a {% if settings.social_tiktok_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_tiktok_link }}"{% endif %} class="link link--text list-social__link icon-tiktok">
+                    {%- render 'icon-tiktok' -%}
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.social_tumblr_link != blank -%}
+          <li class="list-social__item">
+                <a {% if settings.social_tumblr_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_tumblr_link }}"{% endif %} class="link link--text list-social__link icon-tumblr">
+                    {%- render 'icon-tumblr' -%}
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.social_snapchat_link != blank -%}
+            <li class="list-social__item">
+                <a {% if settings.social_snapchat_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_snapchat_link }}"{% endif %} class="link link--text list-social__link icon-snapchat">
+                    {%- render 'icon-snapchat' -%}
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.social_vimeo_link != blank -%}
+            <li class="list-social__item">
+                <a {% if settings.social_vimeo_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_vimeo_link }}"{% endif %} class="link link--text list-social__link icon-vimeo">
+                    {%- render 'icon-vimeo' -%}
+                </a>
+            </li>
+        {%- endif -%}
+    </div>
+</div>
+
+<style>
+.m-footer-social-section {
+	background: #000;
+	padding: 12px 7.5px 12px;
+}
+.m-footer-social {
+	max-width: 1920px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0;
+    margin: auto;
+}
+.m-footer-copyright p {
+    color: rgba(255, 255, 255, 0.60);
+    font-family: Legitima;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    width: max-content;
+    margin: 0;
+}
+.m-footer-copyright p em {
+    color: #FFF;
+    font-family: Legitima;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+}
+.m-footer-copyright p strong {
+    color: #FFF;
+    font-family: Legitima;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.m-footer-divider {
+	width: 100%;
+	display: block !important;
+	background: rgba(255, 255, 255, 0.30);
+	height: 1px;
+}
+.m-footer-social-list {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+}
+.m-footer-social-list .list-social__item {
+    line-height: 0;
+}
+.m-footer-social-list .list-social__item a {
+    text-decoration: none;
+    line-height: 0;
+}
+.m-footer-social-list .list-social__item::marker {
+    display: none;
+    content: none;
+}
+
+@media only screen and (max-width: 750px) {
+    .m-footer-social {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .m-footer-copyright p {
+        width: auto;
+    }
+    .m-footer-divider {
+        width: 100%;
+        display: block !important;
+        background: rgba(255, 255, 255, 0.30);
+        height: 1px;
+    }
+    .m-footer-social-list {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+</style>
+
+{% schema %}
+{
+    "name": "Custom footer social",
+    "class": "m-footer-social-section",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "copyright",
+            "label": "Copyright"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Custom footer social"
+        }
+    ]
+}
+{% endschema %}
