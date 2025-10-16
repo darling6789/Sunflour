@@ -18,11 +18,125 @@
                 <div class="m-featured-watch-collection-slider-left">{% render 'icon-left-arrow' %}</div>
                 <div class="m-featured-watch-collection-slider-right">{% render 'icon-right-arrow' %}</div>
             </div>
-            <a href="{{ section.settings.collection.url }}">{{ section.settings.link_text }}</a>
+            <a class="m-featured-watch-collection-link" href="{{ section.settings.collection.url }}">
+                <span>{{ section.settings.link_text }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <mask id="mask0_947_2844" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                        <rect width="24" height="24" fill="#D9D9D9"/>
+                    </mask>
+                    <g mask="url(#mask0_947_2844)">
+                        <path d="M14 18L12.6 16.55L16.15 13H4V11H16.15L12.6 7.45L14 6L20 12L14 18Z" fill="white"/>
+                    </g>
+                </svg>
+            </a>
         </div>
         
     </div>
 </div>
+
+<style>
+.m-featured-watch-collection-section {
+	width: 100%;
+	background-color: {{section.settings.back_color}};
+	padding-top: 80px;
+	padding-left: 80px;
+	padding-bottom: 80px;
+}
+.m-featured-watch-collection {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.m-featured-watch-product {
+	width: 700px;
+	padding: 10px 80px 40px;
+}
+.m-featured-watch-product>h2 {
+	color: #FFF;
+	font-family: Legitima;
+	font-size: 70px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	margin: 0;
+	margin-bottom: 20px;
+}
+.m-featured-watch-product-image {
+	display: block !important;
+	background-size: cover;
+	background-position: center;
+	width: 100%;
+	height: 550px;
+}
+.m-featured-watch-collection-slider-wrap {
+	display: flex;
+	width: 500px;
+}
+.m-featured-watch-collection-slider-wrap>h3 {
+	color: #FFF;
+	font-family: Legitima;
+	font-size: 29px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	margin: 0;
+	margin-bottom: 30px;
+}
+.m-featured-watch-collection-slider-wrap {
+	width: calc(100% - 1200px);
+	padding-left: 100px;
+}
+.m-featured-watch-collection-slider-wrap>h3 {
+	color: #FFF;
+	font-family: Legitima;
+	font-size: 32px;
+	font-style: italic;
+	font-weight: 500;
+	line-height: normal;
+	margin: 0;
+	margin-bottom: 30px;
+}
+.m-featured-watch-collection-slider {
+	width: 100%;
+}
+.m-featured-watch-collection-bottom {
+	margin-top: 30px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 50px;
+}
+.m-featured-watch-collection-navigation {
+	width: 380px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.m-featured-watch-collection-link {
+	display: flex;
+	text-decoration: none;
+	gap: 10px;
+	justify-content: flex-end;
+	align-items: center;
+	width: calc(100% - 450px);
+}
+.m-featured-watch-collection-link>span {
+	color: #FFF;
+	font-family: Montserrat;
+	font-size: 14px;
+	font-style: italic;
+	font-weight: 400;
+	line-height: 12px; /* 85.714% */
+}
+.m-featured-watch-collection-link svg {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+}
+
+</style>
 
 <script>
 $(document).ready(function(){
