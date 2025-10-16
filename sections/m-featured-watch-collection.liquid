@@ -1,12 +1,60 @@
 <div class="m-featured-watch-collection">
-
+    <div class="m-featured-watch-product">
+        <h2>{{ section.settings.title }}</h2>
+        <div class="m-featured-watch-product-image" style="background-image: url({{ section.settings.product.featured_image | img_url: 'master' }})"></div>
+    </div>
+    <div class="m-featured-watch-description">
+        <h3>{{ section.settings.des_title }}</h3>
+    </div>
+    <div class="m-featured-watch-collection-slider-wrap">
+        <h3>{{ section.settings.col_title }}</h3>
+        <div class="m-featured-watch-collection-slider">
+            {% for product in section.settings.collection.products %}
+                {% render 'm-product-card', product: product %}
+            {% endfor %}
+        </div>
+        <div class="m-featured-watch-collection-bottom">
+            <div class="m-featured-watch-collection-navigation">
+                <div class="m-featured-watch-collection-slider-left">{% render 'icon-left-arrow' %}</div>
+                <div class="m-featured-watch-collection-slider-right">{% render 'icon-right-arrow' %}</div>
+            </div>
+            <a href="{{ section.settings.collection.url }}">{{ section.settings.link_text }}</a>
+        </div>
+        
+    </div>
 </div>
+
+<script>
+$(document).ready(function(){
+  $('.m-featured-watch-collection-slider').slick({
+    slidesToScroll: 1.5,
+    variableWidth: true,
+    infinite: true,
+    arrows: true,
+    dots: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    prevArrow: '.m-featured-watch-collection-slider-left',
+    nextArrow: '.m-featured-watch-collection-slider-right'
+  });
+});    
+</script>
 
 {% schema %}
 {
     "name": "Featured watch collection",
     "class": "m-featured-watch-collection-section",
     "settings": [
+        {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+        },
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+        },
         {
             "type": "color",
             "id": "back_color",
