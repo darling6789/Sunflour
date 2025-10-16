@@ -17,25 +17,22 @@
         "padding_bottom": 28
       }
     },
-    "m_rolex_collection_Hq7DzR": {
-      "type": "m-rolex-collection",
-      "name": "Featured Rolex collection",
+    "m_featured_watch_collection_W4JAGh": {
+      "type": "m-featured-watch-collection",
+      "name": "Featured watch collection",
       "settings": {
-        "bg": "#1f1f21",
-        "left_heading": "Featured Rolex",
         "product": "",
-        "show_vendor": false,
-        "preowned_badge": true,
-        "show_buy": true,
-        "right_heading": "Other Pre-Owned Rolex in Stock",
         "collection": "",
-        "collection_link_text": "Shop all Pre-Owned Rolex",
-        "max_cards": 10
+        "back_color": "",
+        "title": "",
+        "des_title": "",
+        "col_title": "",
+        "link_text": ""
       }
     }
   },
   "order": [
     "main",
-    "m_rolex_collection_Hq7DzR"
+    "m_featured_watch_collection_W4JAGh"
   ]
 }
