@@ -7,11 +7,86 @@
       padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
     }
   }
+
+  /* Collection Breadcrumbs Styles */
+  .breadcrumbs {
+    margin-top: 24px;
+    margin-bottom: 1rem;
+  }
+
+  .breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: #2F2F2F;
+    font-family: Montserrat;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    text-transform: uppercase;
+  }
+
+  .breadcrumbs__item {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumbs__item:not(:last-child)::after {
+    content: '/';
+    margin: 0 0.5rem;
+    color: #2F2F2F;
+  }
+
+  .breadcrumbs__link {
+    color: #2F2F2F;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumbs__link:hover {
+    color: #2F2F2F;
+    text-decoration: underline;
+  }
+
+  .breadcrumbs__item--current {
+    color: #2F2F2F;
+    font-weight: 300;
+  }
+
+  @media screen and (max-width: 749px) {
+    .breadcrumbs {
+      margin-top: 20px;
+    }
+    
+    .breadcrumbs__item:not(:last-child)::after {
+      margin: 0 0.25rem;
+    }
+  }
 {%- endstyle -%}
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     <div class="collection-hero__text-wrapper">
+      {%- comment -%} Breadcrumbs {%- endcomment -%}
+      {%- if section.settings.show_breadcrumbs -%}
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+              <a href="{{ routes.root_url }}" class="breadcrumbs__link">
+                Home
+              </a>
+            </li>
+            <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+              {{ collection.title | escape }}
+            </li>
+          </ol>
+        </nav>
+      {%- endif -%}
+
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
         {{- collection.title | escape -}}
@@ -53,6 +128,12 @@
     {
       "type": "paragraph",
       "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "default": true,
+      "label": "Show breadcrumbs"
     },
     {
       "type": "checkbox",

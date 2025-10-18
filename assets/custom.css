@@ -394,27 +394,6 @@ h1.collection-hero__title {
 }
 
 /* Product page */
-<style>
-.product #MediaGallery-{{section.id}} {
-  display: inline-flex;
-  width: 100%;
-}
-.product #GalleryViewer-{{section.id}} {
-  order: 1;
-  width: 80%;
-}
-.product #GalleryThumbnails-{{section.id}} {
-  width: 20%;
-  height: 100%;
-  flex-direction: column;
-}
-.product #Slider-Thumbnails-{{section.id}} {
-  flex-direction: column;
-  width: 100%;
-  height: 40vw;
-  overflow: scroll;
-  display: inline-flex;
-}
 .product .product__media {
   background: #fff;
 }
@@ -499,7 +478,7 @@ h1.collection-hero__title {
     gap: 24px;
     align-items: flex-start;
     justify-content: flex-start;
-    margin: 30px 0;.
+    margin: 30px 0;
     min-width: 500px;
 }
 .guarantee-badge {
@@ -585,7 +564,7 @@ select.facet-filters__sort:focus-visible {
     font-family: Montserrat;
     font-size: 17.116px;
     font-style: normal;
-    font-weight: 600;`
+    font-weight: 600;
     line-height: normal;
 }
 
@@ -605,10 +584,6 @@ select.facet-filters__sort:focus-visible {
 }
 
 @media only screen and (max-width: 749px) {
-  .product #GalleryViewer-{{section.id}} {
-    order: 1;
-    width: 100%;
-  }
   .product .accordion__title {
     font-family: Montserrat;
     font-size: 20px;
@@ -680,7 +655,8 @@ select.facet-filters__sort:focus-visible {
     }
 
 }
-</style>
+
+/*
 
 /*
  * The Typekit service used to deliver this font or fonts for use on websites
@@ -711,3 +687,122 @@ font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
 }
 
 .tk-legitima { font-family: "legitima",serif; } */
+
+/* Product page breadcrumbs */
+.breadcrumbs--product {
+  margin-top: 0 !important;
+  margin-bottom: 40px !important;
+}
+
+.breadcrumbs--product .breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #2F2F2F;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.breadcrumbs--product .breadcrumbs__item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs--product .breadcrumbs__item:not(:last-child)::after {
+  content: '/';
+  margin: 0 0.5rem;
+  color: #2F2F2F;
+}
+
+.breadcrumbs--product .breadcrumbs__link {
+  color: #2F2F2F;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs--product .breadcrumbs__link:hover {
+  color: #2F2F2F;
+  text-decoration: underline;
+}
+
+.breadcrumbs--product .breadcrumbs__item--current {
+  color: #2F2F2F;
+  font-weight: 300;
+}
+
+@media screen and (max-width: 749px) {
+  .breadcrumbs--product {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .breadcrumbs--product .breadcrumbs__item:not(:last-child)::after {
+    margin: 0 0.25rem;
+  }
+}
+
+/* Collection page breadcrumbs */
+.breadcrumbs {
+  margin-top: 24px;
+  margin-bottom: 1rem;
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #2F2F2F;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.breadcrumbs__item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs__item:not(:last-child)::after {
+  content: '/';
+  margin: 0 0.5rem;
+  color: #2F2F2F;
+}
+
+.breadcrumbs__link {
+  color: #2F2F2F;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs__link:hover {
+  color: #2F2F2F;
+  text-decoration: underline;
+}
+
+.breadcrumbs__item--current {
+  color: #2F2F2F;
+  font-weight: 300;
+}
+
+@media screen and (max-width: 749px) {
+  .breadcrumbs {
+    margin-top: 20px;
+  }
+  
+  .breadcrumbs__item:not(:last-child)::after {
+    margin: 0 0.25rem;
+  }
+}
