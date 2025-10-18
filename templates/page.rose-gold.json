@@ -1,0 +1,282 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "m_special_jewelry_hero_a6D7jr": {
+      "type": "m-special-jewelry-hero",
+      "name": "Special fine jewelry hero",
+      "settings": {
+        "back_image": "shopify://shop_images/special-jewelry-hero-min.jpg",
+        "heading": "White Gold Fine Jewelry"
+      }
+    },
+    "m_collection_list_2_Ex9aff": {
+      "type": "m-collection-list-2",
+      "blocks": {
+        "collection_7G9AGY": {
+          "type": "collection",
+          "settings": {
+            "collection": "bracelets",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_rYnxxQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "earrings",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX-min_a0ae7008-da45-4564-a0e8-65f9d5ad5912.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_Fn4FH6": {
+          "type": "collection",
+          "settings": {
+            "collection": "necklaces-pendants",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_1_-min_a2df6dda-01e0-4710-aa87-4074181016e7.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_tXHQBr": {
+          "type": "collection",
+          "settings": {
+            "collection": "rings",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_2_-min_5eb49db9-c71b-4a70-818f-f818a4a67073.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_FBPdRz": {
+          "type": "collection",
+          "settings": {
+            "collection": "engagement",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_L7pCJ3": {
+          "type": "collection",
+          "settings": {
+            "collection": "bands",
+            "title": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_7G9AGY",
+        "collection_rYnxxQ",
+        "collection_Fn4FH6",
+        "collection_tXHQBr",
+        "collection_FBPdRz",
+        "collection_L7pCJ3"
+      ],
+      "name": "Custom collection list 2",
+      "settings": {
+        "heading": "Shop White Gold by Product Type"
+      }
+    },
+    "m_jewelry_trust_CBGxUP": {
+      "type": "m-jewelry-trust",
+      "blocks": {
+        "badge_nk9ccC": {
+          "type": "badge",
+          "settings": {
+            "image": "shopify://shop_images/Trust_badge_3.svg",
+            "heading": "lifetime warranty",
+            "description": "Included with all 10K, 14K, and 18K gold and silver jewelry!"
+          }
+        },
+        "badge_gMtUDA": {
+          "type": "badge",
+          "settings": {
+            "image": "shopify://shop_images/Trust_badge_2.svg",
+            "heading": "Fast Insured Shipping",
+            "description": "Rest easy with insured shipping!"
+          }
+        },
+        "badge_YCNehm": {
+          "type": "badge",
+          "settings": {
+            "image": "shopify://shop_images/Trust_badge_1.svg",
+            "heading": "easy Returns",
+            "description": "7 day return window for online purchases!"
+          }
+        }
+      },
+      "block_order": [
+        "badge_nk9ccC",
+        "badge_gMtUDA",
+        "badge_YCNehm"
+      ],
+      "name": "Jewelry landing trust",
+      "settings": {
+        "image": "shopify://shop_images/Quality_Trust-min.png",
+        "heading": "Quality You Can Trust"
+      }
+    },
+    "m_featured_collection_2_mwnBJJ": {
+      "type": "m-featured-collection-2",
+      "name": "Custom collection 2",
+      "settings": {
+        "collection": "white-gold-earrings",
+        "image": "shopify://shop_images/earrings-background.png",
+        "image_left": false,
+        "heading": "Earrings",
+        "back_color": "#f9f5f7",
+        "collection_link_text": "Shop All White Gold Earrings",
+        "collection_link": "shopify://collections/white-gold-earrings"
+      }
+    },
+    "m_featured_product_47KrmH": {
+      "type": "m-featured-product",
+      "name": "Custom featured product",
+      "settings": {
+        "back_color": "#f8feff",
+        "product": "",
+        "image": "shopify://shop_images/blueberry-sapphire-vanillagold.jpg",
+        "title": "Le Vian Vanilla Gold",
+        "description": "<p>One of Le Vian's delicious gold metal shades is their unique Vanilla Gold®. By creating a blend with yellow gold using more of a strong white gold alloy, they achieve a very brilliant white color that is sure to dazzle in any combination. <br/><br/>Especially stunning with Vanilla Gold are cool harmonious combinations such as their Costa Smeralda Emeralds™ or Blueberry Sapphires™. For a combination that instead hits the craving for contrast, look no further than their warm Chocolate Diamonds®.<br/></p>",
+        "link_text": "",
+        "link": "",
+        "collection_heading": "More Vanilla Gold Designs",
+        "collection": "le-vian-vanilla-gold",
+        "type_engagement_ring": false,
+        "type_wedding_band": false,
+        "type_womens_wedding_band": false,
+        "type_fashion_ring": false,
+        "type_ring": false,
+        "type_earring": false,
+        "type_gold_earring": false,
+        "type_diamond_earring": false,
+        "type_gem_earring": false,
+        "type_bracelet": false,
+        "type_bangle": false,
+        "type_necklace": false,
+        "type_pendant": false,
+        "type_watch": false,
+        "col_text": "Shop All Le Vian Vanilla Gold"
+      }
+    },
+    "m_featured_collection_2_rc9NBr": {
+      "type": "m-featured-collection-2",
+      "name": "Custom collection 2",
+      "settings": {
+        "collection": "white-gold-bracelets",
+        "image": "shopify://shop_images/bracelet-wg.png",
+        "image_left": true,
+        "heading": "Bracelets",
+        "back_color": "#efeee8",
+        "collection_link_text": "Shop All White Gold Bracelets",
+        "collection_link": "shopify://collections/white-gold-bracelets"
+      }
+    },
+    "m_featured_collection_1_Yi6Lic": {
+      "type": "m-featured-collection-1",
+      "name": "Custom collection 1",
+      "settings": {
+        "collection": "white-gold-necklaces-pendants",
+        "heading": "Necklaces",
+        "back_color": "",
+        "collection_link_text": "Shop All White Gold Necklaces",
+        "collection_link": "shopify://collections/white-gold-necklaces-pendants"
+      }
+    },
+    "m_featured_collection_2_bhnbte": {
+      "type": "m-featured-collection-2",
+      "name": "Custom collection 2",
+      "settings": {
+        "collection": "white-gold-rings",
+        "image": "shopify://shop_images/special-jewelry-hero-min.jpg",
+        "image_left": false,
+        "heading": "Rings",
+        "back_color": "#f8f6f2",
+        "collection_link_text": "Shop All White Gold Rings",
+        "collection_link": "shopify://collections/white-gold-rings"
+      }
+    },
+    "m_featured_collection_1_Nir7Ca": {
+      "type": "m-featured-collection-1",
+      "name": "Custom collection 1",
+      "settings": {
+        "collection": "white-gold-jewelry",
+        "heading": "All White Gold Jewelry",
+        "back_color": "",
+        "collection_link_text": "Shop All White Gold Jewelry",
+        "collection_link": "shopify://collections/white-gold-jewelry"
+      }
+    },
+    "175801863453b60daa": {
+      "type": "apps",
+      "blocks": {
+        "appio_google_reviews_carousel1_mxCPrx": {
+          "type": "shopify://apps/appio-google-reviews/blocks/carousel1/25437a0d-2feb-4f5f-b07d-e313afa21656",
+          "settings": {
+            "title_type": "h2",
+            "show_callout_layout": false,
+            "card_background_color": "#ffffff",
+            "card_text_color": "#151515",
+            "star_color": "#e1b648",
+            "max_line_review_content": 3,
+            "auto_scroll": true,
+            "slide_delay": 3,
+            "show_navigation_bar": false,
+            "show_reviewer_avatar": true,
+            "show_reviewer_name_detail": true,
+            "show_review_date": false,
+            "show_verified_badge": false,
+            "show_review_photos": false,
+            "show_liked_review": false,
+            "show_business_summary": false,
+            "show_business_summary_rating": true,
+            "show_business_summary_total_review": true,
+            "show_business_summary_summary_rating": true,
+            "business_summary_color": "#3a454f",
+            "show_leave_review_button": false,
+            "button_color": "#ffffff",
+            "button_background": "#4285f4"
+          }
+        }
+      },
+      "block_order": [
+        "appio_google_reviews_carousel1_mxCPrx"
+      ],
+      "custom_css": [
+        ".page-width {background: #fff;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "m_special_jewelry_hero_a6D7jr",
+    "m_collection_list_2_Ex9aff",
+    "m_jewelry_trust_CBGxUP",
+    "m_featured_collection_2_mwnBJJ",
+    "m_featured_product_47KrmH",
+    "m_featured_collection_2_rc9NBr",
+    "m_featured_collection_1_Yi6Lic",
+    "m_featured_collection_2_bhnbte",
+    "m_featured_collection_1_Nir7Ca",
+    "175801863453b60daa"
+  ]
+}
