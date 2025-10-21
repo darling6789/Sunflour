@@ -6,10 +6,17 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
-    }
+    },
+    "pre-owned-rolex-disclaimer1": {
+      "type": "pre-owned-rolex-disclaimer",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
   },
   "order": [
-    "pre-owned-rolex-header"
-    
+    "pre-owned-rolex-header",
+    "pre-owned-rolex-disclaimer1"    
   ]
 }

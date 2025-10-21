@@ -1,0 +1,51 @@
+<div class="disclaimer">
+  <p class="text-wrapper">
+    Marc Robinson Jewelers is not an authorized dealer, distributor, or affiliated in any way with Rolex S.A., Rolex
+    USA, or any of its subsidiaries. Rolex is a registered trademark of Rolex S.A. Any trademarks, brand names, or logos
+    mentioned are for identification purposes only and remain the property of their respective owners. All Rolex watches
+    sold by Marc Robinson Jewelers are pre-owned, authentic Rolex timepieces. Rolex has no obligation to service watches
+    sold by Marc Robinson Jewelers. For Rolex’s official terms and services, please visit an authorized Rolex dealer or
+    contact Rolex directly.
+  </p>
+</div>
+
+<style>
+  :root {
+    --variable-collection-notblack: rgba(21, 21, 21, 1);
+  }
+  .disclaimer {
+    display: flex;
+    padding: 20px 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    background-color: var(--variable-collection-notblack);
+  }
+
+  .disclaimer .text-wrapper {
+    max-width: 1200px;
+    margin:auto;
+    align-self: stretch;
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 140%; /* 16.8px */
+    
+    {% comment %} text-align: center; {% endcomment %}
+  }
+  @media (max-width: 1080px) {
+    .disclaimer .text-wrapper {
+      padding: 0 20px;
+    }
+</style>
+
+{% schema %}
+{
+  "name": "POR - Disclaimer",
+  "settings": []
+}
+{% endschema %}
