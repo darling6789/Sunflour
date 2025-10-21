@@ -1,0 +1,235 @@
+<main class="hero" role="main">
+  <section class="hero-container">
+    <div class="hero-content">
+      <div class="hero-content-bg">
+        <div class="hero-text-group">
+          <h1 class="hero-title">{{ section.settings.hero_title }}</h1>
+          <p class="hero-description">
+            {{ section.settings.hero_description }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <nav class="hero-actions" role="navigation" aria-label="Primary actions">
+      <div class="hero-action-item">
+        <a href="{{ section.settings.button_one_url }}" class="hero-button" aria-label="{{ section.settings.button_one_text }}">
+          <span class="hero-button-text">{{ section.settings.button_one_text }}</span>
+        </a>
+      </div>
+      <div class="hero-action-item">
+        <a href="{{ section.settings.button_two_url }}" class="hero-button" aria-label="{{ section.settings.button_two_text }}">
+          <span class="hero-button-text">{{ section.settings.button_two_text }}</span>
+        </a>
+      </div>
+    </nav>
+  </section>
+</main>
+
+<style>
+  :root {
+    --variable-collection-primary-light: rgba(248, 246, 242, 1);
+    --variable-collection-primary-accent: rgba(120, 104, 111, 1);
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0px 468px;
+    position: relative;
+    background-image: url({{ section.settings.hero_image | img_url: '1600x' }});
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+
+  .hero .hero-container {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 41px;
+    padding: 26px 0px 0px;
+    flex: 1;
+    flex-grow: 1;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero .hero-content {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0 0 auto;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero .hero-content-bg {
+    position: relative;
+    width: 504px;
+    height: 229px;
+    border-radius: 252px / 114.5px;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.2) 46%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
+  .hero .hero-text-group {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    top: 48px;
+    left: calc(50% - 188px);
+    align-items: center;
+    position: relative;
+  }
+
+  .hero .hero-title {
+    position: relative;
+    align-self: stretch;
+    margin-top: -1px;
+    margin-bottom: 0;
+    font-family: {{ shop.fonts.heading_font.family }}, {{ shop.fonts.heading_font.fallback_families }};
+    font-weight: 400;
+    font-style: italic;
+    color: #151515;
+    font-size: 34px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 37.4px;
+  }
+
+  .hero .hero-description {
+    position: relative;
+    margin:0px;
+    width: 376px;
+    font-family: Montserrat;
+    font-weight: 600;
+    color: #151515;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 27.2px;
+  }
+
+  .hero .hero-actions {
+    display: flex;
+    width: 400px;
+    justify-content: center;
+    gap: 30px;
+    flex: 0 0 auto;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero .hero-action-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+  }
+
+  .hero .hero-button {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 32px;
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+    background-color: var(--variable-collection-primary-light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .hero .hero-button-text {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: Montserrat;, {{ shop.fonts.body_font.fallback_families }};
+    font-weight: 500;
+    color: #151515;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Pre Owned Rolex Hero",
+  "class": "pre-owned-rolex-hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Find Your Dream Watch"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_description",
+      "label": "Hero Description",
+      "default": "Shop our in-stock Pre-Owned Rolex Watches, or work with one of our experts to locate the Pre-Owned Rolex of your dreams."
+    },
+    {
+      "type": "header",
+      "content": "Button 1 Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_one_text",
+      "label": "Button 1 Text",
+      "default": "Shop In-Stock"
+    },
+    {
+      "type": "url",
+      "id": "button_one_url",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Button 2 Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_two_text",
+      "label": "Button 2 Text",
+      "default": "Find My Watch"
+    },
+    {
+      "type": "url",
+      "id": "button_two_url",
+      "label": "Button 2 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pre Owned Rolex - Hero",
+      "settings": {
+        "hero_title": "Find Your Dream Watch",
+        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches, or work with one of our experts to locate the Pre-Owned Rolex of your dreams.",
+        "button_one_text": "Shop In-Stock",
+        "button_two_text": "Find My Watch"
+      }
+    }
+  ]
+}
+{% endschema %}
