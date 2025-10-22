@@ -16,6 +16,21 @@
 {% assign available_letters_array = available_letters | split: ',' %}
 {% assign letter_products_array = letter_products | split: ',' %}
 
+{% comment %} Sort letters alphabetically {% endcomment %}
+{% assign sorted_letters = '' %}
+{% assign all_letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
+{% for letter in all_letters %}
+    {% for available_letter in available_letters_array %}
+        {% unless available_letter == blank %}
+            {% if available_letter == letter %}
+                {% assign sorted_letters = sorted_letters | append: letter | append: ',' %}
+                {% break %}
+            {% endif %}
+        {% endunless %}
+    {% endfor %}
+{% endfor %}
+{% assign sorted_letters_array = sorted_letters | split: ',' %}
+
 <div class="m-pendants-select-letter">
     <div class="m-pendants-select-letter-content">
         <!-- Left Side: Product Image/Video -->
