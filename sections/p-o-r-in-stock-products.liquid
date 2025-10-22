@@ -1,8 +1,16 @@
 <div class="in-stock-products-container">
   <div class="ispc-header">
-    <h2>Pre-Owned Rolex Watches</h2>
+    <h2>{{ section.settings.section_title }}</h2>
   </div>
-  <div class="ispc-product-grid"></div>
+  <div class="ispc-product-grid">
+    {% if section.settings.collection != blank %}
+      {% for product in section.settings.collection.products %}
+        {% if product.available %}
+          {% render 'product-card', product: product %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
 </div>
 <style>
   .in-stock-products-container {
@@ -13,6 +21,7 @@
     align-items: center;
     gap: 36px;
     align-self: stretch;
+    background-color: #ffffff;
   }
   .in-stock-products-container .ispc-header {
     display: flex;
@@ -31,9 +40,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: 100%; /* 32px */
+    margin: 0;
   }
   .in-stock-products-container .ispc-product-grid {
     display: flex;
+    margin: auto;
     max-width: 1200px;
     justify-content: center;
     align-items: flex-start;
@@ -42,10 +53,367 @@
     align-self: stretch;
     flex-wrap: wrap;
   }
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    width: 262.27px;
+    align-items: flex-start;
+    position: relative;
+    background-color: #fcfcfc;
+    border-radius: 14.3px;
+    overflow: hidden;
+    box-shadow: 1.787px 1.787px 8.936px 0 rgba(34, 34, 34, 0.10);
+
+  }
+  .product-card .product-images {
+    display: flex;
+    flex-direction: column;
+    height: 262.27px;
+    align-items: flex-start;
+    gap: 69.7px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: #c5c5c5;
+    overflow: hidden;
+  }
+  .product-card .product-image-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+    margin-right: -1049.08px;
+    background-image: url(./img/image-2.png);
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+  .product-card .image-bg-1 {
+    width: 262.27px;
+    background-image: url(./img/image.png);
+    background-size: cover;
+    background-position: 50% 50%;
+    position: relative;
+    align-self: stretch;
+  }
+  .product-card .image-bg-2 {
+    width: 262.27px;
+    background-image: url(./img/frame-183320.png);
+    background-size: cover;
+    background-position: 50% 50%;
+    position: relative;
+    align-self: stretch;
+  }
+  .product-card .image-bg-3 {
+    width: 262.27px;
+    background-image: url(./img/frame-183321.png);
+    background-size: cover;
+    background-position: 50% 50%;
+    position: relative;
+    align-self: stretch;
+  }
+  .product-card .image-bg-4 {
+    width: 262.27px;
+    position: relative;
+    align-self: stretch;
+  }
+  .product-card .availability-tag {
+    position: absolute;
+    top: 15px;
+    left: 186px;
+    width: 65px;
+    height: 19px;
+    background-color: #1b8168;
+    border-radius: 3.57px;
+    overflow: hidden;
+    border: 0.71px solid;
+    border-color: transparent;
+  }
+  .product-card .availability-badge-text {
+    position: absolute;
+    top: 3px;
+    left: 8px;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 10.7px;
+    letter-spacing: 0;
+    line-height: 14.3px;
+    white-space: nowrap;
+  }
+  .product-card .filter-button {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 1.79px;
+    position: absolute;
+    top: 223px;
+    left: 11px;
+    background-color: #ffffff80;
+    border-radius: 4.47px;
+  }
+  .product-card .filter-icon {
+    position: relative;
+    width: 17.87px;
+    height: 17.87px;
+    aspect-ratio: 1;
+  }
+  .product-card .product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14.3px 21.45px 21.45px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .product-card .product-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    flex: 0 0 auto;
+    position: relative;
+    align-self: stretch;
+  }
+  .product-card .product-title {
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    height: 21.45px;
+  }
+  .product-card .product-title-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 16.1px;
+    letter-spacing: 0;
+    line-height: 21.45px;
+    white-space: nowrap;
+  }
+  .product-card .product-specs-header {
+    align-items: flex-end;
+    gap: 1.79px;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    position: relative;
+  }
+  .product-card .spec-detail {
+    align-items: flex-end;
+    justify-content: center;
+    width: fit-content;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 400;
+    color: #1a1a1a;
+    font-size: 10.7px;
+    letter-spacing: 0.45px;
+    line-height: 12.5px;
+    white-space: nowrap;
+    display: flex;
+    position: relative;
+  }
+  .product-card .divider {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 200;
+    color: #78686f;
+    font-size: 15.2px;
+    letter-spacing: 0.45px;
+    line-height: 15.2px;
+    white-space: nowrap;
+  }
+  .product-card .divider-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 7.15px 0px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .product-card .divider-line {
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    height: 1px;
+    margin-bottom: -0.11px;
+    border-top-width: 0.71px;
+    border-top-style: solid;
+    border-color: #c5c5c5;
+  }
+  .product-card .specs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5.36px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .product-card .spec-row {
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    position: relative;
+  }
+  .product-card .spec-row:first-child {
+    padding: 0px -1.36e-5px 0px 0px;
+  }
+  .product-card .spec-row:nth-child(2) {
+    padding: 0px -3.41e-6px 0px 0px;
+  }
+  .product-card .spec-row:nth-child(3) {
+    padding: 0px -6.82e-6px 0px 0px;
+  }
+  .product-card .spec-label {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 400;
+    color: #707070;
+    font-size: 12.5px;
+    letter-spacing: 0.71px;
+    line-height: 12.5px;
+    white-space: nowrap;
+  }
+  .product-card .spec-value {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 400;
+    color: #1a1a1a;
+    font-size: 12.5px;
+    letter-spacing: 0;
+    line-height: 12.5px;
+    white-space: nowrap;
+  }
+  .product-card .divider-section-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 3.57px 0px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .product-card .divider-line-2 {
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    height: 1px;
+    margin-bottom: -0.11px;
+    border-top-width: 0.71px;
+    border-top-style: solid;
+    border-color: transparent;
+  }
+  .product-card .price-action-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px -1.36e-5px 0px 0px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .product-card .price-container {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3.57px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .product-card .product-price {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'EB Garamond';
+    font-weight: 500;
+    color: #78686f;
+    font-size: 32.2px;
+    letter-spacing: 0;
+    line-height: 21.4px;
+    white-space: nowrap;
+  }
+  .product-card .btn-primary {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 7.15px 19.66px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #78686f;
+    border-radius: 3.57px;
+  }
+  .product-card .btn-text {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 12.5px;
+    letter-spacing: 0;
+    line-height: 17.9px;
+    white-space: nowrap;
+  }
 </style>
 {% schema %}
 {
   "name": "POR in stock products",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Pre-Owned Rolex Watches"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "POR in stock products",
+      "settings": {
+        "section_title": "Pre-Owned Rolex Watches"
+      }
+    }
+  ]
 }
 {% endschema %}
