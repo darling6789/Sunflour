@@ -100,9 +100,9 @@
         <div class="m-pendants-comparison-carousel">
             <div class="m-pendants-carousel-container">
                 <div class="m-pendants-carousel-slider">
-                    {% for letter in available_letters_array %}
+                    {% for letter in sorted_letters_array %}
                         {% unless letter == blank %}
-                            <div class="m-pendants-carousel-slide" data-letter="{{ letter }}" {% if forloop.first %}class="active"{% endif %}>
+                            <div class="m-pendants-carousel-slide" data-letter="{{ letter }}" {% if letter == 'A' %}class="active"{% endif %}>
                                 <div class="m-pendants-comparison-image">
                                     {% for product in collection.products %}
                                         {% assign product_title = product.title %}
