@@ -12,10 +12,21 @@
       "type": "p-o-r-in-stock-products",
       
     },
+    "p-o-r-in-request-section1": {
+      "type": "p-o-r-request-section",
+      
+    },
+    "p-o-r-list-signup1": {
+      "type": "p-o-r-list-signup",
+      
+    }
   },
   "order": [
     "pre-owned-rolex-header",
     "pre-owned-rolex-disclaimer1",
-    "p-o-r-in-stock-products1"    
+    "p-o-r-list-signup1",
+    "p-o-r-in-stock-products1",
+    "p-o-r-in-request-section1",
+    
   ]
 }

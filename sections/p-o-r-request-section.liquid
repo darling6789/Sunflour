@@ -12,6 +12,9 @@
 </div>
 
 <style>
+  :root {
+    --variable-collection-accent-darkest: rgba(77, 57, 66, 1);
+  }
   .search-consult {
     flex-direction: column;
     align-items: center;
@@ -19,6 +22,7 @@
     padding: 0px 10px 50px;
     display: flex;
     position: relative;
+    background-color: #fff;
   }
   .search-consult .content {
     flex-direction: column;
@@ -34,7 +38,7 @@
     position: relative;
     width: fit-content;
     margin-top: -1px;
-    font-family: 'Legitima-Italic', Helvetica;
+    font-family: 'Legitima-Italic';
     font-weight: 400;
     font-style: italic;
     color: #151515;
@@ -56,7 +60,7 @@
     position: relative;
     flex: 1;
     margin-top: -1px;
-    font-family: 'Montserrat-Medium', Helvetica;
+    font-family: 'Montserrat';
     font-weight: 500;
     color: #000000;
     font-size: 18px;
@@ -81,7 +85,7 @@
     position: relative;
     width: fit-content;
     margin-top: -1px;
-    font-family: 'Montserrat-Medium', Helvetica;
+    font-family: 'Montserrat';
     font-weight: 500;
     color: #ffffff;
     font-size: 18px;
@@ -92,15 +96,15 @@
 </style>
 
 {% schema %}
+{
+  "name": "POR - Request Section",
+  "class": "p-o-r-request-section",
+  "tag": "section",
+  "settings": [],
+  "presets": [
     {
-        "name": "POR - Request Section",
-        "class": "p-o-r-request-section",
-        "tag": "section",
-        "settings": [],
-        "presets": [
-            {
-                "name": "POR - Request Section"
-            }
-        ]
+      "name": "POR - Request Section"
     }
+  ]
+}
 {% endschema %}
