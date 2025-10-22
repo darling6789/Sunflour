@@ -544,21 +544,43 @@ $(document).ready(function(){
     // Letter selection functionality
     $('.m-pendants-letter-btn').on('click', function(){
         const selectedLetter = $(this).data('letter');
-        const productHandle = $(this).data('product-handle');
         
+        // Update active letter button
         $('.m-pendants-letter-btn').removeClass('active');
         $(this).addClass('active');
         
-        // Show corresponding carousel slide
+        // Update active carousel slide
         $('.m-pendants-carousel-slide').removeClass('active');
         $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"]').addClass('active');
         
-        // Update slick slider to show the correct slide
+        // Sync carousel position
         const slideIndex = $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"]').index();
         $('.m-pendants-carousel-slider').slick('slickGoTo', slideIndex);
         
-        // Update product image/video based on selected letter
-        updateProductMedia(selectedLetter, productHandle);
+        // Show/hide media elements based on current media type and selected letter
+        const currentMediaType = $('.m-pendants-media-btn.active').data('media');
+        $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
+        $('.m-pendants-media-' + currentMediaType + '[data-letter="' + selectedLetter + '"]').addClass('active');
+        
+        // Handle video play/pause
+        if (currentMediaType === 'video') {
+            const video = $('.m-pendants-media-video[data-letter="' + selectedLetter + '"] video')[0];
+            if (video) {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        // Video play was interrupted, ignore the error
+                    });
+                }
+            }
+        }
+        
+        // Update detail area image
+        const detailImage = $('.m-pendants-selected-detail-image img');
+        const newImageSrc = $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"] img').attr('src');
+        if (newImageSrc) {
+            detailImage.attr('src', newImageSrc);
+        }
     });
     
     // Carousel navigation
