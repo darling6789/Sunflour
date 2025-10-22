@@ -80,10 +80,8 @@ window.pendantsProducts = {
                         {% endif %}
                     {% endfor %}
                 </div>
-                <div class="m-pendants-media-video">
-                    <video id="product-video" autoplay loop muted playsinline width="100%" height="100%">
-                        <source src="" type="application/x-mpegURL">
-                    </video>
+                <div class="m-pendants-media-video" id="product-video-container">
+                    <!-- Video will be dynamically inserted here -->
                 </div>
             </div>
         </div>
@@ -608,7 +606,16 @@ $(document).ready(function(){
                 const mainVideo = $('#product-video source');
                 const wasPlaying = !video.paused;
                 
+                // Set correct MIME type based on video URL
+                let mimeType = 'video/mp4';
+                if (product.video.includes('.m3u8')) {
+                    mimeType = 'application/x-mpegURL';
+                } else if (product.video.includes('.webm')) {
+                    mimeType = 'video/webm';
+                }
+                
                 mainVideo.attr('src', product.video);
+                mainVideo.attr('type', mimeType);
                 video.load(); // Reload video with new source
                 
                 // Resume playing if video was playing before
