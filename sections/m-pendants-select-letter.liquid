@@ -507,6 +507,14 @@ $(document).ready(function(){
         
         $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
         $('.m-pendants-media-' + mediaType).addClass('active');
+        
+        // Handle video play/pause
+        const video = $('#product-video')[0];
+        if (mediaType === 'video' && video) {
+            video.play();
+        } else if (mediaType === 'image' && video) {
+            video.pause();
+        }
     });
     
     // Letter selection functionality
@@ -580,16 +588,25 @@ $(document).ready(function(){
     function updateProductMedia(letter, productHandle) {
         const product = window.pendantsProducts[letter];
         
-        if (product && product.image) {
-            const imageUrl = product.image;
-            
+        if (product) {
             // Update main product image
-            const mainImage = $('.m-pendants-media-image img');
-            mainImage.attr('src', imageUrl);
+            if (product.image) {
+                const mainImage = $('.m-pendants-media-image img');
+                mainImage.attr('src', product.image);
+            }
+            
+            // Update main product video
+            if (product.video) {
+                const mainVideo = $('#product-video source');
+                mainVideo.attr('src', product.video);
+                $('#product-video')[0].load(); // Reload video with new source
+            }
             
             // Update carousel image for the selected letter
-            const carouselImage = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img');
-            carouselImage.attr('src', imageUrl);
+            if (product.image) {
+                const carouselImage = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img');
+                carouselImage.attr('src', product.image);
+            }
         }
     }
     
