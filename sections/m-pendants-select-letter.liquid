@@ -41,11 +41,11 @@
             </div>
             <div class="m-pendants-media-display">
                 <div class="m-pendants-media-image active">
-                    {% assign first_letter = available_letters_array[0] %}
+                    {% assign default_letter = sorted_letters_array[0] %}
                     {% for product in collection.products %}
                         {% assign product_title = product.title %}
                         {% assign letter_match = product_title | split: '"' %}
-                        {% if letter_match.size > 1 and letter_match[1] == first_letter %}
+                        {% if letter_match.size > 1 and letter_match[1] == default_letter %}
                             <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ section.settings.heading }}" width="100%" height="100%" />
                             {% break %}
                         {% endif %}
