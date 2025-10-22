@@ -29,10 +29,28 @@
         "btn_link": "#",
         "video": "shopify://files/videos/9081.mp4"
       }
+    },
+    "m_pendants_select_letter_MDbp4x": {
+      "type": "m-pendants-select-letter",
+      "name": "Pendants select letter",
+      "settings": {
+        "heading": "SELECT YOUR LETTER",
+        "subheading": "Personalized Perfection",
+        "description": "Each letter is meticulously laser-cut from the finest lab-grown diamonds, creating a unique piece that celebrates your identity with unmatched brilliance.",
+        "size_heading": "TWO EXQUISITE SIZES",
+        "size_subheading": "Classic & Luxe",
+        "classic_title": "Classic",
+        "classic_description": "8mm width pendant crafted from a 3-carat lab-grown diamond. Perfect for everyday elegance and subtle sophistication.",
+        "luxe_title": "Luxe",
+        "luxe_description": "10mm width pendant laser cut from a 5-carat lab-grown diamond. A bold statement piece that commands attention with extraordinary brilliance.",
+        "luxe_label": "Luxe (Left)",
+        "classic_label": "Classic (Right)"
+      }
     }
   },
   "order": [
     "main",
-    "m_pendants_landing_hero_fTB8hU"
+    "m_pendants_landing_hero_fTB8hU",
+    "m_pendants_select_letter_MDbp4x"
   ]
 }
