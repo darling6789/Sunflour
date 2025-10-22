@@ -35,23 +35,29 @@
 {% assign sorted_letters_array = sorted_letters | split: ',' %}
 {% assign sorted_handles_array = sorted_handles | split: ',' %}
 
-{% comment %} Create JavaScript object with all products {% endcomment %}
+{% comment %} Create JavaScript object with all products using correct handles {% endcomment %}
 <script>
 window.pendantsProducts = {
-{% for product in collection.products %}
-    {% assign product_title = product.title %}
-    {% assign letter_match = product_title | split: '"' %}
-    {% if letter_match.size > 1 %}
-        {% assign letter = letter_match[1] %}
+{% for i in (0..sorted_letters_array.size) %}
+    {% unless i >= sorted_letters_array.size %}
+        {% assign letter = sorted_letters_array[i] %}
+        {% assign handle = sorted_handles_array[i] %}
+        {% for product in collection.products %}
+            {% if product.handle == handle %}
     "{{ letter }}": {
         "handle": "{{ product.handle }}",
         "title": "{{ product.title }}",
         "image": "{{ product.featured_image | img_url: 'master' }}"
     }{% unless forloop.last %},{% endunless %}
-    {% endif %}
+                {% break %}
+            {% endif %}
+        {% endfor %}
+    {% endunless %}
 {% endfor %}
 };
 console.log('Available products:', window.pendantsProducts);
+console.log('Sorted letters:', {{ sorted_letters_array | json }});
+console.log('Sorted handles:', {{ sorted_handles_array | json }});
 </script>
 
 <div class="m-pendants-select-letter">
@@ -88,11 +94,15 @@ console.log('Available products:', window.pendantsProducts);
             
             <!-- Letters Board -->
             <div class="m-pendants-letters-board">
-                {% for letter in sorted_letters_array %}
-                    {% unless letter == blank %}
-                        <button class="m-pendants-letter-btn" data-letter="{{ letter }}" data-product-handle="{{ letter | downcase }}-initial-pendant-necklace" {% if letter == 'A' %}class="active"{% endif %}>
-                            {{ letter }}
-                        </button>
+                {% for i in (0..sorted_letters_array.size) %}
+                    {% unless i >= sorted_letters_array.size %}
+                        {% assign letter = sorted_letters_array[i] %}
+                        {% assign handle = sorted_handles_array[i] %}
+                        {% unless letter == blank %}
+                            <button class="m-pendants-letter-btn" data-letter="{{ letter }}" data-product-handle="{{ handle }}" {% if letter == 'A' %}class="active"{% endif %}>
+                                {{ letter }}
+                            </button>
+                        {% endunless %}
                     {% endunless %}
                 {% endfor %}
             </div>
