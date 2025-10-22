@@ -97,6 +97,23 @@
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     max-width: 100%;
 }
+.m-pendants-hero-arrow {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    animation: arrow-bounce 1s infinite;
+}
+@keyframes arrow-bounce {
+    0% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(10px);
+    }
+}
 </style>
 
 {% schema %}
