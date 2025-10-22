@@ -38,20 +38,25 @@
 {% comment %} Create JavaScript object with all products using correct handles {% endcomment %}
 <script>
 window.pendantsProducts = {
+{% assign first_item = true %}
 {% for i in (0..sorted_letters_array.size) %}
     {% unless i >= sorted_letters_array.size %}
         {% assign letter = sorted_letters_array[i] %}
         {% assign handle = sorted_handles_array[i] %}
-        {% for product in collection.products %}
-            {% if product.handle == handle %}
+        {% unless letter == blank %}
+            {% for product in collection.products %}
+                {% if product.handle == handle %}
+                    {% unless first_item %},{% endunless %}
     "{{ letter }}": {
         "handle": "{{ product.handle }}",
-        "title": "{{ product.title }}",
+        "title": "{{ product.title | escape }}",
         "image": "{{ product.featured_image | img_url: 'master' }}"
-    }{% unless forloop.last %},{% endunless %}
-                {% break %}
-            {% endif %}
-        {% endfor %}
+    }
+                    {% assign first_item = false %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+        {% endunless %}
     {% endunless %}
 {% endfor %}
 };
