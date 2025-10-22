@@ -3,14 +3,88 @@
         <h1>{{ section.settings.heading }}</h1>
         <h2>{{ section.settings.subheading }}</h2>
         <p>{{ section.settings.description }}</p>
+        <a href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
     </div>
     <div class="m-pendants-hero-video-wrap">
-        
+
     </div>
 </div>
 <div class="m-pendants-hero-arrow">
     {% render 'icon-bottom-arrow' %}
 </div>
+
+<style>
+.m-pendants-landing-hero-section {
+    width: 100%;
+    background-image: url({{ section.settings.back_image | img_url: 'master' }});
+    background-size: cover;
+    background-position: center;
+    padding: 150px 50px;
+}
+.m-pendants-hero {
+    width: 100%;
+    max-width: 1080px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+.m-pendants-hero-des {
+    width: 50%;
+}
+.m-pendants-hero-des h1 {
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%; /* 21.6px */
+    font-variant: all-small-caps;
+    letter-spacing: 7.2px;
+    margin: 0;
+    margin-bottom: 29px;
+}
+.m-pendants-hero-des h2 {
+    color: #FFF;
+    font-family: "High Tower Text";
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 35px; /* 125% */
+    letter-spacing: -0.4px;
+    margin: 0;
+    margin-bottom: 29px;
+    max-width: 230px;
+}
+.m-pendants-hero-des>p {
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px; /* 211.111% */
+    margin: 0;
+    margin-bottom: 29px;
+}
+.m-pendants-hero-des>a {
+    display: flex;
+    padding: 15px 30.725px 18.6px 48.8px;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 8px;
+    border: 0.8px solid rgba(255, 255, 255, 0.30);
+    background: rgba(255, 255, 255, 0.10);
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    text-decoration: none;
+    width: fit-content;
+}
+</style>
 
 {% schema %}
 {
@@ -28,7 +102,7 @@
             "label": "Heading"
         },
         {
-            "type": "text",
+            "type": "richtext",
             "id": "subheading",
             "label": "Subheading"
         },
