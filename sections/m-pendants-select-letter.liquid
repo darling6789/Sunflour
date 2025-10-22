@@ -516,22 +516,28 @@ $(document).ready(function(){
         $('.m-pendants-media-btn').removeClass('active');
         $(this).addClass('active');
         
-        $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
-        $('.m-pendants-media-' + mediaType).addClass('active');
+        // Show/hide all media elements based on type and current letter
+        const currentLetter = $('.m-pendants-letter-btn.active').data('letter');
         
-        // Handle video play/pause with error handling
-        const video = $('#product-video-container video')[0];
-        if (video) {
-            if (mediaType === 'video') {
+        $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
+        $('.m-pendants-media-' + mediaType + '[data-letter="' + currentLetter + '"]').addClass('active');
+        
+        // Handle video play/pause
+        if (mediaType === 'video') {
+            const video = $('.m-pendants-media-video[data-letter="' + currentLetter + '"] video')[0];
+            if (video) {
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         // Video play was interrupted, ignore the error
                     });
                 }
-            } else if (mediaType === 'image') {
-                video.pause();
             }
+        } else {
+            // Pause all videos when switching to image
+            $('.m-pendants-media-video video').each(function(){
+                this.pause();
+            });
         }
     });
     
