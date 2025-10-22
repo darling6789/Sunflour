@@ -487,13 +487,8 @@ $(document).ready(function(){
     
     // Letter selection functionality
     $('.m-pendants-letter-btn').on('click', function(){
-        console.log('=== LETTER CLICKED ===');
         const selectedLetter = $(this).data('letter');
         const productHandle = $(this).data('product-handle');
-        
-        console.log('Selected letter:', selectedLetter);
-        console.log('Product handle:', productHandle);
-        console.log('Button element:', $(this));
         
         $('.m-pendants-letter-btn').removeClass('active');
         $(this).addClass('active');
@@ -508,7 +503,6 @@ $(document).ready(function(){
         
         // Update product image/video based on selected letter
         updateProductMedia(selectedLetter, productHandle);
-        console.log('=== END LETTER CLICK ===');
     });
     
     // Carousel navigation
