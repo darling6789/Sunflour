@@ -1,11 +1,12 @@
 <div class="product-card">
   <div class="product-images">
     <div class="product-image-container">
-      <div class="image-bg-1"></div>
-      <div class="image-bg-2"></div>
-      <div class="image-bg-3"></div>
-      <div class="image-bg-4"></div>
-      <div class="image-bg-4"></div>
+      <div class="image-bg-1">
+        {% for image in product.images %}
+          <div class="product-image" style="background-image: url('{{image | image_url: width: 500}}'); background-size: cover; background-position: center;"></div>
+        {% endfor %}
+      </div>
+      
     </div>
     <div class="availability-tag"><div class="availability-badge-text">Available</div></div>
     <div class="filter-button"><img class="filter-icon" src="img/filter.svg"></div>
@@ -14,30 +15,30 @@
     <div class="product-header">
       <div class="product-title"><div class="product-title-text">{{product.title | truncate: 28}}</div></div>
       <div class="product-specs-header">
-        <div class="spec-detail">Stainless Steel Blue Dial</div>
+        <div class="spec-detail">{{product.metafields.custom.watch_dial_color}}</div>
         <div class="divider">|</div>
-        <div class="spec-detail">41mm</div>
+        <div class="spec-detail">{{product.metafields.custom.watch_case_size}}</div>
       </div>
     </div>
     <div class="divider-section"><div class="divider-line"></div></div>
     <div class="specs-container">
       <div class="spec-row">
         <div class="spec-label">MODEL</div>
-        <div class="spec-value">126613LB</div>
+        <div class="spec-value">{{product.metafields.custom.watch_vendor_sku}}</div>
       </div>
       <div class="spec-row">
         <div class="spec-label">YEAR</div>
-        <div class="spec-value">2022</div>
+        <div class="spec-value">{{product.metafields.custom.watch_year}}</div>
       </div>
       <div class="spec-row">
         <div class="spec-label">CONDITION</div>
-        <div class="spec-value">Retail Ready</div>
+        <div class="spec-value">{{product.metafields.custom.watch_condition}}</div>
       </div>
     </div>
     <div class="divider-section-2"><div class="divider-line-2"></div></div>
     <div class="price-action-wrapper">
-      <div class="price-container"><div class="product-price">$14,415</div></div>
-      <button class="btn-primary"><div class="btn-text">Buy Now</div></button>
+      <div class="price-container"><div class="product-price">${{product.price | money_without_currency | remove: '.00'}}</div></div>
+      <a href="{{product.url}}" class="btn-primary"><div class="btn-text">Buy Now</div></a>
     </div>
   </div>
 </div>

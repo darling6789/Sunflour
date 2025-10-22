@@ -1,0 +1,106 @@
+<div class="search-consult">
+  <div class="content">
+    <div class="text-wrapper">Looking for Something Else?</div>
+    <div class="frame">
+      <p class="div">
+        Let us know what you have in mind and we will get to work. Send us your request and one of our experts will
+        contact you directly to consult, and ensure we find the watch of your dreams.
+      </p>
+      <button class="button"><div class="get-started">Send Your Request</div></button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-consult {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 10px 50px;
+    display: flex;
+    position: relative;
+  }
+  .search-consult .content {
+    flex-direction: column;
+    max-width: 1200px;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    position: relative;
+  }
+  .search-consult .text-wrapper {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: 'Legitima-Italic', Helvetica;
+    font-weight: 400;
+    font-style: italic;
+    color: #151515;
+    font-size: 34px;
+    letter-spacing: 0;
+    line-height: 37.4px;
+    white-space: nowrap;
+  }
+  .search-consult .frame {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .search-consult .div {
+    position: relative;
+    flex: 1;
+    margin-top: -1px;
+    font-family: 'Montserrat-Medium', Helvetica;
+    font-weight: 500;
+    color: #000000;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 25.2px;
+  }
+  .search-consult .button {
+    all: unset;
+    box-sizing: border-box;
+    width: 250px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 32px;
+    background-color: var(--variable-collection-accent-darkest);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+  }
+  .search-consult .get-started {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: 'Montserrat-Medium', Helvetica;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+</style>
+
+{% schema %}
+    {
+        "name": "POR - Request Section",
+        "class": "p-o-r-request-section",
+        "tag": "section",
+        "settings": [],
+        "presets": [
+            {
+                "name": "POR - Request Section"
+            }
+        ]
+    }
+{% endschema %}
