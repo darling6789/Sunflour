@@ -554,64 +554,19 @@ $(document).ready(function(){
     });
     
     function updateProductMedia(letter, productHandle) {
-        console.log('=== DEBUG: Starting updateProductMedia ===');
-        console.log('Letter:', letter);
-        console.log('Product Handle:', productHandle);
-        console.log('Available products:', window.pendantsProducts);
-        
-        // Use pre-loaded product data instead of API call
         const product = window.pendantsProducts[letter];
-        console.log('Found product for letter:', product);
         
         if (product && product.image) {
             const imageUrl = product.image;
-            console.log('Using image URL:', imageUrl);
             
             // Update main product image
             const mainImage = $('.m-pendants-media-image img');
-            console.log('Main image element found:', mainImage.length);
-            console.log('Current main image src:', mainImage.attr('src'));
-            
-            // Force image update with multiple methods
-            setTimeout(() => {
-                // Method 1: Direct src update
-                mainImage.attr('src', imageUrl);
-                console.log('Method 1 - Direct src update:', imageUrl);
-                
-                // Method 2: Force reload with timestamp
-                const timestamp = new Date().getTime();
-                mainImage.attr('src', imageUrl + '?t=' + timestamp);
-                console.log('Method 2 - Timestamp reload:', imageUrl + '?t=' + timestamp);
-                
-                // Method 3: Replace entire img element
-                const newImg = $('<img>').attr({
-                    'src': imageUrl,
-                    'alt': '{{ section.settings.heading }}',
-                    'width': '100%',
-                    'height': '100%'
-                });
-                mainImage.replaceWith(newImg);
-                console.log('Method 3 - Element replacement completed');
-                
-                // Method 4: Trigger load event
-                newImg.on('load', function() {
-                    console.log('✅ Image loaded successfully');
-                });
-                
-            }, 100);
+            mainImage.attr('src', imageUrl);
             
             // Update carousel image for the selected letter
             const carouselImage = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img');
-            console.log('Carousel image element found:', carouselImage.length);
             carouselImage.attr('src', imageUrl);
-            
-            console.log('✅ Successfully updated images for letter:', letter);
-        } else {
-            console.log('❌ Product not found for letter:', letter);
-            console.log('Available letters:', Object.keys(window.pendantsProducts));
         }
-        
-        console.log('=== DEBUG: End updateProductMedia ===');
     }
     
     // Initialize slick slider for carousel
