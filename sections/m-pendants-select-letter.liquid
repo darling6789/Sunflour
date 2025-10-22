@@ -8,7 +8,7 @@
             </div>
             <div class="m-pendants-media-display">
                 <div class="m-pendants-media-image active">
-                    <img src="{{ section.settings.product_image | img_url: 'master' }}" alt="{{ section.settings.heading }}" />
+                    <img src="{{ section.settings.product_image | img_url: 'master' }}" alt="{{ section.settings.heading }}" width="100%" height="100%" />
                 </div>
                 <div class="m-pendants-media-video">
                     {{ section.settings.product_video | video_tag: autoplay: false, loop: true, muted: true, controls: true, playsinline: true }}
@@ -64,7 +64,7 @@
                         <div class="m-pendants-carousel-slide" data-letter="{{ current_letter }}">
                             <div class="m-pendants-comparison-image">
                                 {% assign image_key = 'comparison_image_' | append: current_letter %}
-                                <img src="{{ section.settings[image_key] | img_url: 'master' }}" alt="{{ current_letter }} Comparison" />
+                                <img src="{{ section.settings[image_key] | img_url: 'master' }}" alt="{{ current_letter }} Comparison" width="100%" height="100%" />
                             </div>
                             <div class="m-pendants-comparison-labels">
                                 <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
