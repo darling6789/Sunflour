@@ -21,11 +21,12 @@
       "type": "m-pendants-landing-hero",
       "name": "Pendants landing hero",
       "settings": {
-        "heading": "",
-        "subheading": "",
-        "description": "",
-        "btn_text": "",
-        "btn_link": ""
+        "back_image": "shopify://shop_images/pendants-landing-hero-min.png",
+        "heading": "Diamond initial pendants",
+        "subheading": "Your Initial, Redefined in Diamond",
+        "description": "Precision-cut from the a single lab-grown diamond, each letter pendant is a masterpiece of modern luxury set in stunning 14K white gold.",
+        "btn_text": "Explore Collection",
+        "btn_link": "#"
       }
     }
   },
