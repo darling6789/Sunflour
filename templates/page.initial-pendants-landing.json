@@ -16,9 +16,21 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "m_pendants_landing_hero_JzwVCp": {
+      "type": "m-pendants-landing-hero",
+      "name": "Pendants landing hero",
+      "settings": {
+        "heading": "",
+        "subheading": "",
+        "description": "",
+        "btn_text": "",
+        "btn_link": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "m_pendants_landing_hero_JzwVCp"
   ]
 }
