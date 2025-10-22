@@ -46,11 +46,35 @@
         "luxe_label": "Luxe (Left)",
         "classic_label": "Classic (Right)"
       }
+    },
+    "m_pendants_product_gGpgBr": {
+      "type": "m-pendants-product",
+      "name": "Pendants product",
+      "settings": {
+        "heading": "PERSONALIZED PENDANTS",
+        "selector_title": "SELECT YOUR LETTER",
+        "size_title": "SELECT SIZE",
+        "features_title": "INCLUDED FEATURES",
+        "feature_1": "Precision cut from 3 carat lab-grown diamond",
+        "feature_2": "14K white gold setting and chain",
+        "feature_3": "Conflict-free and ethically sourced",
+        "selection_title": "YOUR SELECTION",
+        "financing_text": "Starting at $87/mo or 0% APR with affirm. See if you qualify",
+        "add_to_cart_text": "Add to Cart",
+        "promise_title": "OUR PROMISE",
+        "promise_1_title": "Certified Gems",
+        "promise_1_text": "Every diamond and gemstone is GIA or IGI-certified and sourced with full transparency.",
+        "promise_2_title": "Lifetime Warranty",
+        "promise_2_text": "All 10K, 14K, and 18K gold and silver jewelry comes with a lifetime warranty against manufacturing defects.",
+        "promise_3_title": "Fast Insured Shipping",
+        "promise_3_text": "Rest easy with insured shipping! Shipping costs are calculated at checkout."
+      }
     }
   },
   "order": [
     "main",
     "m_pendants_landing_hero_fTB8hU",
-    "m_pendants_select_letter_MDbp4x"
+    "m_pendants_select_letter_MDbp4x",
+    "m_pendants_product_gGpgBr"
   ]
 }
