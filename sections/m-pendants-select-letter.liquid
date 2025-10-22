@@ -3,33 +3,37 @@
 {% assign letter_products = '' %}
 
 {% comment %} Extract letters from product titles and create mapping {% endcomment %}
+{% assign letter_product_map = '' %}
 {% for product in collection.products %}
     {% assign product_title = product.title %}
     {% assign letter_match = product_title | split: '"' %}
     {% if letter_match.size > 1 %}
         {% assign letter = letter_match[1] %}
-        {% assign available_letters = available_letters | append: letter | append: ',' %}
-        {% assign letter_products = letter_products | append: letter | append: ':' | append: product.handle | append: ',' %}
+        {% assign letter_product_map = letter_product_map | append: letter | append: ':' | append: product.handle | append: ',' %}
     {% endif %}
 {% endfor %}
 
-{% assign available_letters_array = available_letters | split: ',' %}
-{% assign letter_products_array = letter_products | split: ',' %}
+{% assign letter_product_array = letter_product_map | split: ',' %}
 
-{% comment %} Sort letters alphabetically {% endcomment %}
+{% comment %} Sort letters alphabetically and create arrays {% endcomment %}
 {% assign sorted_letters = '' %}
+{% assign sorted_handles = '' %}
 {% assign all_letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
 {% for letter in all_letters %}
-    {% for available_letter in available_letters_array %}
-        {% unless available_letter == blank %}
-            {% if available_letter == letter %}
+    {% for letter_product in letter_product_array %}
+        {% unless letter_product == blank %}
+            {% assign letter_handle = letter_product | split: ':' %}
+            {% if letter_handle[0] == letter %}
                 {% assign sorted_letters = sorted_letters | append: letter | append: ',' %}
+                {% assign sorted_handles = sorted_handles | append: letter_handle[1] | append: ',' %}
                 {% break %}
             {% endif %}
         {% endunless %}
     {% endfor %}
 {% endfor %}
+
 {% assign sorted_letters_array = sorted_letters | split: ',' %}
+{% assign sorted_handles_array = sorted_handles | split: ',' %}
 
 {% comment %} Create JavaScript object with all products {% endcomment %}
 <script>
