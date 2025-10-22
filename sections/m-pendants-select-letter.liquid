@@ -1,0 +1,690 @@
+<div class="m-pendants-select-letter">
+    <div class="m-pendants-select-letter-content">
+        <!-- Left Side: Product Image/Video -->
+        <div class="m-pendants-select-letter-media">
+            <div class="m-pendants-media-toggle">
+                <button class="m-pendants-media-btn active" data-media="image">Image</button>
+                <button class="m-pendants-media-btn" data-media="video">Video</button>
+            </div>
+            <div class="m-pendants-media-display">
+                <div class="m-pendants-media-image active">
+                    <img src="{{ section.settings.product_image | img_url: 'master' }}" alt="{{ section.settings.heading }}" />
+                </div>
+                <div class="m-pendants-media-video">
+                    {{ section.settings.product_video | video_tag: autoplay: false, loop: true, muted: true, controls: true, playsinline: true }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Text and Letter Selection -->
+        <div class="m-pendants-select-letter-info">
+            <h3 class="m-pendants-select-heading">{{ section.settings.heading }}</h3>
+            <h2 class="m-pendants-select-subheading">{{ section.settings.subheading }}</h2>
+            <p class="m-pendants-select-description">{{ section.settings.description }}</p>
+            
+            <!-- Letters Board -->
+            <div class="m-pendants-letters-board">
+                {% assign letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
+                {% for letter in letters %}
+                    <button class="m-pendants-letter-btn" data-letter="{{ letter }}" {% if letter == 'M' %}class="active"{% endif %}>
+                        {{ letter }}
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="m-pendants-selected-detail">
+    <div class="m-pendants-selected-detail-content">
+        <!-- Left Side: Size Descriptions -->
+        <div class="m-pendants-size-info">
+            <h3 class="m-pendants-size-heading">{{ section.settings.size_heading }}</h3>
+            <h2 class="m-pendants-size-subheading">{{ section.settings.size_subheading }}</h2>
+            
+            <div class="m-pendants-size-descriptions">
+                <div class="m-pendants-size-classic">
+                    <h4>{{ section.settings.classic_title }}</h4>
+                    <p>{{ section.settings.classic_description }}</p>
+                </div>
+                <div class="m-pendants-size-luxe">
+                    <h4>{{ section.settings.luxe_title }}</h4>
+                    <p>{{ section.settings.luxe_description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Pendant Size Comparison Carousel -->
+        <div class="m-pendants-comparison-carousel">
+            <div class="m-pendants-carousel-container">
+                <div class="m-pendants-carousel-slider">
+                    {% for i in (1..26) %}
+                        {% assign letter_index = i | minus: 1 %}
+                        {% assign current_letter = letters[letter_index] %}
+                        <div class="m-pendants-carousel-slide" data-letter="{{ current_letter }}">
+                            <div class="m-pendants-comparison-image">
+                                {% assign image_key = 'comparison_image_' | append: current_letter %}
+                                <img src="{{ section.settings[image_key] | img_url: 'master' }}" alt="{{ current_letter }} Comparison" />
+                            </div>
+                            <div class="m-pendants-comparison-labels">
+                                <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
+                                <span class="m-pendants-classic-label">{{ section.settings.classic_label }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="m-pendants-carousel-navigation">
+                    <div class="m-pendants-carousel-prev">{% render 'icon-left-arrow' %}</div>
+                    <div class="m-pendants-carousel-next">{% render 'icon-right-arrow' %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.m-pendants-select-letter-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    padding: 80px 50px;
+}
+
+.m-pendants-select-letter-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.m-pendants-select-letter-media {
+    width: 50%;
+    position: relative;
+}
+
+.m-pendants-media-toggle {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.m-pendants-media-btn {
+    padding: 8px 16px;
+    border: 1px solid #E0E0E0;
+    background: #FFFFFF;
+    color: #666666;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.m-pendants-media-btn.active {
+    background: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
+}
+
+.m-pendants-media-display {
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+.m-pendants-media-image,
+.m-pendants-media-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.m-pendants-media-image.active,
+.m-pendants-media-video.active {
+    opacity: 1;
+}
+
+.m-pendants-media-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.m-pendants-media-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.m-pendants-select-letter-info {
+    width: 50%;
+}
+
+.m-pendants-select-heading {
+    color: #999999;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    font-variant: all-small-caps;
+    letter-spacing: 4.8px;
+    margin: 0 0 20px 0;
+}
+
+.m-pendants-select-subheading {
+    color: #333333;
+    font-family: "High Tower Text";
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 30px 0;
+}
+
+.m-pendants-select-description {
+    color: #666666;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 0 0 40px 0;
+}
+
+.m-pendants-letters-board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 8px;
+    max-width: 400px;
+}
+
+.m-pendants-letter-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #E0E0E0;
+    background: #FFFFFF;
+    color: #333333;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.m-pendants-letter-btn:hover {
+    transform: scale(1.05);
+    border-color: #000000;
+}
+
+.m-pendants-letter-btn.active {
+    background: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
+    transform: scale(1.1);
+}
+
+.m-pendants-selected-detail {
+    width: 100%;
+    background-color: #000000;
+    padding: 80px 50px;
+}
+
+.m-pendants-selected-detail-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.m-pendants-size-info {
+    width: 50%;
+}
+
+.m-pendants-size-heading {
+    color: #999999;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    font-variant: all-small-caps;
+    letter-spacing: 4.8px;
+    margin: 0 0 20px 0;
+}
+
+.m-pendants-size-subheading {
+    color: #FFFFFF;
+    font-family: "High Tower Text";
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 40px 0;
+}
+
+.m-pendants-size-descriptions {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.m-pendants-size-classic,
+.m-pendants-size-luxe {
+    color: #FFFFFF;
+}
+
+.m-pendants-size-classic h4,
+.m-pendants-size-luxe h4 {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+}
+
+.m-pendants-size-classic p,
+.m-pendants-size-luxe p {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.m-pendants-comparison-carousel {
+    width: 50%;
+}
+
+.m-pendants-carousel-container {
+    position: relative;
+    width: 100%;
+}
+
+.m-pendants-carousel-slider {
+    width: 100%;
+}
+
+.m-pendants-carousel-slide {
+    display: none;
+    text-align: center;
+}
+
+.m-pendants-carousel-slide.active {
+    display: block;
+}
+
+.m-pendants-comparison-image {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.m-pendants-comparison-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.m-pendants-comparison-labels {
+    display: flex;
+    justify-content: space-between;
+    color: #FFFFFF;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.m-pendants-carousel-navigation {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.m-pendants-carousel-prev,
+.m-pendants-carousel-next {
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.m-pendants-carousel-prev:hover,
+.m-pendants-carousel-next:hover {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .m-pendants-select-letter-content,
+    .m-pendants-selected-detail-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .m-pendants-select-letter-media,
+    .m-pendants-select-letter-info,
+    .m-pendants-size-info,
+    .m-pendants-comparison-carousel {
+        width: 100%;
+    }
+    
+    .m-pendants-letters-board {
+        grid-template-columns: repeat(6, 1fr);
+        max-width: 100%;
+    }
+}
+</style>
+
+<script>
+$(document).ready(function(){
+    // Media toggle functionality
+    $('.m-pendants-media-btn').on('click', function(){
+        const mediaType = $(this).data('media');
+        
+        $('.m-pendants-media-btn').removeClass('active');
+        $(this).addClass('active');
+        
+        $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
+        $('.m-pendants-media-' + mediaType).addClass('active');
+    });
+    
+    // Letter selection functionality
+    $('.m-pendants-letter-btn').on('click', function(){
+        const selectedLetter = $(this).data('letter');
+        
+        $('.m-pendants-letter-btn').removeClass('active');
+        $(this).addClass('active');
+        
+        // Show corresponding carousel slide
+        $('.m-pendants-carousel-slide').removeClass('active');
+        $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"]').addClass('active');
+        
+        // Update product image/video based on selected letter
+        updateProductMedia(selectedLetter);
+    });
+    
+    // Carousel navigation
+    $('.m-pendants-carousel-prev').on('click', function(){
+        const currentSlide = $('.m-pendants-carousel-slide.active');
+        const prevSlide = currentSlide.prev('.m-pendants-carousel-slide');
+        
+        if(prevSlide.length > 0){
+            currentSlide.removeClass('active');
+            prevSlide.addClass('active');
+            
+            const letter = prevSlide.data('letter');
+            $('.m-pendants-letter-btn').removeClass('active');
+            $('.m-pendants-letter-btn[data-letter="' + letter + '"]').addClass('active');
+            updateProductMedia(letter);
+        }
+    });
+    
+    $('.m-pendants-carousel-next').on('click', function(){
+        const currentSlide = $('.m-pendants-carousel-slide.active');
+        const nextSlide = currentSlide.next('.m-pendants-carousel-slide');
+        
+        if(nextSlide.length > 0){
+            currentSlide.removeClass('active');
+            nextSlide.addClass('active');
+            
+            const letter = nextSlide.data('letter');
+            $('.m-pendants-letter-btn').removeClass('active');
+            $('.m-pendants-letter-btn[data-letter="' + letter + '"]').addClass('active');
+            updateProductMedia(letter);
+        }
+    });
+    
+    function updateProductMedia(letter) {
+        // This function would update the product image/video based on the selected letter
+        // You can implement this based on your specific requirements
+        console.log('Selected letter:', letter);
+    }
+    
+    // Initialize slick slider for carousel
+    $('.m-pendants-carousel-slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        arrows: true,
+        dots: false,
+        prevArrow: '.m-pendants-carousel-prev',
+        nextArrow: '.m-pendants-carousel-next',
+        fade: true,
+        cssEase: 'linear'
+    });
+});
+</script>
+
+{% schema %}
+{
+    "name": "Pendants select letter",
+    "tag": "section",
+    "class": "m-pendants-select-letter-section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "SELECT YOUR LETTER"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "Personalized Perfection"
+        },
+        {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description",
+            "default": "Each letter is meticulously laser-cut from the finest lab-grown diamonds, creating a unique piece that celebrates your identity with unmatched brilliance."
+        },
+        {
+            "type": "image_picker",
+            "id": "product_image",
+            "label": "Product Image"
+        },
+        {
+            "type": "video",
+            "id": "product_video",
+            "label": "Product Video"
+        },
+        {
+            "type": "text",
+            "id": "size_heading",
+            "label": "Size Section Heading",
+            "default": "TWO EXQUISITE SIZES"
+        },
+        {
+            "type": "text",
+            "id": "size_subheading",
+            "label": "Size Section Subheading",
+            "default": "Classic & Luxe"
+        },
+        {
+            "type": "text",
+            "id": "classic_title",
+            "label": "Classic Size Title",
+            "default": "Classic"
+        },
+        {
+            "type": "textarea",
+            "id": "classic_description",
+            "label": "Classic Size Description",
+            "default": "8mm width pendant crafted from a 3-carat lab-grown diamond. Perfect for everyday elegance and subtle sophistication."
+        },
+        {
+            "type": "text",
+            "id": "luxe_title",
+            "label": "Luxe Size Title",
+            "default": "Luxe"
+        },
+        {
+            "type": "textarea",
+            "id": "luxe_description",
+            "label": "Luxe Size Description",
+            "default": "10mm width pendant laser cut from a 5-carat lab-grown diamond. A bold statement piece that commands attention with extraordinary brilliance."
+        },
+        {
+            "type": "text",
+            "id": "luxe_label",
+            "label": "Luxe Label",
+            "default": "Luxe (Left)"
+        },
+        {
+            "type": "text",
+            "id": "classic_label",
+            "label": "Classic Label",
+            "default": "Classic (Right)"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_A",
+            "label": "Comparison Image - A"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_B",
+            "label": "Comparison Image - B"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_C",
+            "label": "Comparison Image - C"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_D",
+            "label": "Comparison Image - D"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_E",
+            "label": "Comparison Image - E"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_F",
+            "label": "Comparison Image - F"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_G",
+            "label": "Comparison Image - G"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_H",
+            "label": "Comparison Image - H"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_I",
+            "label": "Comparison Image - I"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_J",
+            "label": "Comparison Image - J"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_K",
+            "label": "Comparison Image - K"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_L",
+            "label": "Comparison Image - L"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_M",
+            "label": "Comparison Image - M"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_N",
+            "label": "Comparison Image - N"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_O",
+            "label": "Comparison Image - O"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_P",
+            "label": "Comparison Image - P"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_Q",
+            "label": "Comparison Image - Q"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_R",
+            "label": "Comparison Image - R"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_S",
+            "label": "Comparison Image - S"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_T",
+            "label": "Comparison Image - T"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_U",
+            "label": "Comparison Image - U"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_V",
+            "label": "Comparison Image - V"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_W",
+            "label": "Comparison Image - W"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_X",
+            "label": "Comparison Image - X"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_Y",
+            "label": "Comparison Image - Y"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_Z",
+            "label": "Comparison Image - Z"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Pendants select letter"
+        }
+    ]
+}
+{% endschema %}
