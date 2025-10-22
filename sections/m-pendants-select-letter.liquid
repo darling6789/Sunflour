@@ -508,12 +508,19 @@ $(document).ready(function(){
         $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
         $('.m-pendants-media-' + mediaType).addClass('active');
         
-        // Handle video play/pause
+        // Handle video play/pause with error handling
         const video = $('#product-video')[0];
-        if (mediaType === 'video' && video) {
-            video.play();
-        } else if (mediaType === 'image' && video) {
-            video.pause();
+        if (video) {
+            if (mediaType === 'video') {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        // Video play was interrupted, ignore the error
+                    });
+                }
+            } else if (mediaType === 'image') {
+                video.pause();
+            }
         }
     });
     
