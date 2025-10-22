@@ -604,9 +604,22 @@ $(document).ready(function(){
             
             // Update main product video
             if (product.video) {
+                const video = $('#product-video')[0];
                 const mainVideo = $('#product-video source');
+                const wasPlaying = !video.paused;
+                
                 mainVideo.attr('src', product.video);
-                $('#product-video')[0].load(); // Reload video with new source
+                video.load(); // Reload video with new source
+                
+                // Resume playing if video was playing before
+                if (wasPlaying && $('.m-pendants-media-video').hasClass('active')) {
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            // Video play was interrupted, ignore the error
+                        });
+                    }
+                }
             }
             
             // Update carousel image for the selected letter
