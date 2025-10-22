@@ -591,7 +591,6 @@ $(document).ready(function(){
         if(prevSlideIndex >= 0){
             const prevSlide = $('.m-pendants-carousel-slide').eq(prevSlideIndex);
             const letter = prevSlide.data('letter');
-            const productHandle = letter.toLowerCase() + '-initial-pendant-necklace';
             
             // Update active states
             $('.m-pendants-carousel-slide').removeClass('active');
@@ -602,8 +601,30 @@ $(document).ready(function(){
             // Update slick slider
             $('.m-pendants-carousel-slider').slick('slickGoTo', prevSlideIndex);
             
-            // Update product media
-            updateProductMedia(letter, productHandle);
+            // Show/hide media elements based on current media type and selected letter
+            const currentMediaType = $('.m-pendants-media-btn.active').data('media');
+            $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
+            $('.m-pendants-media-' + currentMediaType + '[data-letter="' + letter + '"]').addClass('active');
+            
+            // Handle video play/pause
+            if (currentMediaType === 'video') {
+                const video = $('.m-pendants-media-video[data-letter="' + letter + '"] video')[0];
+                if (video) {
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            // Video play was interrupted, ignore the error
+                        });
+                    }
+                }
+            }
+            
+            // Update detail area image
+            const detailImage = $('.m-pendants-selected-detail-image img');
+            const newImageSrc = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img').attr('src');
+            if (newImageSrc) {
+                detailImage.attr('src', newImageSrc);
+            }
         }
     });
     
@@ -615,7 +636,6 @@ $(document).ready(function(){
         if(nextSlideIndex < totalSlides){
             const nextSlide = $('.m-pendants-carousel-slide').eq(nextSlideIndex);
             const letter = nextSlide.data('letter');
-            const productHandle = letter.toLowerCase() + '-initial-pendant-necklace';
             
             // Update active states
             $('.m-pendants-carousel-slide').removeClass('active');
@@ -626,8 +646,30 @@ $(document).ready(function(){
             // Update slick slider
             $('.m-pendants-carousel-slider').slick('slickGoTo', nextSlideIndex);
             
-            // Update product media
-            updateProductMedia(letter, productHandle);
+            // Show/hide media elements based on current media type and selected letter
+            const currentMediaType = $('.m-pendants-media-btn.active').data('media');
+            $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
+            $('.m-pendants-media-' + currentMediaType + '[data-letter="' + letter + '"]').addClass('active');
+            
+            // Handle video play/pause
+            if (currentMediaType === 'video') {
+                const video = $('.m-pendants-media-video[data-letter="' + letter + '"] video')[0];
+                if (video) {
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            // Video play was interrupted, ignore the error
+                        });
+                    }
+                }
+            }
+            
+            // Update detail area image
+            const detailImage = $('.m-pendants-selected-detail-image img');
+            const newImageSrc = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img').attr('src');
+            if (newImageSrc) {
+                detailImage.attr('src', newImageSrc);
+            }
         }
     });
     
