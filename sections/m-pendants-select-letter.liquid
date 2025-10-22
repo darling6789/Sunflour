@@ -35,7 +35,6 @@
 {% assign sorted_letters_array = sorted_letters | split: ',' %}
 {% assign sorted_handles_array = sorted_handles | split: ',' %}
 
-{% comment %} Create JavaScript object with all products using correct handles {% endcomment %}
 <script>
 window.pendantsProducts = {
 {% assign first_item = true %}
@@ -60,9 +59,6 @@ window.pendantsProducts = {
     {% endunless %}
 {% endfor %}
 };
-console.log('Available products:', window.pendantsProducts);
-console.log('Sorted letters:', {{ sorted_letters_array | json }});
-console.log('Sorted handles:', {{ sorted_handles_array | json }});
 </script>
 
 <div class="m-pendants-select-letter">
