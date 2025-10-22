@@ -47,7 +47,8 @@ window.pendantsProducts = {
     "{{ letter }}": {
         "handle": "{{ product.handle }}",
         "title": "{{ product.title | escape }}",
-        "image": "{{ product.featured_image | img_url: 'master' }}"
+        "image": "{{ product.featured_image | img_url: 'master' }}",
+        "video": "{{ product.media[1].sources[0].url | default: '' }}"
     }
                     {% assign first_item = false %}
                     {% break %}
