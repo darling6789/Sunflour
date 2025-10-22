@@ -85,19 +85,25 @@
         <div class="m-pendants-comparison-carousel">
             <div class="m-pendants-carousel-container">
                 <div class="m-pendants-carousel-slider">
-                    {% for i in (1..26) %}
-                        {% assign letter_index = i | minus: 1 %}
-                        {% assign current_letter = letters[letter_index] %}
-                        <div class="m-pendants-carousel-slide" data-letter="{{ current_letter }}">
-                            <div class="m-pendants-comparison-image">
-                                {% assign image_key = 'comparison_image_' | append: current_letter %}
-                                <img src="{{ section.settings[image_key] | img_url: 'master' }}" alt="{{ current_letter }} Comparison" width="100%" height="100%" />
+                    {% for letter in available_letters_array %}
+                        {% unless letter == blank %}
+                            <div class="m-pendants-carousel-slide" data-letter="{{ letter }}" {% if forloop.first %}class="active"{% endif %}>
+                                <div class="m-pendants-comparison-image">
+                                    {% for product in collection.products %}
+                                        {% assign product_title = product.title %}
+                                        {% assign letter_match = product_title | split: '"' %}
+                                        {% if letter_match.size > 1 and letter_match[1] == letter %}
+                                            <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ letter }} Comparison" width="100%" height="100%" />
+                                            {% break %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="m-pendants-comparison-labels">
+                                    <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
+                                    <span class="m-pendants-classic-label">{{ section.settings.classic_label }}</span>
+                                </div>
                             </div>
-                            <div class="m-pendants-comparison-labels">
-                                <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
-                                <span class="m-pendants-classic-label">{{ section.settings.classic_label }}</span>
-                            </div>
-                        </div>
+                        {% endunless %}
                     {% endfor %}
                 </div>
                 <div class="m-pendants-carousel-navigation">
