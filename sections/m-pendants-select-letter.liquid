@@ -518,36 +518,57 @@ $(document).ready(function(){
     });
     
     function updateProductMedia(letter, productHandle) {
+        console.log('=== DEBUG: Starting updateProductMedia ===');
+        console.log('Letter:', letter);
+        console.log('Product Handle:', productHandle);
+        
         // Find the product image for the selected letter
         fetch('/collections/lab-grown-diamond-initial-pendant-necklaces/products.json')
-            .then(response => response.json())
+            .then(response => {
+                console.log('API Response status:', response.status);
+                return response.json();
+            })
             .then(data => {
+                console.log('Total products found:', data.products.length);
+                console.log('All product handles:', data.products.map(p => p.handle));
+                
                 const product = data.products.find(p => p.handle === productHandle);
+                console.log('Found product:', product);
+                
                 if (product && product.featured_image) {
                     // Convert Shopify image URL to master size
                     let imageUrl = product.featured_image;
+                    console.log('Original image URL:', imageUrl);
+                    
                     if (imageUrl.includes('_small') || imageUrl.includes('_medium') || imageUrl.includes('_large')) {
                         imageUrl = imageUrl.replace(/_small|_medium|_large/g, '_master');
                     } else if (!imageUrl.includes('_master')) {
                         imageUrl = imageUrl.replace(/\.(jpg|jpeg|png|webp)/, '_master.$1');
                     }
                     
+                    console.log('Final image URL:', imageUrl);
+                    
                     // Update main product image
-                    $('.m-pendants-media-image img').attr('src', imageUrl);
+                    const mainImage = $('.m-pendants-media-image img');
+                    console.log('Main image element found:', mainImage.length);
+                    mainImage.attr('src', imageUrl);
                     
                     // Update carousel image for the selected letter
-                    $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img').attr('src', imageUrl);
+                    const carouselImage = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img');
+                    console.log('Carousel image element found:', carouselImage.length);
+                    carouselImage.attr('src', imageUrl);
                     
-                    console.log('Updated image for letter:', letter, 'Product handle:', productHandle, 'Image URL:', imageUrl);
+                    console.log('✅ Successfully updated images for letter:', letter);
                 } else {
-                    console.log('Product not found for handle:', productHandle);
+                    console.log('❌ Product not found for handle:', productHandle);
+                    console.log('Available handles:', data.products.map(p => p.handle));
                 }
             })
             .catch(error => {
-                console.log('Error fetching product data:', error);
+                console.log('❌ Error fetching product data:', error);
             });
         
-        console.log('Selected letter:', letter, 'Product handle:', productHandle);
+        console.log('=== DEBUG: End updateProductMedia ===');
     }
     
     // Initialize slick slider for carousel
