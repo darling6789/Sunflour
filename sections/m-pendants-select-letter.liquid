@@ -470,31 +470,46 @@ $(document).ready(function(){
     
     // Carousel navigation
     $('.m-pendants-carousel-prev').on('click', function(){
-        const currentSlide = $('.m-pendants-carousel-slide.active');
-        const prevSlide = currentSlide.prev('.m-pendants-carousel-slide');
+        const currentSlideIndex = $('.m-pendants-carousel-slide.active').index();
+        const prevSlideIndex = currentSlideIndex - 1;
         
-        if(prevSlide.length > 0){
-            currentSlide.removeClass('active');
-            prevSlide.addClass('active');
-            
+        if(prevSlideIndex >= 0){
+            const prevSlide = $('.m-pendants-carousel-slide').eq(prevSlideIndex);
             const letter = prevSlide.data('letter');
+            
+            // Update active states
+            $('.m-pendants-carousel-slide').removeClass('active');
+            prevSlide.addClass('active');
             $('.m-pendants-letter-btn').removeClass('active');
             $('.m-pendants-letter-btn[data-letter="' + letter + '"]').addClass('active');
+            
+            // Update slick slider
+            $('.m-pendants-carousel-slider').slick('slickGoTo', prevSlideIndex);
+            
+            // Update product media
             updateProductMedia(letter);
         }
     });
     
     $('.m-pendants-carousel-next').on('click', function(){
-        const currentSlide = $('.m-pendants-carousel-slide.active');
-        const nextSlide = currentSlide.next('.m-pendants-carousel-slide');
+        const currentSlideIndex = $('.m-pendants-carousel-slide.active').index();
+        const nextSlideIndex = currentSlideIndex + 1;
+        const totalSlides = $('.m-pendants-carousel-slide').length;
         
-        if(nextSlide.length > 0){
-            currentSlide.removeClass('active');
-            nextSlide.addClass('active');
-            
+        if(nextSlideIndex < totalSlides){
+            const nextSlide = $('.m-pendants-carousel-slide').eq(nextSlideIndex);
             const letter = nextSlide.data('letter');
+            
+            // Update active states
+            $('.m-pendants-carousel-slide').removeClass('active');
+            nextSlide.addClass('active');
             $('.m-pendants-letter-btn').removeClass('active');
             $('.m-pendants-letter-btn[data-letter="' + letter + '"]').addClass('active');
+            
+            // Update slick slider
+            $('.m-pendants-carousel-slider').slick('slickGoTo', nextSlideIndex);
+            
+            // Update product media
             updateProductMedia(letter);
         }
     });
