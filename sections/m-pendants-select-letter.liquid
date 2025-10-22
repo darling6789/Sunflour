@@ -460,6 +460,10 @@ $(document).ready(function(){
         $('.m-pendants-carousel-slide').removeClass('active');
         $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"]').addClass('active');
         
+        // Update slick slider to show the correct slide
+        const slideIndex = $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"]').index();
+        $('.m-pendants-carousel-slider').slick('slickGoTo', slideIndex);
+        
         // Update product image/video based on selected letter
         updateProductMedia(selectedLetter);
     });
@@ -505,8 +509,19 @@ $(document).ready(function(){
             .then(data => {
                 const product = data.products.find(p => p.handle === productHandle);
                 if (product && product.featured_image) {
-                    const imageUrl = product.featured_image.replace('.jpg', '_master.jpg').replace('.png', '_master.png');
+                    // Convert Shopify image URL to master size
+                    let imageUrl = product.featured_image;
+                    if (imageUrl.includes('_small') || imageUrl.includes('_medium') || imageUrl.includes('_large')) {
+                        imageUrl = imageUrl.replace(/_small|_medium|_large/g, '_master');
+                    } else if (!imageUrl.includes('_master')) {
+                        imageUrl = imageUrl.replace(/\.(jpg|jpeg|png|webp)/, '_master.$1');
+                    }
+                    
+                    // Update main product image
                     $('.m-pendants-media-image img').attr('src', imageUrl);
+                    
+                    // Update carousel image for the selected letter
+                    $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img').attr('src', imageUrl);
                 }
             })
             .catch(error => {
