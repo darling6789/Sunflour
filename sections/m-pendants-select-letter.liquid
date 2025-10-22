@@ -33,33 +33,6 @@
 {% assign sorted_letters_array = sorted_letters | split: ',' %}
 {% assign sorted_handles_array = sorted_handles | split: ',' %}
 
-<script>
-window.pendantsProducts = {
-{% assign first_item = true %}
-{% for i in (0..sorted_letters_array.size) %}
-    {% unless i >= sorted_letters_array.size %}
-        {% assign letter = sorted_letters_array[i] %}
-        {% assign handle = sorted_handles_array[i] %}
-        {% unless letter == blank %}
-            {% for product in collection.products %}
-                {% if product.handle == handle %}
-                    {% unless first_item %},{% endunless %}
-    "{{ letter }}": {
-        "handle": "{{ product.handle }}",
-        "title": "{{ product.title | escape }}",
-        "image": "{{ product.featured_image | img_url: 'master' }}",
-        "video": {% if product.media[1].media_type == 'video' %}"{{ product.media[1] | media_tag: image_size: '2048x', autoplay: true, loop: true, controls: false, preload: 'none' }}"{% else %}null{% endif %}
-    }
-                    {% assign first_item = false %}
-                    {% break %}
-                {% endif %}
-            {% endfor %}
-        {% endunless %}
-    {% endunless %}
-{% endfor %}
-};
-console.log('Available products:', window.pendantsProducts);
-</script>
 
 <div class="m-pendants-select-letter">
     <div class="m-pendants-select-letter-content">
