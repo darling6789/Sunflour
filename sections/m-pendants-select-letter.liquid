@@ -592,17 +592,25 @@ $(document).ready(function(){
     });
     
     function updateProductMedia(letter, productHandle) {
+        console.log('=== updateProductMedia Debug ===');
+        console.log('Letter:', letter);
+        console.log('Product Handle:', productHandle);
+        console.log('Available products:', window.pendantsProducts);
+        
         const product = window.pendantsProducts[letter];
+        console.log('Found product:', product);
         
         if (product) {
             // Update main product image
             if (product.image) {
+                console.log('Updating image:', product.image);
                 const mainImage = $('.m-pendants-media-image img');
                 mainImage.attr('src', product.image);
             }
             
             // Update main product video using Shopify's media_tag
             if (product.video) {
+                console.log('Updating video:', product.video);
                 const videoContainer = $('#product-video-container');
                 const wasVideoActive = $('.m-pendants-media-video').hasClass('active');
                 
@@ -621,6 +629,8 @@ $(document).ready(function(){
                         }
                     }
                 }
+            } else {
+                console.log('No video found for letter:', letter);
             }
             
             // Update carousel image for the selected letter
@@ -628,7 +638,10 @@ $(document).ready(function(){
                 const carouselImage = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img');
                 carouselImage.attr('src', product.image);
             }
+        } else {
+            console.log('No product found for letter:', letter);
         }
+        console.log('=== End updateProductMedia Debug ===');
     }
     
     // Initialize slick slider for carousel
