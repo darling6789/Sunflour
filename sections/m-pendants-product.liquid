@@ -1,3 +1,661 @@
+<div class="m-pendants-product-section">
+    <div class="m-pendants-product-container">
+        <!-- Left Column: Product Details -->
+        <div class="m-pendants-product-details">
+            <div class="m-pendants-product-image">
+                <img id="m-pendants-main-image" src="{{ section.settings.default_image | img_url: 'master' }}" alt="Pendant" />
+            </div>
+            
+            <!-- Draggable Wheel Scrolly Selector -->
+            <div class="m-pendants-letter-selector">
+                <h3 class="m-pendants-selector-title">{{ section.settings.selector_title }}</h3>
+                <div class="m-pendants-wheel-container">
+                    <div class="m-pendants-wheel-track" id="m-pendants-wheel-track">
+                        {% assign letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
+                        {% for letter in letters %}
+                            <div class="m-pendants-letter-item" data-letter="{{ letter }}" {% if letter == 'M' %}class="active"{% endif %}>
+                                {{ letter }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Size Selector -->
+            <div class="m-pendants-size-selector">
+                <h3 class="m-pendants-size-title">{{ section.settings.size_title }}</h3>
+                <div class="m-pendants-size-options">
+                    <button class="m-pendants-size-btn active" data-size="classic" data-width="8mm">
+                        <span class="m-pendants-size-name">CLASSIC</span>
+                        <span class="m-pendants-size-spec">8mm Width</span>
+                    </button>
+                    <button class="m-pendants-size-btn" data-size="luxe" data-width="10mm">
+                        <span class="m-pendants-size-name">LUXE</span>
+                        <span class="m-pendants-size-spec">10mm Width</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Included Features -->
+            <div class="m-pendants-features">
+                <h3 class="m-pendants-features-title">{{ section.settings.features_title }}</h3>
+                <ul class="m-pendants-features-list">
+                    <li class="m-pendants-feature-item">
+                        <svg class="m-pendants-check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        {{ section.settings.feature_1 }}
+                    </li>
+                    <li class="m-pendants-feature-item">
+                        <svg class="m-pendants-check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        {{ section.settings.feature_2 }}
+                    </li>
+                    <li class="m-pendants-feature-item">
+                        <svg class="m-pendants-check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        {{ section.settings.feature_3 }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Right Column: Selection Summary & Purchase -->
+        <div class="m-pendants-selection-summary">
+            <div class="m-pendants-selection-info">
+                <h3 class="m-pendants-selection-title">{{ section.settings.selection_title }}</h3>
+                <div class="m-pendants-current-selection">
+                    <span id="m-pendants-selected-letter">Letter 'M'</span>
+                    <span id="m-pendants-selected-size">- Classic</span>
+                </div>
+            </div>
+            
+            <!-- Pricing -->
+            <div class="m-pendants-pricing">
+                <div class="m-pendants-price-display">
+                    <span class="m-pendants-current-price" id="m-pendants-current-price">$1,499</span>
+                    <span class="m-pendants-original-price" id="m-pendants-original-price">$2,999 USD</span>
+                </div>
+                <div class="m-pendants-financing">
+                    {{ section.settings.financing_text }}
+                </div>
+            </div>
+            
+            <!-- Add to Cart -->
+            <div class="m-pendants-add-to-cart">
+                <button class="m-pendants-cart-btn" id="m-pendants-add-to-cart">
+                    {{ section.settings.add_to_cart_text }}
+                </button>
+            </div>
+            
+            <!-- Our Promise -->
+            <div class="m-pendants-promise">
+                <h3 class="m-pendants-promise-title">{{ section.settings.promise_title }}</h3>
+                <div class="m-pendants-promise-items">
+                    <div class="m-pendants-promise-item">
+                        <div class="m-pendants-promise-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="#333"/>
+                            </svg>
+                        </div>
+                        <div class="m-pendants-promise-content">
+                            <h4>{{ section.settings.promise_1_title }}</h4>
+                            <p>{{ section.settings.promise_1_text }}</p>
+                        </div>
+                    </div>
+                    <div class="m-pendants-promise-item">
+                        <div class="m-pendants-promise-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="m-pendants-promise-content">
+                            <h4>{{ section.settings.promise_2_title }}</h4>
+                            <p>{{ section.settings.promise_2_text }}</p>
+                        </div>
+                    </div>
+                    <div class="m-pendants-promise-item">
+                        <div class="m-pendants-promise-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 7L9 18L4 13" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="m-pendants-promise-content">
+                            <h4>{{ section.settings.promise_3_title }}</h4>
+                            <p>{{ section.settings.promise_3_text }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.m-pendants-product-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    padding: 80px 50px;
+}
+
+.m-pendants-product-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.m-pendants-product-details {
+    width: 50%;
+}
+
+.m-pendants-product-image {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.m-pendants-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.m-pendants-letter-selector {
+    margin-bottom: 40px;
+}
+
+.m-pendants-selector-title {
+    color: #999999;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    font-variant: all-small-caps;
+    letter-spacing: 4.8px;
+    margin: 0 0 20px 0;
+}
+
+.m-pendants-wheel-container {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+}
+
+.m-pendants-wheel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.3s ease;
+    cursor: grab;
+}
+
+.m-pendants-wheel-track:active {
+    cursor: grabbing;
+}
+
+.m-pendants-letter-item {
+    min-width: 60px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333333;
+    border-right: 1px solid #E0E0E0;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.m-pendants-letter-item:last-child {
+    border-right: none;
+}
+
+.m-pendants-letter-item:hover {
+    background-color: #F5F5F5;
+    transform: scale(1.05);
+}
+
+.m-pendants-letter-item.active {
+    background-color: #000000;
+    color: #FFFFFF;
+    transform: scale(1.1);
+    font-weight: 600;
+}
+
+.m-pendants-size-selector {
+    margin-bottom: 40px;
+}
+
+.m-pendants-size-title {
+    color: #999999;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    font-variant: all-small-caps;
+    letter-spacing: 4.8px;
+    margin: 0 0 20px 0;
+}
+
+.m-pendants-size-options {
+    display: flex;
+    gap: 20px;
+}
+
+.m-pendants-size-btn {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #E0E0E0;
+    background: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.m-pendants-size-btn:hover {
+    border-color: #000000;
+    transform: translateY(-2px);
+}
+
+.m-pendants-size-btn.active {
+    background: #000000;
+    border-color: #000000;
+    color: #FFFFFF;
+}
+
+.m-pendants-size-name {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.m-pendants-size-spec {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.m-pendants-features {
+    margin-bottom: 40px;
+}
+
+.m-pendants-features-title {
+    color: #999999;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    font-variant: all-small-caps;
+    letter-spacing: 4.8px;
+    margin: 0 0 20px 0;
+}
+
+.m-pendants-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.m-pendants-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333333;
+}
+
+.m-pendants-check-icon {
+    flex-shrink: 0;
+}
+
+.m-pendants-selection-summary {
+    width: 50%;
+    padding-left: 40px;
+}
+
+.m-pendants-selection-info {
+    margin-bottom: 30px;
+}
+
+.m-pendants-selection-title {
+    color: #999999;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    font-variant: all-small-caps;
+    letter-spacing: 4.8px;
+    margin: 0 0 20px 0;
+}
+
+.m-pendants-current-selection {
+    font-family: "High Tower Text";
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 400;
+    color: #333333;
+}
+
+.m-pendants-pricing {
+    margin-bottom: 30px;
+}
+
+.m-pendants-price-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.m-pendants-current-price {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.m-pendants-original-price {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 400;
+    color: #999999;
+    text-decoration: line-through;
+}
+
+.m-pendants-financing {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+}
+
+.m-pendants-add-to-cart {
+    margin-bottom: 40px;
+}
+
+.m-pendants-cart-btn {
+    width: 100%;
+    padding: 18px 24px;
+    background: #000000;
+    color: #FFFFFF;
+    border: none;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.m-pendants-cart-btn:hover {
+    background: #333333;
+    transform: translateY(-2px);
+}
+
+.m-pendants-promise {
+    border-top: 1px solid #E0E0E0;
+    padding-top: 30px;
+}
+
+.m-pendants-promise-title {
+    color: #999999;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    font-variant: all-small-caps;
+    letter-spacing: 4.8px;
+    margin: 0 0 20px 0;
+}
+
+.m-pendants-promise-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.m-pendants-promise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.m-pendants-promise-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.m-pendants-promise-content h4 {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0 0 5px 0;
+}
+
+.m-pendants-promise-content p {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .m-pendants-product-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .m-pendants-product-details,
+    .m-pendants-selection-summary {
+        width: 100%;
+    }
+    
+    .m-pendants-selection-summary {
+        padding-left: 0;
+    }
+    
+    .m-pendants-size-options {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .m-pendants-wheel-container {
+        height: 50px;
+    }
+    
+    .m-pendants-letter-item {
+        min-width: 50px;
+        font-size: 16px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const wheelTrack = document.getElementById('m-pendants-wheel-track');
+    const letterItems = document.querySelectorAll('.m-pendants-letter-item');
+    const sizeButtons = document.querySelectorAll('.m-pendants-size-btn');
+    const mainImage = document.getElementById('m-pendants-main-image');
+    const selectedLetterSpan = document.getElementById('m-pendants-selected-letter');
+    const selectedSizeSpan = document.getElementById('m-pendants-selected-size');
+    const currentPriceSpan = document.getElementById('m-pendants-current-price');
+    const originalPriceSpan = document.getElementById('m-pendants-original-price');
+    const addToCartBtn = document.getElementById('m-pendants-add-to-cart');
+    
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let currentLetter = 'M';
+    let currentSize = 'classic';
+    
+    // Pricing configuration
+    const pricing = {
+        classic: {
+            regular: 2999,
+            sale: 1499
+        },
+        luxe: {
+            regular: 3999,
+            sale: 1999
+        }
+    };
+    
+    // Initialize
+    updateSelection();
+    updatePricing();
+    
+    // Wheel dragging functionality
+    wheelTrack.addEventListener('mousedown', startDrag);
+    wheelTrack.addEventListener('touchstart', startDrag);
+    
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag);
+    
+    document.addEventListener('mouseup', endDrag);
+    document.addEventListener('touchend', endDrag);
+    
+    function startDrag(e) {
+        isDragging = true;
+        wheelTrack.style.cursor = 'grabbing';
+        startX = (e.pageX || e.touches[0].pageX) - wheelTrack.offsetLeft;
+        scrollLeft = wheelTrack.scrollLeft;
+    }
+    
+    function drag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = (e.pageX || e.touches[0].pageX) - wheelTrack.offsetLeft;
+        const walk = (x - startX) * 2;
+        wheelTrack.scrollLeft = scrollLeft - walk;
+        
+        // Snap to closest letter
+        snapToClosestLetter();
+    }
+    
+    function endDrag() {
+        isDragging = false;
+        wheelTrack.style.cursor = 'grab';
+        snapToClosestLetter();
+    }
+    
+    function snapToClosestLetter() {
+        const containerWidth = wheelTrack.offsetWidth;
+        const scrollLeft = wheelTrack.scrollLeft;
+        const itemWidth = 60; // Width of each letter item
+        
+        const closestIndex = Math.round(scrollLeft / itemWidth);
+        const targetScrollLeft = closestIndex * itemWidth;
+        
+        wheelTrack.scrollTo({
+            left: targetScrollLeft,
+            behavior: 'smooth'
+        });
+        
+        // Update active letter
+        const letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        const clampedIndex = Math.max(0, Math.min(closestIndex, letters.length - 1));
+        const newLetter = letters[clampedIndex];
+        
+        if (newLetter !== currentLetter) {
+            currentLetter = newLetter;
+            updateSelection();
+            updatePricing();
+        }
+    }
+    
+    // Letter click functionality
+    letterItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const letter = this.dataset.letter;
+            currentLetter = letter;
+            
+            // Update active state
+            letterItems.forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Scroll to letter
+            const letterIndex = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'].indexOf(letter);
+            const targetScrollLeft = letterIndex * 60;
+            
+            wheelTrack.scrollTo({
+                left: targetScrollLeft,
+                behavior: 'smooth'
+            });
+            
+            updateSelection();
+            updatePricing();
+        });
+    });
+    
+    // Size selection functionality
+    sizeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const size = this.dataset.size;
+            currentSize = size;
+            
+            // Update active state
+            sizeButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            updateSelection();
+            updatePricing();
+        });
+    });
+    
+    function updateSelection() {
+        selectedLetterSpan.textContent = `Letter '${currentLetter}'`;
+        selectedSizeSpan.textContent = `- ${currentSize.charAt(0).toUpperCase() + currentSize.slice(1)}`;
+        
+        // Update main image based on selection
+        const imageKey = `image_${currentLetter.toLowerCase()}_${currentSize}`;
+        const imageUrl = window[imageKey] || '{{ section.settings.default_image | img_url: "master" }}';
+        mainImage.src = imageUrl;
+    }
+    
+    function updatePricing() {
+        const priceConfig = pricing[currentSize];
+        currentPriceSpan.textContent = `$${priceConfig.sale.toLocaleString()}`;
+        originalPriceSpan.textContent = `$${priceConfig.regular.toLocaleString()} USD`;
+    }
+    
+    // Add to cart functionality
+    addToCartBtn.addEventListener('click', function() {
+        // Here you would integrate with Shopify's cart API
+        // For now, we'll just show a confirmation
+        const productHandle = `pendant-${currentLetter.toLowerCase()}-${currentSize}`;
+        console.log('Adding to cart:', productHandle);
+        
+        // You can implement actual cart functionality here
+        alert(`Added ${currentLetter} ${currentSize.charAt(0).toUpperCase() + currentSize.slice(1)} pendant to cart!`);
+    });
+    
+    // Prevent default scroll behavior on wheel track
+    wheelTrack.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        wheelTrack.scrollLeft += e.deltaY;
+        snapToClosestLetter();
+    });
+});
+</script>
+
 {% schema %}
 {
     "name": "Pendants product",
@@ -7,7 +665,109 @@
         {
             "type": "text",
             "id": "heading",
-            "label": "Heading"
+            "label": "Heading",
+            "default": "PERSONALIZED PENDANTS"
+        },
+        {
+            "type": "image_picker",
+            "id": "default_image",
+            "label": "Default Product Image"
+        },
+        {
+            "type": "text",
+            "id": "selector_title",
+            "label": "Letter Selector Title",
+            "default": "SELECT YOUR LETTER"
+        },
+        {
+            "type": "text",
+            "id": "size_title",
+            "label": "Size Selector Title",
+            "default": "SELECT SIZE"
+        },
+        {
+            "type": "text",
+            "id": "features_title",
+            "label": "Features Title",
+            "default": "INCLUDED FEATURES"
+        },
+        {
+            "type": "text",
+            "id": "feature_1",
+            "label": "Feature 1",
+            "default": "Precision cut from 3 carat lab-grown diamond"
+        },
+        {
+            "type": "text",
+            "id": "feature_2",
+            "label": "Feature 2",
+            "default": "14K white gold setting and chain"
+        },
+        {
+            "type": "text",
+            "id": "feature_3",
+            "label": "Feature 3",
+            "default": "Conflict-free and ethically sourced"
+        },
+        {
+            "type": "text",
+            "id": "selection_title",
+            "label": "Selection Title",
+            "default": "YOUR SELECTION"
+        },
+        {
+            "type": "text",
+            "id": "financing_text",
+            "label": "Financing Text",
+            "default": "Starting at $87/mo or 0% APR with affirm. See if you qualify"
+        },
+        {
+            "type": "text",
+            "id": "add_to_cart_text",
+            "label": "Add to Cart Button Text",
+            "default": "Add to Cart"
+        },
+        {
+            "type": "text",
+            "id": "promise_title",
+            "label": "Promise Section Title",
+            "default": "OUR PROMISE"
+        },
+        {
+            "type": "text",
+            "id": "promise_1_title",
+            "label": "Promise 1 Title",
+            "default": "Certified Gems"
+        },
+        {
+            "type": "textarea",
+            "id": "promise_1_text",
+            "label": "Promise 1 Text",
+            "default": "Every diamond and gemstone is GIA or IGI-certified and sourced with full transparency."
+        },
+        {
+            "type": "text",
+            "id": "promise_2_title",
+            "label": "Promise 2 Title",
+            "default": "Lifetime Warranty"
+        },
+        {
+            "type": "textarea",
+            "id": "promise_2_text",
+            "label": "Promise 2 Text",
+            "default": "All 10K, 14K, and 18K gold and silver jewelry comes with a lifetime warranty against manufacturing defects."
+        },
+        {
+            "type": "text",
+            "id": "promise_3_title",
+            "label": "Promise 3 Title",
+            "default": "Fast Insured Shipping"
+        },
+        {
+            "type": "textarea",
+            "id": "promise_3_text",
+            "label": "Promise 3 Text",
+            "default": "Rest easy with insured shipping! Shipping costs are calculated at checkout."
         }
     ],
     "presets": [
