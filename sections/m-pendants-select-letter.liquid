@@ -31,6 +31,25 @@
 {% endfor %}
 {% assign sorted_letters_array = sorted_letters | split: ',' %}
 
+{% comment %} Create JavaScript object with all products {% endcomment %}
+<script>
+window.pendantsProducts = {
+{% for product in collection.products %}
+    {% assign product_title = product.title %}
+    {% assign letter_match = product_title | split: '"' %}
+    {% if letter_match.size > 1 %}
+        {% assign letter = letter_match[1] %}
+    "{{ letter }}": {
+        "handle": "{{ product.handle }}",
+        "title": "{{ product.title }}",
+        "image": "{{ product.featured_image | img_url: 'master' }}"
+    }{% unless forloop.last %},{% endunless %}
+    {% endif %}
+{% endfor %}
+};
+console.log('Available products:', window.pendantsProducts);
+</script>
+
 <div class="m-pendants-select-letter">
     <div class="m-pendants-select-letter-content">
         <!-- Left Side: Product Image/Video -->
