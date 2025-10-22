@@ -477,6 +477,7 @@ $(document).ready(function(){
         if(prevSlideIndex >= 0){
             const prevSlide = $('.m-pendants-carousel-slide').eq(prevSlideIndex);
             const letter = prevSlide.data('letter');
+            const productHandle = letter.toLowerCase() + '-initial-pendant-necklace';
             
             // Update active states
             $('.m-pendants-carousel-slide').removeClass('active');
@@ -488,7 +489,7 @@ $(document).ready(function(){
             $('.m-pendants-carousel-slider').slick('slickGoTo', prevSlideIndex);
             
             // Update product media
-            updateProductMedia(letter);
+            updateProductMedia(letter, productHandle);
         }
     });
     
@@ -500,6 +501,7 @@ $(document).ready(function(){
         if(nextSlideIndex < totalSlides){
             const nextSlide = $('.m-pendants-carousel-slide').eq(nextSlideIndex);
             const letter = nextSlide.data('letter');
+            const productHandle = letter.toLowerCase() + '-initial-pendant-necklace';
             
             // Update active states
             $('.m-pendants-carousel-slide').removeClass('active');
@@ -511,7 +513,7 @@ $(document).ready(function(){
             $('.m-pendants-carousel-slider').slick('slickGoTo', nextSlideIndex);
             
             // Update product media
-            updateProductMedia(letter);
+            updateProductMedia(letter, productHandle);
         }
     });
     
