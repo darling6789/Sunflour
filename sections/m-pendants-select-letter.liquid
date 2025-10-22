@@ -232,7 +232,7 @@
 
 .m-pendants-letters-board {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
     gap: 8px;
     max-width: 400px;
 }
@@ -541,9 +541,10 @@ $(document).ready(function(){
             "default": "Each letter is meticulously laser-cut from the finest lab-grown diamonds, creating a unique piece that celebrates your identity with unmatched brilliance."
         },
         {
-            "type": "image_picker",
-            "id": "product_image",
-            "label": "Product Image"
+            "type": "text",
+            "id": "collection_handle",
+            "label": "Collection Handle",
+            "default": "lab-grown-diamond-initial-pendant-necklaces"
         },
         {
             "type": "video",
@@ -597,136 +598,6 @@ $(document).ready(function(){
             "id": "classic_label",
             "label": "Classic Label",
             "default": "Classic (Right)"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_A",
-            "label": "Comparison Image - A"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_B",
-            "label": "Comparison Image - B"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_C",
-            "label": "Comparison Image - C"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_D",
-            "label": "Comparison Image - D"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_E",
-            "label": "Comparison Image - E"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_F",
-            "label": "Comparison Image - F"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_G",
-            "label": "Comparison Image - G"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_H",
-            "label": "Comparison Image - H"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_I",
-            "label": "Comparison Image - I"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_J",
-            "label": "Comparison Image - J"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_K",
-            "label": "Comparison Image - K"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_L",
-            "label": "Comparison Image - L"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_M",
-            "label": "Comparison Image - M"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_N",
-            "label": "Comparison Image - N"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_O",
-            "label": "Comparison Image - O"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_P",
-            "label": "Comparison Image - P"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_Q",
-            "label": "Comparison Image - Q"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_R",
-            "label": "Comparison Image - R"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_S",
-            "label": "Comparison Image - S"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_T",
-            "label": "Comparison Image - T"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_U",
-            "label": "Comparison Image - U"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_V",
-            "label": "Comparison Image - V"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_W",
-            "label": "Comparison Image - W"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_X",
-            "label": "Comparison Image - X"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_Y",
-            "label": "Comparison Image - Y"
-        },
-        {
-            "type": "image_picker",
-            "id": "comparison_image_Z",
-            "label": "Comparison Image - Z"
         }
     ],
     "presets": [
