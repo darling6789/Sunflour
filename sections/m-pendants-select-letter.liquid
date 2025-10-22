@@ -1,3 +1,21 @@
+{% assign collection = collections[section.settings.collection_handle] %}
+{% assign available_letters = '' %}
+{% assign letter_products = '' %}
+
+{% comment %} Extract letters from product titles and create mapping {% endcomment %}
+{% for product in collection.products %}
+    {% assign product_title = product.title %}
+    {% assign letter_match = product_title | split: '"' %}
+    {% if letter_match.size > 1 %}
+        {% assign letter = letter_match[1] %}
+        {% assign available_letters = available_letters | append: letter | append: ',' %}
+        {% assign letter_products = letter_products | append: letter | append: ':' | append: product.handle | append: ',' %}
+    {% endif %}
+{% endfor %}
+
+{% assign available_letters_array = available_letters | split: ',' %}
+{% assign letter_products_array = letter_products | split: ',' %}
+
 <div class="m-pendants-select-letter">
     <div class="m-pendants-select-letter-content">
         <!-- Left Side: Product Image/Video -->
@@ -8,7 +26,15 @@
             </div>
             <div class="m-pendants-media-display">
                 <div class="m-pendants-media-image active">
-                    <img src="{{ section.settings.product_image | img_url: 'master' }}" alt="{{ section.settings.heading }}" width="100%" height="100%" />
+                    {% assign first_letter = available_letters_array[0] %}
+                    {% for product in collection.products %}
+                        {% assign product_title = product.title %}
+                        {% assign letter_match = product_title | split: '"' %}
+                        {% if letter_match.size > 1 and letter_match[1] == first_letter %}
+                            <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ section.settings.heading }}" width="100%" height="100%" />
+                            {% break %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="m-pendants-media-video">
                     {{ section.settings.product_video | video_tag: autoplay: false, loop: true, muted: true, controls: true, playsinline: true }}
@@ -24,11 +50,12 @@
             
             <!-- Letters Board -->
             <div class="m-pendants-letters-board">
-                {% assign letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
-                {% for letter in letters %}
-                    <button class="m-pendants-letter-btn" data-letter="{{ letter }}" {% if letter == 'M' %}class="active"{% endif %}>
-                        {{ letter }}
-                    </button>
+                {% for letter in available_letters_array %}
+                    {% unless letter == blank %}
+                        <button class="m-pendants-letter-btn" data-letter="{{ letter }}" data-product-handle="{{ letter | downcase }}-initial-pendant-necklace" {% if forloop.first %}class="active"{% endif %}>
+                            {{ letter }}
+                        </button>
+                    {% endunless %}
                 {% endfor %}
             </div>
         </div>
