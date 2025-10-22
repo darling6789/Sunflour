@@ -48,7 +48,7 @@ window.pendantsProducts = {
         "handle": "{{ product.handle }}",
         "title": "{{ product.title | escape }}",
         "image": "{{ product.featured_image | img_url: 'master' }}",
-        "video": "{{ product.media[1].sources[0].url | default: '' }}"
+        "video": {% if product.media[1].media_type == 'video' %}"{{ product.media[1] | media_tag: image_size: '2048x', autoplay: true, loop: true, controls: false, preload: 'none' }}"{% else %}null{% endif %}
     }
                     {% assign first_item = false %}
                     {% break %}
