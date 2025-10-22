@@ -507,7 +507,7 @@ $(document).ready(function(){
         $('.m-pendants-media-' + mediaType).addClass('active');
         
         // Handle video play/pause with error handling
-        const video = $('#product-video')[0];
+        const video = $('#product-video-container video')[0];
         if (video) {
             if (mediaType === 'video') {
                 const playPromise = video.play();
@@ -600,31 +600,30 @@ $(document).ready(function(){
                 mainImage.attr('src', product.image);
             }
             
-            // Update main product video
+            // Update main product video using Shopify's video_tag approach
             if (product.video) {
-                const video = $('#product-video')[0];
-                const mainVideo = $('#product-video source');
-                const wasPlaying = !video.paused;
+                const videoContainer = $('#product-video-container');
+                const wasVideoActive = $('.m-pendants-media-video').hasClass('active');
                 
-                // Set correct MIME type based on video URL
-                let mimeType = 'video/mp4';
-                if (product.video.includes('.m3u8')) {
-                    mimeType = 'application/x-mpegURL';
-                } else if (product.video.includes('.webm')) {
-                    mimeType = 'video/webm';
-                }
+                // Create video element using Shopify's video_tag format
+                const videoElement = `
+                    <video autoplay loop muted playsinline width="100%" height="100%">
+                        <source src="${product.video}" type="video/mp4">
+                    </video>
+                `;
                 
-                mainVideo.attr('src', product.video);
-                mainVideo.attr('type', mimeType);
-                video.load(); // Reload video with new source
+                videoContainer.html(videoElement);
                 
-                // Resume playing if video was playing before
-                if (wasPlaying && $('.m-pendants-media-video').hasClass('active')) {
-                    const playPromise = video.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            // Video play was interrupted, ignore the error
-                        });
+                // Auto-play if video view is active
+                if (wasVideoActive) {
+                    const video = videoContainer.find('video')[0];
+                    if (video) {
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                // Video play was interrupted, ignore the error
+                            });
+                        }
                     }
                 }
             }
