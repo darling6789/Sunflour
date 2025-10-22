@@ -98,9 +98,15 @@ window.pendantsProducts = {
                         {% assign letter = sorted_letters_array[i] %}
                         {% assign handle = sorted_handles_array[i] %}
                         {% unless letter == blank %}
-                            <button class="m-pendants-letter-btn" data-letter="{{ letter }}" data-product-handle="{{ handle }}" {% if letter == 'A' %}class="active"{% endif %}>
-                                {{ letter }}
-                            </button>
+                            {% if letter == 'A' %}
+                                <button class="m-pendants-letter-btn active" data-letter="{{ letter }}" data-product-handle="{{ handle }}">
+                                    {{ letter }}
+                                </button>
+                            {% else %}
+                                <button class="m-pendants-letter-btn" data-letter="{{ letter }}" data-product-handle="{{ handle }}">
+                                    {{ letter }}
+                                </button>
+                            {% endif %}
                         {% endunless %}
                     {% endunless %}
                 {% endfor %}
