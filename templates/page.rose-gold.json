@@ -179,13 +179,13 @@
       "type": "m-featured-collection-2",
       "name": "Custom collection 2",
       "settings": {
-        "collection": "white-gold-bracelets",
+        "collection": "rose-gold-bracelets",
         "image": "shopify://shop_images/bracelet-wg.png",
         "image_left": true,
         "heading": "Bracelets",
-        "back_color": "#efeee8",
-        "collection_link_text": "Shop All White Gold Bracelets",
-        "collection_link": "shopify://collections/white-gold-bracelets"
+        "back_color": "#f4f1e9",
+        "collection_link_text": "Shop All Rose Gold Bracelets",
+        "collection_link": "shopify://collections/rose-gold-bracelets"
       }
     },
     "m_featured_collection_1_Yi6Lic": {
