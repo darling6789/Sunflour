@@ -515,10 +515,7 @@ $(document).ready(function(){
         }
     });
     
-    function updateProductMedia(letter) {
-        // Update the product image based on selected letter
-        const productHandle = letter.toLowerCase() + '-initial-pendant-necklace';
-        
+    function updateProductMedia(letter, productHandle) {
         // Find the product image for the selected letter
         fetch('/collections/lab-grown-diamond-initial-pendant-necklaces/products.json')
             .then(response => response.json())
@@ -538,13 +535,17 @@ $(document).ready(function(){
                     
                     // Update carousel image for the selected letter
                     $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img').attr('src', imageUrl);
+                    
+                    console.log('Updated image for letter:', letter, 'Product handle:', productHandle, 'Image URL:', imageUrl);
+                } else {
+                    console.log('Product not found for handle:', productHandle);
                 }
             })
             .catch(error => {
                 console.log('Error fetching product data:', error);
             });
         
-        console.log('Selected letter:', letter);
+        console.log('Selected letter:', letter, 'Product handle:', productHandle);
     }
     
     // Initialize slick slider for carousel
