@@ -1,12 +1,7 @@
 <div class="product-card">
   <div class="product-images">
     <div class="product-image-container">
-      <div class="image-bg-1">
-        {% for image in product.images %}
-          <div class="product-image" style="background-image: url('{{image | image_url: width: 500}}'); background-size: cover; background-position: center;"></div>
-        {% endfor %}
-      </div>
-      
+      <img class="product-image" src="{{product.featured_image | image_url: width: 500}}" alt="{{product.title}}" width="500" height="500" />
     </div>
     <div class="availability-tag"><div class="availability-badge-text">Available</div></div>
     <div class="filter-button">{{ 'filter.svg' | asset_url | img_tag}}</div>
