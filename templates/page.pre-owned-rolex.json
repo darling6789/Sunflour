@@ -2,21 +2,20 @@
   "sections": {
     "pre-owned-rolex-header": {
       "type": "pre-owned-rolex-hero",
-      "settings": {
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
+      
     },
     "pre-owned-rolex-disclaimer1": {
       "type": "pre-owned-rolex-disclaimer",
-      "settings": {
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
+      
+    },
+    "p-o-r-in-stock-products1": {
+      "type": "p-o-r-in-stock-products",
+      
     },
   },
   "order": [
     "pre-owned-rolex-header",
-    "pre-owned-rolex-disclaimer1"    
+    "pre-owned-rolex-disclaimer1",
+    "p-o-r-in-stock-products1"    
   ]
 }

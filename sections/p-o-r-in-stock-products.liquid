@@ -1,0 +1,51 @@
+<div class="in-stock-products-container">
+  <div class="ispc-header">
+    <h2>Pre-Owned Rolex Watches</h2>
+  </div>
+  <div class="ispc-product-grid"></div>
+</div>
+<style>
+  .in-stock-products-container {
+    display: flex;
+    padding: 30px 0 40px 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 36px;
+    align-self: stretch;
+  }
+  .in-stock-products-container .ispc-header {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+  }
+  .in-stock-products-container .ispc-header h2 {
+    color: #000;
+    font-family: 'EB Garamond';
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 32px */
+  }
+  .in-stock-products-container .ispc-product-grid {
+    display: flex;
+    max-width: 1200px;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 50px;
+    align-self: stretch;
+    flex-wrap: wrap;
+  }
+</style>
+{% schema %}
+{
+  "name": "POR in stock products",
+  "settings": []
+}
+{% endschema %}
