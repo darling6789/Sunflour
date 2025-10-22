@@ -51,7 +51,7 @@
                             {% for product in collection.products %}
                                 {% if product.handle == handle %}
                                     <!-- Image for {{ letter }} -->
-                                    <div class="m-pendants-media-image" data-letter="{{ letter }}" {% if letter == 'A' %}class="active"{% endif %}>
+                                    <div class="m-pendants-media-image{% if letter == 'A' %} active{% endif %}" data-letter="{{ letter }}">
                                         <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ letter }} Pendant" width="100%" height="100%" />
                                     </div>
                                     
