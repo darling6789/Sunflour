@@ -65,9 +65,9 @@
             
             <!-- Letters Board -->
             <div class="m-pendants-letters-board">
-                {% for letter in available_letters_array %}
+                {% for letter in sorted_letters_array %}
                     {% unless letter == blank %}
-                        <button class="m-pendants-letter-btn" data-letter="{{ letter }}" data-product-handle="{{ letter | downcase }}-initial-pendant-necklace" {% if forloop.first %}class="active"{% endif %}>
+                        <button class="m-pendants-letter-btn" data-letter="{{ letter }}" data-product-handle="{{ letter | downcase }}-initial-pendant-necklace" {% if letter == 'A' %}class="active"{% endif %}>
                             {{ letter }}
                         </button>
                     {% endunless %}
