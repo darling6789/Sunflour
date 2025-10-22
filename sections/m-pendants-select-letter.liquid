@@ -481,7 +481,23 @@ $(document).ready(function(){
     });
     
     function updateProductMedia(letter) {
-        // This function would update the product image/video based on the selected letter
+        // Update the product image based on selected letter
+        const productHandle = letter.toLowerCase() + '-initial-pendant-necklace';
+        
+        // Find the product image for the selected letter
+        fetch('/collections/lab-grown-diamond-initial-pendant-necklaces/products.json')
+            .then(response => response.json())
+            .then(data => {
+                const product = data.products.find(p => p.handle === productHandle);
+                if (product && product.featured_image) {
+                    const imageUrl = product.featured_image.replace('.jpg', '_master.jpg').replace('.png', '_master.png');
+                    $('.m-pendants-media-image img').attr('src', imageUrl);
+                }
+            })
+            .catch(error => {
+                console.log('Error fetching product data:', error);
+            });
+        
         console.log('Selected letter:', letter);
     }
     
