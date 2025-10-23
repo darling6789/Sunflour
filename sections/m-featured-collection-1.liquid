@@ -30,7 +30,7 @@
 
 }
 #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>h2 {
-	color: #333;
+	color: {{ section.settings.heading_color }};
 	font-family: Legitima;
 	font-size: 44px;
 	font-style: normal;
@@ -72,7 +72,7 @@
 }
 
 #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-link {
-    color: #333;
+    color: {{ section.settings.link_color }};
     font-family: Montserrat;
     font-size: 18px;
     font-style: italic;
@@ -93,18 +93,15 @@
     padding: 30px 37.5px;
   }
   #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>h2, .m-collection-1>h2 {
-    color: #333;
-    /* Heading/Medium */
     font-family: Legitima;
     font-size: 32px;
     font-style: normal;
     font-weight: 500;
-    line-height: 110%; /* 37.4px */
+    line-height: 110%;
     margin: 0;
     margin-bottom: 10px;
   }
   #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-link {
-    color: #333;
     font-family: Montserrat;
     font-size: 13.5px;
     font-style: italic;
@@ -159,6 +156,10 @@ $(document).ready(function(){
   "tag": "section",
   "settings": [
     {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
       "type": "collection",
       "id": "collection",
       "label": "Collection"
@@ -169,11 +170,6 @@ $(document).ready(function(){
       "label": "Heading"
     },
     {
-      "type": "color",
-      "id": "back_color",
-      "label": "Background color"
-    },
-    {
       "type": "text",
       "id": "collection_link_text",
       "label": "Collection link text"
@@ -182,6 +178,28 @@ $(document).ready(function(){
       "type": "url",
       "id": "collection_link",
       "label": "Collection link"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "back_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#333333"
     }
   ],
   "presets": [
