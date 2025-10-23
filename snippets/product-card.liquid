@@ -2,6 +2,9 @@
   <div class="product-images">
     <div class="product-image-container">
       <img class="product-image" src="{{product.featured_image | image_url: width: 500}}" alt="{{product.title}}" width="500" height="500" />
+      {% if product.images.size > 1 %}
+        <img class="product-image-hover" src="{{product.images[1] | image_url: width: 500}}" alt="{{product.title}}" width="500" height="500" />
+      {% endif %}
     </div>
     <div class="availability-tag">{% if product.available %}<div class="availability-badge-text">Available</div>{% else %}<div class="availability-badge-text sold-out">Sold Out</div>{% endif %}</div>
     <div class="filter-button">{{ 'filter.svg' | asset_url | img_tag}}</div>
