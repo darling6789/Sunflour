@@ -6,10 +6,9 @@
 .m-special-jewelry-hero-section {
     width: 100%;
    {% assign overlay_color = section.settings.overlay_color | default: '#b1b1b1' %}
-
-background: linear-gradient(41deg, {{ overlay_color | color_modify: 'alpha', 0.80 }} 19.13%, {{ overlay_color | color_modify: 'alpha', 0.75 }} 23.05%, {{ overlay_color | color_modify: 'alpha', 0 }} 51.78%), url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat;
-background-size: cover;
-background-position: center;
+    background: linear-gradient(41deg, {{ overlay_color | color_modify: 'alpha', 0.80 }} 19.13%, {{ overlay_color | color_modify: 'alpha', 0.75 }} 23.05%, {{ overlay_color | color_modify: 'alpha', 0 }} 51.78%), url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 28vw;
     position: relative;
     background-size: cover;
