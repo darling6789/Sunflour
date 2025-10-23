@@ -1,4 +1,4 @@
-<main class="hero" role="main">
+<main class="hero" role="main" style="background-image: url({{ section.settings.hero_image | image_url: width: 1600 }}); background-size: cover; background-position: 50% 50%;">
   <section class="hero-container">
     <div class="hero-content">
       <div class="hero-content-bg">
@@ -39,9 +39,6 @@
     justify-content: center;
     gap: 10px;
     position: relative;
-    background-image: url({{ section.settings.hero_image | img_url: '1600x' }});
-    background-size: cover;
-    background-position: 50% 50%;
   }
 
   .hero .hero-container {
