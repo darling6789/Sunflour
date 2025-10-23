@@ -125,7 +125,7 @@
 
 <style>
 #shopify-section-{{ section.id }}.m-featured-product-section {
-  background: {{  section.settings.back_color }};
+  background: {{ section.settings.back_color }};
   width: 100%;
   padding: 100px 100px 80px;
 }
@@ -140,7 +140,7 @@
   max-width: 430px;
 }
 #shopify-section-{{ section.id }} .m-featured-product-des h2 {
-  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  color: {{ section.settings.heading_color }};
   font-family: Legitima;
   font-size: 44px;
   font-style: normal;
@@ -150,7 +150,7 @@
   margin-bottom: 30px;
 }
 #shopify-section-{{ section.id }} .m-featured-product-description p {
-  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  color: {{ section.settings.description_color }};
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
@@ -165,9 +165,10 @@
 #shopify-section-{{ section.id }} .m-featured-product-des button {
   outline: none;
   border-radius: 1.6px;
-  border: var(--stroke-weight-1, 1px) solid #151515;
+  border: var(--stroke-weight-1, 1px) solid {{ section.settings.button_border_color }};
   padding: 12.48px 17px 13.52px 17px;
-  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  color: {{ section.settings.button_text_color }};
+  background: {{ section.settings.button_bg_color }};
   text-align: center;
   font-family: var(--font-family-Font-2, Montserrat);
   font-size: 15.4px;
@@ -176,19 +177,19 @@
   line-height: 23px;
   margin-bottom: 7px;
   width: 275px;
-  background: transparent;
+  cursor: pointer;
 }
 #shopify-section-{{ section.id }} .m-featured-product-des-btn-group a {
   display: block;
   text-decoration: none;
   text-align: center;
-  color: var(--M3-sys-light-high-contrast-shadow, #000);
+  color: {{ section.settings.link_color }};
   text-align: center;
   font-family: var(--font-family-Font-2, Montserrat);
   font-size: 15.4px;
   font-style: normal;
   font-weight: var(--font-weight-500, 500);
-  line-height: 150%;
+  line-height: 23px;
   text-decoration-line: underline;
   text-decoration-style: solid;
   text-decoration-skip-ink: auto;
@@ -204,55 +205,29 @@
   align-items: center;
   justify-content: center;
 }
-#shopify-section-{{ section.id }} .m-featured-product-image img {
-  width: 100%;
-  display: block;
-  margin: auto;
-}
-#shopify-section-{{ section.id }} .m-featured-product-collection {
-  flex: 1;
-  width: 30%;
-}
+#shopify-section-{{ section.id }} .m-featured-product-image img { width: 100%; display: block; margin: auto; }
+#shopify-section-{{ section.id }} .m-featured-product-collection { flex: 1; width: 30%; }
 #shopify-section-{{ section.id }} .m-featured-product-collection>h3 {
-  color: #333;
+  color: {{ section.settings.collection_heading_color }};
   font-family: Legitima;
-  font-size: 34px;
+  font-size: 27px;
   font-style: italic;
   font-weight: 500;
   line-height: 140%;
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
-#shopify-section-{{ section.id }} .m-featured-product-slider-wrap {
-  position: relative;
-}
+#shopify-section-{{ section.id }} .m-featured-product-slider-wrap { position: relative; }
 #shopify-section-{{ section.id }} .m-featured-product-slider-left {
-  position: absolute;
-  left: -25px;
-  z-index: 1;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
+  position: absolute; left: -35px; z-index: 1; top: 50%; transform: translateY(-50%); cursor: pointer;
 }
 #shopify-section-{{ section.id }} .m-featured-product-slider-right {
-  position: absolute;
-  right: -25px;
-  z-index: 1;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
+  position: absolute; right: -35px; z-index: 1; top: 50%; transform: translateY(-50%); cursor: pointer;
 }
-#shopify-section-{{ section.id }} .m-featured-product-slider {
-
-}
-#shopify-section-{{ section.id }} .m-featured-product-slider .slick-track {
-  display: flex !important;
-}
-#shopify-section-{{ section.id }} .m-featured-product-slider .slick-slide {
-  height: inherit !important;
-}
+#shopify-section-{{ section.id }} .m-featured-product-slider .slick-track { display: flex !important; }
+#shopify-section-{{ section.id }} .m-featured-product-slider .slick-slide { height: inherit !important; }
 #shopify-section-{{ section.id }} .m-featured-product-collection>a {
-  color: #333;
+  color: {{ section.settings.collection_link_color }};
   font-family: Montserrat;
   font-size: 18px;
   font-style: italic;
@@ -265,31 +240,19 @@
   text-underline-offset: auto;
   text-underline-position: from-font;
   display: block;
-  margin-top: 18px;
+  margin-top: 12px;
+}
+#shopify-section-{{ section.id }} .m-featured-product-empty {
+  color: {{ section.settings.description_color }};
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 20px;
+  text-align: center;
 }
 
-/* ==== Responsive (restored from your previous CSS) ==== */
-@media only screen and (max-width: 1919px) {
-  #shopify-section-{{ section.id }} .m-featured-product-collection>h3 { font-size: 1.8vw; }
-}
-
-@media only screen and (max-width: 1440px) {
-  #shopify-section-{{ section.id }}.m-featured-product-section {
-    width: 100%;
-    padding: 88px 27px 94px 115px;
-  }
-  #shopify-section-{{ section.id }} .m-featured-product {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-  }
-  #shopify-section-{{ section.id }} .m-featured-product-des {
-    width: 30%;
-    max-width: 430px;
-  }
+@media only screen and (min-width: 991px) and (max-width: 1279px) {
+  #shopify-section-{{ section.id }}.m-featured-product-section { padding: 80px 60px 60px; }
   #shopify-section-{{ section.id }} .m-featured-product-des h2 {
-    color: var(--M3-sys-light-high-contrast-shadow, #000);
     font-family: Legitima;
     font-size: 34px;
     font-style: normal;
@@ -299,7 +262,6 @@
     margin-bottom: 22.5px;
   }
   #shopify-section-{{ section.id }} .m-featured-product-description p {
-    color: var(--M3-sys-light-high-contrast-shadow, #000);
     font-family: Montserrat;
     font-size: 12px;
     font-style: normal;
@@ -312,9 +274,10 @@
   #shopify-section-{{ section.id }} .m-featured-product-des button {
     outline: none;
     border-radius: 1.6px;
-    border: var(--stroke-weight-1, 1px) solid #151515;
+    border: var(--stroke-weight-1, 1px) solid {{ section.settings.button_border_color }};
     padding: 9px 12px;
-    color: var(--M3-sys-light-high-contrast-shadow, #000);
+    color: {{ section.settings.button_text_color }};
+    background: {{ section.settings.button_bg_color }};
     text-align: center;
     font-family: var(--font-family-Font-2, Montserrat);
     font-size: 11.55px;
@@ -323,13 +286,12 @@
     line-height: 17.25px;
     margin-bottom: 5px;
     width: 200px;
-    background: transparent;
   }
   #shopify-section-{{ section.id }} .m-featured-product-des-btn-group a {
     display: block;
     text-decoration: none;
     text-align: center;
-    color: var(--M3-sys-light-high-contrast-shadow, #000);
+    color: {{ section.settings.link_color }};
     text-align: center;
     font-family: var(--font-family-Font-2, Montserrat);
     font-size: 11.55px;
@@ -354,7 +316,6 @@
   #shopify-section-{{ section.id }} .m-featured-product-image img { width: 100%; display: block; margin: auto; }
   #shopify-section-{{ section.id }} .m-featured-product-collection { flex: 1; width: 30%; }
   #shopify-section-{{ section.id }} .m-featured-product-collection>h3 {
-    color: #333;
     font-family: Legitima;
     font-style: italic;
     font-weight: 500;
@@ -372,7 +333,7 @@
   #shopify-section-{{ section.id }} .m-featured-product-slider .slick-track { display: flex !important; }
   #shopify-section-{{ section.id }} .m-featured-product-slider .slick-slide { height: inherit !important; }
   #shopify-section-{{ section.id }} .m-featured-product-collection>a {
-    color: #333; font-family: Montserrat; font-size: 13.5px; font-style: italic; font-weight: 500; line-height: normal;
+    font-family: Montserrat; font-size: 13.5px; font-style: italic; font-weight: 500; line-height: normal;
     text-decoration-line: underline; text-decoration-style: solid; text-decoration-skip-ink: none;
     text-decoration-thickness: auto; text-underline-offset: auto; text-underline-position: from-font;
     display: block; margin-top: 3px;
@@ -430,41 +391,214 @@ $(document).ready(function(){
   "tag": "section",
   "class": "m-featured-product-section",
   "settings": [
-    { "type": "color", "id": "back_color", "label": "Section background color", "default": "#eceef2" },
-    { "type": "product", "id": "product", "label": "Product" },
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "text", "id": "title", "label": "Title" },
-    { "type": "richtext", "id": "description", "label": "Description" },
-    { "type": "text", "id": "link_text", "label": "Link text" },
-    { "type": "url", "id": "link", "label": "Link" },
-
-    { "type": "text", "id": "collection_heading", "label": "Collection heading" },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-
-    { "type": "header", "content": "Type filters (check one or more for OR matching)" },
-    { "type": "checkbox", "id": "type_engagement_ring", "label": "Engagement Ring", "default": false },
-    { "type": "checkbox", "id": "type_wedding_band", "label": "Wedding Band", "default": false },
-    { "type": "checkbox", "id": "type_womens_wedding_band", "label": "Women's Wedding Band", "default": false },
-    { "type": "checkbox", "id": "type_fashion_ring", "label": "Fashion Ring", "default": false },
-    { "type": "checkbox", "id": "type_ring", "label": "Ring", "default": false },
-
-    { "type": "checkbox", "id": "type_earring", "label": "Earring", "default": false },
-    { "type": "checkbox", "id": "type_gold_earring", "label": "Gold Earring", "default": false },
-    { "type": "checkbox", "id": "type_diamond_earring", "label": "Diamond Earring", "default": false },
-    { "type": "checkbox", "id": "type_gem_earring", "label": "Gem Earring", "default": false },
-
-    { "type": "checkbox", "id": "type_bracelet", "label": "Bracelet", "default": false },
-    { "type": "checkbox", "id": "type_bangle", "label": "Bangle", "default": false },
-
-    { "type": "checkbox", "id": "type_necklace", "label": "Necklace", "default": false },
-    { "type": "checkbox", "id": "type_pendant", "label": "Pendant", "default": false },
-
-    { "type": "checkbox", "id": "type_watch", "label": "Watch", "default": false },
-
-    { "type": "text", "id": "col_text", "label": "Collection link text" }
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    { 
+      "type": "color", 
+      "id": "back_color", 
+      "label": "Section background color", 
+      "default": "#eceef2" 
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    { 
+      "type": "product", 
+      "id": "product", 
+      "label": "Product" 
+    },
+    { 
+      "type": "image_picker", 
+      "id": "image", 
+      "label": "Image" 
+    },
+    { 
+      "type": "text", 
+      "id": "title", 
+      "label": "Title" 
+    },
+    { 
+      "type": "richtext", 
+      "id": "description", 
+      "label": "Description" 
+    },
+    { 
+      "type": "text", 
+      "id": "link_text", 
+      "label": "Link text" 
+    },
+    { 
+      "type": "url", 
+      "id": "link", 
+      "label": "Link" 
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border color",
+      "default": "#151515"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "collection_heading_color",
+      "label": "Collection heading color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "collection_link_color",
+      "label": "Collection link color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Collection Settings"
+    },
+    { 
+      "type": "text", 
+      "id": "collection_heading", 
+      "label": "Collection heading" 
+    },
+    { 
+      "type": "collection", 
+      "id": "collection", 
+      "label": "Collection" 
+    },
+    { 
+      "type": "text", 
+      "id": "col_text", 
+      "label": "Collection link text" 
+    },
+    { 
+      "type": "header", 
+      "content": "Type filters (check one or more for OR matching)" 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_engagement_ring", 
+      "label": "Engagement Ring", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_wedding_band", 
+      "label": "Wedding Band", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_womens_wedding_band", 
+      "label": "Women's Wedding Band", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_fashion_ring", 
+      "label": "Fashion Ring", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_ring", 
+      "label": "Ring", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_earring", 
+      "label": "Earring", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_gold_earring", 
+      "label": "Gold Earring", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_diamond_earring", 
+      "label": "Diamond Earring", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_gem_earring", 
+      "label": "Gem Earring", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_bracelet", 
+      "label": "Bracelet", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_bangle", 
+      "label": "Bangle", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_necklace", 
+      "label": "Necklace", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_pendant", 
+      "label": "Pendant", 
+      "default": false 
+    },
+    { 
+      "type": "checkbox", 
+      "id": "type_watch", 
+      "label": "Watch", 
+      "default": false 
+    }
   ],
   "presets": [
-    { "name": "Custom featured product" }
+    { 
+      "name": "Custom featured product" 
+    }
   ]
 }
 {% endschema %}
