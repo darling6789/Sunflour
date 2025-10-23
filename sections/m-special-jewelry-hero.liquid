@@ -5,13 +5,15 @@
 <style>
 .m-special-jewelry-hero-section {
     width: 100%;
-    {% capture oc %}{{ section.settings.overlay_color | default: '#B1B1B1' | color_to_rgb }}{% endcapture %}
-    background: linear-gradient(
-    41deg,
-    rgba({{ oc }}, 0.80) 19.13%,
-    rgba({{ oc }}, 0.75) 23.05%,
-    rgba({{ oc }}, 0.00) 51.78%
-    ), url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat;
+    {% assign overlay_rgb = section.settings.overlay_color | color_to_rgb | remove: 'rgb(' | remove: ')' %}
+
+background: linear-gradient(
+  41deg, 
+  rgba({{ overlay_rgb }}, 0.80) 19.13%, 
+  rgba({{ overlay_rgb }}, 0.75) 23.05%, 
+  rgba({{ overlay_rgb }}, 0.00) 51.78%
+), 
+url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat;
     height: 28vw;
     position: relative;
     background-size: cover;
@@ -50,13 +52,7 @@
 
 @media only screen and ( max-width: 749px ) {
     .m-special-jewelry-hero-section {
-        {% capture oc %}{{ section.settings.overlay_color | default: '#B1B1B1' | color_to_rgb }}{% endcapture %}
-        background: linear-gradient(
-        0deg,
-        rgba({{ oc }}, 0.80) 0.17%,
-        rgba({{ oc }}, 0.75) 33.34%,
-        rgba({{ oc }}, 0.00) 100.17%
-        ), url({{ section.settings.back_image | img_url: 'large' }}) lightgray no-repeat;
+        background: linear-gradient(0deg, rgba(177, 177, 177, 0.80) 0.17%, rgba(177, 177, 177, 0.75) 33.34%, rgba(177, 177, 177, 0.00) 100.17%), url({{ section.settings.back_image | img_url: 'large' }}) lightgray no-repeat;
         background-size: cover;
         background-position: center;
         height: 150px;
