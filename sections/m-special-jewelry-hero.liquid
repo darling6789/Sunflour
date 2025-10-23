@@ -1,13 +1,16 @@
+{% assign overlay_color = section.settings.overlay_color %}
+{% assign r = overlay_color.red %}
+{% assign g = overlay_color.green %}
+{% assign b = overlay_color.blue %}
+
 <div class="m-special-jewelry-hero">
     <h1>{{ section.settings.heading }}</h1>
 </div>
 
-{% assign overlay_rgb = section.settings.overlay_color | color_to_rgb | remove: 'rgb(' | remove: ')' %}
-
 <style>
 .m-special-jewelry-hero-section {
     width: 100%;
-   background: linear-gradient(41deg, rgba({{ overlay_rgb }}, 0.80) 19.13%, rgba({{ overlay_rgb }}, 0.75) 23.05%, rgba({{ overlay_rgb }}, 0.00) 51.78%), url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat;
+   background: linear-gradient(41deg, rgba({{ r }}, {{ g }}, {{ b }}, 0.80) 19.13%, rgba({{ r }}, {{ g }}, {{ b }}, 0.75) 23.05%, rgba({{ r }}, {{ g }}, {{ b }}, 0.00) 51.78%), url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat; background-size: cover; background-position: center;
     height: 28vw;
     position: relative;
     background-size: cover;
