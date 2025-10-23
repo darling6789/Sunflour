@@ -1,16 +1,40 @@
-<div class="in-stock-products-container">
+<div class="in-stock-products-container" data-section-id="{{ section.id }}">
   <div class="ispc-header">
     <h2>{{ section.settings.section_title }}</h2>
   </div>
-  <div class="ispc-product-grid">
+  <div class="ispc-product-grid" data-product-grid>
     {% if section.settings.collection != blank %}
+      {% assign product_index = 0 %}
       {% for product in section.settings.collection.products %}
         {% if product.available %}
-          {% render 'product-card', product: product %}
+          <div class="product-card-wrapper" data-product-index="{{ product_index }}" style="{% if product_index >= 12 %}display: none;{% endif %}">
+            {% render 'product-card', product: product %}
+          </div>
+          {% assign product_index = product_index | plus: 1 %}
         {% endif %}
       {% endfor %}
     {% endif %}
   </div>
+  {% if section.settings.collection != blank %}
+    {% assign available_count = 0 %}
+    {% for product in section.settings.collection.products %}
+      {% if product.available %}
+        {% assign available_count = available_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    {% if available_count > 12 %}
+      {% assign total_pages = available_count | divided_by: 12.0 | ceil %}
+      <div class="pagination-wrapper" data-pagination>
+        <div class="pagination-list">
+          {% for i in (1..total_pages) %}
+            <button class="pagination-page{% if i == 1 %} active{% endif %}" data-page="{{ i }}">
+              <div class="pagination-text">{{ i }}</div>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
 </div>
 <style>
   .in-stock-products-container {
@@ -139,7 +163,7 @@
     white-space: nowrap;
   }
   .product-card .availability-badge-text.sold-out {
-    background-color: #821C1E;
+    background-color: #821c1e;
   }
   .product-card .filter-button {
     display: flex;
@@ -255,7 +279,7 @@
     align-items: flex-start;
     gap: 8.936px;
     align-self: stretch;
-    border-top: 0.715px solid #C5C5C5;
+    border-top: 0.715px solid #c5c5c5;
     border-color: #c5c5c5;
   }
   .product-card .specs-container {
@@ -389,7 +413,110 @@
     line-height: 17.9px;
     white-space: nowrap;
   }
+  .product-card-wrapper {
+    display: contents;
+  }
+  .pagination-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0px 25px;
+    position: relative;
+    margin-top: 20px;
+  }
+  .pagination-list {
+    gap: 8px;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .pagination-page {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: transparent;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .pagination-page:hover {
+    background-color: rgba(77, 57, 66, 0.1);
+  }
+  .pagination-page.active {
+    background-color: #4d3942;
+  }
+  .pagination-text {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: 'Montserrat', Helvetica;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0px;
+    line-height: 100%;
+    white-space: nowrap;
+    font-style: normal;
+  }
+  .pagination-page:not(.active) .pagination-text {
+    color: #1e1e1e;
+  }
+  .pagination-page.active .pagination-text {
+    color: #f5f5f5;
+  }
 </style>
+<script>
+  (function() {
+    const container = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!container) return;
+
+    const paginationWrapper = container.querySelector('[data-pagination]');
+    if (!paginationWrapper) return;
+
+    const productGrid = container.querySelector('[data-product-grid]');
+    const productWrappers = Array.from(productGrid.querySelectorAll('.product-card-wrapper'));
+    const paginationButtons = Array.from(paginationWrapper.querySelectorAll('.pagination-page'));
+    
+    const productsPerPage = 12;
+
+    function showPage(pageNumber) {
+      const startIndex = (pageNumber - 1) * productsPerPage;
+      const endIndex = startIndex + productsPerPage;
+
+      // Hide all products
+      productWrappers.forEach(wrapper => {
+        wrapper.style.display = 'none';
+      });
+
+      // Show products for current page
+      for (let i = startIndex; i < endIndex && i < productWrappers.length; i++) {
+        productWrappers[i].style.display = '';
+      }
+
+      // Update active button
+      paginationButtons.forEach(btn => {
+        btn.classList.remove('active');
+      });
+      paginationButtons[pageNumber - 1].classList.add('active');
+
+      // Scroll to top of products section
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Add click handlers to pagination buttons
+    paginationButtons.forEach((btn, index) => {
+      btn.addEventListener('click', function() {
+        showPage(index + 1);
+      });
+    });
+  })();
+</script>
 {% schema %}
 {
   "name": "POR in stock products",
