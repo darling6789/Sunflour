@@ -12,14 +12,14 @@
     </div>
     <nav class="hero-actions" role="navigation" aria-label="Primary actions">
       <div class="hero-action-item">
-        <a href="{{ section.settings.button_one_url }}" class="hero-button" aria-label="{{ section.settings.button_one_text }}">
+        <button class="hero-button" data-scroll-to="in-stock-products" aria-label="{{ section.settings.button_one_text }}">
           <span class="hero-button-text">{{ section.settings.button_one_text }}</span>
-        </a>
+        </button>
       </div>
       <div class="hero-action-item">
-        <a href="{{ section.settings.button_two_url }}" class="hero-button" aria-label="{{ section.settings.button_two_text }}">
+        <button class="hero-button" data-scroll-to="looking-for-something-else" aria-label="{{ section.settings.button_two_text }}">
           <span class="hero-button-text">{{ section.settings.button_two_text }}</span>
-        </a>
+        </button>
       </div>
     </nav>
   </section>
@@ -148,6 +148,7 @@
     background-color: var(--variable-collection-primary-light);
     border-radius: 4px;
     overflow: hidden;
+    cursor: pointer;
   }
 
   .hero .hero-button-text {
@@ -181,6 +182,48 @@
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollButtons = document.querySelectorAll('[data-scroll-to]');
+
+    scrollButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('data-scroll-to');
+        let targetElement = null;
+
+        // Map scroll target IDs to section IDs
+        if (targetId === 'in-stock-products') {
+          // Find the in-stock products section
+          targetElement = document.querySelector('[data-section-id*="p-o-r-in-stock"]');
+          if (!targetElement) {
+            targetElement = document.querySelector('.in-stock-products-wrapper');
+          }
+        } else if (targetId === 'looking-for-something-else') {
+          // Find the "Looking for something else" / request section
+          targetElement = document.querySelector('[data-section-id*="p-o-r-in-request"]');
+          if (!targetElement) {
+            targetElement = document.querySelector('[data-section-id*="request"]');
+          }
+          if (!targetElement) {
+            targetElement = document.querySelector('[class*="request"]');
+          }
+        }
+
+        if (targetElement) {
+          // Smooth scroll to the target element
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        } else {
+          console.warn('Target section not found for:', targetId);
+        }
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
