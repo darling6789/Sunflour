@@ -308,6 +308,7 @@
     user-select: none;
     cursor: pointer;
     margin: auto;
+    border: none;
 }
 
 .m-pendants-letter-slide:hover {
@@ -315,13 +316,14 @@
 }
 
 .m-pendants-letter-slider-wrap {
-    
+    border: none;   
 }
 
 .m-pendants-letter-slider-wrap.slick-current .m-pendants-letter-slide {
     background-color: #000000;
     color: #FFFFFF;
     font-weight: 600;
+    border: none;
 }
 
 .m-pendants-product-image img {
@@ -831,12 +833,19 @@ document.addEventListener('DOMContentLoaded', function() {
             selectVariant(currentProduct.variants[0]);
         }
         
-        // Update size display for single variant products
+        // Update size display and separator visibility
+        const separator = document.querySelector('.m-pendants-selection-separator');
         if (currentProduct.variants.length === 1) {
-            selectedSizeSpan.textContent = currentProduct.variants[0].title;
-        } else if (currentProduct.variants.length === 0) {
-            // No variants - hide size display
+            // Single variant - hide separator and size
             selectedSizeSpan.textContent = '';
+            separator.style.display = 'none';
+        } else if (currentProduct.variants.length === 0) {
+            // No variants - hide separator and size
+            selectedSizeSpan.textContent = '';
+            separator.style.display = 'none';
+        } else {
+            // Multiple variants - show separator and size
+            separator.style.display = 'inline';
         }
     }
     
