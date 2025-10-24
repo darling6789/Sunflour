@@ -161,8 +161,8 @@
   /* Carousel Container */
   .quickview-carousel-container {
     position: relative;
-    width: 620px;
-    height: 603.76px;
+    width: 100%;
+    aspect-ratio: 620 / 603.76;
     flex-shrink: 0;
     background-color: var(--color-bg-light);
     border-radius: var(--radius-md);
@@ -199,6 +199,8 @@
     transform: translateY(-50%);
     background-color: rgba(255, 255, 255, 0.9);
     border: none;
+    min-width: 44px;
+    min-height: 44px;
     width: 44px;
     height: 44px;
     border-radius: var(--radius-sm);
@@ -211,6 +213,9 @@
     z-index: 10;
     padding: 0;
     gap: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .quickview-swiper-prev:hover,
@@ -219,24 +224,37 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
+  .quickview-swiper-prev:focus-visible,
+  .quickview-swiper-next:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .quickview-swiper-prev:active,
+  .quickview-swiper-next:active {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
   .quickview-swiper-prev {
-    left: var(--spacing-lg);
+    left: var(--spacing-md);
   }
 
   .quickview-swiper-next {
-    right: var(--spacing-lg);
+    right: var(--spacing-md);
   }
 
   .quickview-swiper-prev:disabled,
   .quickview-swiper-next:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
+    background-color: rgba(255, 255, 255, 0.7);
   }
 
   .quickview-swiper-prev svg,
   .quickview-swiper-next svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 
   :root {
@@ -297,13 +315,14 @@
     z-index: 1000;
     overflow-y: auto;
     padding: var(--spacing-lg);
+    padding-bottom: max(var(--spacing-lg), env(safe-area-inset-bottom));
   }
 
   .quickview-modal-container {
     position: relative;
     background-color: #ffffff;
     border-radius: var(--radius-md);
-    max-height: 90vh;
+    max-height: min(95vh, 100% - 32px);
     overflow-y: auto;
     width: 100%;
     max-width: 1200px;
@@ -316,7 +335,9 @@
     z-index: 1001;
     background: none;
     border: none;
-    padding: var(--spacing-sm);
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -324,6 +345,9 @@
     color: var(--color-text-primary);
     transition: color 200ms ease, background-color 200ms ease;
     border-radius: var(--radius-sm);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .quickview-modal-close:hover {
@@ -336,22 +360,31 @@
     outline-offset: 2px;
   }
 
+  .quickview-modal-close:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
   /* ============================================
      LOADING & ERROR STATES
      ============================================ */
 
   .quickview-loading-state,
   .quickview-error-state {
-    padding: var(--spacing-4xl);
+    padding: var(--spacing-2xl) var(--spacing-lg);
     text-align: center;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .quickview-spinner {
     border: 4px solid #f3f3f3;
     border-top-color: var(--color-accent-primary);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     animation: spin 1s linear infinite;
     margin: 0 auto var(--spacing-lg);
   }
@@ -362,12 +395,14 @@
     color: var(--color-text-primary);
     font-family: var(--font-montserrat);
     font-size: 14px;
-    line-height: 1.4;
+    line-height: 1.6;
   }
 
   .quickview-error-retry {
     margin-top: var(--spacing-lg);
-    padding: var(--spacing-sm) var(--spacing-lg);
+    min-width: 150px;
+    min-height: 44px;
+    padding: 12px 24px;
     background-color: var(--color-accent-primary);
     color: #ffffff;
     border: none;
@@ -377,10 +412,22 @@
     font-weight: 500;
     font-size: 14px;
     transition: background-color 200ms ease;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .quickview-error-retry:hover {
     background-color: var(--color-accent-secondary);
+  }
+
+  .quickview-error-retry:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .quickview-error-retry:active {
+    transform: scale(0.98);
   }
 
   /* ============================================
@@ -399,9 +446,10 @@
   
   .quickview-main {
     display: flex;
+    flex-direction: column;
     gap: 0;
-    height: 600px;
-    align-items: flex-start;
+    height: auto;
+    align-items: stretch;
     position: relative;
     width: 100%;
     z-index: 0;
@@ -409,8 +457,8 @@
 
   .quickview-image {
     position: relative;
-    width: 620px;
-    height: 603.76px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     flex-shrink: 0;
   }
@@ -422,25 +470,17 @@
   .quickview-panel {
     display: flex;
     flex-direction: column;
-    width: 544px;
-    height: 600px;
+    width: 100%;
+    height: auto;
     align-items: flex-start;
     gap: var(--spacing-md);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
   }
 
-  /* Scrollbar */
+  /* Scrollbar - Hidden by default, shown on desktop only */
   .quickview-scrollbar {
-    display: inline-flex;
-    flex-direction: column;
-    height: 291px;
-    align-items: center;
-    padding: var(--dimensions-scrollbar-margin-top) 2px var(--dimensions-scrollbar-margin-top) 2px;
-    position: absolute;
-    top: 309px;
-    left: 534px;
-    z-index: 2;
+    display: none;
   }
 
   .quickview-scrollbar-track {
@@ -477,18 +517,17 @@
   .quickview-content {
     display: flex;
     flex-direction: column;
-    gap: 6.63px;
-    padding: 0 22.49px;
+    gap: var(--spacing-md);
+    padding: 0;
     position: relative;
     width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible;
   }
 
   .quickview-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 33.17px;
+    gap: var(--spacing-lg);
     position: relative;
     width: 100%;
   }
@@ -498,23 +537,24 @@
      ============================================ */
 
   .quickview-header {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
-    gap: 7.96px;
+    gap: var(--spacing-md);
     position: relative;
+    width: 100%;
   }
 
   .quickview-title-section {
     display: flex;
     flex-direction: column;
-    gap: 6.75px;
-    width: 447.56px;
+    gap: var(--spacing-sm);
+    width: 100%;
   }
 
   .quickview-title {
     margin: 0;
     font-family: var(--font-garamond);
-    font-size: 27px;
+    font-size: clamp(20px, 5vw, 27px);
     font-weight: 400;
     color: var(--color-text-primary);
     line-height: 1.3;
@@ -523,25 +563,27 @@
   .quickview-subtitle {
     margin: 0;
     font-family: var(--font-montserrat);
-    font-size: 13.3px;
+    font-size: clamp(11px, 2.5vw, 14px);
     font-weight: 400;
     color: var(--color-text-secondary);
-    line-height: 1.2;
+    line-height: 1.3;
   }
 
   /* Specs Grid */
   .quickview-specs-grid {
     display: flex;
-    width: 498.15px;
-    gap: 13.49px;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: var(--spacing-md);
     position: relative;
   }
 
   .quickview-spec-column {
     display: flex;
     flex-direction: column;
-    width: 169.81px;
-    gap: 7.96px;
+    flex: 1;
+    min-width: 140px;
+    gap: var(--spacing-sm);
   }
 
   .quickview-spec {
@@ -549,52 +591,54 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    gap: var(--spacing-sm);
   }
 
   .quickview-spec-label {
     font-family: var(--font-montserrat);
-    font-size: 10.6px;
+    font-size: clamp(10px, 2.5vw, 11px);
     font-weight: 400;
     color: var(--color-text-secondary);
-    letter-spacing: 0.47px;
-    line-height: 1;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
     white-space: nowrap;
   }
 
   .quickview-spec-value {
     font-family: var(--font-montserrat);
-    font-size: 10.6px;
+    font-size: clamp(10px, 2.5vw, 11px);
     font-weight: 400;
     color: var(--color-text-primary);
-    line-height: 1;
-    white-space: nowrap;
+    line-height: 1.3;
+    text-align: right;
   }
 
   /* Price Section */
   .quickview-price-section {
-    display: inline-flex;
-    gap: 3.37px;
+    display: flex;
+    gap: var(--spacing-sm);
     position: relative;
+    width: 100%;
   }
 
   .quickview-price {
-    display: inline-flex;
+    display: flex;
     align-items: baseline;
-    gap: 3.37px;
+    gap: 4px;
   }
 
   .quickview-price-currency {
     font-family: var(--font-montserrat);
-    font-size: 27px;
+    font-size: clamp(20px, 4vw, 27px);
     font-weight: 500;
     color: var(--color-accent-secondary);
-    letter-spacing: 2.25px;
+    letter-spacing: 1px;
     line-height: 1;
   }
 
   .quickview-price-amount {
     font-family: var(--font-montserrat);
-    font-size: 36px;
+    font-size: clamp(24px, 7vw, 36px);
     font-weight: 500;
     color: var(--color-accent-secondary);
     line-height: 1;
@@ -602,27 +646,27 @@
 
   .quickview-price-currency:last-child {
     font-family: var(--font-montserrat);
-    font-size: 20.2px;
+    font-size: clamp(14px, 3vw, 20px);
     font-weight: 600;
     color: var(--color-accent-secondary);
-    letter-spacing: -0.56px;
+    letter-spacing: 0;
   }
 
   /* Financing Info */
   .quickview-financing {
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    flex-direction: column;
     gap: var(--spacing-sm);
+    width: 100%;
   }
 
   .quickview-financing-text {
     margin: 0;
     font-family: var(--font-montserrat);
-    font-size: 13.3px;
+    font-size: clamp(11px, 2.5vw, 13px);
     font-weight: 400;
     color: var(--color-text-primary);
-    opacity: 0.6;
+    opacity: 0.7;
     line-height: 1.5;
   }
 
@@ -631,17 +675,18 @@
   }
 
   .quickview-affirm-logo {
-    width: 52.41px;
-    height: 22.12px;
+    width: clamp(40px, 12vw, 52px);
+    height: auto;
+    aspect-ratio: 52.41 / 22.12;
     background-image: url(./img/frame-183318.png);
-    background-size: cover;
-    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .quickview-financing-link {
     margin: 0;
     font-family: var(--font-montserrat);
-    font-size: 13.3px;
+    font-size: clamp(11px, 2.5vw, 13px);
     font-weight: 400;
     color: var(--color-text-primary);
     line-height: 1.5;
@@ -654,7 +699,8 @@
     transition: color 200ms ease;
   }
 
-  .quickview-financing-link a:hover {
+  .quickview-financing-link a:hover,
+  .quickview-financing-link a:focus-visible {
     color: var(--color-accent-primary);
   }
 
@@ -665,8 +711,8 @@
   .quickview-cta {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 11.06px;
+    align-items: stretch;
+    gap: var(--spacing-md);
     position: relative;
     width: 100%;
   }
@@ -675,7 +721,7 @@
   .quickview-error-message-wrapper {
     display: flex;
     align-items: flex-start;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     padding: var(--spacing-md) var(--spacing-lg);
     background-color: #fee;
     border: 1px solid #f4d4d4;
@@ -693,9 +739,11 @@
   .quickview-error-message-wrapper .svg-wrapper {
     display: flex;
     flex-shrink: 0;
-    width: 16px;
-    height: 16px;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
     color: #d32f2f;
+    margin-top: 2px;
   }
 
   .quickview-error-message-wrapper .svg-wrapper svg {
@@ -705,9 +753,10 @@
 
   .quickview-cta-buttons {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
-    gap: 0;
+    gap: var(--spacing-md);
+    flex-direction: column;
   }
 
   .quickview-btn {
@@ -716,35 +765,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 17.99px 35.98px;
+    min-height: 44px;
+    padding: 12px 20px;
     font-family: var(--font-montserrat);
-    font-size: 15.7px;
+    font-size: clamp(13px, 2.5vw, 15px);
     font-weight: 500;
-    line-height: 1;
+    line-height: 1.3;
     cursor: pointer;
-    border-radius: 4.5px;
+    border-radius: 4px;
     transition: all 200ms ease;
     flex: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .quickview-btn-primary {
     background-color: var(--color-accent-primary);
     color: #ffffff;
-    margin-right: 11.25px;
   }
 
   .quickview-btn-primary:hover {
     background-color: var(--color-accent-secondary);
   }
 
+  .quickview-btn-primary:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
   .quickview-btn-primary:active {
     transform: scale(0.98);
+    background-color: var(--color-accent-secondary);
   }
 
   .quickview-btn-secondary {
     background-color: transparent;
     color: #594242;
-    border: 1.12px solid #68565e;
+    border: 1px solid #68565e;
     text-decoration: none;
   }
 
@@ -753,24 +811,40 @@
     border-color: var(--color-accent-primary);
   }
 
+  .quickview-btn-secondary:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
   .quickview-btn-secondary:active {
     transform: scale(0.98);
+    background-color: var(--color-bg-light);
   }
 
   .quickview-expert-link {
     all: unset;
     font-family: var(--font-montserrat);
-    font-size: 13.3px;
+    font-size: clamp(12px, 2.5vw, 13px);
     font-weight: 600;
     font-style: italic;
     color: var(--color-accent-dark);
     text-decoration: underline;
     cursor: pointer;
     transition: color 200ms ease;
+    padding: var(--spacing-sm);
+    margin: 0 calc(-1 * var(--spacing-sm));
+    border-radius: var(--radius-sm);
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .quickview-expert-link:hover {
     color: #3d2e35;
+  }
+
+  .quickview-expert-link:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
   }
 
   /* ============================================
@@ -780,9 +854,9 @@
   .quickview-description-panel {
     display: flex;
     flex-direction: column;
-    width: 544px;
-    gap: var(--spacing-xl);
-    padding: 0 22.5px;
+    width: 100%;
+    gap: var(--spacing-lg);
+    padding: 0;
     position: relative;
   }
 
@@ -797,51 +871,450 @@
   .quickview-description-title {
     margin: 0;
     font-family: var(--font-montserrat);
-    font-size: 16px;
+    font-size: clamp(13px, 3vw, 16px);
     font-weight: 400;
     color: var(--color-text-primary);
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.3;
   }
 
   .quickview-description-text {
     margin: 0;
     font-family: var(--font-montserrat);
-    font-size: 16px;
+    font-size: clamp(14px, 2.5vw, 16px);
     font-weight: 400;
     color: var(--color-text-primary);
-    line-height: 1.4;
+    line-height: 1.6;
   }
 
   /* ============================================
      RESPONSIVE
      ============================================ */
 
-  @media (max-width: 768px) {
-    .quickview-main {
-      flex-direction: column;
-      height: auto;
+  /* ============================================
+     MOBILE & TABLET RESPONSIVE
+     Desktop design (1024px+) remains unchanged
+     ============================================ */
+
+  /* SMALL PHONES: 320px - 479px */
+  @media (max-width: 479px) {
+    .quickview-modal-backdrop {
+      padding: var(--spacing-sm);
+      padding-bottom: max(var(--spacing-sm), env(safe-area-inset-bottom));
     }
 
-    .quickview-image,
+    .quickview-modal-container {
+      max-height: min(95vh, 100% - 16px);
+      border-radius: var(--radius-sm);
+      width: calc(100% - 16px);
+    }
+
+    .quickview-modal {
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+    }
+
+    .quickview-main {
+      gap: var(--spacing-md);
+    }
+
     .quickview-panel {
-      width: 100%;
-      height: auto;
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-content {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-cta {
+      gap: var(--spacing-sm);
     }
 
     .quickview-cta-buttons {
-      flex-direction: column;
+      gap: var(--spacing-xs);
     }
 
     .quickview-btn {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: var(--spacing-md);
+      min-height: 40px;
+      padding: 10px 16px;
+      font-size: 13px;
     }
 
-    .quickview-btn:last-child {
-      margin-bottom: 0;
+    .quickview-title {
+      font-size: 20px;
+    }
+
+    .quickview-subtitle {
+      font-size: 12px;
+    }
+
+    .quickview-spec-label,
+    .quickview-spec-value {
+      font-size: 10px;
+    }
+
+    .quickview-price-amount {
+      font-size: 24px;
+    }
+
+    .quickview-price-currency {
+      font-size: 18px;
+    }
+
+    .quickview-financing {
+      gap: var(--spacing-xs);
+    }
+
+    .quickview-affirm-logo {
+      width: 40px;
+    }
+
+    .quickview-scrollbar {
+      display: none !important;
+    }
+  }
+
+  /* PHONES & SMALL TABLETS: 480px - 767px */
+  @media (min-width: 480px) and (max-width: 767px) {
+    .quickview-modal-backdrop {
+      padding: var(--spacing-md);
+      padding-bottom: max(var(--spacing-md), env(safe-area-inset-bottom));
+    }
+
+    .quickview-modal-container {
+      max-height: min(95vh, 100% - 32px);
+    }
+
+    .quickview-modal {
+      gap: var(--spacing-lg);
+      padding: var(--spacing-lg);
+    }
+
+    .quickview-main {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-panel {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-cta-buttons {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-financing {
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+
+    .quickview-scrollbar {
+      display: none !important;
+    }
+
+    .quickview-btn {
+      min-height: 44px;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    .quickview-specs-grid {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-spec-column {
+      min-width: 120px;
+    }
+  }
+
+  /* TABLETS: 768px - 1023px */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .quickview-modal-backdrop {
+      padding: var(--spacing-lg);
+      padding-bottom: max(var(--spacing-lg), env(safe-area-inset-bottom));
+    }
+
+    .quickview-modal-container {
+      max-width: min(95vw, 900px);
+      max-height: min(90vh, 100% - 32px);
+    }
+
+    .quickview-modal {
+      gap: var(--spacing-lg);
+      padding: var(--spacing-lg);
+    }
+
+    .quickview-main {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-panel {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-content {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-scrollbar {
+      display: none !important;
+    }
+
+    .quickview-cta-buttons {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-btn {
+      min-height: 48px;
+      padding: 14px 24px;
+      font-size: 14px;
+    }
+
+    .quickview-specs-grid {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-spec-column {
+      min-width: 140px;
+    }
+
+    .quickview-swiper-prev,
+    .quickview-swiper-next {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+    }
+
+    .quickview-financing {
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+
+    .quickview-description-panel {
+      gap: var(--spacing-lg);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--spacing-md);
+    }
+  }
+
+  /* LANDSCAPE ORIENTATION: Prevents modal from being too tall */
+  @media (max-height: 600px) {
+    .quickview-modal-container {
+      max-height: 95vh;
+    }
+
+    .quickview-carousel-container {
+      min-height: 200px;
+      max-height: 350px;
+    }
+
+    .quickview-main {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-panel {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-cta {
+      gap: var(--spacing-xs);
+    }
+
+    .quickview-description-panel {
+      display: none;
+    }
+  }
+
+  /* DESKTOP: 1024px+ - Restore original side-by-side layout */
+  @media (min-width: 1024px) {
+    .quickview-main {
+      flex-direction: row;
+      gap: 0;
+      height: 600px;
+      align-items: flex-start;
+    }
+
+    .quickview-carousel-container {
+      width: 620px;
+      height: 603.76px;
+      flex-shrink: 0;
+    }
+
+    .quickview-panel {
+      width: 544px;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .quickview-content {
+      gap: 6.63px;
+      padding: 0 22.49px;
+      overflow-y: auto;
+    }
+
+    .quickview-wrapper {
+      gap: 33.17px;
+    }
+
+    .quickview-scrollbar {
+      display: inline-flex;
+      flex-direction: column;
+      height: 291px;
+      align-items: center;
+      padding: var(--dimensions-scrollbar-margin-top) 2px var(--dimensions-scrollbar-margin-top) 2px;
+      position: absolute;
+      top: 309px;
+      left: 534px;
+      z-index: 2;
+    }
+
+    .quickview-header {
+      gap: 7.96px;
+      width: 447.56px;
+    }
+
+    .quickview-title-section {
+      gap: 6.75px;
+      width: 447.56px;
+    }
+
+    .quickview-title {
+      font-size: 27px;
+    }
+
+    .quickview-subtitle {
+      font-size: 13.3px;
+    }
+
+    .quickview-specs-grid {
+      width: 498.15px;
+      gap: 13.49px;
+      flex-wrap: nowrap;
+    }
+
+    .quickview-spec-column {
+      
+      min-width: auto;
+      max-width: 169.81px;
+      gap: 7.96px;
+    }
+
+    .quickview-spec-label,
+    .quickview-spec-value {
+      font-size: 10.6px;
+      letter-spacing: 0.47px;
+    }
+
+    .quickview-price-section {
+      gap: 3.37px;
+    }
+
+    .quickview-price {
+      gap: 3.37px;
+    }
+
+    .quickview-price-currency {
+      font-size: 27px;
+      letter-spacing: 2.25px;
+    }
+
+    .quickview-price-amount {
+      font-size: 36px;
+    }
+
+    .quickview-price-currency:last-child {
+      font-size: 20.2px;
+      letter-spacing: -0.56px;
+    }
+
+    .quickview-financing {
+      flex-direction: row;
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-financing-text {
+      font-size: 13.3px;
+      opacity: 0.6;
+    }
+
+    .quickview-financing-amount {
+      font-weight: 600;
+    }
+
+    .quickview-affirm-logo {
+      width: 52.41px;
+      height: 22.12px;
+      aspect-ratio: auto;
+      background-size: cover;
+    }
+
+    .quickview-financing-link {
+      font-size: 13.3px;
+    }
+
+    .quickview-cta {
+      align-items: flex-end;
+      gap: 11.06px;
+    }
+
+    .quickview-cta-buttons {
+      flex-direction: row;
+      gap: 0;
+      align-items: center;
+    }
+
+    .quickview-btn {
+      min-height: auto;
+      padding: 17.99px 35.98px;
+      font-size: 15.7px;
+      line-height: 1;
+    }
+
+    .quickview-btn-primary {
+      margin-right: 11.25px;
+    }
+
+    .quickview-expert-link {
+      font-size: 13.3px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .quickview-description-panel {
+      width: 544px;
+      gap: var(--spacing-xl);
+      padding: 0 22.5px;
+      border-top: none;
+      margin-top: 0;
+    }
+
+    .quickview-description-title {
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      line-height: 1;
+    }
+
+    .quickview-description-text {
+      font-size: 16px;
+      line-height: 1.4;
     }
   }
 </style>
