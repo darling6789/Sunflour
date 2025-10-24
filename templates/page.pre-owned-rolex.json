@@ -1,24 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "pre-owned-rolex-header": {
       "type": "pre-owned-rolex-hero",
-      
+      "settings": {
+        "hero_image": "shopify://shop_images/a09702bacbe33de7eaafcd751c3585424155c72f_1.jpg",
+        "hero_title": "Find Your Dream Watch",
+        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches, or work with one of our experts to locate the Pre-Owned Rolex of your dreams.",
+        "button_one_text": "Shop In-Stock",
+        "button_one_url": "",
+        "button_two_text": "Find My Watch",
+        "button_two_url": ""
+      }
     },
     "pre-owned-rolex-disclaimer1": {
       "type": "pre-owned-rolex-disclaimer",
-      
-    },
-    "p-o-r-in-stock-products1": {
-      "type": "p-o-r-in-stock-products",
-      
-    },
-    "p-o-r-in-request-section1": {
-      "type": "p-o-r-request-section",
-      
+      "settings": {}
     },
     "p-o-r-list-signup1": {
       "type": "p-o-r-list-signup",
-      
+      "settings": {}
+    },
+    "p-o-r-in-stock-products1": {
+      "type": "p-o-r-in-stock-products",
+      "settings": {
+        "section_title": "Pre-Owned Rolex Watches",
+        "collection": "rolex-1"
+      }
+    },
+    "p-o-r-in-request-section1": {
+      "type": "p-o-r-request-section",
+      "settings": {}
     }
   },
   "order": [
@@ -26,7 +46,6 @@
     "pre-owned-rolex-disclaimer1",
     "p-o-r-list-signup1",
     "p-o-r-in-stock-products1",
-    "p-o-r-in-request-section1",
-    
+    "p-o-r-in-request-section1"
   ]
 }
