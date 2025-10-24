@@ -25,7 +25,9 @@
         data-product-url="{{ product.url }}"
         aria-label="Quick view for {{ product.title | remove: 'Pre-Owned Rolex ' }}"
       >
-        {{ 'filter.svg' | asset_url | img_tag: alt: 'Quick view' }}
+        <div class="quick-view-icon" width="20" height="20" >
+          {{ 'eye.svg' | inline_asset_content }}
+        </div>
       </button>
     </div>
     <div class="product-details">
