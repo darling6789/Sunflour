@@ -54,7 +54,7 @@
                                               data-product-id="{{ product.id }}"
                                               data-product-handle="{{ product.handle }}"
                                               data-product-title="{{ product.title }}">
-                                             <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" />
+                                             <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" width="100%" height="100%" />
                                          </div>
                                      {% endif %}
                                  {% endunless %}
@@ -261,9 +261,13 @@
 }
 
 .m-pendants-product-image {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+.m-pendants-product-image .slick-track {
+    padding: 0;
 }
 
 .m-pendants-image-slider {
@@ -324,6 +328,87 @@
     color: #FFFFFF;
     font-weight: 600;
     border: none;
+}
+
+/* Letter Slider Arrow Buttons */
+.m-pendants-letter-selector {
+    position: relative;
+}
+
+.m-pendants-letter-selector .slick-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.m-pendants-letter-selector .slick-prev {
+    left: -60px;
+}
+
+.m-pendants-letter-selector .slick-next {
+    right: -60px;
+}
+
+.m-pendants-slider-button {
+    color: #000000 !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.m-pendants-slider-button:not([disabled]):hover {
+    color: #333333 !important;
+    transform: scale(1.1);
+}
+
+.m-pendants-slider-button .svg-wrapper {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.m-pendants-slider-button .svg-wrapper svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+.m-pendants-slider-button[disabled] {
+    color: #CCCCCC !important;
+    cursor: not-allowed;
+}
+
+.m-pendants-slider-button--next .svg-wrapper svg {
+    transform: rotate(-90deg);
+}
+
+.m-pendants-slider-button--prev .svg-wrapper svg {
+    transform: rotate(90deg);
+}
+
+.m-pendants-slider-button--next:not([disabled]):hover .svg-wrapper svg {
+    transform: rotate(-90deg) scale(1.1);
+}
+
+.m-pendants-slider-button--prev:not([disabled]):hover .svg-wrapper svg {
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* Responsive styles for arrows */
+@media screen and (max-width: 768px) {
+    .m-pendants-letter-selector .slick-arrow {
+        display: none !important;
+    }
 }
 
 .m-pendants-product-image img {
@@ -755,6 +840,8 @@
     }
     
     .m-pendants-product-image {
+        width: 150px;
+        height: 150px;
         margin-bottom: 20px;
     }
 }
@@ -765,6 +852,75 @@
         gap: 20px;
         align-items: center;
         justify-content: center;
+    }
+    .m-pendants-product-image {
+        width: 100%;
+        height: calc(100vw - 40px);
+    }
+    .m-pendants-letter-selector {
+        padding: 0;
+        width: 100%;
+    }
+    .m-pendants-product-title {
+        font-size: 18px;
+    }
+    .m-pendants-size-title {
+        font-size: 16px;
+    }
+    .m-pendants-selection-title {
+        font-size: 16px;
+    }
+    .m-pendants-current-selection {
+        font-size: 14px;
+    }
+    .m-pendants-current-price {
+        font-size: 36px;
+    }
+    .m-pendants-original-price {
+        font-size: 14px;
+    }
+    .m-pendants-financing {
+        font-size: 10px;
+    }
+    .m-pendants-cart-btn {
+        font-size: 14px;
+    }
+    .m-pendants-promise-title {
+        font-size: 16px;
+    }
+    .m-pendants-promise-items {
+        font-size: 14px;
+    }
+    .m-pendants-promise-item {
+        font-size: 14px;
+    }
+    .m-pendants-size-spec {
+        display: none;
+    }
+    .m-pendants-size-name {
+        margin: 0;
+    }
+    .m-pendants-size-btn {
+        align-items: center;
+    }
+    .m-pendants-media-display {
+        max-height: calc(100vw - 40px);
+    }
+    .m-pendants-media-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .m-pendants-media-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .m-pendants-media-image {
+        overflow: hidden;
+    }
+    .m-pendants-media-image img {
+        scale: 1.5;
     }
 }
 </style>
@@ -962,7 +1118,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     $('#m-pendants-letter-slider').slick({
-        arrows: false,
+        arrows: true,
+        prevArrow: '<button type="button" class="m-pendants-slider-button m-pendants-slider-button--prev" name="previous" aria-label="Previous letter"><span class="svg-wrapper">{{- "icon-caret.svg" | inline_asset_content -}}</span></button>',
+        nextArrow: '<button type="button" class="m-pendants-slider-button m-pendants-slider-button--next" name="next" aria-label="Next letter"><span class="svg-wrapper">{{- "icon-caret.svg" | inline_asset_content -}}</span></button>',
         centerMode: true,
         asNavFor: '#m-pendants-image-slider',
         infinite: true,
@@ -974,6 +1132,25 @@ document.addEventListener('DOMContentLoaded', function() {
         useTransform: true,
         useHardwareAcceleration: true,
         useTransform: true,
+        responsive: [
+            {
+                breakpoint: 420,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 5,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    focusOnSelect: true,
+                    swipeToSlide: true,
+                    touchMove: true,
+                    draggable: true,
+                    useCSS: true,
+                    useTransform: true,
+                    useHardwareAcceleration: true,
+                    useTransform: true,
+                }
+            }
+        ]
     });
     
     // Handle slide change
