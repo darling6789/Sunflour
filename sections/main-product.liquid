@@ -262,16 +262,16 @@
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                 {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
-                {%- if _promo contains 'promo-price-block' -%}
+                {% comment %} {%- if _promo contains 'promo-price-block' -%}
                   {{ _promo }}
-                {%- else -%}
+                {%- else -%} {% endcomment %}
                   {%- render 'price',
                     product: product,
                     use_variant: true,
                     show_badges: true,
                     price_class: 'price--large'
                   -%}
-                {%- endif -%}
+                {% comment %} {%- endif -%} {% endcomment %}
                 </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
