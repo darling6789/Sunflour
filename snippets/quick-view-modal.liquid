@@ -33,13 +33,28 @@
     <!-- Modal Content -->
     <div data-quick-view-content style="display: none;">
       <div class="quickview-modal">
-        <!-- Navigation -->
-        <img class="quickview-navigation" src="img/navigation-container.svg" alt="Product navigation" />
 
         <!-- Main Content -->
         <div class="quickview-main">
-          <!-- Product Image -->
-          <img class="quickview-image js-quickview-featured-image" src="" alt="Product" />
+          <!-- Product Image Carousel -->
+          <div class="quickview-carousel-container">
+            <div class="swiper quickview-swiper" data-quickview-swiper>
+              <div class="swiper-wrapper">
+                <!-- Images will be populated here -->
+              </div>
+              <!-- Navigation Buttons -->
+              <button class="quickview-swiper-prev" aria-label="Previous image">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button class="quickview-swiper-next" aria-label="Next image">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
 
           <!-- Details Panel -->
           <div class="quickview-panel">
@@ -128,6 +143,90 @@
 </div>
 
 <style>
+  /* Import Swiper CSS */
+  @import url('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+
+  /* Carousel Container */
+  .quickview-carousel-container {
+    position: relative;
+    width: 620px;
+    height: 603.76px;
+    flex-shrink: 0;
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .quickview-swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .quickview-swiper .swiper-wrapper {
+    height: 100%;
+  }
+
+  .quickview-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-light);
+  }
+
+  .quickview-swiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Navigation Buttons */
+  .quickview-swiper-prev,
+  .quickview-swiper-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    transition: all 200ms ease;
+    z-index: 10;
+    padding: 0;
+    gap: 0;
+  }
+
+  .quickview-swiper-prev:hover,
+  .quickview-swiper-next:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .quickview-swiper-prev {
+    left: var(--spacing-lg);
+  }
+
+  .quickview-swiper-next {
+    right: var(--spacing-lg);
+  }
+
+  .quickview-swiper-prev:disabled,
+  .quickview-swiper-next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .quickview-swiper-prev svg,
+  .quickview-swiper-next svg {
+    width: 24px;
+    height: 24px;
+  }
+
   :root {
     /* Typography */
     --font-garamond: "EB Garamond", serif;
@@ -285,15 +384,7 @@
     background-color: #ffffff;
   }
 
-  .quickview-navigation {
-    position: absolute;
-    top: 307px;
-    left: 28px;
-    width: 597px;
-    height: 46px;
-    z-index: 1;
-  }
-
+  
   .quickview-main {
     display: flex;
     gap: 0;
@@ -711,6 +802,8 @@
   }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
 <script>
   /**
    * Quick View Modal Manager
@@ -736,10 +829,16 @@
         this.conditionEl = document.querySelector('.js-quickview-condition');
         this.priceEl = document.querySelector('.js-quickview-price');
         this.descriptionEl = document.querySelector('.js-quickview-description');
-        this.imageEl = document.querySelector('.js-quickview-featured-image');
         this.buyNowBtn = document.querySelector('.js-quickview-buy-now');
 
+        // Carousel elements
+        this.swiperContainer = document.querySelector('.quickview-swiper');
+        this.swiperWrapper = document.querySelector('.swiper-wrapper');
+        this.swiperPrevBtn = document.querySelector('.quickview-swiper-prev');
+        this.swiperNextBtn = document.querySelector('.quickview-swiper-next');
+
         this.currentTrigger = null;
+        this.swiper = null;
         this.init();
       }
 
@@ -834,7 +933,7 @@
           };
 
           this.populateModal(productData);
-          this.fetchProductDescription(productData.handle);
+          this.fetchProductDescriptionAndImages(productData.handle, productData.featured_image.src);
           this.showContent();
         } catch (error) {
           console.error('Error loading product data:', error);
@@ -867,12 +966,13 @@
         if (this.buyNowBtn) this.buyNowBtn.href = productData.url;
       }
 
-      async fetchProductDescription(productHandle) {
+      async fetchProductDescriptionAndImages(productHandle, featuredImageSrc) {
         try {
+          // Always initialize carousel with at least featured image
           if (!productHandle) {
-            if (this.descriptionEl) {
-              this.descriptionEl.textContent = 'Experience the refined craftsmanship of premium timepieces.';
-            }
+            console.log('No product handle provided, using featured image');
+            this.setDefaultDescription();
+            this.initializeCarousel([{ src: featuredImageSrc, alt: 'Product' }]);
             return;
           }
 
@@ -880,17 +980,122 @@
           if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
           const fullProductData = await response.json();
+          console.log('Fetched product data:', fullProductData);
+
+          // Extract description
           const description = fullProductData.body_html || '';
           const plainText = description.replace(/<[^>]*>/g, '').substring(0, 300);
-
           if (this.descriptionEl) {
             this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
           }
-        } catch (error) {
-          console.error('Error fetching product description:', error);
-          if (this.descriptionEl) {
-            this.descriptionEl.textContent = 'Experience the refined craftsmanship of premium timepieces.';
+
+          // Extract images - handle different response formats
+          let images = [];
+          if (fullProductData.images && Array.isArray(fullProductData.images)) {
+            images = fullProductData.images.map((img) => ({
+              src: typeof img === 'string' ? img : (img.src || ''),
+              alt: img.alt || 'Product image'
+            })).filter(img => img.src);
+          } else if (fullProductData.featured_image) {
+            images = [{ src: fullProductData.featured_image.src, alt: 'Product' }];
           }
+
+          console.log('Extracted images:', images);
+
+          // Use product images if available, otherwise use featured image
+          const imagesToUse = images.length > 0 ? images : [{ src: featuredImageSrc, alt: 'Product' }];
+          console.log('Images to use:', imagesToUse);
+          this.initializeCarousel(imagesToUse);
+        } catch (error) {
+          console.error('Error fetching product description and images:', error);
+          this.setDefaultDescription();
+          // Fallback to featured image on error
+          console.log('Using fallback featured image:', featuredImageSrc);
+          this.initializeCarousel([{ src: featuredImageSrc, alt: 'Product' }]);
+        }
+      }
+
+      setDefaultDescription() {
+        if (this.descriptionEl) {
+          this.descriptionEl.textContent = 'Experience the refined craftsmanship of premium timepieces.';
+        }
+      }
+
+      initializeCarousel(images) {
+        try {
+          // Query the wrapper fresh to ensure we have the current element
+          const swiperWrapper = document.querySelector('.swiper-wrapper');
+          console.log('Swiper wrapper element:', swiperWrapper);
+          console.log('Images to populate:', images);
+
+          if (!swiperWrapper) {
+            console.error('Swiper wrapper element not found!');
+            return;
+          }
+
+          // Clear previous slides
+          swiperWrapper.innerHTML = '';
+
+          // Populate carousel with images
+          images.forEach((img, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'swiper-slide';
+            const imgElement = document.createElement('img');
+            imgElement.src = img.src;
+            imgElement.alt = img.alt || `Product image ${index + 1}`;
+            imgElement.loading = 'lazy';
+            slide.appendChild(imgElement);
+            swiperWrapper.appendChild(slide);
+            console.log(`Added image ${index + 1}:`, img.src);
+          });
+
+          console.log('Carousel populated with', images.length, 'images');
+
+          // Destroy existing Swiper instance if it exists
+          if (this.swiper) {
+            this.swiper.destroy();
+            this.swiper = null;
+          }
+
+          // Initialize Swiper - wait for library to be available
+          const initSwiper = () => {
+            if (typeof Swiper === 'undefined') {
+              console.log('Swiper library not yet available, retrying...');
+              setTimeout(initSwiper, 100);
+              return;
+            }
+
+            const swiperContainer = document.querySelector('.quickview-swiper');
+            if (!swiperContainer) {
+              console.error('Swiper container not found!');
+              return;
+            }
+
+            try {
+              this.swiper = new Swiper(swiperContainer, {
+                loop: images.length > 1,
+                navigation: {
+                  nextEl: '.quickview-swiper-next',
+                  prevEl: '.quickview-swiper-prev',
+                  disabledClass: 'swiper-button-disabled'
+                },
+                keyboard: {
+                  enabled: true,
+                  onlyInViewport: false
+                },
+                touchEventsTarget: 'container',
+                spaceBetween: 0,
+                speed: 300
+              });
+              console.log('Swiper initialized successfully');
+            } catch (error) {
+              console.error('Error initializing Swiper:', error);
+            }
+          };
+
+          initSwiper();
+        } catch (error) {
+          console.error('Error initializing carousel:', error);
         }
       }
 
