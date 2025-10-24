@@ -45,15 +45,17 @@
         "luxe_title": "Luxe",
         "luxe_description": "10mm width pendant laser cut from a 5-carat lab-grown diamond. A bold statement piece that commands attention with extraordinary brilliance.",
         "luxe_label": "Luxe (Left)",
-        "classic_label": "Classic (Right)"
+        "classic_label": "Classic (Right)",
+        "comparison_image_1": "shopify://shop_images/Diamond_Initial_Pendant_Sizing-min.png",
+        "comparison_image_2": "shopify://shop_images/Diamond_Initial_Pendant_Sizing_2-min.png"
       }
     },
     "m_pendants_product_gGpgBr": {
       "type": "m-pendants-product",
       "name": "Pendants product",
       "settings": {
-        "heading": "PERSONALIZED PENDANTS",
-        "selector_title": "SELECT YOUR LETTER",
+        "product_title": "PRODUCT DETAILS",
+        "collection": "lab-grown-diamond-initial-pendant-necklaces",
         "size_title": "SELECT SIZE",
         "features_title": "INCLUDED FEATURES",
         "feature_1": "Precision cut from 3 carat lab-grown diamond",
