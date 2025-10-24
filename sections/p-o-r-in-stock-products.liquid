@@ -3,6 +3,7 @@
     <h2>{{ section.settings.section_title }}</h2>
   </div>
 
+
   <!-- Filters - Custom Facets Drawer Design -->
   <script>
     window.customFilterConfig = [
@@ -30,7 +31,7 @@
             data-case-size="{% if product.metafields.custom.watch_case_size %}{{ product.metafields.custom.watch_case_size | downcase }}{% endif %}"
             data-model="{% if product.metafields.custom.watch_vendor_sku %}{{ product.metafields.custom.watch_vendor_sku | downcase }}{% endif %}"
             data-year="{% if product.metafields.custom.watch_year %}{{ product.metafields.custom.watch_year | downcase }}{% endif %}"
-            data-condition="{% if product.metafields.custom.watch_condition %}{{ product.metafields.custom.watch_condition | downcase }}{% endif %}"
+            data-condition="{% if product.metafields.custom.watch_condition %}{% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}{% case raw_condition %}{% when 'unworn' %}unworn{% when 'unworn (nos)' %}unworn{% when 'as is' %}retail-ready{% when 'slider' %}excellent{% when 'mint' %}very-good{% when 'very good' %}very-good{% when 'pre-owned' %}good{% when 'good' %}good{% else %}{{ raw_condition }}{% endcase %}{% endif %}"
             
             style="{% if product_index >= 12 %}display: none;{% endif %}"
           >

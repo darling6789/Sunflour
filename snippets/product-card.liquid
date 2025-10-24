@@ -52,7 +52,20 @@
         </div>
         <div class="spec-row">
           <div class="spec-label">CONDITION</div>
-          <div class="spec-value">{{product.metafields.custom.watch_condition}}</div>
+          <div class="spec-value">
+            {% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}
+            {% case raw_condition %}
+              {% when 'unworn' %}UNWORN
+              {% when 'unworn (nos)' %}UNWORN
+              {% when 'as is' %}RETAIL READY
+              {% when 'slider' %}EXCELLENT
+              {% when 'mint' %}VERY GOOD
+              {% when 'very good' %}VERY GOOD
+              {% when 'pre-owned' %}GOOD
+              {% when 'good' %}GOOD
+              {% else %}{{ product.metafields.custom.watch_condition | upcase }}
+            {% endcase %}
+          </div>
         </div>
       </div>
       <div class="divider-section-2"><div class="divider-line-2"></div></div>

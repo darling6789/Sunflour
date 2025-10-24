@@ -334,15 +334,16 @@
       checkmarkIcon.innerHTML = '<path fill="currentColor" fill-rule="evenodd" d="M11.35.643a.5.5 0 0 1 .006.707l-6.77 6.886a.5.5 0 0 1-.719-.006L.638 4.845a.5.5 0 1 1 .724-.69l2.872 3.011 6.41-6.517a.5.5 0 0 1 .707-.006z" clip-rule="evenodd"></path>';
 
       // Label text with count
+      const displayValue = capitalizeFilterDisplay(value);
       const textSpan = document.createElement('span');
       textSpan.className = 'facet-checkbox__text';
       textSpan.setAttribute('aria-hidden', 'true');
-      textSpan.innerHTML = `<span class="facet-checkbox__text-label">${escapeHtml(value)}</span> (${count})`;
+      textSpan.innerHTML = `<span class="facet-checkbox__text-label">${escapeHtml(displayValue)}</span> (${count})`;
 
       // Screen reader text
       const hiddenSpan = document.createElement('span');
       hiddenSpan.className = 'visually-hidden';
-      hiddenSpan.textContent = `${value} (${count} product${count !== 1 ? 's' : ''})`;
+      hiddenSpan.textContent = `${displayValue} (${count} product${count !== 1 ? 's' : ''})`;
 
       // Assemble label
       label.appendChild(input);
@@ -518,6 +519,16 @@
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
+    }
+
+    function capitalizeFilterDisplay(value) {
+      // Replace hyphens with spaces and capitalize each word
+      return value
+        .replace(/-/g, ' ')
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+        .toUpperCase();
     }
 
     function logInfo(message, data = null) {
