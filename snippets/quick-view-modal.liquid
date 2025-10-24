@@ -119,9 +119,21 @@
 
                 <!-- CTA Section -->
                 <div class="quickview-cta">
+                  <!-- Error Message -->
+                  <div class="quickview-error-message-wrapper" role="alert" hidden>
+                    <span class="svg-wrapper">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                    </span>
+                    <span class="quickview-error-message"></span>
+                  </div>
+
                   <div class="quickview-cta-buttons">
-                    <button type="button" class="quickview-btn quickview-btn-primary">Add to Cart</button>
-                    <a href="" class="quickview-btn quickview-btn-secondary js-quickview-buy-now">Buy Now</a>
+                    <button type="button" class="quickview-btn quickview-btn-primary" data-quickview-add-to-cart>Add to Cart</button>
+                    <button type="button" class="quickview-btn quickview-btn-secondary" data-quickview-buy-now>Buy Now</button>
                   </div>
                   <button type="button" class="quickview-expert-link">Consult an Expert</button>
                 </div>
@@ -659,6 +671,38 @@
     width: 100%;
   }
 
+  /* Error Message */
+  .quickview-error-message-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: #fee;
+    border: 1px solid #f4d4d4;
+    border-radius: var(--radius-sm);
+    color: #d32f2f;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .quickview-error-message-wrapper[hidden] {
+    display: none;
+  }
+
+  .quickview-error-message-wrapper .svg-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: #d32f2f;
+  }
+
+  .quickview-error-message-wrapper .svg-wrapper svg {
+    width: 100%;
+    height: 100%;
+  }
+
   .quickview-cta-buttons {
     display: flex;
     align-items: center;
@@ -829,7 +873,15 @@
         this.conditionEl = document.querySelector('.js-quickview-condition');
         this.priceEl = document.querySelector('.js-quickview-price');
         this.descriptionEl = document.querySelector('.js-quickview-description');
-        this.buyNowBtn = document.querySelector('.js-quickview-buy-now');
+        this.addToCartBtn = document.querySelector('[data-quickview-add-to-cart]');
+        this.buyNowBtn = document.querySelector('[data-quickview-buy-now]');
+
+        // Error message elements
+        this.errorMessageWrapper = document.querySelector('.quickview-error-message-wrapper');
+        this.errorMessage = this.errorMessageWrapper ? this.errorMessageWrapper.querySelector('.quickview-error-message') : null;
+
+        // Cart notification (use existing theme component)
+        this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
 
         // Carousel elements
         this.swiperContainer = document.querySelector('.quickview-swiper');
@@ -837,7 +889,11 @@
         this.swiperPrevBtn = document.querySelector('.quickview-swiper-prev');
         this.swiperNextBtn = document.querySelector('.quickview-swiper-next');
 
+        // Product data
         this.currentTrigger = null;
+        this.currentProductHandle = null;
+        this.currentVariantId = null;
+        this.currentProductUrl = null;
         this.swiper = null;
         this.init();
       }
@@ -848,6 +904,7 @@
           const trigger = e.target.closest('[data-quick-view-trigger]');
           if (trigger) {
             e.preventDefault();
+            e.stopPropagation();
             this.open(trigger);
           }
         });
@@ -892,6 +949,22 @@
             e.stopPropagation();
           });
         }
+
+        // Add to Cart button
+        if (this.addToCartBtn) {
+          this.addToCartBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.addToCart();
+          });
+        }
+
+        // Buy Now button
+        if (this.buyNowBtn) {
+          this.buyNowBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.buyNow();
+          });
+        }
       }
 
       open(trigger) {
@@ -911,6 +984,18 @@
         this.backdrop.style.display = 'none';
         document.body.style.overflow = '';
         this.currentTrigger = null;
+        // Clear error message when closing
+        this.handleErrorMessage(false);
+      }
+
+      handleErrorMessage(errorMessage = false) {
+        if (!this.errorMessageWrapper || !this.errorMessage) return;
+
+        this.errorMessageWrapper.toggleAttribute('hidden', !errorMessage);
+
+        if (errorMessage) {
+          this.errorMessage.textContent = errorMessage;
+        }
       }
 
       loadProductData(trigger) {
@@ -931,6 +1016,10 @@
               condition: trigger.getAttribute('data-product-condition') || '—'
             }
           };
+
+          // Store product info for cart operations
+          this.currentProductHandle = productData.handle;
+          this.currentProductUrl = productData.url;
 
           this.populateModal(productData);
           this.fetchProductDescriptionAndImages(productData.handle, productData.featured_image.src);
@@ -981,6 +1070,12 @@
 
           const fullProductData = await response.json();
           console.log('Fetched product data:', fullProductData);
+
+          // Store first available variant ID for cart operations
+          if (fullProductData.variants && fullProductData.variants.length > 0) {
+            this.currentVariantId = fullProductData.variants[0].id;
+            console.log('Stored variant ID:', this.currentVariantId);
+          }
 
           // Extract description
           const description = fullProductData.body_html || '';
@@ -1096,6 +1191,149 @@
           initSwiper();
         } catch (error) {
           console.error('Error initializing carousel:', error);
+        }
+      }
+
+      async addToCart() {
+        if (!this.currentVariantId) {
+          console.error('No variant ID available');
+          this.handleErrorMessage('Unable to add product to cart. Please try again.');
+          return;
+        }
+
+        try {
+          this.addToCartBtn.disabled = true;
+          this.addToCartBtn.textContent = 'Adding...';
+          this.handleErrorMessage(false);
+
+          const config = fetchConfig('javascript');
+          config.headers['X-Requested-With'] = 'XMLHttpRequest';
+          delete config.headers['Content-Type'];
+
+          const formData = new FormData();
+          formData.append('id', this.currentVariantId);
+          formData.append('quantity', 1);
+
+          // Request sections from cart so renderContents() works
+          if (this.cart) {
+            // Get sections to render from cart component
+            const sectionIds = this.cart.getSectionsToRender().map((section) => section.id);
+            console.log('Requesting sections:', sectionIds);
+
+            formData.append('sections', sectionIds);
+            formData.append('sections_url', window.location.pathname);
+            this.cart.setActiveElement(document.activeElement);
+          } else {
+            // Fallback: request common cart sections if cart component not found
+            formData.append('sections', 'cart-drawer,cart-notification');
+            formData.append('sections_url', window.location.pathname);
+          }
+
+          config.body = formData;
+
+          console.log('Adding to cart with variant ID:', this.currentVariantId);
+          const response = await fetch(window.routes.cart_add_url, config);
+
+          if (!response.ok) {
+            const errorData = await response.text();
+            console.error('Cart API error response:', errorData);
+
+            // Try to parse JSON error response
+            try {
+              const errorJson = JSON.parse(errorData);
+              const errorMessage = errorJson.message || errorJson.description || `Failed to add to cart (Error ${response.status})`;
+              throw new Error(errorMessage);
+            } catch (e) {
+              if (e instanceof SyntaxError) {
+                throw new Error(`Failed to add to cart (Error ${response.status})`);
+              }
+              throw e;
+            }
+          }
+
+          const data = await response.json();
+          console.log('Added to cart:', data);
+
+          // Update cart UI using theme's existing cart notification component
+          if (this.cart) {
+            // Render the updated cart content with the response
+            if (this.cart.renderContents) {
+              this.cart.renderContents(data);
+            }
+
+            // Remove the 'is-empty' class if cart was previously empty
+            // This is critical for proper display when transitioning from empty to full cart
+            if (this.cart.classList.contains('is-empty')) {
+              this.cart.classList.remove('is-empty');
+              console.log('Removed is-empty class from cart');
+            }
+          }
+
+          // Reset button state
+          this.addToCartBtn.disabled = false;
+          this.addToCartBtn.textContent = 'Add to Cart';
+
+          // Close modal after successful add
+          this.close();
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          this.addToCartBtn.disabled = false;
+          this.addToCartBtn.textContent = 'Add to Cart';
+          this.handleErrorMessage(error.message || 'Failed to add product to cart. Please try again.');
+        }
+      }
+
+      async buyNow() {
+        if (!this.currentVariantId) {
+          console.error('No variant ID available');
+          this.handleErrorMessage('Unable to complete purchase. Please try again.');
+          return;
+        }
+
+        try {
+          this.buyNowBtn.disabled = true;
+          this.buyNowBtn.textContent = 'Loading...';
+          this.handleErrorMessage(false);
+
+          const config = fetchConfig('javascript');
+          config.headers['X-Requested-With'] = 'XMLHttpRequest';
+          delete config.headers['Content-Type'];
+
+          const formData = new FormData();
+          formData.append('id', this.currentVariantId);
+          formData.append('quantity', 1);
+          config.body = formData;
+
+          console.log('Adding to cart with variant ID:', this.currentVariantId);
+          const response = await fetch(window.routes.cart_add_url, config);
+
+          if (!response.ok) {
+            const errorData = await response.text();
+            console.error('Cart API error response:', errorData);
+
+            // Try to parse JSON error response
+            try {
+              const errorJson = JSON.parse(errorData);
+              const errorMessage = errorJson.message || errorJson.description || `Failed to add to cart (Error ${response.status})`;
+              throw new Error(errorMessage);
+            } catch (e) {
+              if (e instanceof SyntaxError) {
+                throw new Error(`Failed to add to cart (Error ${response.status})`);
+              }
+              throw e;
+            }
+          }
+
+          const data = await response.json();
+          console.log('Added to cart:', data);
+
+          // Redirect to cart after successful add
+          window.location.href = window.routes.cart_url;
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          this.buyNowBtn.disabled = false;
+          this.buyNowBtn.textContent = 'Buy Now';
+          this.handleErrorMessage(error.message || 'Failed to add product to cart. Please try again.');
         }
       }
 
