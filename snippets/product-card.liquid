@@ -7,7 +7,25 @@
       {% endif %}
     </div>
     <div class="availability-tag">{% if product.available %}<div class="availability-badge-text">Available</div>{% else %}<div class="availability-badge-text sold-out">Sold Out</div>{% endif %}</div>
-    <div class="filter-button">{{ 'filter.svg' | asset_url | img_tag}}</div>
+    <button
+      type="button"
+      class="filter-button"
+      data-quick-view-trigger
+      data-product-id="{{ product.id }}"
+      data-product-handle="{{ product.handle }}"
+      data-product-title="{{ product.title | remove: 'Pre-Owned Rolex ' | escape }}"
+      data-product-price="{{ product.price | money_without_currency | remove: '.00' }}"
+      data-product-featured-image="{{ product.featured_image | image_url: width: 620 }}"
+      data-product-dial-color="{{ product.metafields.custom.watch_dial_color | escape }}"
+      data-product-case-size="{{ product.metafields.custom.watch_case_size | escape }}"
+      data-product-model="{{ product.metafields.custom.watch_vendor_sku | escape }}"
+      data-product-year="{{ product.metafields.custom.watch_year | escape }}"
+      data-product-condition="{{ product.metafields.custom.watch_condition | escape }}"
+      data-product-url="{{ product.url }}"
+      aria-label="Quick view for {{ product.title | remove: 'Pre-Owned Rolex ' }}"
+    >
+      {{ 'filter.svg' | asset_url | img_tag: alt: 'Quick view' }}
+    </button>
   </div>
   <div class="product-details">
     <div class="product-header">

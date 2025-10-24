@@ -36,6 +36,11 @@
     {% endif %}
   {% endif %}
 </div>
+<!-- Quick View Modal -->
+{% if section.settings.enable_quick_view %}
+  {% render 'quick-view-modal' %}
+{% endif %}
+
 <style>
   .in-stock-products-container {
     display: flex;
@@ -187,6 +192,8 @@
     background-color: #821c1e;
   }
   .product-card .filter-button {
+    border:none;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     width: 30px;
@@ -200,6 +207,10 @@
     left: 11px;
     background-color: #ffffff80;
     border-radius: 4.47px;
+  }
+  .product-card .filter-button :hover {
+    transform: scale(1.1);
+    transition: scale 0.4s ease;
   }
   .product-card .filter-icon {
     position: relative;
@@ -670,13 +681,20 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_view",
+      "label": "Enable Quick View Modal",
+      "default": true
     }
   ],
   "presets": [
     {
       "name": "POR in stock products",
       "settings": {
-        "section_title": "Pre-Owned Rolex Watches"
+        "section_title": "Pre-Owned Rolex Watches",
+        "enable_quick_view": true
       }
     }
   ]

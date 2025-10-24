@@ -1,0 +1,925 @@
+<!-- Quick View Modal -->
+<div class="quickview-modal-backdrop" data-quick-view-modal-backdrop style="display: none;">
+  <div class="quickview-modal-container" role="dialog" aria-labelledby="quickview-product-title" aria-modal="true">
+    <!-- Close Button -->
+    <button
+      type="button"
+      class="quickview-modal-close"
+      data-quick-view-close
+      aria-label="Close quick view modal"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Loading State -->
+    <div data-quick-view-loading style="display: none;">
+      <div class="quickview-loading-state">
+        <div class="quickview-spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div data-quick-view-error style="display: none;">
+      <div class="quickview-error-state">
+        <p>Unable to load product. Please try again.</p>
+        <button type="button" data-quick-view-retry class="quickview-error-retry">Retry</button>
+      </div>
+    </div>
+
+    <!-- Modal Content -->
+    <div data-quick-view-content style="display: none;">
+      <div class="quickview-modal">
+        <!-- Navigation -->
+        <img class="quickview-navigation" src="img/navigation-container.svg" alt="Product navigation" />
+
+        <!-- Main Content -->
+        <div class="quickview-main">
+          <!-- Product Image -->
+          <img class="quickview-image js-quickview-featured-image" src="" alt="Product" />
+
+          <!-- Details Panel -->
+          <div class="quickview-panel">
+            <!-- Scrollbar -->
+            <div class="quickview-scrollbar">
+              <div class="quickview-scrollbar-track">
+                <div class="quickview-scrollbar-spacer"></div>
+                <div class="quickview-scrollbar-thumb"></div>
+              </div>
+            </div>
+
+            <!-- Content Wrapper -->
+            <div class="quickview-content">
+              <div class="quickview-wrapper">
+                <!-- Title & Specs Section -->
+                <div class="quickview-header">
+                  <div class="quickview-title-section">
+                    <h2 id="quickview-product-title" class="quickview-title">
+                      <span class="js-quickview-title"></span>
+                    </h2>
+                    <p class="quickview-subtitle">
+                      <span class="js-quickview-subtitle"></span>
+                    </p>
+                  </div>
+
+                  <!-- Specs Grid -->
+                  <div class="quickview-specs-grid">
+                    <div class="quickview-spec-column">
+                      <div class="quickview-spec">
+                        <span class="quickview-spec-label">MODEL</span>
+                        <span class="quickview-spec-value js-quickview-model">—</span>
+                      </div>
+                      <div class="quickview-spec">
+                        <span class="quickview-spec-label">YEAR</span>
+                        <span class="quickview-spec-value js-quickview-year">—</span>
+                      </div>
+                      <div class="quickview-spec">
+                        <span class="quickview-spec-label">CONDITION</span>
+                        <span class="quickview-spec-value js-quickview-condition">—</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Price Section -->
+                  <div class="quickview-price-section">
+                    <div class="quickview-price">
+                      <span class="quickview-price-currency">$</span>
+                      <span class="quickview-price-amount js-quickview-price">0</span>
+                      <span class="quickview-price-currency">USD</span>
+                    </div>
+                  </div>
+
+                  <!-- Financing Info -->
+                  <div class="quickview-financing">
+                    <p class="quickview-financing-text">Starting at <span class="quickview-financing-amount">$1,201.25/mo</span> or 0% APR with</p>
+                    <div class="quickview-affirm-logo"></div>
+                    <p class="quickview-financing-link">
+                      <a href="javascript:void(0)" target="_blank" rel="noopener noreferrer">See if you qualify</a>
+                    </p>
+                  </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="quickview-cta">
+                  <div class="quickview-cta-buttons">
+                    <button type="button" class="quickview-btn quickview-btn-primary">Add to Cart</button>
+                    <a href="" class="quickview-btn quickview-btn-secondary js-quickview-buy-now">Buy Now</a>
+                  </div>
+                  <button type="button" class="quickview-expert-link">Consult an Expert</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="quickview-description-panel">
+              <div class="quickview-description-section">
+                <h3 class="quickview-description-title">PRODUCT DESCRIPTION</h3>
+                <p class="quickview-description-text js-quickview-description"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    /* Typography */
+    --font-garamond: "EB Garamond", serif;
+    --font-montserrat: "Montserrat", sans-serif;
+    --font-inter: "Inter", sans-serif;
+
+    /* Colors */
+    --color-text-primary: #151515;
+    --color-text-secondary: #707070;
+    --color-text-muted: #2f2f2f;
+    --color-accent-primary: #78686f;
+    --color-accent-secondary: #69575f;
+    --color-accent-dark: #57434c;
+    --color-bg-light: #f5f5f5;
+    --color-bg-lighter: #fcfcfc;
+    --color-border: #e0e0e0;
+    --color-border-light: #15151580;
+
+    /* Spacing System */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 32px;
+    --spacing-4xl: 40px;
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+
+    /* Scrollbar */
+    --dimensions-scrollbar-margin-top: 33.5px;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ============================================
+     MODAL BACKDROP & CONTAINER
+     ============================================ */
+
+  .quickview-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+  }
+
+  .quickview-modal-container {
+    position: relative;
+    background-color: #ffffff;
+    border-radius: var(--radius-md);
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .quickview-modal-close {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: 1001;
+    background: none;
+    border: none;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-primary);
+    transition: color 200ms ease, background-color 200ms ease;
+    border-radius: var(--radius-sm);
+  }
+
+  .quickview-modal-close:hover {
+    color: var(--color-accent-primary);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .quickview-modal-close:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+     LOADING & ERROR STATES
+     ============================================ */
+
+  .quickview-loading-state,
+  .quickview-error-state {
+    padding: var(--spacing-4xl);
+    text-align: center;
+  }
+
+  .quickview-spinner {
+    border: 4px solid #f3f3f3;
+    border-top-color: var(--color-accent-primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto var(--spacing-lg);
+  }
+
+  .quickview-loading-state p,
+  .quickview-error-state p {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-family: var(--font-montserrat);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .quickview-error-retry {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-accent-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: var(--font-montserrat);
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 200ms ease;
+  }
+
+  .quickview-error-retry:hover {
+    background-color: var(--color-accent-secondary);
+  }
+
+  /* ============================================
+     MODAL MAIN LAYOUT
+     ============================================ */
+
+  .quickview-modal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    position: relative;
+    background-color: #ffffff;
+  }
+
+  .quickview-navigation {
+    position: absolute;
+    top: 307px;
+    left: 28px;
+    width: 597px;
+    height: 46px;
+    z-index: 1;
+  }
+
+  .quickview-main {
+    display: flex;
+    gap: 0;
+    height: 600px;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+
+  .quickview-image {
+    position: relative;
+    width: 620px;
+    height: 603.76px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  /* ============================================
+     DETAILS PANEL
+     ============================================ */
+
+  .quickview-panel {
+    display: flex;
+    flex-direction: column;
+    width: 544px;
+    height: 600px;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Scrollbar */
+  .quickview-scrollbar {
+    display: inline-flex;
+    flex-direction: column;
+    height: 291px;
+    align-items: center;
+    padding: var(--dimensions-scrollbar-margin-top) 2px var(--dimensions-scrollbar-margin-top) 2px;
+    position: absolute;
+    top: 309px;
+    left: 534px;
+    z-index: 2;
+  }
+
+  .quickview-scrollbar-track {
+    position: relative;
+    flex: 1;
+    width: 6px;
+    background-color: #ffffff24;
+    border-radius: 50px;
+    backdrop-filter: blur(12px) brightness(100%);
+    -webkit-backdrop-filter: blur(12px) brightness(100%);
+  }
+
+  .quickview-scrollbar-spacer {
+    position: absolute;
+    top: 32px;
+    left: 0;
+    width: 6px;
+    height: 214px;
+    background-color: #e6e6e6;
+    border-radius: 50px;
+  }
+
+  .quickview-scrollbar-thumb {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 6px;
+    height: 47px;
+    background-color: #cccccc;
+    border-radius: 50px;
+  }
+
+  /* Content Area */
+  .quickview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6.63px;
+    padding: 0 22.49px;
+    position: relative;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .quickview-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 33.17px;
+    position: relative;
+    width: 100%;
+  }
+
+  /* ============================================
+     HEADER SECTION
+     ============================================ */
+
+  .quickview-header {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 7.96px;
+    position: relative;
+  }
+
+  .quickview-title-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6.75px;
+    width: 447.56px;
+  }
+
+  .quickview-title {
+    margin: 0;
+    font-family: var(--font-garamond);
+    font-size: 27px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+
+  .quickview-subtitle {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: 13.3px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    line-height: 1.2;
+  }
+
+  /* Specs Grid */
+  .quickview-specs-grid {
+    display: flex;
+    width: 498.15px;
+    gap: 13.49px;
+    position: relative;
+  }
+
+  .quickview-spec-column {
+    display: flex;
+    flex-direction: column;
+    width: 169.81px;
+    gap: 7.96px;
+  }
+
+  .quickview-spec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .quickview-spec-label {
+    font-family: var(--font-montserrat);
+    font-size: 10.6px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.47px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .quickview-spec-value {
+    font-family: var(--font-montserrat);
+    font-size: 10.6px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* Price Section */
+  .quickview-price-section {
+    display: inline-flex;
+    gap: 3.37px;
+    position: relative;
+  }
+
+  .quickview-price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3.37px;
+  }
+
+  .quickview-price-currency {
+    font-family: var(--font-montserrat);
+    font-size: 27px;
+    font-weight: 500;
+    color: var(--color-accent-secondary);
+    letter-spacing: 2.25px;
+    line-height: 1;
+  }
+
+  .quickview-price-amount {
+    font-family: var(--font-montserrat);
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--color-accent-secondary);
+    line-height: 1;
+  }
+
+  .quickview-price-currency:last-child {
+    font-family: var(--font-montserrat);
+    font-size: 20.2px;
+    font-weight: 600;
+    color: var(--color-accent-secondary);
+    letter-spacing: -0.56px;
+  }
+
+  /* Financing Info */
+  .quickview-financing {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: var(--spacing-sm);
+  }
+
+  .quickview-financing-text {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: 13.3px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    opacity: 0.6;
+    line-height: 1.5;
+  }
+
+  .quickview-financing-amount {
+    font-weight: 600;
+  }
+
+  .quickview-affirm-logo {
+    width: 52.41px;
+    height: 22.12px;
+    background-image: url(./img/frame-183318.png);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .quickview-financing-link {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: 13.3px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  .quickview-financing-link a {
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 200ms ease;
+  }
+
+  .quickview-financing-link a:hover {
+    color: var(--color-accent-primary);
+  }
+
+  /* ============================================
+     CTA SECTION
+     ============================================ */
+
+  .quickview-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 11.06px;
+    position: relative;
+    width: 100%;
+  }
+
+  .quickview-cta-buttons {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+  }
+
+  .quickview-btn {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 17.99px 35.98px;
+    font-family: var(--font-montserrat);
+    font-size: 15.7px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 4.5px;
+    transition: all 200ms ease;
+    flex: 1;
+  }
+
+  .quickview-btn-primary {
+    background-color: var(--color-accent-primary);
+    color: #ffffff;
+    margin-right: 11.25px;
+  }
+
+  .quickview-btn-primary:hover {
+    background-color: var(--color-accent-secondary);
+  }
+
+  .quickview-btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .quickview-btn-secondary {
+    background-color: transparent;
+    color: #594242;
+    border: 1.12px solid #68565e;
+    text-decoration: none;
+  }
+
+  .quickview-btn-secondary:hover {
+    background-color: var(--color-bg-light);
+    border-color: var(--color-accent-primary);
+  }
+
+  .quickview-btn-secondary:active {
+    transform: scale(0.98);
+  }
+
+  .quickview-expert-link {
+    all: unset;
+    font-family: var(--font-montserrat);
+    font-size: 13.3px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--color-accent-dark);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 200ms ease;
+  }
+
+  .quickview-expert-link:hover {
+    color: #3d2e35;
+  }
+
+  /* ============================================
+     DESCRIPTION SECTION
+     ============================================ */
+
+  .quickview-description-panel {
+    display: flex;
+    flex-direction: column;
+    width: 544px;
+    gap: var(--spacing-xl);
+    padding: 0 22.5px;
+    position: relative;
+  }
+
+  .quickview-description-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+    background-color: #ffffff;
+  }
+
+  .quickview-description-title {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .quickview-description-text {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+
+  @media (max-width: 768px) {
+    .quickview-main {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .quickview-image,
+    .quickview-panel {
+      width: 100%;
+      height: auto;
+    }
+
+    .quickview-cta-buttons {
+      flex-direction: column;
+    }
+
+    .quickview-btn {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .quickview-btn:last-child {
+      margin-bottom: 0;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Quick View Modal Manager
+   * Handles single modal instance with dynamic product data loading
+   */
+  (function() {
+    'use strict';
+
+    class QuickViewModal {
+      constructor() {
+        this.backdrop = document.querySelector('[data-quick-view-modal-backdrop]');
+        this.closeBtn = document.querySelector('[data-quick-view-close]');
+        this.loadingEl = document.querySelector('[data-quick-view-loading]');
+        this.errorEl = document.querySelector('[data-quick-view-error]');
+        this.contentEl = document.querySelector('[data-quick-view-content]');
+        this.retryBtn = document.querySelector('[data-quick-view-retry]');
+
+        // DOM element cache
+        this.titleEl = document.querySelector('.js-quickview-title');
+        this.subtitleEl = document.querySelector('.js-quickview-subtitle');
+        this.modelEl = document.querySelector('.js-quickview-model');
+        this.yearEl = document.querySelector('.js-quickview-year');
+        this.conditionEl = document.querySelector('.js-quickview-condition');
+        this.priceEl = document.querySelector('.js-quickview-price');
+        this.descriptionEl = document.querySelector('.js-quickview-description');
+        this.imageEl = document.querySelector('.js-quickview-featured-image');
+        this.buyNowBtn = document.querySelector('.js-quickview-buy-now');
+
+        this.currentTrigger = null;
+        this.init();
+      }
+
+      init() {
+        // Event delegation for quick view triggers
+        document.addEventListener('click', (e) => {
+          const trigger = e.target.closest('[data-quick-view-trigger]');
+          if (trigger) {
+            e.preventDefault();
+            this.open(trigger);
+          }
+        });
+
+        // Close button
+        if (this.closeBtn) {
+          this.closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.close();
+          });
+        }
+
+        // Backdrop click
+        if (this.backdrop) {
+          this.backdrop.addEventListener('click', (e) => {
+            if (e.target === this.backdrop) {
+              this.close();
+            }
+          });
+        }
+
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.backdrop && this.backdrop.style.display === 'flex') {
+            this.close();
+          }
+        });
+
+        // Retry button
+        if (this.retryBtn) {
+          this.retryBtn.addEventListener('click', () => {
+            if (this.currentTrigger) {
+              this.loadProductData(this.currentTrigger);
+            }
+          });
+        }
+
+        // Prevent modal content from closing
+        const modalContainer = document.querySelector('.quickview-modal-container');
+        if (modalContainer) {
+          modalContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+          });
+        }
+      }
+
+      open(trigger) {
+        this.currentTrigger = trigger;
+        this.showLoading();
+        this.backdrop.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+          if (this.closeBtn) this.closeBtn.focus();
+        }, 100);
+
+        this.loadProductData(trigger);
+      }
+
+      close() {
+        this.backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+        this.currentTrigger = null;
+      }
+
+      loadProductData(trigger) {
+        try {
+          const productData = {
+            title: trigger.getAttribute('data-product-title') || 'Product',
+            price: trigger.getAttribute('data-product-price') || '0',
+            featured_image: {
+              src: trigger.getAttribute('data-product-featured-image') || ''
+            },
+            url: trigger.getAttribute('data-product-url') || '#',
+            handle: trigger.getAttribute('data-product-handle') || '',
+            metafields: {
+              dial_color: trigger.getAttribute('data-product-dial-color') || 'N/A',
+              case_size: trigger.getAttribute('data-product-case-size') || 'N/A',
+              model: trigger.getAttribute('data-product-model') || '—',
+              year: trigger.getAttribute('data-product-year') || '—',
+              condition: trigger.getAttribute('data-product-condition') || '—'
+            }
+          };
+
+          this.populateModal(productData);
+          this.fetchProductDescription(productData.handle);
+          this.showContent();
+        } catch (error) {
+          console.error('Error loading product data:', error);
+          this.showError();
+        }
+      }
+
+      populateModal(productData) {
+        const cleanTitle = productData.title.replace('Pre-Owned Rolex ', '');
+
+        if (this.titleEl) this.titleEl.textContent = cleanTitle;
+
+        if (this.subtitleEl) {
+          const dialColor = productData.metafields.dial_color || 'N/A';
+          const caseSize = productData.metafields.case_size || 'N/A';
+          this.subtitleEl.textContent = `${dialColor} | ${caseSize}`;
+        }
+
+        if (this.modelEl) this.modelEl.textContent = productData.metafields.model || '—';
+        if (this.yearEl) this.yearEl.textContent = productData.metafields.year || '—';
+        if (this.conditionEl) this.conditionEl.textContent = productData.metafields.condition || '—';
+
+        if (this.priceEl) this.priceEl.textContent = productData.price;
+
+        if (productData.featured_image.src && this.imageEl) {
+          this.imageEl.src = productData.featured_image.src;
+          this.imageEl.alt = cleanTitle;
+        }
+
+        if (this.buyNowBtn) this.buyNowBtn.href = productData.url;
+      }
+
+      async fetchProductDescription(productHandle) {
+        try {
+          if (!productHandle) {
+            if (this.descriptionEl) {
+              this.descriptionEl.textContent = 'Experience the refined craftsmanship of premium timepieces.';
+            }
+            return;
+          }
+
+          const response = await fetch(`/products/${productHandle}.js`);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+          const fullProductData = await response.json();
+          const description = fullProductData.body_html || '';
+          const plainText = description.replace(/<[^>]*>/g, '').substring(0, 300);
+
+          if (this.descriptionEl) {
+            this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
+          }
+        } catch (error) {
+          console.error('Error fetching product description:', error);
+          if (this.descriptionEl) {
+            this.descriptionEl.textContent = 'Experience the refined craftsmanship of premium timepieces.';
+          }
+        }
+      }
+
+      showLoading() {
+        if (this.loadingEl) this.loadingEl.style.display = 'block';
+        if (this.errorEl) this.errorEl.style.display = 'none';
+        if (this.contentEl) this.contentEl.style.display = 'none';
+      }
+
+      showContent() {
+        if (this.loadingEl) this.loadingEl.style.display = 'none';
+        if (this.errorEl) this.errorEl.style.display = 'none';
+        if (this.contentEl) this.contentEl.style.display = 'block';
+      }
+
+      showError() {
+        if (this.loadingEl) this.loadingEl.style.display = 'none';
+        if (this.contentEl) this.contentEl.style.display = 'none';
+        if (this.errorEl) this.errorEl.style.display = 'block';
+      }
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        new QuickViewModal();
+      });
+    } else {
+      new QuickViewModal();
+    }
+  })();
+</script>
