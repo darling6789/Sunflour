@@ -2,12 +2,38 @@
   <div class="ispc-header">
     <h2>{{ section.settings.section_title }}</h2>
   </div>
+
+  <!-- Filters - Custom Facets Drawer Design -->
+  <script>
+    window.customFilterConfig = [
+      { name: 'dial-color', dataAttr: 'data-dial-color', label: 'Watch - Dial Color' },
+      { name: 'bezel-type', dataAttr: 'data-bezel-type', label: 'Watch - Bezel Type' },
+      { name: 'case-size', dataAttr: 'data-case-size', label: 'Case Size' },
+      { name: 'model', dataAttr: 'data-model', label: 'Model' },
+      { name: 'year', dataAttr: 'data-year', label: 'Year' },
+      { name: 'condition', dataAttr: 'data-condition', label: 'Condition' },
+      
+    ];
+  </script>
+  {% render 'custom-facets' %}
+
   <div class="ispc-product-grid" data-product-grid>
     {% if section.settings.collection != blank %}
       {% assign product_index = 0 %}
       {% for product in section.settings.collection.products %}
         {% if product.available %}
-          <div class="product-card-wrapper" data-product-index="{{ product_index }}" style="{% if product_index >= 12 %}display: none;{% endif %}">
+          <div
+            class="product-card-wrapper"
+            data-product-index="{{ product_index }}"
+            data-dial-color="{% if product.metafields.custom.watch_dial_color %}{{ product.metafields.custom.watch_dial_color | downcase }}{% endif %}"
+            data-bezel-type="{% if product.metafields.custom.watch_bezel_type %}{{ product.metafields.custom.watch_bezel_type | downcase }}{% endif %}"
+            data-case-size="{% if product.metafields.custom.watch_case_size %}{{ product.metafields.custom.watch_case_size | downcase }}{% endif %}"
+            data-model="{% if product.metafields.custom.watch_vendor_sku %}{{ product.metafields.custom.watch_vendor_sku | downcase }}{% endif %}"
+            data-year="{% if product.metafields.custom.watch_year %}{{ product.metafields.custom.watch_year | downcase }}{% endif %}"
+            data-condition="{% if product.metafields.custom.watch_condition %}{{ product.metafields.custom.watch_condition | downcase }}{% endif %}"
+            
+            style="{% if product_index >= 12 %}display: none;{% endif %}"
+          >
             {% render 'product-card', product: product %}
           </div>
           {% assign product_index = product_index | plus: 1 %}
@@ -42,7 +68,7 @@
 {% endif %}
 
 <style>
-  .quick-view-icon{
+  .quick-view-icon {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -197,7 +223,7 @@
     background-color: #821c1e;
   }
   .product-card .filter-button {
-    border:none;
+    border: none;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -521,7 +547,13 @@
   }
 
   /* Responsive Design - Container, Grid, Header & Pagination Only */
-  
+  @media (min-width: 1200px) {
+    .facets-container.facets-container-drawer.scroll-trigger.animate--fade-in {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+    }
+  }
   /* Large Tablet: 1024px - 1200px */
   @media (max-width: 1200px) {
     .in-stock-products-container {
@@ -633,7 +665,7 @@
   }
 </style>
 <script>
-  (function() {
+  (function () {
     const container = document.querySelector('[data-section-id="{{ section.id }}"]');
     if (!container) return;
 
@@ -643,7 +675,7 @@
     const productGrid = container.querySelector('[data-product-grid]');
     const productWrappers = Array.from(productGrid.querySelectorAll('.product-card-wrapper'));
     const paginationButtons = Array.from(paginationWrapper.querySelectorAll('.pagination-page'));
-    
+
     const productsPerPage = 12;
 
     function showPage(pageNumber) {
@@ -651,7 +683,7 @@
       const endIndex = startIndex + productsPerPage;
 
       // Hide all products
-      productWrappers.forEach(wrapper => {
+      productWrappers.forEach((wrapper) => {
         wrapper.style.display = 'none';
       });
 
@@ -661,7 +693,7 @@
       }
 
       // Update active button
-      paginationButtons.forEach(btn => {
+      paginationButtons.forEach((btn) => {
         btn.classList.remove('active');
       });
       paginationButtons[pageNumber - 1].classList.add('active');
@@ -672,17 +704,17 @@
 
     // Add click handlers to pagination buttons
     paginationButtons.forEach((btn, index) => {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function () {
         showPage(index + 1);
       });
     });
   })();
 
   // Product Card Navigation & Button Handlers
-  (function() {
+  (function () {
     const productCards = document.querySelectorAll('.product-card-link');
 
-    productCards.forEach(card => {
+    productCards.forEach((card) => {
       // Get filter button reference (for data attributes only)
       // Note: Filter button click is handled by quick view modal's event delegation
       const filterBtn = card.querySelector('[data-quick-view-trigger]');
@@ -734,7 +766,8 @@
               // Try to parse JSON error response
               try {
                 const errorJson = JSON.parse(errorData);
-                const errorMessage = errorJson.message || errorJson.description || `Failed to add to cart (Error ${cartResponse.status})`;
+                const errorMessage =
+                  errorJson.message || errorJson.description || `Failed to add to cart (Error ${cartResponse.status})`;
                 throw new Error(errorMessage);
               } catch (e) {
                 if (e instanceof SyntaxError) {
@@ -748,7 +781,8 @@
 
             // Remove the 'is-empty' class from cart if it was previously empty
             // This ensures proper display when transitioning from empty to full cart
-            const cartNotification = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+            const cartNotification =
+              document.querySelector('cart-notification') || document.querySelector('cart-drawer');
             if (cartNotification && cartNotification.classList.contains('is-empty')) {
               cartNotification.classList.remove('is-empty');
             }

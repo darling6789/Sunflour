@@ -18,6 +18,7 @@
         data-product-price="{{ product.price | money_without_currency | remove: '.00' }}"
         data-product-featured-image="{{ product.featured_image | image_url: width: 620 }}"
         data-product-dial-color="{{ product.metafields.custom.watch_dial_color | escape }}"
+        data-product-bezel-type="{{ product.metafields.custom.watch_bezel_type | escape }}"
         data-product-case-size="{{ product.metafields.custom.watch_case_size | escape }}"
         data-product-model="{{ product.metafields.custom.watch_vendor_sku | escape }}"
         data-product-year="{{ product.metafields.custom.watch_year | escape }}"
