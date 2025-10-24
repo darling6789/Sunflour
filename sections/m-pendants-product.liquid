@@ -1,38 +1,101 @@
-<div class="m-pendants-product-section">
+{% assign collection = collections[section.settings.collection] %}
+
+{% comment %} Extract letters from product titles and create mapping {% endcomment %}
+{% assign letter_product_map = '' %}
+{% for product in collection.products %}
+    {% assign product_title = product.title %}
+    {% assign letter_match = product_title | split: '"' %}
+    {% if letter_match.size > 1 %}
+        {% assign letter = letter_match[1] %}
+        {% assign letter_product_map = letter_product_map | append: letter | append: ':' | append: product.handle | append: ',' %}
+    {% endif %}
+{% endfor %}
+
+{% assign letter_product_array = letter_product_map | split: ',' %}
+
+{% comment %} Sort letters alphabetically and create arrays {% endcomment %}
+{% assign sorted_letters = '' %}
+{% assign sorted_handles = '' %}
+{% assign all_letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
+{% for letter in all_letters %}
+    {% for letter_product in letter_product_array %}
+        {% unless letter_product == blank %}
+            {% assign letter_handle = letter_product | split: ':' %}
+            {% if letter_handle[0] == letter %}
+                {% assign sorted_letters = sorted_letters | append: letter | append: ',' %}
+                {% assign sorted_handles = sorted_handles | append: letter_handle[1] | append: ',' %}
+                {% break %}
+            {% endif %}
+        {% endunless %}
+    {% endfor %}
+{% endfor %}
+
+{% assign sorted_letters_array = sorted_letters | split: ',' %}
+{% assign sorted_handles_array = sorted_handles | split: ',' %}
+
+<div class="m-pendants-product">
     <div class="m-pendants-product-container">
         <!-- Left Column: Product Details -->
         <div class="m-pendants-product-details">
-            <div class="m-pendants-product-image">
-                <img id="m-pendants-main-image" src="{{ section.settings.default_image | img_url: 'master' }}" alt="Pendant" width="100%" height="100%" />
-            </div>
+            <h2 class="m-pendants-product-title">{{ section.settings.product_title }}</h2>
             
-            <!-- Draggable Wheel Scrolly Selector -->
-            <div class="m-pendants-letter-selector">
-                <h3 class="m-pendants-selector-title">{{ section.settings.selector_title }}</h3>
-                <div class="m-pendants-wheel-container">
-                    <div class="m-pendants-wheel-track" id="m-pendants-wheel-track">
-                        {% assign letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
-                        {% for letter in letters %}
-                            <div class="m-pendants-letter-item" data-letter="{{ letter }}" {% if letter == 'M' %}class="active"{% endif %}>
-                                {{ letter }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+            <div class="m-pendants-product-details-body">
+                 <div class="m-pendants-product-image">
+                     <div class="m-pendants-image-slider" id="m-pendants-image-slider">
+                         {% for i in (0..sorted_letters_array.size) %}
+                             {% unless i >= sorted_letters_array.size %}
+                                 {% assign letter = sorted_letters_array[i] %}
+                                 {% assign handle = sorted_handles_array[i] %}
+                                 {% unless letter == blank %}
+                                     {% assign product = collections[section.settings.collection].products | where: 'handle', handle | first %}
+                                     {% if product %}
+                                         <div class="m-pendants-image-slide" 
+                                              data-letter="{{ letter }}" 
+                                              data-product-id="{{ product.id }}"
+                                              data-product-handle="{{ product.handle }}"
+                                              data-product-title="{{ product.title }}">
+                                             <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" />
+                                         </div>
+                                     {% endif %}
+                                 {% endunless %}
+                             {% endunless %}
+                         {% endfor %}
+                     </div>
+                 </div>
+                
+                 <!-- Draggable Wheel Scrolly Selector -->
+                 <div class="m-pendants-letter-selector">
+                     <div class="m-pendants-letter-slider" id="m-pendants-letter-slider">
+                         {% for i in (0..sorted_letters_array.size) %}
+                             {% unless i >= sorted_letters_array.size %}
+                                 {% assign letter = sorted_letters_array[i] %}
+                                 {% assign handle = sorted_handles_array[i] %}
+                                 {% unless letter == blank %}
+                                     {% assign product = collections[section.settings.collection].products | where: 'handle', handle | first %}
+                                     {% if product %}
+                                        <div class="m-pendants-letter-slider-wrap">
+                                            <div class="m-pendants-letter-slide" 
+                                                data-letter="{{ letter }}" 
+                                                data-product-id="{{ product.id }}"
+                                                data-product-handle="{{ product.handle }}"
+                                                data-product-title="{{ product.title }}"
+                                                data-product-image="{{ product.featured_image | img_url: 'master' }}">
+                                               {{ letter }}
+                                           </div>
+                                        </div>                                         
+                                     {% endif %}
+                                 {% endunless %}
+                             {% endunless %}
+                         {% endfor %}
+                     </div>
+                 </div>
+            </div>            
             
             <!-- Size Selector -->
             <div class="m-pendants-size-selector">
                 <h3 class="m-pendants-size-title">{{ section.settings.size_title }}</h3>
-                <div class="m-pendants-size-options">
-                    <button class="m-pendants-size-btn active" data-size="classic" data-width="8mm">
-                        <span class="m-pendants-size-name">CLASSIC</span>
-                        <span class="m-pendants-size-spec">8mm Width</span>
-                    </button>
-                    <button class="m-pendants-size-btn" data-size="luxe" data-width="10mm">
-                        <span class="m-pendants-size-name">LUXE</span>
-                        <span class="m-pendants-size-spec">10mm Width</span>
-                    </button>
+                <div class="m-pendants-size-options" id="m-pendants-size-options">
+                    <!-- Size options will be populated by JavaScript based on current product -->
                 </div>
             </div>
             
@@ -41,21 +104,15 @@
                 <h3 class="m-pendants-features-title">{{ section.settings.features_title }}</h3>
                 <ul class="m-pendants-features-list">
                     <li class="m-pendants-feature-item">
-                        <svg class="m-pendants-check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        {% render 'icon-check-dark' %}
                         {{ section.settings.feature_1 }}
                     </li>
                     <li class="m-pendants-feature-item">
-                        <svg class="m-pendants-check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        {% render 'icon-check-dark' %}
                         {{ section.settings.feature_2 }}
                     </li>
                     <li class="m-pendants-feature-item">
-                        <svg class="m-pendants-check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        {% render 'icon-check-dark' %}
                         {{ section.settings.feature_3 }}
                     </li>
                 </ul>
@@ -67,8 +124,9 @@
             <div class="m-pendants-selection-info">
                 <h3 class="m-pendants-selection-title">{{ section.settings.selection_title }}</h3>
                 <div class="m-pendants-current-selection">
-                    <span id="m-pendants-selected-letter">Letter 'M'</span>
-                    <span id="m-pendants-selected-size">- Classic</span>
+                    <span id="m-pendants-selected-letter">Letter "A"</span>
+                    <span class="m-pendants-selection-separator">·</span>
+                    <span id="m-pendants-selected-size">Classic</span>
                 </div>
             </div>
             
@@ -76,10 +134,10 @@
             <div class="m-pendants-pricing">
                 <div class="m-pendants-price-display">
                     <span class="m-pendants-current-price" id="m-pendants-current-price">$1,499</span>
-                    <span class="m-pendants-original-price" id="m-pendants-original-price">$2,999 USD</span>
+                    <span class="m-pendants-original-price" id="m-pendants-original-price">$2,499 USD</span>
                 </div>
                 <div class="m-pendants-financing">
-                    {{ section.settings.financing_text }}
+                    <p class="affirm-as-low-as" data-page-type="product" data-amount="{{product.price}}"></p>
                 </div>
             </div>
             
@@ -96,9 +154,7 @@
                 <div class="m-pendants-promise-items">
                     <div class="m-pendants-promise-item">
                         <div class="m-pendants-promise-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="#333"/>
-                            </svg>
+                            {% render 'icon-certified-gems' %}
                         </div>
                         <div class="m-pendants-promise-content">
                             <h4>{{ section.settings.promise_1_title }}</h4>
@@ -107,9 +163,7 @@
                     </div>
                     <div class="m-pendants-promise-item">
                         <div class="m-pendants-promise-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            {% render 'icon-lifetime-warranty' %}
                         </div>
                         <div class="m-pendants-promise-content">
                             <h4>{{ section.settings.promise_2_title }}</h4>
@@ -118,9 +172,7 @@
                     </div>
                     <div class="m-pendants-promise-item">
                         <div class="m-pendants-promise-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M20 7L9 18L4 13" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            {% render 'icon-fast-shipping' %}
                         </div>
                         <div class="m-pendants-promise-content">
                             <h4>{{ section.settings.promise_3_title }}</h4>
@@ -133,11 +185,42 @@
     </div>
 </div>
 
+<!-- Hidden data for JavaScript -->
+<div id="m-pendants-product-data" style="display: none;">
+    {% for i in (0..sorted_letters_array.size) %}
+        {% unless i >= sorted_letters_array.size %}
+            {% assign letter = sorted_letters_array[i] %}
+            {% assign handle = sorted_handles_array[i] %}
+            {% unless letter == blank %}
+                {% assign product = collections[section.settings.collection].products | where: 'handle', handle | first %}
+                {% if product %}
+                    <div class="product-data" 
+                         data-letter="{{ letter }}"
+                         data-product-id="{{ product.id }}"
+                         data-product-handle="{{ product.handle }}"
+                         data-product-title="{{ product.title }}"
+                         data-product-image="{{ product.featured_image | img_url: 'master' }}">
+                        {% for variant in product.variants %}
+                            <div class="variant-data"
+                                 data-variant-id="{{ variant.id }}"
+                                 data-variant-title="{{ variant.title }}"
+                                 data-variant-price="{{ variant.price }}"
+                                 data-variant-compare-price="{{ variant.compare_at_price }}"
+                                 data-variant-available="{{ variant.available }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endunless %}
+        {% endunless %}
+    {% endfor %}
+</div>
+
 <style>
 .m-pendants-product-section {
     width: 100%;
     background-color: #FFFFFF;
-    padding: 80px 50px;
+    padding: 50px 40px 100px;
 }
 
 .m-pendants-product-container {
@@ -145,20 +228,100 @@
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    gap: 60px;
+    gap: 46px;
     align-items: flex-start;
 }
 
 .m-pendants-product-details {
-    width: 50%;
+    width: calc(50% - 23px);
+    padding: 48px;
+}
+
+.m-pendants-product-title {
+    color: #151515;
+    font-family: Montserrat;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 109.091% */
+    letter-spacing: 6.5px;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+
+.m-pendants-product-details-body {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }
 
 .m-pendants-product-image {
+    width: 150px;
+    height: 150px;
+    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+.m-pendants-image-slider {
     width: 100%;
-    height: 400px;
-    margin-bottom: 40px;
-    border-radius: 8px;
-    overflow: hidden;
+    height: 100%;
+}
+
+.m-pendants-image-slide {
+    width: 100%;
+    height: 100%;
+}
+
+.m-pendants-image-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.m-pendants-letter-slider {
+    width: 100%;
+}
+
+.m-pendants-letter-slider .slick-track {
+    padding: 0;
+}
+
+.m-pendants-letter-slide {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #151515;
+    text-align: center;
+    font-family: Arial;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px; /* 100% */
+    border: 1px solid #E0E0E0;
+    transition: all 0.3s ease;
+    user-select: none;
+    cursor: pointer;
+    margin: auto;
+}
+
+.m-pendants-letter-slide:hover {
+    background-color: #F5F5F5;
+}
+
+.m-pendants-letter-slider-wrap {
+    
+}
+
+.m-pendants-letter-slider-wrap.slick-current .m-pendants-letter-slide {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-weight: 600;
 }
 
 .m-pendants-product-image img {
@@ -168,17 +331,9 @@
 }
 
 .m-pendants-letter-selector {
-    margin-bottom: 40px;
-}
-
-.m-pendants-selector-title {
-    color: #999999;
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 400;
-    font-variant: all-small-caps;
-    letter-spacing: 4.8px;
-    margin: 0 0 20px 0;
+    width: 197px;
+    padding: 20px 0;
+    background: linear-gradient(270deg, rgba(153, 153, 153, 0.15) 0%, rgba(204, 204, 204, 0.05) 5%, rgba(255, 255, 255, 0.00) 10%, rgba(255, 255, 255, 0.00) 50%, rgba(255, 255, 255, 0.00) 90%, rgba(204, 204, 204, 0.05) 95%, rgba(153, 153, 153, 0.15) 100%);
 }
 
 .m-pendants-wheel-container {
@@ -188,13 +343,42 @@
     overflow: hidden;
     border: 1px solid #E0E0E0;
     border-radius: 8px;
+    background: #FAFAFA;
+}
+
+.m-pendants-wheel-container::before,
+.m-pendants-wheel-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.m-pendants-wheel-container::before {
+    left: 0;
+    background: linear-gradient(to right, #FAFAFA, transparent);
+}
+
+.m-pendants-wheel-container::after {
+    right: 0;
+    background: linear-gradient(to left, #FAFAFA, transparent);
 }
 
 .m-pendants-wheel-track {
     display: flex;
     height: 100%;
-    transition: transform 0.3s ease;
     cursor: grab;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+}
+
+.m-pendants-wheel-track::-webkit-scrollbar {
+    display: none;
 }
 
 .m-pendants-wheel-track:active {
@@ -214,6 +398,8 @@
     border-right: 1px solid #E0E0E0;
     transition: all 0.3s ease;
     user-select: none;
+    flex-shrink: 0;
+    position: relative;
 }
 
 .m-pendants-letter-item:last-child {
@@ -222,85 +408,99 @@
 
 .m-pendants-letter-item:hover {
     background-color: #F5F5F5;
-    transform: scale(1.05);
 }
 
 .m-pendants-letter-item.active {
     background-color: #000000;
     color: #FFFFFF;
-    transform: scale(1.1);
     font-weight: 600;
 }
 
 .m-pendants-size-selector {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .m-pendants-size-title {
-    color: #999999;
+    color: #151515;
     font-family: Montserrat;
-    font-size: 16px;
+    font-size: 18px;
+    font-style: normal;
     font-weight: 400;
-    font-variant: all-small-caps;
-    letter-spacing: 4.8px;
-    margin: 0 0 20px 0;
+    line-height: 24px; /* 133.333% */
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 17px;
+    opacity: 0.6;
 }
 
 .m-pendants-size-options {
     display: flex;
-    gap: 20px;
+    gap: 16px;
 }
 
 .m-pendants-size-btn {
     flex: 1;
-    padding: 20px;
-    border: 1px solid #E0E0E0;
-    background: #FFFFFF;
+    padding: 24px 26px;
+    border-radius: 5px;
+    border: 2px solid #E5E7EB;
+    background: #FFF;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 5px;
+    max-width: 240px;
 }
 
 .m-pendants-size-btn:hover {
     border-color: #000000;
-    transform: translateY(-2px);
 }
 
 .m-pendants-size-btn.active {
-    background: #000000;
-    border-color: #000000;
-    color: #FFFFFF;
+    border-radius: 5px;
+    border: 2px solid #151515;
+    background: #151515;
+    color: #fff;
 }
 
 .m-pendants-size-name {
     font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 2px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 133.333% */
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .m-pendants-size-spec {
     font-family: Montserrat;
-    font-size: 14px;
+    font-size: 18px;
+    font-style: normal;
     font-weight: 400;
+    line-height: 24px;
     opacity: 0.8;
 }
 
 .m-pendants-features {
-    margin-bottom: 40px;
+    margin-bottom: 0;
 }
 
 .m-pendants-features-title {
-    color: #999999;
+    color: #151515;
     font-family: Montserrat;
-    font-size: 16px;
+    font-size: 18px;
+    font-style: normal;
     font-weight: 400;
-    font-variant: all-small-caps;
-    letter-spacing: 4.8px;
-    margin: 0 0 20px 0;
+    line-height: 24px; /* 133.333% */
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin: 0 0 12px 0;
 }
 
 .m-pendants-features-list {
@@ -312,12 +512,14 @@
 .m-pendants-feature-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 10px;
+    color: #151515;
     font-family: Montserrat;
     font-size: 16px;
+    font-style: normal;
     font-weight: 400;
-    color: #333333;
+    line-height: 24px; /* 150% */
+    opacity: 0.7;
 }
 
 .m-pendants-check-icon {
@@ -325,333 +527,537 @@
 }
 
 .m-pendants-selection-summary {
-    width: 50%;
-    padding-left: 40px;
+    width: calc(50% - 23px);
+    padding: 48px;
+    background: #FFF;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
 }
 
 .m-pendants-selection-info {
-    margin-bottom: 30px;
+    margin-bottom: 8px;
 }
 
 .m-pendants-selection-title {
-    color: #999999;
-    font-family: Montserrat;
-    font-size: 16px;
+    color: #151515;
+    font-family: Arial;
+    font-size: 22px;
+    font-style: normal;
     font-weight: 400;
-    font-variant: all-small-caps;
-    letter-spacing: 4.8px;
-    margin: 0 0 20px 0;
+    line-height: 24px; /* 109.091% */
+    letter-spacing: 6.5px;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+    opacity: 0.6;
 }
 
 .m-pendants-current-selection {
-    font-family: "High Tower Text";
-    font-size: 24px;
-    font-style: italic;
+    color: #151515;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
     font-weight: 400;
-    color: #333333;
+    line-height: 24px; /* 133.333% */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.m-pendants-selection-separator {
+    color: #999999;
+    font-size: 18px;
 }
 
 .m-pendants-pricing {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .m-pendants-price-display {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
+    gap: 12px;
+    margin-bottom: 8px;
 }
 
 .m-pendants-current-price {
-    font-family: Montserrat;
-    font-size: 32px;
-    font-weight: 700;
-    color: #000000;
+    color: #151515;
+    font-family: "EB Garamond";
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 48px; /* 100% */
 }
 
 .m-pendants-original-price {
+    color: rgba(0, 0, 0, 0.60);
     font-family: Montserrat;
-    font-size: 18px;
+    font-size: 16px;
+    font-style: normal;
     font-weight: 400;
-    color: #999999;
+    line-height: 24px; /* 150% */
     text-decoration: line-through;
 }
 
 .m-pendants-financing {
+    color: #151515;
     font-family: Montserrat;
-    font-size: 14px;
+    font-size: 12px;
+    font-style: normal;
     font-weight: 400;
-    color: #666666;
+    line-height: 20px; /* 166.667% */
 }
 
 .m-pendants-add-to-cart {
-    margin-bottom: 40px;
+    margin-bottom: 27px;
 }
 
 .m-pendants-cart-btn {
     width: 100%;
-    padding: 18px 24px;
-    background: #000000;
-    color: #FFFFFF;
-    border: none;
+    padding: 20px 40px;
+    border-radius: 8px;
+    background: #151515;
+    color: #FFF;
     font-family: Montserrat;
     font-size: 16px;
-    font-weight: 600;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+    outline: none;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .m-pendants-cart-btn:hover {
     background: #333333;
-    transform: translateY(-2px);
 }
 
 .m-pendants-promise {
-    border-top: 1px solid #E0E0E0;
-    padding-top: 30px;
+    border-top: 0.8px solid #E5E7EB;
+    margin: 0;
+    padding-top: 20px;
 }
 
 .m-pendants-promise-title {
-    color: #999999;
+    color: #151515;
     font-family: Montserrat;
-    font-size: 16px;
+    font-size: 18px;
+    font-style: normal;
     font-weight: 400;
-    font-variant: all-small-caps;
+    line-height: 24px; /* 133.333% */
     letter-spacing: 4.8px;
-    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+    opacity: 0.6;
 }
 
 .m-pendants-promise-items {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
+    opacity: 0.7;
 }
 
 .m-pendants-promise-item {
     display: flex;
     align-items: flex-start;
-    gap: 15px;
+    gap: 20px;
 }
 
 .m-pendants-promise-icon {
     flex-shrink: 0;
-    margin-top: 2px;
+    display: flex;
+    width: 48px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .m-pendants-promise-content h4 {
+    color: #2F2F2F;
     font-family: Montserrat;
-    font-size: 16px;
+    font-size: 14px;
+    font-style: normal;
     font-weight: 600;
-    color: #333333;
-    margin: 0 0 5px 0;
+    line-height: normal;
+    margin: 0 0 4px 0;
 }
 
 .m-pendants-promise-content p {
+    color: #2F2F2F;
     font-family: Montserrat;
     font-size: 14px;
+    font-style: normal;
     font-weight: 400;
-    color: #666666;
-    line-height: 1.5;
+    line-height: normal;
     margin: 0;
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 1080px) {
+    .m-pendants-product-section {
+        padding: 60px 40px;
+    }
+    .m-pendants-product-details,
+    .m-pendants-selection-summary {
+        width: 100%;
+        padding: 0px;
+        box-shadow: none;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .m-pendants-product-section {
+        padding: 40px 20px;
+    }
+    
     .m-pendants-product-container {
         flex-direction: column;
         gap: 40px;
+    }
+
+    .m-pendants-product-details-body {
+        justify-content: space-around;
+    }
+
+    m-pendants-letter-selector {
     }
     
     .m-pendants-product-details,
     .m-pendants-selection-summary {
         width: 100%;
-    }
-    
-    .m-pendants-selection-summary {
-        padding-left: 0;
+        padding: 0px;
+        box-shadow: none;
     }
     
     .m-pendants-size-options {
-        flex-direction: column;
-        gap: 15px;
+        gap: 12px;
+    }
+    
+    .m-pendants-size-btn {
+        padding: 10px;
     }
     
     .m-pendants-wheel-container {
-        height: 50px;
+        height: 55px;
     }
     
     .m-pendants-letter-item {
-        min-width: 50px;
+        min-width: 55px;
         font-size: 16px;
+    }
+    
+    .m-pendants-product-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .m-pendants-product-image {
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .m-pendants-product-details-body {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
     }
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const wheelTrack = document.getElementById('m-pendants-wheel-track');
-    const letterItems = document.querySelectorAll('.m-pendants-letter-item');
-    const sizeButtons = document.querySelectorAll('.m-pendants-size-btn');
-    const mainImage = document.getElementById('m-pendants-main-image');
+    const sizeOptionsContainer = document.getElementById('m-pendants-size-options');
     const selectedLetterSpan = document.getElementById('m-pendants-selected-letter');
     const selectedSizeSpan = document.getElementById('m-pendants-selected-size');
     const currentPriceSpan = document.getElementById('m-pendants-current-price');
     const originalPriceSpan = document.getElementById('m-pendants-original-price');
     const addToCartBtn = document.getElementById('m-pendants-add-to-cart');
     
-    let isDragging = false;
-    let startX = 0;
-    let scrollLeft = 0;
-    let currentLetter = 'M';
-    let currentSize = 'classic';
+    let currentProduct = null;
+    let currentVariant = null;
+    let productData = {};
     
-    // Pricing configuration
-    const pricing = {
-        classic: {
-            regular: 2999,
-            sale: 1499
-        },
-        luxe: {
-            regular: 3999,
-            sale: 1999
-        }
-    };
-    
-    // Initialize
-    updateSelection();
-    updatePricing();
-    
-    // Wheel dragging functionality
-    wheelTrack.addEventListener('mousedown', startDrag);
-    wheelTrack.addEventListener('touchstart', startDrag);
-    
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-    
-    document.addEventListener('mouseup', endDrag);
-    document.addEventListener('touchend', endDrag);
-    
-    function startDrag(e) {
-        isDragging = true;
-        wheelTrack.style.cursor = 'grabbing';
-        startX = (e.pageX || e.touches[0].pageX) - wheelTrack.offsetLeft;
-        scrollLeft = wheelTrack.scrollLeft;
-    }
-    
-    function drag(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = (e.pageX || e.touches[0].pageX) - wheelTrack.offsetLeft;
-        const walk = (x - startX) * 2;
-        wheelTrack.scrollLeft = scrollLeft - walk;
+    // Load product data from hidden elements
+    function loadProductData() {
+        const productDataElements = document.querySelectorAll('#m-pendants-product-data .product-data');
         
-        // Snap to closest letter
-        snapToClosestLetter();
-    }
-    
-    function endDrag() {
-        isDragging = false;
-        wheelTrack.style.cursor = 'grab';
-        snapToClosestLetter();
-    }
-    
-    function snapToClosestLetter() {
-        const containerWidth = wheelTrack.offsetWidth;
-        const scrollLeft = wheelTrack.scrollLeft;
-        const itemWidth = 60; // Width of each letter item
-        
-        const closestIndex = Math.round(scrollLeft / itemWidth);
-        const targetScrollLeft = closestIndex * itemWidth;
-        
-        wheelTrack.scrollTo({
-            left: targetScrollLeft,
-            behavior: 'smooth'
-        });
-        
-        // Update active letter
-        const letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        const clampedIndex = Math.max(0, Math.min(closestIndex, letters.length - 1));
-        const newLetter = letters[clampedIndex];
-        
-        if (newLetter !== currentLetter) {
-            currentLetter = newLetter;
-            updateSelection();
-            updatePricing();
-        }
-    }
-    
-    // Letter click functionality
-    letterItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const letter = this.dataset.letter;
-            currentLetter = letter;
+        productDataElements.forEach(element => {
+            const letter = element.dataset.letter;
+            const productId = element.dataset.productId;
+            const productHandle = element.dataset.productHandle;
+            const productTitle = element.dataset.productTitle;
+            const productImage = element.dataset.productImage;
             
-            // Update active state
-            letterItems.forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Scroll to letter
-            const letterIndex = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'].indexOf(letter);
-            const targetScrollLeft = letterIndex * 60;
-            
-            wheelTrack.scrollTo({
-                left: targetScrollLeft,
-                behavior: 'smooth'
+            const variants = [];
+            const variantElements = element.querySelectorAll('.variant-data');
+            variantElements.forEach(variantEl => {
+                variants.push({
+                    id: variantEl.dataset.variantId,
+                    title: variantEl.dataset.variantTitle,
+                    price: parseInt(variantEl.dataset.variantPrice),
+                    comparePrice: variantEl.dataset.variantComparePrice ? parseInt(variantEl.dataset.variantComparePrice) : null,
+                    available: variantEl.dataset.variantAvailable === 'true'
+                });
             });
             
-            updateSelection();
-            updatePricing();
+            productData[letter] = {
+                id: productId,
+                handle: productHandle,
+                title: productTitle,
+                image: productImage,
+                variants: variants
+            };
         });
-    });
-    
-    // Size selection functionality
-    sizeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const size = this.dataset.size;
-            currentSize = size;
-            
-            // Update active state
-            sizeButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            updateSelection();
-            updatePricing();
-        });
-    });
-    
-    function updateSelection() {
-        selectedLetterSpan.textContent = `Letter '${currentLetter}'`;
-        selectedSizeSpan.textContent = `- ${currentSize.charAt(0).toUpperCase() + currentSize.slice(1)}`;
-        
-        // Update main image based on selection
-        const imageKey = `image_${currentLetter.toLowerCase()}_${currentSize}`;
-        const imageUrl = window[imageKey] || '{{ section.settings.default_image | img_url: "master" }}';
-        mainImage.src = imageUrl;
     }
     
+    // Select product by letter
+    function selectProduct(letter) {
+        if (!productData[letter]) {
+            return;
+        }
+        
+        currentProduct = productData[letter];
+        
+        // Update letter selection
+        selectedLetterSpan.textContent = `Letter "${letter}"`;
+        
+        // Update size options
+        updateSizeOptions();
+        
+        // Select first available variant (or only variant for single variant products)
+        if (currentProduct.variants.length > 0) {
+            selectVariant(currentProduct.variants[0]);
+        }
+        
+        // Update size display for single variant products
+        if (currentProduct.variants.length === 1) {
+            selectedSizeSpan.textContent = currentProduct.variants[0].title;
+        } else if (currentProduct.variants.length === 0) {
+            // No variants - hide size display
+            selectedSizeSpan.textContent = '';
+        }
+    }
+    
+    // Update size options based on current product
+    function updateSizeOptions() {
+        if (!currentProduct) {
+            return;
+        }
+        
+        sizeOptionsContainer.innerHTML = '';
+        
+        // Hide size selector if product has only one variant
+        const sizeSelector = document.querySelector('.m-pendants-size-selector');
+        if (currentProduct.variants.length <= 1) {
+            sizeSelector.style.display = 'none';
+        } else {
+            sizeSelector.style.display = 'block';
+            
+            currentProduct.variants.forEach((variant, index) => {
+                const button = document.createElement('button');
+                button.className = `m-pendants-size-btn ${index === 0 ? 'active' : ''}`;
+                button.dataset.variantId = variant.id;
+                button.dataset.variantTitle = variant.title;
+                
+                const sizeName = document.createElement('span');
+                sizeName.className = 'm-pendants-size-name';
+                sizeName.textContent = variant.title.toUpperCase();
+                
+                const sizeSpec = document.createElement('span');
+                sizeSpec.className = 'm-pendants-size-spec';
+                sizeSpec.textContent = variant.title.includes('Classic') ? '8mm Width' : '10mm Width';
+                
+                button.appendChild(sizeName);
+                button.appendChild(sizeSpec);
+                
+                button.addEventListener('click', () => selectVariant(variant));
+                sizeOptionsContainer.appendChild(button);
+            });
+        }
+    }
+    
+    // Select variant
+    function selectVariant(variant) {
+        currentVariant = variant;
+        
+        // Update size selection
+        selectedSizeSpan.textContent = variant.title;
+        
+        // Update pricing
+        updatePricing();
+        
+        // Update active size button
+        const sizeButtons = sizeOptionsContainer.querySelectorAll('.m-pendants-size-btn');
+        sizeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.variantId === variant.id) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Update add to cart button state
+        if (variant.available) {
+            addToCartBtn.textContent = 'Add to Cart';
+            addToCartBtn.disabled = false;
+        } else {
+            addToCartBtn.textContent = 'Sold Out';
+            addToCartBtn.disabled = true;
+        }
+    }
+    
+    // Update pricing display
     function updatePricing() {
-        const priceConfig = pricing[currentSize];
-        currentPriceSpan.textContent = `$${priceConfig.sale.toLocaleString()}`;
-        originalPriceSpan.textContent = `$${priceConfig.regular.toLocaleString()} USD`;
+        if (!currentVariant) return;
+        
+        const price = (currentVariant.price / 100).toFixed(0);
+        currentPriceSpan.textContent = `$${parseInt(price).toLocaleString()}`;
+        
+        if (currentVariant.comparePrice) {
+            const comparePrice = (currentVariant.comparePrice / 100).toFixed(0);
+            originalPriceSpan.textContent = `$${parseInt(comparePrice).toLocaleString()} USD`;
+            originalPriceSpan.style.display = 'inline';
+        } else {
+            originalPriceSpan.style.display = 'none';
+        }
+    }
+    
+    // Update selection summary when slider changes
+    function updateSelectionSummary(letter) {
+        if (!productData[letter]) return;
+        
+        const product = productData[letter];
+        
+        // Update letter display
+        selectedLetterSpan.textContent = `Letter "${letter}"`;
+        
+        // Update price if we have a current variant
+        if (currentVariant) {
+            updatePricing();
+        }
+    }
+    
+    // Initialize
+    loadProductData();
+    
+    // Initialize Slick sliders
+    $('#m-pendants-image-slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '#m-pendants-letter-slider',
+        infinite: true
+    });
+    
+    $('#m-pendants-letter-slider').slick({
+        arrows: false,
+        centerMode: true,
+        asNavFor: '#m-pendants-image-slider',
+        infinite: true,
+        focusOnSelect: true,
+        swipeToSlide: true,
+        touchMove: true,
+        draggable: true,
+        useCSS: true,
+        useTransform: true,
+        useHardwareAcceleration: true,
+        useTransform: true,
+    });
+    
+    // Handle slide change
+    $('#m-pendants-letter-slider').on('afterChange', function(event, slick, currentSlide) {
+        const currentSlideElement = slick.$slides.eq(currentSlide);
+        const letter = currentSlideElement.find('.m-pendants-letter-slide').data('letter');
+        if (letter) {
+            selectProduct(letter);
+            updateSelectionSummary(letter);
+        }
+    });
+    
+    // Initialize with first product
+    const firstLetter = Object.keys(productData)[0];
+    if (firstLetter) {
+        selectProduct(firstLetter);
+        updateSelectionSummary(firstLetter);
     }
     
     // Add to cart functionality
     addToCartBtn.addEventListener('click', function() {
-        // Here you would integrate with Shopify's cart API
-        // For now, we'll just show a confirmation
-        const productHandle = `pendant-${currentLetter.toLowerCase()}-${currentSize}`;
-        console.log('Adding to cart:', productHandle);
+        if (!currentVariant) {
+            return;
+        }
         
-        // You can implement actual cart functionality here
-        alert(`Added ${currentLetter} ${currentSize.charAt(0).toUpperCase() + currentSize.slice(1)} pendant to cart!`);
-    });
-    
-    // Prevent default scroll behavior on wheel track
-    wheelTrack.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        wheelTrack.scrollLeft += e.deltaY;
-        snapToClosestLetter();
+        // Check if variant is available
+        if (!currentVariant.available) {
+            addToCartBtn.textContent = 'Sold Out';
+            addToCartBtn.disabled = true;
+            return;
+        }
+        
+        // Show loading state
+        const originalText = addToCartBtn.textContent;
+        addToCartBtn.textContent = 'Adding...';
+        addToCartBtn.disabled = true;
+        
+        // Add to cart using Shopify's fetch API
+        fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                id: currentVariant.id,
+                quantity: 1
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Check if there's an error status
+            if (data.status && data.status >= 400) {
+                // If it's already in cart, disable the button
+                if (data.message && data.message.includes('already in your cart')) {
+                    addToCartBtn.textContent = 'In Cart';
+                    addToCartBtn.disabled = true;
+                    return;
+                }
+                
+                // For other errors, show error message
+                addToCartBtn.textContent = 'Error - Try Again';
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    addToCartBtn.textContent = originalText;
+                    addToCartBtn.disabled = false;
+                }, 3000);
+                return;
+            }
+            
+            // Show success message
+            addToCartBtn.textContent = 'Added';
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                addToCartBtn.textContent = originalText;
+                addToCartBtn.disabled = false;
+            }, 2000);
+            
+            // Trigger cart update event
+            document.dispatchEvent(new CustomEvent('cart:updated'));
+        })
+        .catch(error => {
+            // Show error message
+            addToCartBtn.textContent = 'Error - Try Again';
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                addToCartBtn.textContent = originalText;
+                addToCartBtn.disabled = false;
+            }, 2000);
+        });
     });
 });
 </script>
@@ -664,25 +1070,20 @@ document.addEventListener('DOMContentLoaded', function() {
     "settings": [
         {
             "type": "text",
-            "id": "heading",
-            "label": "Heading",
-            "default": "PERSONALIZED PENDANTS"
+            "id": "product_title",
+            "label": "Product Title",
+            "default": "PRODUCT DETAILS"
         },
         {
-            "type": "image_picker",
-            "id": "default_image",
-            "label": "Default Product Image"
-        },
-        {
-            "type": "text",
-            "id": "selector_title",
-            "label": "Letter Selector Title",
-            "default": "SELECT YOUR LETTER"
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection",
+            "info": "Select the collection containing the pendant products"
         },
         {
             "type": "text",
             "id": "size_title",
-            "label": "Size Selector Title",
+            "label": "Size Title",
             "default": "SELECT SIZE"
         },
         {

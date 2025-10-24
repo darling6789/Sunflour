@@ -125,49 +125,34 @@
         <div class="m-pendants-comparison-carousel">
             <div class="m-pendants-carousel-container">
                 <div class="m-pendants-carousel-slider">
-                    {% for i in (0..sorted_letters_array.size) %}
-                        {% unless i >= sorted_letters_array.size %}
-                            {% assign letter = sorted_letters_array[i] %}
-                            {% assign handle = sorted_handles_array[i] %}
-                            {% unless letter == blank %}
-                                {% if letter == 'A' %}
-                                    <div class="m-pendants-carousel-slide active" data-letter="{{ letter }}">
-                                        <div class="m-pendants-comparison-image">
-                                            {% for product in collection.products %}
-                                                {% if product.handle == handle %}
-                                                    <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ letter }} Comparison" width="100%" height="100%" />
-                                                    {% break %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </div>
-                                        <div class="m-pendants-comparison-labels">
-                                            <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
-                                            <span class="m-pendants-classic-label">{{ section.settings.classic_label }}</span>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div class="m-pendants-carousel-slide" data-letter="{{ letter }}">
-                                        <div class="m-pendants-comparison-image">
-                                            {% for product in collection.products %}
-                                                {% if product.handle == handle %}
-                                                    <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ letter }} Comparison" width="100%" height="100%" />
-                                                    {% break %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </div>
-                                        <div class="m-pendants-comparison-labels">
-                                            <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
-                                            <span class="m-pendants-classic-label">{{ section.settings.classic_label }}</span>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endunless %}
-                        {% endunless %}
-                    {% endfor %}
+                    <div class="m-pendants-carousel-slide active">
+                        <div class="m-pendants-comparison-image">
+                            {% if section.settings.comparison_image_1 %}
+                                <img src="{{ section.settings.comparison_image_1 | img_url: 'master' }}" alt="Comparison Image 1" width="100%" height="100%" />
+                            {% endif %}
+                        </div>
+                        <div class="m-pendants-comparison-labels">
+                            <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
+                            &nbsp; · &nbsp;
+                            <span class="m-pendants-classic-label">{{ section.settings.classic_label }}</span>
+                        </div>
+                    </div>
+                    <div class="m-pendants-carousel-slide">
+                        <div class="m-pendants-comparison-image">
+                            {% if section.settings.comparison_image_2 %}
+                                <img src="{{ section.settings.comparison_image_2 | img_url: 'master' }}" alt="Comparison Image 2" width="100%" height="100%" />
+                            {% endif %}
+                        </div>
+                        <div class="m-pendants-comparison-labels">
+                            <span class="m-pendants-luxe-label">{{ section.settings.luxe_label }}</span>
+                            &nbsp; · &nbsp;
+                            <span class="m-pendants-classic-label">{{ section.settings.classic_label }}</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="m-pendants-carousel-navigation">
-                    <div class="m-pendants-carousel-prev">{% render 'icon-left-arrow' %}</div>
-                    <div class="m-pendants-carousel-next">{% render 'icon-right-arrow' %}</div>
+                    <div class="m-pendants-carousel-prev">{% render 'icon-carousel-left-arrow' %}</div>
+                    <div class="m-pendants-carousel-next">{% render 'icon-carousel-right-arrow' %}</div>
                 </div>
             </div>
         </div>
@@ -281,6 +266,7 @@
     text-transform: uppercase;
     margin: 0;
     margin-bottom: 30px;
+    opacity: 0.6;
 }
 
 .m-pendants-select-subheading {
@@ -301,6 +287,7 @@
     font-weight: 400;
     line-height: 38px; /* 237.5% */
     margin: 0 0 50px 0;
+    opacity: 0.7;
 }
 
 .m-pendants-letters-board {
@@ -348,7 +335,7 @@
 
 .m-pendants-selected-detail-content {
     width: 100%;
-    max-width: 1160px;
+    max-width: 1080px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -357,10 +344,11 @@
 }
 
 .m-pendants-size-info {
-    width: 50%;
+    width: 55%;
 }
 
 .m-pendants-size-heading {
+    opacity: 0.6;
     color: #FFF;
     font-family: Montserrat;
     font-size: 20px;
@@ -407,6 +395,7 @@
 
 .m-pendants-size-classic p,
 .m-pendants-size-luxe p {
+    opacity: 0.7;
     color: #FFF;
     font-family: Montserrat;
     font-size: 16px;
@@ -417,7 +406,8 @@
 }
 
 .m-pendants-comparison-carousel {
-    width: calc(50% - 40px);
+    width: calc(45% - 40px);
+    max-width: 450px;
 }
 
 .m-pendants-carousel-container {
@@ -442,6 +432,7 @@
     width: 100%;
     max-width: 400px;
     height: 400px;
+    margin: auto;
     margin-bottom: 10px;
 }
 
@@ -484,11 +475,19 @@
     opacity: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 749px) {
+    .m-pendants-select-letter-content {
+        padding: 60px 20px;
+    }
+
     .m-pendants-select-letter-content,
     .m-pendants-selected-detail-content {
         flex-direction: column;
         gap: 40px;
+    }
+
+    .m-pendants-select-description {
+        line-height: 2;
     }
     
     .m-pendants-select-letter-media,
@@ -497,10 +496,19 @@
     .m-pendants-comparison-carousel {
         width: 100%;
     }
+
+    .m-pendants-media-image,
+    .m-pendants-media-video {
+        box-shadow: none;
+    }
     
     .m-pendants-letters-board {
         grid-template-columns: repeat(6, 1fr);
         max-width: 100%;
+    }
+
+    .m-pendants-selected-detail {
+        padding: 60px 20px;
     }
 }
 </style>
@@ -547,14 +555,6 @@ $(document).ready(function(){
         $('.m-pendants-letter-btn').removeClass('active');
         $(this).addClass('active');
         
-        // Update active carousel slide
-        $('.m-pendants-carousel-slide').removeClass('active');
-        $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"]').addClass('active');
-        
-        // Sync carousel position
-        const slideIndex = $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"]').index();
-        $('.m-pendants-carousel-slider').slick('slickGoTo', slideIndex);
-        
         // Show/hide media elements based on current media type and selected letter
         const currentMediaType = $('.m-pendants-media-btn.active').data('media');
         $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
@@ -572,13 +572,6 @@ $(document).ready(function(){
                 }
             }
         }
-        
-        // Update detail area image
-        const detailImage = $('.m-pendants-selected-detail-image img');
-        const newImageSrc = $('.m-pendants-carousel-slide[data-letter="' + selectedLetter + '"] img').attr('src');
-        if (newImageSrc) {
-            detailImage.attr('src', newImageSrc);
-        }
     });
     
     // Carousel navigation
@@ -587,42 +580,9 @@ $(document).ready(function(){
         const prevSlideIndex = currentSlideIndex - 1;
         
         if(prevSlideIndex >= 0){
-            const prevSlide = $('.m-pendants-carousel-slide').eq(prevSlideIndex);
-            const letter = prevSlide.data('letter');
-            
-            // Update active states
             $('.m-pendants-carousel-slide').removeClass('active');
-            prevSlide.addClass('active');
-            $('.m-pendants-letter-btn').removeClass('active');
-            $('.m-pendants-letter-btn[data-letter="' + letter + '"]').addClass('active');
-            
-            // Update slick slider
+            $('.m-pendants-carousel-slide').eq(prevSlideIndex).addClass('active');
             $('.m-pendants-carousel-slider').slick('slickGoTo', prevSlideIndex);
-            
-            // Show/hide media elements based on current media type and selected letter
-            const currentMediaType = $('.m-pendants-media-btn.active').data('media');
-            $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
-            $('.m-pendants-media-' + currentMediaType + '[data-letter="' + letter + '"]').addClass('active');
-            
-            // Handle video play/pause
-            if (currentMediaType === 'video') {
-                const video = $('.m-pendants-media-video[data-letter="' + letter + '"] video')[0];
-                if (video) {
-                    const playPromise = video.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            // Video play was interrupted, ignore the error
-                        });
-                    }
-                }
-            }
-            
-            // Update detail area image
-            const detailImage = $('.m-pendants-selected-detail-image img');
-            const newImageSrc = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img').attr('src');
-            if (newImageSrc) {
-                detailImage.attr('src', newImageSrc);
-            }
         }
     });
     
@@ -632,42 +592,9 @@ $(document).ready(function(){
         const totalSlides = $('.m-pendants-carousel-slide').length;
         
         if(nextSlideIndex < totalSlides){
-            const nextSlide = $('.m-pendants-carousel-slide').eq(nextSlideIndex);
-            const letter = nextSlide.data('letter');
-            
-            // Update active states
             $('.m-pendants-carousel-slide').removeClass('active');
-            nextSlide.addClass('active');
-            $('.m-pendants-letter-btn').removeClass('active');
-            $('.m-pendants-letter-btn[data-letter="' + letter + '"]').addClass('active');
-            
-            // Update slick slider
+            $('.m-pendants-carousel-slide').eq(nextSlideIndex).addClass('active');
             $('.m-pendants-carousel-slider').slick('slickGoTo', nextSlideIndex);
-            
-            // Show/hide media elements based on current media type and selected letter
-            const currentMediaType = $('.m-pendants-media-btn.active').data('media');
-            $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
-            $('.m-pendants-media-' + currentMediaType + '[data-letter="' + letter + '"]').addClass('active');
-            
-            // Handle video play/pause
-            if (currentMediaType === 'video') {
-                const video = $('.m-pendants-media-video[data-letter="' + letter + '"] video')[0];
-                if (video) {
-                    const playPromise = video.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            // Video play was interrupted, ignore the error
-                        });
-                    }
-                }
-            }
-            
-            // Update detail area image
-            const detailImage = $('.m-pendants-selected-detail-image img');
-            const newImageSrc = $('.m-pendants-carousel-slide[data-letter="' + letter + '"] img').attr('src');
-            if (newImageSrc) {
-                detailImage.attr('src', newImageSrc);
-            }
         }
     });
     
@@ -769,6 +696,16 @@ $(document).ready(function(){
             "id": "classic_label",
             "label": "Classic Label",
             "default": "Classic (Right)"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_1",
+            "label": "Comparison Image 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "comparison_image_2",
+            "label": "Comparison Image 2"
         }
     ],
     "presets": [
