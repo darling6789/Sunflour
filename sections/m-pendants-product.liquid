@@ -109,7 +109,7 @@
                 <ul class="m-pendants-features-list">
                     <li class="m-pendants-feature-item">
                         {% render 'icon-check-dark' %}
-                        {{ section.settings.feature_1 }}
+                        Precision cut from <span id="m-pendants-carat-size">3</span> carat lab-grown diamond
                     </li>
                     <li class="m-pendants-feature-item">
                         {% render 'icon-check-dark' %}
@@ -147,9 +147,12 @@
             
             <!-- Add to Cart -->
             <div class="m-pendants-add-to-cart">
-                <button class="m-pendants-cart-btn" id="m-pendants-add-to-cart">
-                    {{ section.settings.add_to_cart_text }}
-                </button>
+                <form action="/cart/add" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="" id="m-pendants-variant-id">
+                    <button type="submit" name="add" class="m-pendants-cart-btn" id="m-pendants-add-to-cart">
+                        {{ section.settings.add_to_cart_text }}
+                    </button>
+                </form>
             </div>
             
             <!-- Our Promise -->
@@ -1016,6 +1019,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update size options
         updateSizeOptions();
         
+        // Update carat size for the first variant
+        if (currentProduct.variants.length > 0) {
+            updateCaratSize(currentProduct.variants[0].title);
+        }
+        
         // Select first available variant (or only variant for single variant products)
         if (currentProduct.variants.length > 0) {
             selectVariant(currentProduct.variants[0]);
@@ -1085,6 +1093,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update pricing
         updatePricing();
         
+        // Update carat size in features
+        updateCaratSize(variant.title);
+        
+        // Update variant ID in form
+        updateVariantId();
+        
         // Update active size button
         const sizeButtons = sizeOptionsContainer.querySelectorAll('.m-pendants-size-btn');
         sizeButtons.forEach(btn => {
@@ -1120,6 +1134,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Update carat size in features based on variant
+    function updateCaratSize(variantTitle) {
+        const caratSizeSpan = document.getElementById('m-pendants-carat-size');
+        if (!caratSizeSpan) return;
+        
+        // Set carat size based on variant title
+        if (variantTitle.toLowerCase().includes('luxe')) {
+            caratSizeSpan.textContent = '5';
+        } else {
+            caratSizeSpan.textContent = '3';
+        }
+    }
+    
     // Update selection summary when slider changes
     function updateSelectionSummary(letter) {
         if (!productData[letter]) return;
@@ -1148,43 +1175,44 @@ document.addEventListener('DOMContentLoaded', function() {
         infinite: true
     });
     
-    $('#m-pendants-letter-slider').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: true,
-        centerMode: true,
-        asNavFor: '#m-pendants-image-slider',
-        infinite: true,
-        focusOnSelect: true,
-        swipeToSlide: true,
-        touchMove: true,
-        draggable: true,
-        useCSS: true,
-        useTransform: true,
-        useHardwareAcceleration: true,
-        useTransform: true,
-        prevArrow: '.m-pendants-letter-prev',
-        nextArrow: '.m-pendants-letter-next',
-        responsive: [
-            {
-                breakpoint: 420,
-                settings: {
-                    arrows: false,
-                    slidesToShow: 5,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    focusOnSelect: true,
-                    swipeToSlide: true,
-                    touchMove: true,
-                    draggable: true,
-                    useCSS: true,
-                    useTransform: true,
-                    useHardwareAcceleration: true,
-                    useTransform: true,
+        $('#m-pendants-letter-slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            arrows: true,
+            centerMode: true,
+            centerPadding: '0px',
+            asNavFor: '#m-pendants-image-slider',
+            infinite: true,
+            focusOnSelect: true,
+            swipeToSlide: true,
+            touchMove: true,
+            draggable: true,
+            useCSS: true,
+            useTransform: true,
+            useHardwareAcceleration: true,
+            prevArrow: '.m-pendants-letter-prev',
+            nextArrow: '.m-pendants-letter-next',
+            responsive: [
+                {
+                    breakpoint: 420,
+                    settings: {
+                        arrows: false,
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        centerMode: true,
+                        centerPadding: '0px',
+                        infinite: false,
+                        focusOnSelect: true,
+                        swipeToSlide: true,
+                        touchMove: true,
+                        draggable: true,
+                        useCSS: true,
+                        useTransform: true,
+                        useHardwareAcceleration: true,
+                    }
                 }
-            }
-        ]
-    });
+            ]
+        });
     
     // Handle slide change
     $('#m-pendants-letter-slider').on('afterChange', function(event, slick, currentSlide) {
@@ -1203,82 +1231,16 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSelectionSummary(firstLetter);
     }
     
-    // Add to cart functionality
-    addToCartBtn.addEventListener('click', function() {
-        if (!currentVariant) {
-            return;
+    // Update variant ID in the form when variant changes
+    function updateVariantId() {
+        const variantIdInput = document.getElementById('m-pendants-variant-id');
+        if (variantIdInput && currentVariant) {
+            variantIdInput.value = currentVariant.id;
         }
-        
-        // Check if variant is available
-        if (!currentVariant.available) {
-            addToCartBtn.textContent = 'Sold Out';
-            addToCartBtn.disabled = true;
-            return;
-        }
-        
-        // Show loading state
-        const originalText = addToCartBtn.textContent;
-        addToCartBtn.textContent = 'Adding...';
-        addToCartBtn.disabled = true;
-        
-        // Add to cart using Shopify's fetch API
-        fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify({
-                id: currentVariant.id,
-                quantity: 1
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Check if there's an error status
-            if (data.status && data.status >= 400) {
-                // If it's already in cart, disable the button
-                if (data.message && data.message.includes('already in your cart')) {
-                    addToCartBtn.textContent = 'In Cart';
-                    addToCartBtn.disabled = true;
-                    return;
-                }
-                
-                // For other errors, show error message
-                addToCartBtn.textContent = 'Error - Try Again';
-                
-                // Reset button after 3 seconds
-                setTimeout(() => {
-                    addToCartBtn.textContent = originalText;
-                    addToCartBtn.disabled = false;
-                }, 3000);
-                return;
-            }
-            
-            // Show success message
-            addToCartBtn.textContent = 'Added';
-            
-            // Reset button after 2 seconds
-            setTimeout(() => {
-                addToCartBtn.textContent = originalText;
-                addToCartBtn.disabled = false;
-            }, 2000);
-            
-            // Trigger cart update event
-            document.dispatchEvent(new CustomEvent('cart:updated'));
-        })
-        .catch(error => {
-            // Show error message
-            addToCartBtn.textContent = 'Error - Try Again';
-            
-            // Reset button after 2 seconds
-            setTimeout(() => {
-                addToCartBtn.textContent = originalText;
-                addToCartBtn.disabled = false;
-            }, 2000);
-        });
-    });
+    }
+    
+    // Update variant ID when variant changes
+    updateVariantId();
 });
 </script>
 
