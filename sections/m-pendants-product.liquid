@@ -154,6 +154,12 @@
             <!-- Add to Cart -->
             <div class="m-pendants-add-to-cart">
                 <product-form data-section-id="{{ section.id }}">
+                    <div class="product-form__error-message-wrapper" role="alert" hidden>
+                        <span class="svg-wrapper">
+                            {{- 'icon-error.svg' | inline_asset_content -}}
+                        </span>
+                        <span class="product-form__error-message"></span>
+                    </div>
                     <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form">
                         <input type="hidden" name="id" value="" id="m-pendants-variant-id">
                         <button type="submit" name="add" class="m-pendants-cart-btn" id="m-pendants-add-to-cart" aria-haspopup="dialog">
@@ -222,7 +228,10 @@
                                  data-variant-title="{{ variant.title }}"
                                  data-variant-price="{{ variant.price }}"
                                  data-variant-compare-price="{{ variant.compare_at_price }}"
-                                 data-variant-available="{{ variant.available }}">
+                                 data-variant-available="{{ variant.available }}"
+                                 data-variant-min="{{ variant.quantity_rule.min }}"
+                                 data-variant-max="{{ variant.quantity_rule.max }}"
+                                 data-variant-increment="{{ variant.quantity_rule.increment }}">
                             </div>
                         {% endfor %}
                     </div>
@@ -742,6 +751,45 @@
     margin-bottom: 27px;
 }
 
+.product-form__error-message-wrapper {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 6px;
+    color: #DC2626;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.product-form__error-message-wrapper:not([hidden]) {
+    display: flex;
+}
+
+.product-form__error-message-wrapper .svg-wrapper {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-form__error-message-wrapper .svg-wrapper svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+.product-form__error-message {
+    flex: 1;
+}
+
 .m-pendants-cart-btn {
     width: 100%;
     padding: 20px 40px;
@@ -1012,7 +1060,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: variantEl.dataset.variantTitle,
                     price: parseInt(variantEl.dataset.variantPrice),
                     comparePrice: variantEl.dataset.variantComparePrice ? parseInt(variantEl.dataset.variantComparePrice) : null,
-                    available: variantEl.dataset.variantAvailable === 'true'
+                    available: variantEl.dataset.variantAvailable === 'true',
+                    quantity_rule: {
+                        min: parseInt(variantEl.dataset.variantMin || '1'),
+                        max: variantEl.dataset.variantMax ? parseInt(variantEl.dataset.variantMax) : null,
+                        increment: parseInt(variantEl.dataset.variantIncrement || '1')
+                    }
                 });
             });
             
@@ -1033,6 +1086,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         currentProduct = productData[letter];
+        
+        // Clear error messages when product changes
+        clearErrorMessage();
         
         // Update letter selection
         selectedLetterSpan.textContent = `Letter "${letter}"`;
@@ -1057,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update carat size and select variant
         if (targetVariant) {
             updateCaratSize(targetVariant.title);
-            selectVariant(targetVariant);
+            selectVariantWithQuantityCheck(targetVariant);
         }
         
         // Update size display and separator visibility
@@ -1108,7 +1164,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.appendChild(sizeName);
                 button.appendChild(sizeSpec);
                 
-                button.addEventListener('click', () => selectVariant(variant));
+                button.addEventListener('click', () => selectVariantWithQuantityCheck(variant));
                 sizeOptionsContainer.appendChild(button);
             });
         }
@@ -1197,6 +1253,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     loadProductData();
     
+    // Clear any error messages on page load
+    clearErrorMessage();
+    
     // Initialize Slick sliders
     $('#m-pendants-image-slider').slick({
         slidesToShow: 1,
@@ -1251,6 +1310,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentSlideElement = slick.$slides.eq(currentSlide);
         const letter = currentSlideElement.find('.m-pendants-letter-slide').data('letter');
         if (letter) {
+            // Clear error messages when letter changes
+            clearErrorMessage();
             selectProduct(letter);
             updateSelectionSummary(letter);
         }
@@ -1268,6 +1329,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const variantIdInput = document.getElementById('m-pendants-variant-id');
         if (variantIdInput && currentVariant) {
             variantIdInput.value = currentVariant.id;
+        }
+    }
+    
+    // Enhanced selectVariant function (simplified - using built-in error handling)
+    function selectVariantWithQuantityCheck(variant) {
+        currentVariant = variant;
+        
+        // Clear any error messages when variant changes
+        clearErrorMessage();
+        
+        // Continue with normal variant selection
+        selectVariant(variant);
+    }
+    
+    // Function to clear error messages
+    function clearErrorMessage() {
+        const errorWrapper = document.querySelector('.product-form__error-message-wrapper');
+        if (errorWrapper) {
+            errorWrapper.setAttribute('hidden', '');
         }
     }
     
