@@ -109,15 +109,21 @@
                 <ul class="m-pendants-features-list">
                     <li class="m-pendants-feature-item">
                         {% render 'icon-check-dark' %}
-                        Precision cut from <span id="m-pendants-carat-size">3</span> carat lab-grown diamond
+                        <div class="m-pendants-feature-item-text" >
+                            Precision cut from <span id="m-pendants-carat-size">3</span> carat lab-grown diamond
+                        </div>
                     </li>
                     <li class="m-pendants-feature-item">
                         {% render 'icon-check-dark' %}
-                        {{ section.settings.feature_2 }}
+                        <div class="m-pendants-feature-item-text" >
+                            {{ section.settings.feature_2 }}
+                        </div>
                     </li>
                     <li class="m-pendants-feature-item">
                         {% render 'icon-check-dark' %}
-                        {{ section.settings.feature_3 }}
+                        <div class="m-pendants-feature-item-text" >
+                            {{ section.settings.feature_3 }}
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -147,12 +153,15 @@
             
             <!-- Add to Cart -->
             <div class="m-pendants-add-to-cart">
-                <form action="/cart/add" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="" id="m-pendants-variant-id">
-                    <button type="submit" name="add" class="m-pendants-cart-btn" id="m-pendants-add-to-cart">
-                        {{ section.settings.add_to_cart_text }}
-                    </button>
-                </form>
+                <product-form data-section-id="{{ section.id }}">
+                    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form">
+                        <input type="hidden" name="id" value="" id="m-pendants-variant-id">
+                        <button type="submit" name="add" class="m-pendants-cart-btn" id="m-pendants-add-to-cart" aria-haspopup="dialog">
+                            <span>{{ section.settings.add_to_cart_text }}</span>
+                            {%- render 'loading-spinner' -%}
+                        </button>
+                    </form>
+                </product-form>
             </div>
             
             <!-- Our Promise -->
@@ -753,6 +762,15 @@
     background: #333333;
 }
 
+/* Loading spinner styling for pendants button */
+.m-pendants-cart-btn .loading__spinner {
+    margin-left: 8px;
+}
+
+.m-pendants-cart-btn .loading__spinner .path {
+    stroke: #FFF;
+}
+
 .m-pendants-promise {
     border-top: 0.8px solid #E5E7EB;
     margin: 0;
@@ -843,6 +861,7 @@
 
     m-pendants-letter-selector {
     }
+
     
     .m-pendants-product-details,
     .m-pendants-selection-summary {
@@ -958,6 +977,8 @@
     }
 }
 </style>
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1119,11 +1140,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Update add to cart button state
+        const buttonSpan = addToCartBtn.querySelector('span');
         if (variant.available) {
-            addToCartBtn.textContent = 'Add to Cart';
+            buttonSpan.textContent = 'Add to Cart';
             addToCartBtn.disabled = false;
         } else {
-            addToCartBtn.textContent = 'Sold Out';
+            buttonSpan.textContent = 'Sold Out';
             addToCartBtn.disabled = true;
         }
     }
