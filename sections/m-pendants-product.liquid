@@ -1019,14 +1019,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update size options
         updateSizeOptions();
         
-        // Update carat size for the first variant
-        if (currentProduct.variants.length > 0) {
-            updateCaratSize(currentProduct.variants[0].title);
+        // Try to maintain the same size selection if possible
+        let targetVariant = null;
+        if (currentVariant && currentProduct.variants.length > 1) {
+            // Look for a variant with the same title (size) as the current selection
+            targetVariant = currentProduct.variants.find(variant => 
+                variant.title.toLowerCase() === currentVariant.title.toLowerCase()
+            );
         }
         
-        // Select first available variant (or only variant for single variant products)
-        if (currentProduct.variants.length > 0) {
-            selectVariant(currentProduct.variants[0]);
+        // If no matching size found, use the first variant
+        if (!targetVariant && currentProduct.variants.length > 0) {
+            targetVariant = currentProduct.variants[0];
+        }
+        
+        // Update carat size and select variant
+        if (targetVariant) {
+            updateCaratSize(targetVariant.title);
+            selectVariant(targetVariant);
         }
         
         // Update size display and separator visibility
