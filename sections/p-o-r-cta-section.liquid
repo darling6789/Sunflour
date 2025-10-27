@@ -1,0 +1,350 @@
+<section class="CTA-section" aria-label="Call to Action Section">
+  <div class="group">
+    <div class="frame">
+      <article class="subscribe">
+        <h2 class="text-wrapper">Subscribe for Exclusive Offers</h2>
+        <p class="div">
+          Join our insider list to receive early access to special pricing, flash sales, and limited-time offers on
+          Pre-Owned Rolex watches and other fine timepieces.
+        </p>
+        <form class="input-action" aria-label="Email subscription form" novalidate>
+          <label for="email-input" class="visually-hidden">Email Address</label>
+          <input
+            class="input"
+            id="email-input"
+            name="email"
+            placeholder="Email Address"
+            type="email"
+            required
+            aria-required="true"
+            aria-describedby="email-error"
+          >
+          <button class="button" type="submit" aria-label="Subscribe to newsletter">
+            <span class="get-started">Subscribe</span>
+          </button>
+          <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
+        </form>
+      </article>
+      <article class="dream-watch">
+        <h2 class="text-wrapper">Find My Dream Watch</h2>
+        <p class="div">
+          Looking for a specific model or year? We will personally source your ideal timepiece based on your style,
+          preferences, and budget.
+        </p>
+        <button class="get-started-wrapper" type="button" aria-label="Start searching for your dream watch">
+          <span class="get-started">Start My Search</span>
+        </button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --body-medium-semibold-font-family: 'Montserrat', Helvetica;
+    --body-medium-semibold-font-weight: 600;
+    --body-medium-semibold-font-size: 16px;
+    --body-medium-semibold-letter-spacing: 0px;
+    --body-medium-semibold-line-height: 139.9999976158142%;
+    --body-medium-semibold-font-style: normal;
+    --variable-collection-notblack: rgba(21, 21, 21, 1);
+    --variable-collection-accent-darkest: rgba(77, 57, 66, 1);
+    --variable-collection-primary-accent: rgba(120, 104, 111, 1);
+    --variable-collection-primary-light: rgba(248, 246, 242, 1);
+  }
+  .CTA-section {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+    max-width: 100%;
+    width: 100%;
+    height: 469px;
+    position: relative;
+    background-color: #ffffff;
+  }
+  .CTA-section .group {
+    margin: auto;
+    position: relative;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    width: 1920px;
+    height: 469px;
+  }
+  .CTA-section .frame {
+    width: 1920px;
+    height: 469px;
+    display: flex;
+    gap: 60px;
+    background-color: #ffffff;
+  }
+  .CTA-section .subscribe {
+    display: flex;
+    margin-top: 78.1px;
+    width: 600px;
+    height: 313px;
+    position: relative;
+    margin-left: 330.5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 45px 38px;
+    background-color: var(--variable-collection-primary-light);
+    border-radius: 16px;
+  }
+  .CTA-section .text-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 370px;
+    height: 25px;
+    font-family: 'EB Garamond';
+    font-weight: 400;
+    color: var(--variable-collection-notblack);
+    font-size: 32px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  .CTA-section .div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 524px;
+    height: 84px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: var(--variable-collection-accent-darkest);
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  .CTA-section .input-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .CTA-section .input {
+    width: 328px;
+    padding: 16px;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    border: none;
+    margin-top: -1px;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    color: #4e4e4e;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+  .CTA-section .button {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    width: 183px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 32px;
+    position: relative;
+    background-color: var(--variable-collection-primary-accent);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .CTA-section .get-started {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+  .CTA-section .dream-watch {
+    display: flex;
+    margin-top: 78.1px;
+    width: 600px;
+    height: 313px;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 45px 38px;
+    background-color: #f2e7d8a6;
+    border-radius: 16px;
+  }
+  .CTA-section .get-started-wrapper {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    width: 183px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 32px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: var(--variable-collection-primary-accent);
+    border-radius: 4px;
+    overflow: hidden;
+  } /* Original CSS code should be injected here */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  .error-message {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    font-family: 'Montserrat';
+    font-size: 12px;
+    color: #d32f2f;
+    line-height: 1.4;
+  }
+  .input-action {
+    position: relative;
+  }
+  .input:focus {
+    outline: 2px solid var(--variable-collection-primary-accent);
+    outline-offset: 2px;
+  }
+  .input:invalid:not(:placeholder-shown) {
+    border: 2px solid #d32f2f;
+  }
+  .input:invalid:not(:placeholder-shown) ~ .error-message {
+    display: block;
+  }
+  .button:hover {
+    background-color: var(--variable-collection-accent-darkest);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .button:focus-visible {
+    outline: 2px solid var(--variable-collection-notblack);
+    outline-offset: 2px;
+  }
+  .button:active {
+    transform: scale(0.98);
+  }
+  .get-started-wrapper:hover {
+    background-color: var(--variable-collection-accent-darkest);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .get-started-wrapper:focus-visible {
+    outline: 2px solid var(--variable-collection-notblack);
+    outline-offset: 2px;
+  }
+  .get-started-wrapper:active {
+    transform: scale(0.98);
+  }
+  @media (max-width: 1920px) {
+    .CTA-section {
+      width: 100%;
+      max-width: 1920px;
+      margin: 0 auto;
+    }
+    .CTA-section .group {
+      width: 100%;
+    }
+    .CTA-section .frame {
+      width: 100%;
+      justify-content: center;
+      padding: 0 20px;
+    }
+  }
+  @media (max-width: 1280px) {
+    .CTA-section .frame {
+      gap: 40px;
+    }
+    .CTA-section .subscribe,
+    .CTA-section .dream-watch {
+      width: 500px;
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 1024px) {
+    .CTA-section {
+      height: auto;
+    }
+    .CTA-section .group {
+      height: auto;
+    }
+    .CTA-section .frame {
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 40px 20px;
+      height: auto;
+    }
+    .CTA-section .subscribe,
+    .CTA-section .dream-watch {
+      margin-top: 0;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+    }
+  }
+  @media (max-width: 640px) {
+    .CTA-section .text-wrapper {
+      width: 100%;
+      font-size: 24px;
+      height: auto;
+    }
+    .CTA-section .div {
+      width: 100%;
+      font-size: 16px;
+      height: auto;
+    }
+    .CTA-section .input-action {
+      flex-direction: column;
+      width: 100%;
+      gap: 12px;
+    }
+    .CTA-section .input,
+    .CTA-section .button {
+      width: 100%;
+    }
+    .CTA-section .get-started-wrapper {
+      width: 100%;
+    }
+  }
+</style>
+
+
+{% schema %}
+{
+  "name": "POR - CTA Section",
+  "class": "p-o-r-cta-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "POR - CTA Section"
+    }
+  ]
+}
+{% endschema %}
