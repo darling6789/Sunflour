@@ -22,21 +22,19 @@
     {% if section.settings.collection != blank %}
       {% assign product_index = 0 %}
       {% for product in section.settings.collection.products %}
-        {% if product.available %}
-          <div
-            class="product-card-wrapper"
-            data-product-index="{{ product_index }}"
-            data-dial-color="{% if product.metafields.custom.watch_dial_color %}{{ product.metafields.custom.watch_dial_color | downcase }}{% endif %}"
-            data-bezel-type="{% if product.metafields.custom.watch_bezel_type %}{{ product.metafields.custom.watch_bezel_type | downcase }}{% endif %}"
-            data-case-size="{% if product.metafields.custom.watch_case_size %}{{ product.metafields.custom.watch_case_size | downcase }}{% endif %}"
-            data-model="{% if product.metafields.custom.watch_vendor_sku %}{{ product.metafields.custom.watch_vendor_sku | downcase }}{% endif %}"
-            data-year="{% if product.metafields.custom.watch_year %}{{ product.metafields.custom.watch_year | downcase }}{% endif %}"
-            data-condition="{% if product.metafields.custom.watch_condition %}{% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}{% case raw_condition %}{% when 'unworn' %}unworn{% when 'unworn (nos)' %}unworn{% when 'as is' %}retail-ready{% when 'slider' %}excellent{% when 'mint' %}very-good{% when 'very good' %}very-good{% when 'pre-owned' %}good{% when 'good' %}good{% else %}{{ raw_condition }}{% endcase %}{% endif %}"
-          >
-            {% render 'product-card', product: product %}
-          </div>
-          {% assign product_index = product_index | plus: 1 %}
-        {% endif %}
+        <div
+          class="product-card-wrapper{% unless product.available %} product-card-unavailable{% endunless %}"
+          data-product-index="{{ product_index }}"
+          data-dial-color="{% if product.metafields.custom.watch_dial_color %}{{ product.metafields.custom.watch_dial_color | downcase }}{% endif %}"
+          data-bezel-type="{% if product.metafields.custom.watch_bezel_type %}{{ product.metafields.custom.watch_bezel_type | downcase }}{% endif %}"
+          data-case-size="{% if product.metafields.custom.watch_case_size %}{{ product.metafields.custom.watch_case_size | downcase }}{% endif %}"
+          data-model="{% if product.metafields.custom.watch_vendor_sku %}{{ product.metafields.custom.watch_vendor_sku | downcase }}{% endif %}"
+          data-year="{% if product.metafields.custom.watch_year %}{{ product.metafields.custom.watch_year | downcase }}{% endif %}"
+          data-condition="{% if product.metafields.custom.watch_condition %}{% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}{% case raw_condition %}{% when 'unworn' %}unworn{% when 'unworn (nos)' %}unworn{% when 'as is' %}retail-ready{% when 'slider' %}excellent{% when 'mint' %}very-good{% when 'very good' %}very-good{% when 'pre-owned' %}good{% when 'good' %}good{% else %}{{ raw_condition }}{% endcase %}{% endif %}"
+        >
+          {% render 'product-card', product: product %}
+        </div>
+        {% assign product_index = product_index | plus: 1 %}
       {% endfor %}
     {% endif %}
   </div>
@@ -545,6 +543,58 @@
     color: #f5f5f5;
   }
 
+  /* Out of Stock Product Styling */
+  .product-card-wrapper.product-card-unavailable .product-details {
+    background: rgba(26, 26, 26, 0.08);
+  }
+
+  {% comment %} .product-card-wrapper.product-card-unavailable .product-title-text,
+  .product-card-wrapper.product-card-unavailable .spec-detail,
+  .product-card-wrapper.product-card-unavailable .spec-label,
+  .product-card-wrapper.product-card-unavailable .spec-value,
+  .product-card-wrapper.product-card-unavailable .product-price,
+  .product-card-wrapper.product-card-unavailable .divider {
+    color: #ffffff;
+  } {% endcomment %}
+
+  .product-card-wrapper.product-card-unavailable .price-action-wrapper {
+    width: 100%;
+  }
+
+  .btn-notify-me {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 7.15px 19.66px;
+    position: relative;
+    flex: 1;
+    width: 100%;
+    background-color: transparent;
+    border: 1.5px solid #4D3942;
+    border-radius: 3.57px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    color: #4D3942 !Important;
+    font-size: 12.5px;
+    letter-spacing: 0;
+    line-height: 17.9px;
+    white-space: nowrap;
+  }
+
+  .btn-notify-me:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-notify-me .btn-text {
+    color: #4D3942 !Important;
+  }
+
   /* Responsive Design - Container, Grid, Header & Pagination Only */
   @media (min-width: 1200px) {
     .facets-container.facets-container-drawer.scroll-trigger.animate--fade-in {
@@ -878,6 +928,18 @@
           }
         });
       }
+    });
+  })();
+
+  // Notify Me Button Handler
+  (function () {
+    const notifyMeButtons = document.querySelectorAll('[data-notify-me-trigger]');
+    notifyMeButtons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        alert('Thank you for your interest! We will notify you when this item is back in stock.');
+      });
     });
   })();
 </script>

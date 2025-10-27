@@ -565,34 +565,18 @@
 
     // ==================== AGGRESSIVE SCROLL UNLOCK ====================
     function aggressiveScrollUnlock() {
-      console.log('🔓 START aggressiveScrollUnlock');
-
       // CRITICAL: Remove overflow-hidden-mobile class (THE MAIN CULPRIT)
       if (document.body.classList.contains('overflow-hidden-mobile')) {
         document.body.classList.remove('overflow-hidden-mobile');
-        console.log('✅ Removed overflow-hidden-mobile from body');
       }
-
-      // Remove all variants
-      document.body.classList.remove('overflow-hidden-tablet');
-      document.body.classList.remove('overflow-hidden-desktop');
-      document.body.classList.remove('overflow-hidden');
 
       // Remove ALL overflow-hidden classes from body (double check)
       const bodyClasses = Array.from(document.body.classList);
       bodyClasses.forEach((className) => {
         if (className.includes('overflow-hidden')) {
           document.body.classList.remove(className);
-          console.log('✅ Removed additional class:', className);
         }
       });
-
-      // Verify it's actually removed
-      if (!document.body.classList.contains('overflow-hidden-mobile')) {
-        console.log('✅ CONFIRMED: overflow-hidden-mobile is gone');
-      } else {
-        console.error('❌ ERROR: overflow-hidden-mobile is STILL on body!');
-      }
 
       // Remove inline overflow styles
       document.body.style.overflow = '';
@@ -608,22 +592,14 @@
       });
 
       // Remove overflow:hidden from ALL elements on page
-      let elementsFixed = 0;
       document.querySelectorAll('*').forEach((el) => {
         const style = window.getComputedStyle(el);
         if (style.overflow === 'hidden' || style.overflowY === 'hidden' || style.overflowX === 'hidden') {
           el.style.overflow = '';
           el.style.overflowX = '';
           el.style.overflowY = '';
-          elementsFixed++;
         }
       });
-
-      if (elementsFixed > 0) {
-        console.log(`✅ Removed overflow:hidden from ${elementsFixed} elements`);
-      }
-
-      console.log('🔓 END aggressiveScrollUnlock - Scroll is now ENABLED');
     }
 
     // ==================== APPLY BUTTON LISTENERS ====================
@@ -631,39 +607,30 @@
       // Main view Apply button
       document.addEventListener('click', function(e) {
         if (e.target && e.target.hasAttribute('data-facets-apply-close')) {
-          console.log('🔥 MAIN APPLY BUTTON CLICKED');
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
 
-          logInfo('Main Apply button clicked - applying filters');
-          console.log('Before applyFilters - overflow-hidden-mobile:', document.body.classList.contains('overflow-hidden-mobile'));
-
           // Apply the filters
           applyFilters();
-          console.log('After applyFilters - overflow-hidden-mobile:', document.body.classList.contains('overflow-hidden-mobile'));
 
           // Close the drawer
           const menuDrawer = document.querySelector('menu-drawer.mobile-facets__wrapper');
           if (menuDrawer) {
             const summary = menuDrawer.querySelector('details[open] > summary');
             if (summary) {
-              console.log('Closing drawer...');
               summary.click();
             }
           }
 
           // Unlock scroll IMMEDIATELY and also after drawer closes
-          console.log('Unlocking scroll immediately');
           aggressiveScrollUnlock();
 
           setTimeout(() => {
-            console.log('Unlocking scroll again after 100ms');
             aggressiveScrollUnlock();
           }, 100);
 
           setTimeout(() => {
-            console.log('Final scroll unlock check at 300ms');
             aggressiveScrollUnlock();
           }, 300);
 
@@ -674,33 +641,24 @@
       // Detail view Apply button
       document.addEventListener('click', function(e) {
         if (e.target && e.target.hasAttribute('data-facets-detail-apply')) {
-          console.log('🔥 DETAIL APPLY BUTTON CLICKED');
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
 
-          logInfo('Detail Apply button clicked - applying filters');
-          console.log('Before applyFilters - overflow-hidden-mobile:', document.body.classList.contains('overflow-hidden-mobile'));
-
           // Apply filters
           applyFilters();
-          console.log('After applyFilters - overflow-hidden-mobile:', document.body.classList.contains('overflow-hidden-mobile'));
 
           // Go back to main view
           showMainFilters();
-          console.log('After showMainFilters - overflow-hidden-mobile:', document.body.classList.contains('overflow-hidden-mobile'));
 
           // Unlock scroll IMMEDIATELY and also after view changes
-          console.log('Unlocking scroll immediately');
           aggressiveScrollUnlock();
 
           setTimeout(() => {
-            console.log('Unlocking scroll again after 100ms');
             aggressiveScrollUnlock();
           }, 100);
 
           setTimeout(() => {
-            console.log('Final scroll unlock check at 300ms');
             aggressiveScrollUnlock();
           }, 300);
 
