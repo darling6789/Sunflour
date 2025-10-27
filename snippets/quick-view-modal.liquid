@@ -109,11 +109,7 @@
 
                   <!-- Financing Info -->
                   <div class="quickview-financing">
-                    <p class="quickview-financing-text">Starting at <span class="quickview-financing-amount">$1,201.25/mo</span> or 0% APR with</p>
-                    <div class="quickview-affirm-logo"></div>
-                    <p class="quickview-financing-link">
-                      <a href="javascript:void(0)" target="_blank" rel="noopener noreferrer">See if you qualify</a>
-                    </p>
+                    <p class="affirm-as-low-as" data-page-type="product" data-amount="0" style="margin: 0;"></p>
                   </div>
                 </div>
 
@@ -660,48 +656,11 @@
     width: 100%;
   }
 
-  .quickview-financing-text {
-    margin: 0;
+  .quickview-financing .affirm-as-low-as {
     font-family: var(--font-montserrat);
     font-size: clamp(11px, 2.5vw, 13px);
-    font-weight: 400;
-    color: var(--color-text-primary);
-    opacity: 0.7;
-    line-height: 1.5;
-  }
-
-  .quickview-financing-amount {
-    font-weight: 600;
-  }
-
-  .quickview-affirm-logo {
-    width: clamp(40px, 12vw, 52px);
-    height: auto;
-    aspect-ratio: 52.41 / 22.12;
-    background-image: url(./img/frame-183318.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-
-  .quickview-financing-link {
-    margin: 0;
-    font-family: var(--font-montserrat);
-    font-size: clamp(11px, 2.5vw, 13px);
-    font-weight: 400;
     color: var(--color-text-primary);
     line-height: 1.5;
-  }
-
-  .quickview-financing-link a {
-    color: inherit;
-    text-decoration: underline;
-    cursor: pointer;
-    transition: color 200ms ease;
-  }
-
-  .quickview-financing-link a:hover,
-  .quickview-financing-link a:focus-visible {
-    color: var(--color-accent-primary);
   }
 
   /* ============================================
@@ -1348,6 +1307,7 @@
         this.descriptionEl = document.querySelector('.js-quickview-description');
         this.addToCartBtn = document.querySelector('[data-quickview-add-to-cart]');
         this.buyNowBtn = document.querySelector('[data-quickview-buy-now]');
+        this.affirm_widget = document.querySelector('.quickview-financing .affirm-as-low-as');
 
         // Error message elements
         this.errorMessageWrapper = document.querySelector('.quickview-error-message-wrapper');
@@ -1518,7 +1478,15 @@
         if (this.yearEl) this.yearEl.textContent = productData.metafields.year || '—';
         if (this.conditionEl) this.conditionEl.textContent = productData.metafields.condition || '—';
 
-        if (this.priceEl) this.priceEl.textContent = productData.price;
+        // Format price for display: convert cents to dollars with comma separator
+        const priceInCents = parseInt(productData.price) || 0;
+        const priceInDollars = (priceInCents / 100).toFixed(2);
+        const formattedPrice = new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(Math.floor(priceInDollars));
+
+        if (this.priceEl) this.priceEl.textContent = formattedPrice;
 
         if (productData.featured_image.src && this.imageEl) {
           this.imageEl.src = productData.featured_image.src;
@@ -1526,6 +1494,29 @@
         }
 
         if (this.buyNowBtn) this.buyNowBtn.href = productData.url;
+
+        // Update Affirm widget with dynamic price
+        // Affirm requires recreating the widget element for it to update with new price
+        if (this.affirm_widget) {
+          const container = this.affirm_widget.parentElement;
+          if (container) {
+            // Create new widget element with updated price (use raw cents value for Affirm)
+            const newWidget = document.createElement('p');
+            newWidget.className = 'affirm-as-low-as';
+            newWidget.setAttribute('data-page-type', 'product');
+            newWidget.setAttribute('data-amount', productData.price);
+            newWidget.style.margin = '0';
+
+            // Replace old widget with new one
+            container.replaceChild(newWidget, this.affirm_widget);
+            this.affirm_widget = newWidget;
+
+            // Refresh Affirm UI to render the new widget
+            if (window.affirm && window.affirm.ui && window.affirm.ui.refresh) {
+              window.affirm.ui.refresh();
+            }
+          }
+        }
       }
 
       async fetchProductDescriptionAndImages(productHandle, featuredImageSrc) {

@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:shopify.dev)",
       "WebFetch(domain:community.shopify.com)",
-      "Read(//c/Users/Daniel-PC/Documents/Dev Builds/shopify/Bonto/**)"
+      "Read(//c/Users/Daniel-PC/Documents/Dev Builds/shopify/Bonto/**)",
+      "WebFetch(domain:docs.affirm.com)"
     ],
     "deny": [],
     "ask": []

@@ -15,7 +15,7 @@
         data-product-id="{{ product.id }}"
         data-product-handle="{{ product.handle }}"
         data-product-title="{{ product.title | remove: 'Pre-Owned Rolex ' | escape }}"
-        data-product-price="{{ product.price | money_without_currency | remove: '.00' }}"
+        data-product-price="{{ product.price }}"
         data-product-featured-image="{{ product.featured_image | image_url: width: 620 }}"
         data-product-dial-color="{{ product.metafields.custom.watch_dial_color | escape }}"
         data-product-bezel-type="{{ product.metafields.custom.watch_bezel_type | escape }}"
