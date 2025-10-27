@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "main": {
       "type": "main-page",
@@ -47,7 +47,7 @@
         "luxe_description": "10mm width pendant laser cut from a 5-carat lab-grown diamond. A bold statement piece that commands attention with extraordinary brilliance.",
         "luxe_label": "Luxe (Left)",
         "classic_label": "Classic (Right)",
-        "comparison_image_1": "shopify://shop_images/Diamond_Initial_Pendant_Sizing-min.png",
+        "comparison_image_1": "shopify://shop_images/H-diamond-pendant-size-textfree.png",
         "comparison_image_2": "shopify://shop_images/Diamond_Initial_Pendant_Sizing_2-min.png"
       }
     },
