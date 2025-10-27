@@ -107,6 +107,30 @@
     let allProducts = [];
     let currentDetailFilter = null; // Track which filter detail view is showing
 
+    // ==================== SHARED FILTER STATE FOR PAGINATION ====================
+    // Expose filter state globally so pagination can access it
+    window.customFilterState = {
+      selectedFilters: {},
+      updateFromFilters: function() {
+        this.selectedFilters = JSON.parse(JSON.stringify(selectedFilters));
+      },
+      hasActiveFilters: function() {
+        return Object.keys(this.selectedFilters).some(key => this.selectedFilters[key].length > 0);
+      }
+    };
+
+    // Dispatch custom event when filters change
+    function dispatchFilterChangeEvent() {
+      window.customFilterState.updateFromFilters();
+      const event = new CustomEvent('customFiltersChanged', {
+        detail: {
+          selectedFilters: window.customFilterState.selectedFilters,
+          filterConfig: filterConfig
+        }
+      });
+      document.dispatchEvent(event);
+    }
+
     // ==================== INITIALIZATION ====================
     let initialized = false; // Guard against multiple initializations
 
@@ -157,7 +181,7 @@
         attachAllListeners();
 
         // Update initial product count
-        updateProductCount();
+        updateProductCount(allProducts.length);
 
         logInfo('Filter initialization complete');
       } catch (error) {
@@ -461,9 +485,8 @@
 
       logInfo('Filters applied', selectedFilters);
 
-      // Show/hide products with AND logic, respecting pagination
+      // Show/hide ALL products based on filters (pagination will handle display)
       let visibleCount = 0;
-      let paginatedVisibleCount = 0;
 
       allProducts.forEach(card => {
         let shouldShow = true;
@@ -478,35 +501,30 @@
           }
         });
 
-        // CRITICAL: Respect pagination - only show first 12 products
-        // Products beyond index 12 should remain hidden to respect the pagination limit
-        const productIndex = parseInt(card.getAttribute('data-product-index')) || 0;
-        const isPaginationHidden = productIndex >= 12;
-
-        if (shouldShow && !isPaginationHidden) {
+        if (shouldShow) {
           card.style.display = '';
-          paginatedVisibleCount++;
           visibleCount++;
         } else {
           card.style.display = 'none';
-          if (shouldShow) visibleCount++;
         }
       });
 
-      logInfo('Filters applied with pagination respect', {
+      logInfo('Filters applied', {
         selectedFilters,
-        visibleCount,
-        paginatedVisibleCount
+        visibleCount
       });
 
-      updateProductCount(paginatedVisibleCount, visibleCount);
+      updateProductCount(visibleCount);
+
+      // Dispatch event so pagination knows filters changed
+      dispatchFilterChangeEvent();
     }
 
-    function updateProductCount(visible, total) {
+    function updateProductCount(visible) {
       const countEl = document.getElementById('filter-product-count');
       if (countEl) {
-        if (visible !== undefined && total !== undefined) {
-          countEl.textContent = `${visible} of ${total} products`;
+        if (visible !== undefined) {
+          countEl.textContent = `${visible} of ${allProducts.length} products`;
         } else {
           const visibleCards = Array.from(allProducts).filter(card => card.style.display !== 'none').length;
           countEl.textContent = `${visibleCards} of ${allProducts.length} products`;
