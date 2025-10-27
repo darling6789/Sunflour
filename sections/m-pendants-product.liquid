@@ -147,7 +147,18 @@
                     <span class="m-pendants-original-price" id="m-pendants-original-price">$2,499 USD</span>
                 </div>
                 <div class="m-pendants-financing">
-                    <p class="affirm-as-low-as" data-page-type="product" data-amount="{{product.price}}"></p>
+                    {% comment %} Render Affirm elements for both variants initially {% endcomment %}
+                    {% assign first_product = collections[section.settings.collection].products | first %}
+                    {% if first_product %}
+                        {% for variant in first_product.variants %}
+                            <p class="affirm-as-low-as" 
+                               data-page-type="product" 
+                               data-amount="{{ variant.price }}" 
+                               data-variant-title="{{ variant.title }}"
+                               style="display: none;">
+                            </p>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             
@@ -1220,6 +1231,19 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             originalPriceSpan.style.display = 'none';
         }
+        
+        // Show only the Affirm element for the current variant (match by title since all products have same variant titles)
+        const affirmContainer = document.querySelector('.m-pendants-financing');
+        if (affirmContainer && currentVariant) {
+            const affirmElements = affirmContainer.querySelectorAll('.affirm-as-low-as');
+            affirmElements.forEach(el => {
+                if (el.dataset.variantTitle && el.dataset.variantTitle.toLowerCase() === currentVariant.title.toLowerCase()) {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        }
     }
     
     // Update carat size in features based on variant
@@ -1409,12 +1433,6 @@ document.addEventListener('DOMContentLoaded', function() {
             "id": "selection_title",
             "label": "Selection Title",
             "default": "YOUR SELECTION"
-        },
-        {
-            "type": "text",
-            "id": "financing_text",
-            "label": "Financing Text",
-            "default": "Starting at $87/mo or 0% APR with affirm. See if you qualify"
         },
         {
             "type": "text",
