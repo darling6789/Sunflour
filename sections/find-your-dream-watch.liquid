@@ -98,6 +98,79 @@
     font-weight: 500;
     line-height: 110%; /* 41.25px */
     margin: 0;
+    padding: 0 20px;
+  }
+
+  /* Tablet Optimization (768px and below) */
+  @media (max-width: 768px) {
+    .f-w-d-w-wrapper {
+      padding: 50px 20px;
+      gap: 30px;
+    }
+
+    .f-w-d-w-wrapper h2 {
+      font-size: 28px;
+      line-height: 110%;
+    }
+
+    .f-w-d-w-trust-badges {
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .f-w-d-w-trust-badge {
+      width: 150px;
+      flex-shrink: 0;
+    }
+
+    .f-w-d-w-trust-badge-content h3 {
+      font-size: 13px;
+    }
+
+    .f-w-d-w-trust-badge-content p {
+      font-size: 11px;
+    }
+  }
+
+  /* Mobile Optimization (480px and below) */
+  @media (max-width: 480px) {
+    .f-w-d-w-wrapper {
+      padding: 40px 16px;
+      gap: 24px;
+    }
+
+    .f-w-d-w-wrapper h2 {
+      font-size: 24px;
+      line-height: 110%;
+    }
+
+    .f-w-d-w-trust-badges {
+      max-width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .f-w-d-w-trust-badge {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .f-w-d-w-trust-badge-image {
+      width: 50px;
+      height: 57px;
+    }
+
+    .f-w-d-w-trust-badge-content h3 {
+      font-size: 12px;
+    }
+
+    .f-w-d-w-trust-badge-content p {
+      font-size: 10px;
+      line-height: 130%;
+    }
   }
 </style>
 {% schema %}
