@@ -7,311 +7,310 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
-    "sections": {
-      "m_slideshow_2_Emq8JH": {
-        "type": "m-slideshow-2",
-        "blocks": {
-          "hero_composed_NktaeL": {
-            "type": "hero_composed",
-            "disabled": true,
-            "settings": {
-              "image": "shopify://shop_images/edited-pendant-worn-min.png",
-              "text1": "We're Online",
-              "text2": "Celebrate with",
-              "text3": "15% Off",
-              "text4": "Jewelry Sitewide",
-              "text5": "this week only",
-              "btn_text_1": "Shop Bridal",
-              "btn_link_1": "shopify://collections/bands",
-              "btn_text_2": "Shop Fine Jewelry",
-              "btn_link_2": "shopify://collections/fine-jewelry",
-              "corner_text_1": "Launch Special-",
-              "corner_text_2": "Diamond Initial Pendant",
-              "corner_price": "$2,999",
-              "corner_compared_price": "(reg. $4,999)",
-              "corner_color": "#ffffff",
-              "corner_color_mob": "#151515"
-            }
-          },
-          "slide_iVBpRp": {
-            "type": "slide",
-            "disabled": true,
-            "settings": {
-              "image": "shopify://shop_images/1800x750_centrix-jpeg.webp",
-              "image_overlay_opacity": 0,
-              "heading": "Spark of True Love & Bridge to Eternity",
-              "heading_size": "h1",
-              "subheading": "The Centrix Open Heart tells a Rado love story to match the most evocative moods that the brand has ever created.",
-              "button_label": "Shop Centrix Open Heart",
-              "link": "shopify://collections/rado-centrix-open-heart",
-              "button_style_secondary": false,
-              "show_text_box": false,
-              "box_align": "middle-right",
-              "text_alignment": "center",
-              "text_alignment_mobile": "center",
-              "back_color": "#ffffff",
-              "text_color": "#151515",
-              "btn_color": "#78686f",
-              "btn_text_color": "#ffffff",
-              "color_scheme": ""
-            }
-          },
-          "initial_pendants_yPceXE": {
-            "type": "initial_pendants",
-            "settings": {
-              "image": "shopify://shop_images/edited-pendant-worn_1_-min.png",
-              "video": "shopify://files/videos/U.MP4.mp4",
-              "heading": "Diamond initial pendants",
-              "subheading": "Your Initial, Redefined in Diamond",
-              "btn_text": "Find Your Initial",
-              "btn_link": "shopify://pages/initial-pendants",
-              "start_price": "1,499",
-              "reg_price": "2,499",
-              "heading_color": "#78686f",
-              "subheading_color": "#4d3942",
-              "btn_text_color": "#f8f6f2",
-              "btn_bg_color": "#4d3942",
-              "start_price_color": "#4d3942",
-              "reg_price_color": "#4d3942"
-            }
+{
+  "sections": {
+    "m_slideshow_2_Emq8JH": {
+      "type": "m-slideshow-2",
+      "blocks": {
+        "hero_composed_NktaeL": {
+          "type": "hero_composed",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/edited-pendant-worn-min.png",
+            "text1": "We're Online",
+            "text2": "Celebrate with",
+            "text3": "15% Off",
+            "text4": "Jewelry Sitewide",
+            "text5": "this week only",
+            "btn_text_1": "Shop Bridal",
+            "btn_link_1": "shopify://collections/bands",
+            "btn_text_2": "Shop Fine Jewelry",
+            "btn_link_2": "shopify://collections/fine-jewelry",
+            "corner_text_1": "Launch Special-",
+            "corner_text_2": "Diamond Initial Pendant",
+            "corner_price": "$2,999",
+            "corner_compared_price": "(reg. $4,999)",
+            "corner_color": "#ffffff",
+            "corner_color_mob": "#151515"
           }
         },
-        "block_order": [
-          "hero_composed_NktaeL",
-          "slide_iVBpRp",
-          "initial_pendants_yPceXE"
-        ],
-        "name": "Custom slideshow 2",
-        "settings": {
-          "layout": "full_bleed",
-          "slide_height": "small",
-          "slider_visual": "dots",
-          "auto_rotate": true,
-          "change_slides_speed": 9,
-          "image_behavior": "none",
-          "show_text_below": true,
-          "accessibility_info": "Slideshow about our brand"
-        }
-      },
-      "m_collection_list_HdxhjL": {
-        "type": "m-collection-list",
-        "blocks": {
-          "collection_pUwzPj": {
-            "type": "collection",
-            "settings": {
-              "collection": "fine-jewelry",
-              "image": "shopify://shop_images/build_your_engagement_ring-min.png",
-              "title": "Custom Ring Design",
-              "link": "shopify://pages/custom-ring-builder"
-            }
-          },
-          "collection_qMRUhM": {
-            "type": "collection",
-            "settings": {
-              "collection": "engagement",
-              "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_1_-min.png",
-              "title": "",
-              "link": ""
-            }
-          },
-          "collection_4TRcYD": {
-            "type": "collection",
-            "settings": {
-              "collection": "luxury-timepieces",
-              "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_2_-min.png",
-              "title": "",
-              "link": ""
-            }
-          },
-          "collection_DxEd9D": {
-            "type": "collection",
-            "settings": {
-              "collection": "bands",
-              "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_3_-min.png",
-              "title": "",
-              "link": ""
-            }
-          },
-          "collection_NwyrqX": {
-            "type": "collection",
-            "settings": {
-              "collection": "rings",
-              "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_4_-min.png",
-              "title": "",
-              "link": ""
-            }
-          },
-          "collection_z46GfG": {
-            "type": "collection",
-            "settings": {
-              "collection": "bracelets",
-              "image": "shopify://shop_images/6ee94ca5f34ca82c571794975f3d26c4177e6ce7-min.png",
-              "title": "",
-              "link": ""
-            }
-          },
-          "collection_W94Lz6": {
-            "type": "collection",
-            "settings": {
-              "collection": "earrings",
-              "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX-min.png",
-              "title": "",
-              "link": ""
-            }
-          },
-          "collection_EJt3Tt": {
-            "type": "collection",
-            "settings": {
-              "collection": "necklaces-pendants",
-              "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_1_-min_428fc0a0-b9fb-4621-bba6-8082d7d6c116.png",
-              "title": "",
-              "link": ""
-            }
+        "slide_iVBpRp": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/1800x750_centrix-jpeg.webp",
+            "image_overlay_opacity": 0,
+            "heading": "Spark of True Love & Bridge to Eternity",
+            "heading_size": "h1",
+            "subheading": "The Centrix Open Heart tells a Rado love story to match the most evocative moods that the brand has ever created.",
+            "button_label": "Shop Centrix Open Heart",
+            "link": "shopify://collections/rado-centrix-open-heart",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-right",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "back_color": "#ffffff",
+            "text_color": "#151515",
+            "btn_color": "#78686f",
+            "btn_text_color": "#ffffff",
+            "color_scheme": ""
           }
         },
-        "block_order": [
-          "collection_pUwzPj",
-          "collection_qMRUhM",
-          "collection_4TRcYD",
-          "collection_DxEd9D",
-          "collection_NwyrqX",
-          "collection_z46GfG",
-          "collection_W94Lz6",
-          "collection_EJt3Tt"
-        ],
-        "name": "Custom collection list",
-        "settings": {
-          "heading": "Shop by Category",
-          "description": "Discover the dazzling jewelry options we carry by category."
-        }
-      },
-      "m_image_background_XtgQgy": {
-        "type": "m-image-background",
-        "name": "Custom image background",
-        "settings": {
-          "image": "shopify://shop_images/Jeweler_sCarePlanImage_1-min.png",
-          "heading": "Design Your Forever",
-          "description": "At Marc Robinson, every ring begins with your vision. Our Custom Ring Builder transforms your dream into a masterpiece with unparalleled ease. Choose from premium materials, dazzling diamonds, and exquisite gemstones, all brought together by our master craftsmen.",
-          "btn_text": "Design Your Custom Ring",
-          "btn_link": "shopify://pages/custom-ring-builder"
-        }
-      },
-      "m_featured_collection_1_gdb8ee": {
-        "type": "m-featured-collection-1",
-        "name": "Custom collection 1",
-        "settings": {
-          "collection": "bracelets",
-          "heading": "Shop Bracelets",
-          "back_color": "",
-          "collection_link_text": "",
-          "collection_link": ""
-        }
-      },
-      "m_featured_collection_2_AMxdBk": {
-        "type": "m-featured-collection-2",
-        "name": "Custom collection 2",
-        "settings": {
-          "collection": "rado",
-          "image": "shopify://shop_images/Rado1-432934756_822310889933516_8492968429999032239_n-jpeg.webp",
-          "image_left": true,
-          "heading": "Shop Rado Luxury Timepieces",
-          "back_color": "",
-          "collection_link_text": "",
-          "collection_link": ""
-        }
-      },
-      "1755802282dfe1f035": {
-        "type": "apps",
-        "blocks": {
-          "appio_google_reviews_carousel1_mexVKr": {
-            "type": "shopify://apps/appio-google-reviews/blocks/carousel1/25437a0d-2feb-4f5f-b07d-e313afa21656",
-            "settings": {
-              "title_type": "h2",
-              "show_callout_layout": false,
-              "card_background_color": "#ffffff",
-              "card_text_color": "#151515",
-              "star_color": "#e1b648",
-              "max_line_review_content": 3,
-              "auto_scroll": true,
-              "slide_delay": 3,
-              "show_navigation_bar": false,
-              "show_reviewer_avatar": true,
-              "show_reviewer_name_detail": true,
-              "show_review_date": false,
-              "show_verified_badge": false,
-              "show_review_photos": false,
-              "show_liked_review": false,
-              "show_business_summary": false,
-              "show_business_summary_rating": true,
-              "show_business_summary_total_review": true,
-              "show_business_summary_summary_rating": true,
-              "business_summary_color": "#3a454f",
-              "show_leave_review_button": false,
-              "button_color": "#ffffff",
-              "button_background": "#4285f4"
-            }
+        "initial_pendants_yPceXE": {
+          "type": "initial_pendants",
+          "settings": {
+            "image": "shopify://shop_images/edited-pendant-worn_1_-min.png",
+            "video": "shopify://files/videos/U.MP4.mp4",
+            "heading": "Diamond initial pendants",
+            "subheading": "Your Initial, Redefined in Diamond",
+            "btn_text": "Find Your Initial",
+            "btn_link": "shopify://pages/initial-pendants",
+            "start_price": "$1,499",
+            "reg_price": "$2,499",
+            "heading_color": "#78686f",
+            "subheading_color": "#4d3942",
+            "btn_text_color": "#f8f6f2",
+            "btn_bg_color": "#4d3942",
+            "start_price_color": "#4d3942",
+            "reg_price_color": "#4d3942"
           }
-        },
-        "block_order": [
-          "appio_google_reviews_carousel1_mexVKr"
-        ],
-        "custom_css": [],
-        "settings": {
-          "include_margins": true
         }
       },
-      "m_image_background_GtVPfT": {
-        "type": "m-image-background",
-        "disabled": true,
-        "name": "Custom image background",
-        "settings": {
-          "image": "shopify://shop_images/Jeweler_sCarePlanImage_1-min_1.png",
-          "heading": "Marc Robinson Jewelers Care Plan",
-          "description": "Purchasing your jewelry at Marc Robinson Jewelers means\nyou have the highest quality of care. Explore all the details of\nour jewelry care plan to see why we're the best choice.",
-          "btn_text": "Explore the Care Plan",
-          "btn_link": "shopify://collections/fine-jewelry"
-        }
-      },
-      "1755802285ad7b85d7": {
-        "type": "apps",
-        "blocks": {
-          "instafeed_app_block_7PThBz": {
-            "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
-            "settings": {
-              "title": "",
-              "title_color": "",
-              "title_size_v2": 0,
-              "alignment": "center",
-              "instafeed_margin_top": 0,
-              "instafeed_margin_bottom": 0,
-              "instafeed_margin_sides": 0,
-              "show_instagram_link": false,
-              "link_alignment": "left",
-              "link_color": "#000000",
-              "background_color": "",
-              "feed_id": "",
-              "html_area": ""
-            }
-          }
-        },
-        "block_order": [
-          "instafeed_app_block_7PThBz"
-        ],
-        "settings": {
-          "include_margins": true
-        }
+      "block_order": [
+        "hero_composed_NktaeL",
+        "slide_iVBpRp",
+        "initial_pendants_yPceXE"
+      ],
+      "name": "Custom slideshow 2",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "small",
+        "slider_visual": "dots",
+        "auto_rotate": true,
+        "change_slides_speed": 9,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
       }
     },
-    "order": [
-      "m_slideshow_2_Emq8JH",
-      "m_collection_list_HdxhjL",
-      "m_image_background_XtgQgy",
-      "m_featured_collection_1_gdb8ee",
-      "m_featured_collection_2_AMxdBk",
-      "1755802282dfe1f035",
-      "m_image_background_GtVPfT",
-      "1755802285ad7b85d7"
-    ]
-  }
-  
+    "m_collection_list_HdxhjL": {
+      "type": "m-collection-list",
+      "blocks": {
+        "collection_pUwzPj": {
+          "type": "collection",
+          "settings": {
+            "collection": "fine-jewelry",
+            "image": "shopify://shop_images/build_your_engagement_ring-min.png",
+            "title": "Custom Ring Design",
+            "link": "shopify://pages/custom-ring-builder"
+          }
+        },
+        "collection_qMRUhM": {
+          "type": "collection",
+          "settings": {
+            "collection": "engagement",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_1_-min.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_4TRcYD": {
+          "type": "collection",
+          "settings": {
+            "collection": "luxury-timepieces",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_2_-min.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_DxEd9D": {
+          "type": "collection",
+          "settings": {
+            "collection": "bands",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_3_-min.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_NwyrqX": {
+          "type": "collection",
+          "settings": {
+            "collection": "rings",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_4_-min.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_z46GfG": {
+          "type": "collection",
+          "settings": {
+            "collection": "bracelets",
+            "image": "shopify://shop_images/6ee94ca5f34ca82c571794975f3d26c4177e6ce7-min.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_W94Lz6": {
+          "type": "collection",
+          "settings": {
+            "collection": "earrings",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX-min.png",
+            "title": "",
+            "link": ""
+          }
+        },
+        "collection_EJt3Tt": {
+          "type": "collection",
+          "settings": {
+            "collection": "necklaces-pendants",
+            "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_1_-min_428fc0a0-b9fb-4621-bba6-8082d7d6c116.png",
+            "title": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_pUwzPj",
+        "collection_qMRUhM",
+        "collection_4TRcYD",
+        "collection_DxEd9D",
+        "collection_NwyrqX",
+        "collection_z46GfG",
+        "collection_W94Lz6",
+        "collection_EJt3Tt"
+      ],
+      "name": "Custom collection list",
+      "settings": {
+        "heading": "Shop by Category",
+        "description": "Discover the dazzling jewelry options we carry by category."
+      }
+    },
+    "m_image_background_XtgQgy": {
+      "type": "m-image-background",
+      "name": "Custom image background",
+      "settings": {
+        "image": "shopify://shop_images/Jeweler_sCarePlanImage_1-min.png",
+        "heading": "Design Your Forever",
+        "description": "At Marc Robinson, every ring begins with your vision. Our Custom Ring Builder transforms your dream into a masterpiece with unparalleled ease. Choose from premium materials, dazzling diamonds, and exquisite gemstones, all brought together by our master craftsmen.",
+        "btn_text": "Design Your Custom Ring",
+        "btn_link": "shopify://pages/custom-ring-builder"
+      }
+    },
+    "m_featured_collection_1_gdb8ee": {
+      "type": "m-featured-collection-1",
+      "name": "Custom collection 1",
+      "settings": {
+        "collection": "bracelets",
+        "heading": "Shop Bracelets",
+        "back_color": "",
+        "collection_link_text": "",
+        "collection_link": ""
+      }
+    },
+    "m_featured_collection_2_AMxdBk": {
+      "type": "m-featured-collection-2",
+      "name": "Custom collection 2",
+      "settings": {
+        "collection": "rado",
+        "image": "shopify://shop_images/Rado1-432934756_822310889933516_8492968429999032239_n-jpeg.webp",
+        "image_left": true,
+        "heading": "Shop Rado Luxury Timepieces",
+        "back_color": "",
+        "collection_link_text": "",
+        "collection_link": ""
+      }
+    },
+    "1755802282dfe1f035": {
+      "type": "apps",
+      "blocks": {
+        "appio_google_reviews_carousel1_mexVKr": {
+          "type": "shopify://apps/appio-google-reviews/blocks/carousel1/25437a0d-2feb-4f5f-b07d-e313afa21656",
+          "settings": {
+            "title_type": "h2",
+            "show_callout_layout": false,
+            "card_background_color": "#ffffff",
+            "card_text_color": "#151515",
+            "star_color": "#e1b648",
+            "max_line_review_content": 3,
+            "auto_scroll": true,
+            "slide_delay": 3,
+            "show_navigation_bar": false,
+            "show_reviewer_avatar": true,
+            "show_reviewer_name_detail": true,
+            "show_review_date": false,
+            "show_verified_badge": false,
+            "show_review_photos": false,
+            "show_liked_review": false,
+            "show_business_summary": false,
+            "show_business_summary_rating": true,
+            "show_business_summary_total_review": true,
+            "show_business_summary_summary_rating": true,
+            "business_summary_color": "#3a454f",
+            "show_leave_review_button": false,
+            "button_color": "#ffffff",
+            "button_background": "#4285f4"
+          }
+        }
+      },
+      "block_order": [
+        "appio_google_reviews_carousel1_mexVKr"
+      ],
+      "custom_css": [],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "m_image_background_GtVPfT": {
+      "type": "m-image-background",
+      "disabled": true,
+      "name": "Custom image background",
+      "settings": {
+        "image": "shopify://shop_images/Jeweler_sCarePlanImage_1-min_1.png",
+        "heading": "Marc Robinson Jewelers Care Plan",
+        "description": "Purchasing your jewelry at Marc Robinson Jewelers means\nyou have the highest quality of care. Explore all the details of\nour jewelry care plan to see why we're the best choice.",
+        "btn_text": "Explore the Care Plan",
+        "btn_link": "shopify://collections/fine-jewelry"
+      }
+    },
+    "1755802285ad7b85d7": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_7PThBz": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_7PThBz"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "m_slideshow_2_Emq8JH",
+    "m_collection_list_HdxhjL",
+    "m_image_background_XtgQgy",
+    "m_featured_collection_1_gdb8ee",
+    "m_featured_collection_2_AMxdBk",
+    "1755802282dfe1f035",
+    "m_image_background_GtVPfT",
+    "1755802285ad7b85d7"
+  ]
+}
