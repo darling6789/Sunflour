@@ -4,7 +4,9 @@
       "WebFetch(domain:shopify.dev)",
       "WebFetch(domain:community.shopify.com)",
       "Read(//c/Users/Daniel-PC/Documents/Dev Builds/shopify/Bonto/**)",
-      "WebFetch(domain:docs.affirm.com)"
+      "WebFetch(domain:docs.affirm.com)",
+      "WebFetch(domain:fonts.google.com)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
