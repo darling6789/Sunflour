@@ -3,14 +3,334 @@
         <h1>{{ section.settings.heading }}</h1>
         <h2>{{ section.settings.subheading }}</h2>
         <p>{{ section.settings.description }}</p>
+        <a href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
     </div>
     <div class="m-pendants-hero-video-wrap">
-
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
     </div>
 </div>
 <div class="m-pendants-hero-arrow">
     {% render 'icon-bottom-arrow' %}
 </div>
+
+<style>
+.m-pendants-landing-hero-section {
+    width: 100%;
+    background-image: url({{ section.settings.back_image_desktop | img_url: 'master' }});
+    background-size: cover;
+    background-position: center;
+    padding: 150px 50px;
+    position: relative;
+}
+.m-pendants-hero {
+    width: 100%;
+    max-width: 1080px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+.m-pendants-hero-des {
+    width: 50%;
+}
+.m-pendants-hero-des h1 {
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2; /* 21.6px */
+    font-variant: all-small-caps;
+    letter-spacing: 6.2px;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 29px;
+}
+.m-pendants-hero-des h2 {
+    color: #FFF;
+    font-family: "High Tower Text";
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 35px; /* 125% */
+    letter-spacing: -0.4px;
+    margin: 0;
+    margin-bottom: 29px;
+    max-width: 250px;
+}
+.m-pendants-hero-des h2 p {
+    margin: 0;
+}
+.m-pendants-hero-des>p {
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px; /* 211.111% */
+    margin: 0;
+    margin-bottom: 29px;
+}
+.m-pendants-hero-des>a {
+    display: flex;
+    padding: 15px 40px;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 8px;
+    border: 0.8px solid rgba(255, 255, 255, 0.30);
+    background: rgba(255, 255, 255, 0.10);
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    text-decoration: none;
+    width: fit-content;
+}
+.m-pendants-hero-video-wrap {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.m-pendants-hero-video-wrap video {
+    display: block;
+    width: 322px;
+    height: 400px;
+    object-fit: cover;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    max-width: 100%;
+}
+.m-pendants-hero-arrow {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    animation: arrow-bounce 1s infinite;
+}
+
+@media only screen and (max-width: 1080px) {
+    .m-pendants-landing-hero-section {
+        width: 100%;
+        background-image: url({{ section.settings.back_image_desktop | img_url: 'master' }});
+        background-size: cover;
+        background-position: center;
+        padding: 150px 50px;
+        position: relative;
+    }
+    .m-pendants-hero {
+        width: 100%;
+        max-width: 1080px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+    }
+    .m-pendants-hero-des {
+        width: 50%;
+    }
+    .m-pendants-hero-des h1 {
+        font-size: 20px;
+        letter-spacing: 4px;
+        line-height: 1.5;
+    }
+    .m-pendants-hero-des h2 {
+        color: #FFF;
+        font-family: "High Tower Text";
+        font-size: 24px;
+        font-style: italic;
+        font-weight: 400;
+        line-height: 35px; /* 125% */
+        letter-spacing: -0.4px;
+        margin: 0;
+        margin-bottom: 29px;
+        max-width: 250px;
+    }
+    .m-pendants-hero-des>p {
+        color: #FFF;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 38px; /* 211.111% */
+        margin: 0;
+        margin-bottom: 29px;
+    }
+    .m-pendants-hero-des>a {
+        display: flex;
+        padding: 15px 40px;
+        justify-content: flex-end;
+        align-items: center;
+        border-radius: 8px;
+        border: 0.8px solid rgba(255, 255, 255, 0.30);
+        background: rgba(255, 255, 255, 0.10);
+        color: #FFF;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 150% */
+        text-decoration: none;
+        width: fit-content;
+    }
+    .m-pendants-hero-video-wrap {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .m-pendants-hero-video-wrap video {
+        display: block;
+        width: 322px;
+        height: 400px;
+        object-fit: cover;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+        max-width: 100%;
+    }
+    .m-pendants-hero-arrow {
+        position: absolute;
+        bottom: 35px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+        animation: arrow-bounce 1s infinite;
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .m-pendants-landing-hero-section {
+        width: 100%;
+        background-image: url({{ section.settings.back_image_mobile | img_url: 'master' }});
+        background-size: cover;
+        background-position: center;
+        padding: 60px 20px 40px;
+        position: relative;
+    }
+    .m-pendants-hero {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .m-pendants-hero-des {
+        width: 100%;
+    }
+    .m-pendants-hero-des h1 {
+        font-size: 20px;
+        letter-spacing: 3.5px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+    .m-pendants-hero-des h2 {
+        font-size: 20px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+    .m-pendants-hero-des>p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .m-pendants-hero-des>a {
+        display: flex;
+        padding: 15px 40px;
+        font-size: 14px;
+    }
+    .m-pendants-hero-video-wrap {
+        width: 100%;
+    }
+    .m-pendants-hero-video-wrap video {
+        display: block;
+        width: 100%;
+    }
+    .m-pendants-hero-arrow {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .m-pendants-landing-hero-section {
+        width: 100%;
+        background-image: url({{ section.settings.back_image_mobile | img_url: 'master' }});
+        background-size: cover;
+        background-position: center;
+        padding: 30px 20px 50px;
+        position: relative;
+    }
+    .m-pendants-hero {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .m-pendants-hero-des {
+        width: 100%;
+    }
+    .m-pendants-hero-des h1 {
+        color: #FFF;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5;
+        font-variant: all-small-caps;
+        letter-spacing: 3.5px;
+        margin-bottom: 6px;
+    }
+    .m-pendants-hero-des h2 {
+        color: #FFF;
+        font-family: "High Tower Text";
+        font-size: 22px;
+        font-style: italic;
+        font-weight: 400;
+        line-height: 35px; /* 159.091% */
+        letter-spacing: -0.4px;
+        margin-bottom: 8px;
+    }
+    .m-pendants-hero-des>p {
+        color: #FFF;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 150% */
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    .m-pendants-hero-des>a {
+        display: flex;
+        padding: 15px 40px;
+        font-size: 14px;
+        margin: auto;
+    }
+    .m-pendants-hero-video-wrap {
+        width: 100%;
+    }
+    .m-pendants-hero-video-wrap video {
+        display: block;
+        width: 320px;
+        height: 320px;
+        max-width: 100%;
+        max-height: calc(100vw - 40px);
+        margin: auto;
+    }
+    .m-pendants-hero-arrow {
+        display: none;
+    }
+}
+
+@keyframes arrow-bounce {
+    0% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(10px);
+    }
+}
+</style>
 
 {% schema %}
 {
@@ -19,8 +339,13 @@
     "settings": [
         {
             "type": "image_picker",
-            "id": "back_image",
-            "label": "Background image"
+            "id": "back_image_desktop",
+            "label": "Desktop Background image"
+        },
+        {
+            "type": "image_picker",
+            "id": "back_image_mobile",
+            "label": "Mobile Background image"
         },
         {
             "type": "text",
@@ -28,7 +353,7 @@
             "label": "Heading"
         },
         {
-            "type": "text",
+            "type": "richtext",
             "id": "subheading",
             "label": "Subheading"
         },
