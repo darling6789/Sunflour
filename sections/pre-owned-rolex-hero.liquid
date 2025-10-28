@@ -12,12 +12,12 @@
     </div>
     <nav class="hero-actions" role="navigation" aria-label="Primary actions">
       <div class="hero-action-item">
-        <button class="hero-button" data-scroll-to="in-stock-products" aria-label="{{ section.settings.button_one_text }}">
+        <button class="hero-button" data-scroll-to="in-stock-products" {% if section.settings.button_one_url %}data-button-url="{{ section.settings.button_one_url }}"{% endif %} aria-label="{{ section.settings.button_one_text }}">
           <span class="hero-button-text">{{ section.settings.button_one_text }}</span>
         </button>
       </div>
       <div class="hero-action-item">
-        <button class="hero-button" data-scroll-to="looking-for-something-else" aria-label="{{ section.settings.button_two_text }}">
+        <button class="hero-button" data-scroll-to="looking-for-something-else" {% if section.settings.button_two_url %}data-button-url="{{ section.settings.button_two_url }}"{% endif %} aria-label="{{ section.settings.button_two_text }}">
           <span class="hero-button-text">{{ section.settings.button_two_text }}</span>
         </button>
       </div>
@@ -190,6 +190,16 @@
     scrollButtons.forEach(button => {
       button.addEventListener('click', function(e) {
         e.preventDefault();
+
+        // Check if button has a URL configured
+        const buttonUrl = this.getAttribute('data-button-url');
+        if (buttonUrl) {
+          // Navigate to the URL
+          window.location.href = buttonUrl;
+          return;
+        }
+
+        // Otherwise, use scroll behavior
         const targetId = this.getAttribute('data-scroll-to');
         let targetElement = null;
 
