@@ -20,7 +20,7 @@
         data-product-dial-color="{{ product.metafields.custom.watch_dial_color | escape }}"
         data-product-bezel-type="{{ product.metafields.custom.watch_bezel_type | escape }}"
         data-product-case-size="{{ product.metafields.custom.watch_case_size | escape }}"
-        data-product-model="{{ product.metafields.custom.watch_vendor_sku | escape }}"
+        data-product-model="{{ product.metafields.custom.watch_reference | escape }}"
         data-product-year="{{ product.metafields.custom.watch_year | escape }}"
         data-product-condition="{{ product.metafields.custom.watch_condition | escape }}"
         data-product-url="{{ product.url }}"
@@ -44,7 +44,7 @@
       <div class="specs-container">
         <div class="spec-row">
           <div class="spec-label">MODEL</div>
-          <div class="spec-value">{{product.metafields.custom.watch_vendor_sku}}</div>
+          <div class="spec-value">{{product.metafields.custom.watch_reference}}</div>
         </div>
         <div class="spec-row">
           <div class="spec-label">YEAR</div>

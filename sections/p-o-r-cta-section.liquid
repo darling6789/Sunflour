@@ -232,9 +232,7 @@
     outline: 2px solid var(--variable-collection-primary-accent);
     outline-offset: 2px;
   }
-  .input:invalid:not(:placeholder-shown) {
-    border: 2px solid #d32f2f;
-  }
+  
   .input:invalid:not(:placeholder-shown) ~ .error-message {
     display: block;
   }
@@ -261,6 +259,10 @@
   }
   .get-started-wrapper:active {
     transform: scale(0.98);
+  }
+  .button.subscribed {
+    background-color: var(--Accent-Darkest, #4D3942);
+    border-radius: 4px;
   }
   /* Desktop: 1921px and above - NO CHANGES */
   @media (max-width: 1920px) {
@@ -532,6 +534,26 @@
   }
 </style>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.input-action');
+    const button = document.querySelector('.CTA-section .button');
+    const buttonText = button.querySelector('.get-started');
+
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // Change button text
+      buttonText.textContent = "You're Subscribed!";
+
+      // Add the subscribed class
+      button.classList.add('subscribed');
+
+      // Disable the button to prevent multiple clicks
+      button.disabled = true;
+    });
+  });
+</script>
 
 {% schema %}
 {
