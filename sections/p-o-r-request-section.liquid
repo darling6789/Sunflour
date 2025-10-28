@@ -6,7 +6,9 @@
         Let us know what you have in mind and we will get to work. Send us your request and one of our experts will
         contact you directly to consult, and ensure we find the watch of your dreams.
       </p>
+      <a href="{% if section.settings.request_form_url %}{{section.settings.request_form_url}}{% else %}javascript:void(0){% endif %}" class="button">
       <button class="button"><div class="get-started">Send Your Request</div></button>
+      </a>
     </div>
   </div>
 </div>
@@ -81,6 +83,32 @@
     display: flex;
     position: relative;
   }
+  .button::before,
+.button::after {
+  content: none !important;
+  display: none !important;
+}
+.frame a.button {
+  padding: 0px;
+}
+
+  .search-consult a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-flex;
+    border: none;
+  }
+
+  .search-consult a:visited {
+    color: inherit;
+  }
+
+  .search-consult a:hover,
+  .search-consult a:active {
+    color: inherit;
+    text-decoration: none;
+  }
+
   .search-consult .get-started {
     position: relative;
     width: fit-content;
@@ -196,7 +224,13 @@
   "name": "POR - Request Section",
   "class": "p-o-r-request-section",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "url",
+      "id": "request_form_url",
+      "label": "Request Form URL"
+    }
+  ],
   "presets": [
     {
       "name": "POR - Request Section"
