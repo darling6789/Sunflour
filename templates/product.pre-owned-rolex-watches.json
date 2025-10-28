@@ -101,6 +101,7 @@
     },
     "related-products": {
       "type": "related-products",
+      "disabled": true,
       "settings": {
         "heading": "You May Also Like",
         "heading_size": "h2",
@@ -116,11 +117,26 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "p_o_r_featured_collection_HPUTm4": {
+      "type": "p-o-r-featured-collection",
+      "name": "POR Featured Collection",
+      "settings": {
+        "collection_title": "More Pre-Owned Rolex Watches",
+        "collection": "rolex-1"
+      }
+    },
+    "p_o_r_cta_section_Xxdy6a": {
+      "type": "p-o-r-cta-section",
+      "name": "POR - CTA Section",
+      "settings": {}
     }
   },
   "order": [
     "main",
     "m_multi_tabs_YV9PX8",
-    "related-products"
+    "related-products",
+    "p_o_r_featured_collection_HPUTm4",
+    "p_o_r_cta_section_Xxdy6a"
   ]
 }
