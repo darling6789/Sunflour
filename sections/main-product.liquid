@@ -211,9 +211,14 @@
             {%- case block.type -%}
               {%- when '@app' -%}
                 {% render block %}
-              {%- when 'guarantee' -%}  
+              {%- when 'guarantee' -%}
                 <div class="guarantees-wrap">
-                  <div id="guarantee-{{ section.id }}" role="status" {{ block.shopify_attributes }} class="guarantee-badges">                
+                  <div
+                    id="guarantee-{{ section.id }}"
+                    role="status"
+                    {{ block.shopify_attributes }}
+                    class="guarantee-badges"
+                  >
                     <div class="guarantee-badge">
                       <svg xmlns="http://www.w3.org/2000/svg" width="79" height="89" viewBox="0 0 79 89" fill="none">
                         <path d="M71.3427 0.520996H14.8002C10.8952 0.520996 7.73237 3.68381 7.73237 7.58882C3.82736 7.58882 0.664551 10.7516 0.664551 14.6566V72.9661C0.664551 73.4431 0.858898 73.8849 1.17693 74.2206L15.3126 88.3562C15.6483 88.6744 16.09 88.8687 16.5671 88.8687H64.2749C68.1799 88.8687 71.3427 85.7058 71.3427 81.8009C75.2477 81.8009 78.4106 78.638 78.4106 74.7331V7.58882C78.4106 3.68381 75.2477 0.520996 71.3427 0.520996ZM4.19846 14.6566C4.19846 12.7129 5.78875 11.1227 7.73237 11.1227V71.1992H4.19846V14.6566ZM14.8002 82.8434L6.68981 74.7331H14.8002V82.8434ZM64.2749 85.3348H18.3341V81.8009H67.8088C67.8088 83.7445 66.2185 85.3348 64.2749 85.3348ZM74.8767 74.7331C74.8767 76.6767 73.2864 78.267 71.3427 78.267H18.3341V72.9661C18.3341 71.9943 17.539 71.1992 16.5671 71.1992H11.2663V7.58882C11.2663 5.64509 12.8566 4.05491 14.8002 4.05491H71.3427C73.2864 4.05491 74.8767 5.64509 74.8767 7.58882V74.7331Z" fill="#78686F"/>
@@ -241,7 +246,7 @@
                       <h3>{{ block.settings.shipping_title }}</h3>
                       <p>{{ block.settings.shipping_text }}</p>
                     </div>
-                  </div>  
+                  </div>
                 </div>
               {%- when 'text' -%}
                 <p
@@ -261,17 +266,17 @@
                 </div>
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
-                {% comment %} {%- if _promo contains 'promo-price-block' -%}
-                  {{ _promo }}
-                {%- else -%} {% endcomment %}
-                  {%- render 'price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: true,
-                    price_class: 'price--large'
-                  -%}
-                {% comment %} {%- endif -%} {% endcomment %}
+                  {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
+                  {%- if _promo contains 'promo-price-block' -%}
+                    {{ _promo }}
+                  {%- else -%}
+                    {%- render 'price',
+                      product: product,
+                      use_variant: true,
+                      show_badges: true,
+                      price_class: 'price--large'
+                    -%}
+                  {%- endif -%}
                 </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
@@ -836,6 +841,106 @@
                 </product-recommendations>
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
+              {% when 'disclaimer_badge' %}
+                <div class="disclaimer-badge">
+                  <p class="disclaimer-badge__text">
+                    <span>DISCLAIMER</span>
+                    Marc Robinson Jewelers is not an authorized dealer, distributor, or affiliated in any way with Rolex
+                    S.A., Rolex USA, or any of its subsidiaries. Rolex is a registered trademark of Rolex S.A. Any
+                    trademarks, brand names, or logos mentioned are for identification purposes only and remain the
+                    property of their respective owners. All Rolex watches sold by Marc Robinson Jewelers are pre-owned,
+                    authentic Rolex timepieces. Rolex has no obligation to service watches sold by Marc Robinson
+                    Jewelers. For Rolex’s official terms and services, please visit an authorized Rolex dealer or
+                    contact Rolex directly.
+                  </p>
+                  <div class="disclaimer-badge__image">
+                    <img src="{{ 'icon-info.svg' | asset_url }}" alt="Disclaimer Badge">
+                  </div>
+                </div>
+              {% when 'trust_badge' %}
+                <div class="trust-badges">
+                  <div class="trust-badge">
+                    <div class="trust-badge__image">
+                      <img src="{{ block.settings.image1 | img_url: 'master' }}" alt="Trust Badge">
+                    </div>
+                    <div class="trust-badge__content">
+                      <h3>Original Warranty</h3>
+                      <p>Retain the manufacturer’s warranty coverage.</p>
+                    </div>
+                  </div>
+                  <div class="trust-badge">
+                    <div class="trust-badge__image">
+                      <img src="{{ block.settings.image2 | img_url: 'master' }}" alt="Trust Badge">
+                    </div>
+                    <div class="trust-badge__content">
+                      <h3>Fast Insured Shipping</h3>
+                      <p>Rest easy with insured shipping! Shipping costs are calculated at checkout.</p>
+                    </div>
+                  </div>
+                  <div class="trust-badge">
+                    <div class="trust-badge__image">
+                      <img src="{{ block.settings.image3 | img_url: 'master' }}" alt="Trust Badge">
+                    </div>
+                    <div class="trust-badge__content">
+                      <h3>Easy Returns</h3>
+                      <p>7 day return window for online purchases.</p>
+                    </div>
+                  </div>
+                </div>
+              {% when 'consult_an_expert' %}
+                <div class="consult-an-expert">
+                  <a href="{{ block.settings.consult_link }}">
+                    <h3 style="font-style: italic;">Consult an Expert</h3>
+                  </a>
+                </div>
+              {% when 'rolex_watch_metafields' %}
+                <div class="rolex-watch-metafields">
+                  <div>
+                    {{ product.metafields.custom.watch_band_type }} | {{ product.metafields.custom.watch_case_size }}
+                  </div>
+                  <div class="rolex-watch-metafields__content">
+                    <div class="rolex-watch-metafields__content-item-wrapper">
+                      <div class="rolex-watch-metafields__content-item">
+                        <div class="rolex-watch-metafields__content-item-label">MODEL</div>
+                        <div class="rolex-watch-metafields__content-item-value">
+                          {{ product.metafields.custom.watch_reference }}
+                        </div>
+                      </div>
+                      <div class="rolex-watch-metafields__content-item">
+                        <div class="rolex-watch-metafields__content-item-label">YEAR</div>
+                        <div class="rolex-watch-metafields__content-item-value">
+                          {{ product.metafields.custom.watch_year }}
+                        </div>
+                      </div>
+                      <div class="rolex-watch-metafields__content-item">
+                        <div class="rolex-watch-metafields__content-item-label">CONDITION</div>
+                        <div class="rolex-watch-metafields__content-item-value">
+                          {% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}
+                          {% case raw_condition %}
+                            {% when 'unworn' -%}
+                              UNWORN
+                            {% when 'unworn (nos)' -%}
+                              UNWORN
+                            {% when 'as is' -%}
+                              RETAIL READY
+                            {% when 'slider' -%}
+                              EXCELLENT
+                            {% when 'mint' -%}
+                              VERY GOOD
+                            {% when 'very good' -%}
+                              VERY GOOD
+                            {% when 'pre-owned' -%}
+                              GOOD
+                            {% when 'good' -%}
+                              GOOD
+                            {% else -%}
+                              {{- product.metafields.custom.watch_condition | upcase }}
+                          {% endcase %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -899,7 +1004,255 @@
     </script>
   </div>
 </product-info>
+<style>
 
+    .rolex-watch-metafields__content-item-value {
+      color: #1A1A1A;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12.51px; /* 78.189% */
+    }
+    .rolex-watch-metafields__content-item-label {
+      color: #707070;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12.51px; /* 78.189% */
+  letter-spacing: 0.715px;
+  text-transform: uppercase;
+    }
+      .rolex-watch-metafields__content-item {
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+      }
+        .rolex-watch-metafields__content-item-wrapper {
+          display: flex;
+      width: 256px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      flex-shrink: 0;
+      align-self: stretch;
+        }
+          .rolex-watch-metafields__content {
+            display: flex;
+        width: 751px;
+        align-items: flex-start;
+        gap: 20.343px;
+          }
+            .rolex-watch-metafields {
+              color: var(--NotBlack, #151515);
+          font-family: Montserrat;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+            }
+              .consult-an-expert h3 {
+                margin: 0;
+                color: #57434C;
+                text-align: center;
+                font-family: Montserrat;
+                font-size: 20.004px;
+                font-style: italic;
+                font-weight: 600;
+                line-height: normal;
+                text-decoration-line: underline;
+                text-decoration-style: solid;
+                text-decoration-skip-ink: none;
+                text-decoration-thickness: auto;
+                text-underline-offset: auto;
+                text-underline-position: from-font;
+              }
+              .consult-an-expert {
+                display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            gap: 17px;
+              }
+
+            .trust-badge__content p {
+              font-weight: 400 !important;
+
+            }
+            .trust-badge__content h3, .trust-badge__content p {
+              color: #2F2F2F;
+            font-family: Montserrat;
+            font-size: 17.943px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0 !important;
+            }
+              .trust-badge__content {
+                display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5.127px;
+            flex: 1 0 0;
+              }
+                .trust-badge_image img {
+                  width: 44.857px;
+              height: 61.349px;
+              aspect-ratio: 44.86/61.35;
+                }
+                .trust-badge__image {
+                  display: flex;
+              width: 61.518px;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 12.816px;
+                }
+                  .trust-badge {
+                    display: flex;
+                align-items: center;
+                gap: 25.633px;
+                align-self: stretch;
+                  }
+                    .trust-badges {
+                      display: flex;
+                  height: 258.889px;
+                  flex-direction: column;
+                  justify-content: space-between;
+                  align-items: center;
+                  flex: 1 0 0;
+                    }
+
+                    .disclaimer-badge__image {
+                      display: flex;
+                      width: 16.358px;
+                      height: 16px;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: flex-end;
+                      gap: 10px;
+                      flex-shrink: 0;
+                    }
+                    .disclaimer-badge__text {
+                        color: #78686F;
+                        margin: 0;
+                        /* Caption/Regular */
+                        font-family: Montserrat;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 110%;
+                        display: flex;
+                        flex-direction: column;
+                      }
+                      .disclaimer-badge__text span {
+                        font-weight: 600;
+                        flex-shrink: 0;
+                      }
+                      .disclaimer-badge {
+                        max-width: 752.478px;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row-reverse;
+                        gap:13.12px
+                      }
+                      .m-main-product-section #MediaGallery-{{section.id}} {
+                        display: inline-flex;
+                        width: 100%;
+                      }
+                      .m-main-product-section #GalleryViewer-{{section.id}} {
+                        order: 1;
+                        width: 80%;
+                      }
+                      .m-main-product-section #GalleryThumbnails-{{section.id}} {
+                        width: 20%;
+                        height: 100%;
+                        flex-direction: column;
+                      }
+                      .m-main-product-section #Slider-Thumbnails-{{section.id}} {
+                        flex-direction: column;
+                        width: 100%;
+                        height: 40vw;
+                        overflow: scroll;
+                        display: inline-flex;
+                      }
+                      .m-main-product-section .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
+                        width: 100%;
+                      }
+                      .m-main-product-section .product--thumbnail_slider .slider-mobile-gutter .slider-button {
+                        display: none;
+                      }
+                      .m-main-product-section .product-form__buttons {
+                        max-width: unset;
+                      }
+                      .m-main-product-section .product-form__submit {
+                        padding: 26.672px 53.345px;
+                        gap: 16.67px;
+                        border-radius: 6.668px;
+                        font-size: 23.338px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 100%;
+                        border: none !important;
+                      }
+                      .m-main-product-section .product-form__submit:before, .m-main-product-section .product-form__submit:after {
+                        box-shadow: none !important;
+                      }
+                      .m-main-product-section .buy-buttons-wrap {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 25px;
+                      }
+                      .m-main-product-section .buy-buttons-wrap>div {
+                        width: 100%;
+                      }
+                      .m-main-product-section .accordion {
+                        border-top: unset;
+                      }
+                      .m-main-product-section .accordion__title {
+                        font-family: Montserrat;
+                        font-size: 24px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                      }
+                      .m-main-product-section .accordion summary {
+                        padding-bottom: 0;
+                      }
+                      .m-main-product-section .accordion summary .icon-caret {
+                        height: unset;
+                        position: unset;
+                        transform: rotate(-90deg);
+                      }
+                      .m-main-product-section .accordion details[open]>summary .icon-caret {
+                          transform: rotate(-180deg);
+                      }
+                      @media (max-width: 749px) {
+                        .consult-an-expert h3{
+                          font-size: 16px;
+                        }
+                        .consult-an-expert {
+                      margin: auto;
+                      justify-content: center;
+                      font-size: 16px;
+                    }
+                    .trust-badge__image{
+                      width:46px;
+                    }
+                    .trust-badge__image img{
+                      width:100%;
+                    }
+                    .trust-badge__content h3, .trust-badge__content p{
+                      font-size: 14px;
+                    }
+                      }
+</style>
 {% schema %}
 {
   "name": "t:sections.main-product.name",
@@ -908,6 +1261,50 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "disclaimer_badge",
+      "name": "Disclaimer Badge",
+      "limit": 1
+    },
+    {
+      "type": "consult_an_expert",
+      "name": "Consult an Expert",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "url",
+          "id": "consult_link",
+          "label": "Button Link"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "Image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image3",
+          "label": "Image 3"
+        }
+      ]
+    },
+    {
+      "type": "rolex_watch_metafields",
+      "name": "Rolex Watch Metafields",
+      "limit": 1
     },
     {
       "type": "guarantee",

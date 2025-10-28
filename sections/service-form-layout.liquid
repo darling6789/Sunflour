@@ -1,0 +1,815 @@
+{% comment %}
+  Dream Watch Request Form - Shopify Liquid Template
+
+  Instructions:
+  1. Upload this file to your Shopify theme's sections or templates folder
+  2. Add Google Fonts link to your theme.liquid <head> if not already present
+  3. Replace form action with your preferred form handler (Shopify form, third-party service, etc.)
+  4. Update SVG icons or replace with your own
+{% endcomment %}
+
+<style>
+  /* CSS Variables / Design Tokens */
+  :root {
+    --body-less-small-font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    --body-less-small-font-weight: 400;
+    --body-less-small-font-size: 14px;
+    --body-less-small-letter-spacing: 0px;
+    --body-less-small-line-height: 120%;
+    --body-less-small-font-style: normal;
+    --button-text-small-font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    --button-text-small-font-weight: 600;
+    --button-text-small-font-size: 15px;
+    --button-text-small-letter-spacing: 0px;
+    --button-text-small-line-height: 90%;
+    --button-text-small-font-style: normal;
+    --single-line-body-base-font-family: 'Inter', Helvetica, Arial, sans-serif;
+    --single-line-body-base-font-weight: 400;
+    --single-line-body-base-font-size: 16px;
+    --single-line-body-base-letter-spacing: 0px;
+    --single-line-body-base-line-height: 100%;
+    --single-line-body-base-font-style: normal;
+    --body-base-font-family: 'Inter', Helvetica, Arial, sans-serif;
+    --body-base-font-weight: 400;
+    --body-base-font-size: 16px;
+    --body-base-letter-spacing: 0px;
+    --body-base-line-height: 140%;
+    --body-base-font-style: normal;
+    --size-space-800: 32px;
+    --size-space-400: 16px;
+    --size-space-300: 12px;
+    --size-radius-200: 8px;
+    --size-space-200: 8px;
+    --size-space-600: 24px;
+    --color-background-default-secondary: var(--color-primitives-gray-100);
+    --color-text-brand-on-brand-tertiary: var(--color-primitives-brand-800);
+    --color-text-default-default: var(--color-primitives-gray-900);
+    --color-text-default-tertiary: var(--color-primitives-gray-400);
+    --color-text-brand-on-brand: var(--color-primitives-brand-100);
+    --color-background-default-default: var(--color-primitives-white-1000);
+    --color-border-default-default: var(--color-primitives-gray-300);
+    --color-background-brand-default: var(--color-primitives-brand-800);
+    --color-border-brand-default: var(--color-primitives-brand-800);
+    --color-text-neutral-default: var(--color-primitives-slate-900);
+    --color-background-brand-hover: var(--color-primitives-brand-900);
+    --color-primitives-gray-100: rgba(245, 245, 245, 1);
+    --color-primitives-brand-800: rgba(44, 44, 44, 1);
+    --color-primitives-gray-900: rgba(30, 30, 30, 1);
+    --color-primitives-gray-400: rgba(179, 179, 179, 1);
+    --color-primitives-brand-100: rgba(245, 245, 245, 1);
+    --color-primitives-gray-800: rgba(44, 44, 44, 1);
+    --color-primitives-white-1000: rgba(255, 255, 255, 1);
+    --color-primitives-white-400: rgba(255, 255, 255, 0.4);
+    --color-primitives-brand-900: rgba(30, 30, 30, 1);
+    --color-primitives-gray-300: rgba(217, 217, 217, 1);
+    --color-primitives-gray-600: rgba(68, 68, 68, 1);
+    --color-primitives-brand-b-800: rgba(119, 0, 0, 1);
+    --color-primitives-slate-900: rgba(48, 48, 48, 1);
+    --color-primitives-slate-200: rgba(227, 227, 227, 1);
+    --color-primitives-brand-300: rgba(217, 217, 217, 1);
+  }
+
+  /* Universal Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  /* CSS Reset for text elements */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  hr,
+  span {
+    margin: 0;
+    padding: 0;
+  }
+  h2.title {
+    margin: 0;
+  }
+  /* Component Styles */
+  .services-form-layout {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--size-space-800);
+    padding: 50px 150px;
+    position: relative;
+    background-color: var(--color-background-default-secondary);
+  }
+
+  @media (max-width: 1024px) {
+    .services-form-layout {
+      padding: 40px 60px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .services-form-layout {
+      padding: 30px 20px;
+    }
+  }
+
+  .services-form-layout .frame {
+    align-items: flex-start;
+    gap: 100px;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    position: relative;
+  }
+
+  @media (max-width: 1024px) {
+    .services-form-layout .frame {
+      flex-direction: column;
+      gap: 50px;
+    }
+  }
+
+  .services-form-layout .div {
+    flex-direction: column;
+    width: 600px;
+    max-width: 100%;
+    align-items: flex-start;
+    gap: 16px;
+    display: flex;
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .services-form-layout .div {
+      width: 100%;
+    }
+  }
+
+  .services-form-layout .text-wrapper {
+    color: #000;
+    text-align: center;
+    font-family: 'EB Garamond';
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 44px */
+    max-width: 603px;
+    width: 100%;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 768px) {
+    .services-form-layout .text-wrapper {
+      font-size: 32px;
+      line-height: 36px;
+    }
+  }
+
+  .services-form-layout .at-marc-robinson {
+    position: relative;
+    align-self: stretch;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19.6px;
+  }
+
+  .services-form-layout .line {
+    position: relative;
+    width: 100%;
+    max-width: 604px;
+    height: 1px;
+    background-color: var(--color-border-default-default);
+    border: none;
+  }
+
+  .services-form-layout .how-it-works-tell-us {
+    position: relative;
+    align-self: stretch;
+    color: #000000;
+  }
+
+  .services-form-layout .how-it-works-list {
+    padding-left: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .services-form-layout .how-it-works-item {
+    margin: 0;
+  }
+
+  .services-form-layout .span {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-weight: 400;
+    color: #000000;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 28px;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .services-form-layout .text-wrapper-2 {
+    display: block;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19.6px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .services-form-layout .text-wrapper-3 {
+    display: block;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19.6px;
+    margin-top: 0;
+    margin-bottom: 0px;
+  }
+
+  .services-form-layout .frame-2 {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+    min-width: 300px;
+  }
+
+  @media (max-width: 1024px) {
+    .services-form-layout .frame-2 {
+      width: 100%;
+    }
+  }
+
+  .services-form-layout .title {
+    position: relative;
+    max-width: 252px;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-weight: 400;
+    color: var(--color-text-brand-on-brand-tertiary);
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 26.4px;
+  }
+
+  .services-form-layout .form-contact-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+    max-width: 100%;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  .services-form-layout .form-contact {
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+    align-items: flex-start;
+    gap: 16px;
+    padding: var(--size-space-600);
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    background-color: var(--color-background-default-default);
+    border-radius: var(--size-radius-200);
+    border: 1px solid;
+    border-color: var(--color-border-default-default);
+  }
+
+  .services-form-layout .div-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--size-space-200);
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .services-form-layout .label-2 {
+    position: relative;
+    align-self: stretch;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-weight: 400;
+    color: var(--color-text-default-default);
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 22px;
+  }
+
+  .services-form-layout .label-2 abbr {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .services-form-layout .input {
+    min-width: 240px;
+    padding: var(--size-space-300) var(--size-space-400);
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: var(--color-background-default-default);
+    border-radius: var(--size-radius-200);
+    border: 1px solid;
+    border-color: var(--color-border-default-default);
+    font-family: var(--body-less-small-font-family);
+    font-weight: var(--body-less-small-font-weight);
+    color: var(--color-text-default-default);
+    font-size: var(--body-less-small-font-size);
+    letter-spacing: var(--body-less-small-letter-spacing);
+    line-height: var(--body-less-small-line-height);
+    font-style: var(--body-less-small-font-style);
+    transition: border-color 0.2s ease, outline 0.2s ease;
+  }
+
+  .services-form-layout .input::placeholder {
+    color: var(--color-text-default-tertiary);
+  }
+
+  .services-form-layout .input:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 0;
+    border-color: #4a90e2;
+  }
+
+  .services-form-layout .select-wrapper {
+    position: relative;
+    display: flex;
+    align-self: stretch;
+    width: 100%;
+  }
+
+  .services-form-layout .select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: flex;
+    min-width: 240px;
+    height: 42px;
+    align-items: center;
+    gap: var(--size-space-200);
+    padding: var(--size-space-300) 40px var(--size-space-300) var(--size-space-400);
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: var(--color-background-default-default);
+    border-radius: var(--size-radius-200);
+    border: 1px solid;
+    border-color: var(--color-border-default-default);
+    font-family: var(--body-less-small-font-family);
+    font-weight: var(--body-less-small-font-weight);
+    color: var(--color-text-default-default);
+    font-size: var(--body-less-small-font-size);
+    letter-spacing: var(--body-less-small-letter-spacing);
+    line-height: var(--body-less-small-line-height);
+    font-style: var(--body-less-small-font-style);
+    cursor: pointer;
+    transition: border-color 0.2s ease, outline 0.2s ease;
+  }
+
+  .services-form-layout .select:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 0;
+    border-color: #4a90e2;
+  }
+
+  .services-form-layout .chevron-down {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+  }
+
+  .services-form-layout .textarea-wrapper {
+    position: relative;
+    display: flex;
+    min-width: 240px;
+    min-height: 80px;
+    align-items: flex-start;
+    padding: var(--size-space-300) var(--size-space-400);
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    background-color: var(--color-background-default-default);
+    border-radius: var(--size-radius-200);
+    border: 1px solid;
+    border-color: var(--color-border-default-default);
+    transition: border-color 0.2s ease, outline 0.2s ease;
+  }
+
+  .services-form-layout .textarea {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-family: var(--body-less-small-font-family);
+    font-weight: var(--body-less-small-font-weight);
+    color: var(--color-text-default-default);
+    font-size: var(--body-less-small-font-size);
+    letter-spacing: var(--body-less-small-letter-spacing);
+    line-height: var(--body-less-small-line-height);
+    font-style: var(--body-less-small-font-style);
+  }
+
+  .services-form-layout .textarea::placeholder {
+    color: #b3b3b3;
+  }
+  /* Remove Shopify theme's pseudo-elements from button */
+  .services-form-layout .button::before,
+  .services-form-layout .button::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .services-form-layout .textarea:focus {
+    outline: none;
+  }
+
+  .services-form-layout .textarea-wrapper:focus-within {
+    outline: 2px solid #4a90e2;
+    outline-offset: 0;
+    border-color: #4a90e2;
+  }
+
+  .services-form-layout .button-group {
+    display: flex;
+    align-items: center;
+    gap: var(--size-space-400);
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .services-form-layout .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-space-200);
+    padding: var(--size-space-300);
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+    background-color: var(--color-background-brand-default);
+    border-radius: var(--size-radius-200);
+    border: 1px solid;
+    border-color: var(--color-border-brand-default);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .services-form-layout .button:hover {
+    background-color: var(--color-background-brand-hover);
+  }
+
+  .services-form-layout .button:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .services-form-layout .button-2 {
+    position: relative;
+    width: fit-content;
+    font-family: var(--button-text-small-font-family);
+    font-weight: var(--button-text-small-font-weight);
+    color: var(--color-text-brand-on-brand);
+    font-size: var(--button-text-small-font-size);
+    letter-spacing: var(--button-text-small-letter-spacing);
+    line-height: var(--button-text-small-line-height);
+    white-space: nowrap;
+    font-style: var(--button-text-small-font-style);
+  }
+
+  /* Ensure fonts are loaded - add this to your theme.liquid <head> if not present:
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+       <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    */
+</style>
+
+<main class="services-form-layout">
+  <div class="frame">
+    <article class="div">
+      <h1 class="text-wrapper">Your Perfect Timepiece, Personally Sourced</h1>
+      <p class="at-marc-robinson">
+        At Marc Robinson Jewelers, we know that every collector's vision of the perfect Pre-Owned Rolex is unique — a
+        reflection of personal taste, heritage, and craftsmanship. Whether you're searching for a vintage Submariner, a
+        classic Datejust, or a modern GMT-Master II, our concierge team is dedicated to helping you find the exact piece
+        you've been dreaming of.<br>
+        <br>
+        Through our trusted network of Rolex specialists, dealers, and private collectors, we source authentic Pre-Owned
+        Rolex timepieces that align with your preferred model, condition, and budget. Each watch we locate is carefully
+        reviewed for quality and provenance, and every step of your experience is handled with the personalized
+        attention of a boutique jeweler.
+      </p>
+      <hr class="line">
+      <section class="how-it-works-tell-us">
+        <h2 class="span">How It Works</h2>
+        <ol class="how-it-works-list">
+          <li class="how-it-works-item">
+            <h3 class="text-wrapper-2">Tell Us About Your Dream Watch</h3>
+            <p class="text-wrapper-3">
+              Share what you're looking for — model name, reference number, year, dial color, or any special details
+              that matter to you.
+            </p>
+          </li>
+          <li class="how-it-works-item">
+            <h3 class="text-wrapper-2">We Begin the Search</h3>
+            <p class="text-wrapper-3">
+              Our specialists reach out across our verified network to locate the exact or closest possible match.
+            </p>
+          </li>
+          <li class="how-it-works-item">
+            <h3 class="text-wrapper-2">Review &amp; Confirm Options</h3>
+            <p class="text-wrapper-3">
+              We'll send you curated watch options, complete with photos, condition details, and pricing transparency.
+            </p>
+          </li>
+          <li class="how-it-works-item">
+            <h3 class="text-wrapper-2">Make It Yours</h3>
+            <p class="text-wrapper-3">
+              Once you've chosen your timepiece, we handle secure payment, authentication, and insured delivery or
+              in-store pickup.
+            </p>
+          </li>
+        </ol>
+      </section>
+    </article>
+
+    <aside class="frame-2">
+      <h2 class="title">Find Your Dream Watch</h2>
+      <div class="form-contact-wrapper">
+        {% comment %}
+          UPDATE THIS: Replace with your form handler
+          Options:
+          1. Shopify contact form: action="/contact#contact_form" method="post"
+          2. Email service (Formspree, Basin, etc.)
+          3. Custom endpoint
+        {% endcomment %}
+        <form
+          class="form-contact"
+          method="post"
+          action="/contact#contact_form"
+          accept-charset="UTF-8"
+          aria-label="Dream Watch Request Form"
+        >
+          <input type="hidden" name="form_type" value="contact">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="contact[subject]" value="Dream Watch Request">
+
+          <div class="div-2">
+            <label for="contact-name" class="label-2">Name <abbr title="required" aria-label="required">*</abbr></label>
+            <input
+              class="input"
+              id="contact-name"
+              name="contact[name]"
+              placeholder="First &amp; Last Name"
+              type="text"
+              required
+              aria-required="true"
+            >
+          </div>
+
+          <div class="div-2">
+            <label for="contact-email" class="label-2"
+              >Email Address <abbr title="required" aria-label="required">*</abbr></label
+            >
+            <input
+              class="input"
+              id="contact-email"
+              name="contact[email]"
+              placeholder="Email Address"
+              type="email"
+              required
+              aria-required="true"
+            >
+          </div>
+
+          <div class="div-2">
+            <label for="contact-phone" class="label-2">Phone Number</label>
+            <input class="input" id="contact-phone" name="contact[phone]" placeholder="Phone Number" type="tel">
+          </div>
+
+          <div class="div-2">
+            <label for="contact-collection" class="label-2">Collection</label>
+            <div class="select-wrapper">
+              <select class="select" id="contact-collection" name="contact[collection]">
+                <option value="">Select Brand Collection</option>
+                <option value="submariner">Submariner</option>
+                <option value="datejust">Datejust</option>
+                <option value="gmt-master">GMT-Master II</option>
+                <option value="daytona">Daytona</option>
+                <option value="explorer">Explorer</option>
+                <option value="yacht-master">Yacht-Master</option>
+                <option value="other">Other</option>
+              </select>
+              <svg
+                class="chevron-down"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="div-2">
+            <label for="contact-model" class="label-2">Model</label>
+            <input class="input" id="contact-model" name="contact[model]" placeholder="Model Number" type="text">
+          </div>
+
+          <div class="div-2">
+            <label for="contact-year" class="label-2">Year</label>
+            <div class="select-wrapper">
+              <select class="select" id="contact-year" name="contact[year]">
+                <option value="">Select Year</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2010-2014">2010-2014</option>
+                <option value="2000-2009">2000-2009</option>
+                <option value="1990-1999">1990-1999</option>
+                <option value="pre-1990">Pre-1990</option>
+              </select>
+              <svg
+                class="chevron-down"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="div-2">
+            <label for="contact-condition" class="label-2">Condition</label>
+            <div class="select-wrapper">
+              <select class="select" id="contact-condition" name="contact[condition]">
+                <option value="">Select Condition</option>
+                <option value="new">New/Unworn</option>
+                <option value="retail-ready">Retail Ready</option>
+                <option value="excellent">Excellent</option>
+                <option value="very-good">Very Good</option>
+                <option value="good">Good</option>
+                <option value="fair">Fair</option>
+              </select>
+              <svg
+                class="chevron-down"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="div-2">
+            <label for="contact-bracelet" class="label-2">Bracelet Style</label>
+            <div class="select-wrapper">
+              <select class="select" id="contact-bracelet" name="contact[bracelet]">
+                <option value="">Select Style</option>
+                <option value="oyster">Oyster</option>
+                <option value="jubilee">Jubilee</option>
+                <option value="president">President</option>
+                <option value="leather">Leather</option>
+                <option value="rubber">Rubber</option>
+                <option value="other">Other</option>
+              </select>
+              <svg
+                class="chevron-down"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="div-2">
+            <label for="contact-case-size" class="label-2">Case Size</label>
+            <input
+              class="input"
+              id="contact-case-size"
+              name="contact[case-size]"
+              placeholder="Size (e.g., 40mm)"
+              type="text"
+            >
+          </div>
+
+          <div class="div-2">
+            <label for="contact-notes" class="label-2">Additional Notes</label>
+            <div class="textarea-wrapper">
+              <textarea
+                class="textarea"
+                id="contact-notes"
+                name="contact[additional-notes]"
+                placeholder="Anything else you'd like us to know?"
+                rows="4"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="div-2">
+            <label for="contact-budget" class="label-2">Budget Range</label>
+            <input
+              class="input"
+              id="contact-budget"
+              name="contact[budget]"
+              placeholder="Budget (e.g., $10,000 - $15,000)"
+              type="text"
+            >
+          </div>
+
+          <div class="div-2">
+            <label for="contact-timeline" class="label-2">Timeline</label>
+            <div class="textarea-wrapper">
+              <textarea
+                class="textarea"
+                id="contact-timeline"
+                name="contact[timeline]"
+                placeholder="When were you hoping to purchase?"
+                rows="4"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button class="button" type="submit">
+              <span class="button-2">Submit</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </aside>
+  </div>
+</main>
+
+{% comment %}
+  IMPORTANT: Add to your theme.liquid <head> section:
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Service Form Layout",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Service Form Layout"
+    }
+  ]
+}
+{% endschema %}

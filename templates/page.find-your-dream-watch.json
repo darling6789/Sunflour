@@ -1,0 +1,84 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "pre-owned-rolex-header": {
+      "type": "pre-owned-rolex-hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/a09702bacbe33de7eaafcd751c3585424155c72f_1.jpg",
+        "hero_title": "Find Your Dream Watch",
+        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches, or work with one of our experts to locate the Pre-Owned Rolex of your dreams.",
+        "button_one_text": "Shop In-Stock",
+        "button_one_url": "",
+        "button_two_text": "Find My Watch",
+        "button_two_url": ""
+      }
+    },
+    "pre-owned-rolex-disclaimer1": {
+      "type": "pre-owned-rolex-disclaimer",
+      "settings": {}
+    },
+    "p-o-r-list-signup1": {
+      "type": "p-o-r-list-signup",
+      "disabled": true,
+      "settings": {}
+    },
+    "service_form_layout_eJDQqM": {
+      "type": "service-form-layout",
+      "name": "Service Form Layout",
+      "settings": {}
+    },
+    "find_your_dream_watch_HMXjLN": {
+      "type": "find-your-dream-watch",
+      "blocks": {
+        "badge_MjjbiM": {
+          "type": "badge",
+          "settings": {
+            "image": "shopify://shop_images/Group.svg",
+            "heading": "TRUST POINT ONE",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna."
+          }
+        },
+        "badge_tzrHn8": {
+          "type": "badge",
+          "settings": {
+            "image": "shopify://shop_images/Group_145478.svg",
+            "heading": "TRUST POINT TWO",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna."
+          }
+        },
+        "badge_wtAfpw": {
+          "type": "badge",
+          "settings": {
+            "image": "shopify://shop_images/Frame_183309.svg",
+            "heading": "TRUST POINT THREE",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna."
+          }
+        }
+      },
+      "block_order": [
+        "badge_MjjbiM",
+        "badge_tzrHn8",
+        "badge_wtAfpw"
+      ],
+      "name": "Find Your Dream Watch",
+      "settings": {
+        "heading": "Why Should I?"
+      }
+    }
+  },
+  "order": [
+    "pre-owned-rolex-header",
+    "pre-owned-rolex-disclaimer1",
+    "p-o-r-list-signup1",
+    "service_form_layout_eJDQqM",
+    "find_your_dream_watch_HMXjLN"
+  ]
+}

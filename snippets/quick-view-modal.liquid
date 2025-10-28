@@ -1,0 +1,1832 @@
+<!-- Quick View Modal -->
+<div class="quickview-modal-backdrop" data-quick-view-modal-backdrop style="display: none;">
+  <div class="quickview-modal-container" role="dialog" aria-labelledby="quickview-product-title" aria-modal="true">
+    <!-- Close Button -->
+    <button
+      type="button"
+      class="quickview-modal-close"
+      data-quick-view-close
+      aria-label="Close quick view modal"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Loading State -->
+    <div data-quick-view-loading style="display: none;">
+      <div class="quickview-loading-state">
+        <div class="quickview-spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div data-quick-view-error style="display: none;">
+      <div class="quickview-error-state">
+        <p>Unable to load product. Please try again.</p>
+        <button type="button" data-quick-view-retry class="quickview-error-retry">Retry</button>
+      </div>
+    </div>
+
+    <!-- Modal Content -->
+    <div data-quick-view-content style="display: none;">
+      <div class="quickview-modal">
+
+        <!-- Main Content -->
+        <div class="quickview-main">
+          <!-- Product Image Carousel -->
+          <div class="quickview-carousel-container">
+            <div class="swiper quickview-swiper" data-quickview-swiper>
+              <div class="swiper-wrapper">
+                <!-- Images will be populated here -->
+              </div>
+              <!-- Navigation Buttons -->
+              <button class="quickview-swiper-prev" aria-label="Previous image">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button class="quickview-swiper-next" aria-label="Next image">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Details Panel -->
+          <div class="quickview-panel">
+            <!-- Scrollbar -->
+            <div class="quickview-scrollbar">
+              <div class="quickview-scrollbar-track">
+                <div class="quickview-scrollbar-spacer"></div>
+                <div class="quickview-scrollbar-thumb"></div>
+              </div>
+            </div>
+
+            <!-- Content Wrapper -->
+            <div class="quickview-content">
+              <div class="quickview-wrapper">
+                <!-- Title & Specs Section -->
+                <div class="quickview-header">
+                  <div class="quickview-title-section">
+                    <h2 id="quickview-product-title" class="quickview-title">
+                      <span class="js-quickview-title"></span>
+                    </h2>
+                    <p class="quickview-subtitle">
+                      <span class="js-quickview-subtitle"></span>
+                    </p>
+                  </div>
+
+                  <!-- Specs Grid -->
+                  <div class="quickview-specs-grid">
+                    <div class="quickview-spec-column">
+                      <div class="quickview-spec">
+                        <span class="quickview-spec-label">MODEL</span>
+                        <span class="quickview-spec-value js-quickview-model">—</span>
+                      </div>
+                      <div class="quickview-spec">
+                        <span class="quickview-spec-label">YEAR</span>
+                        <span class="quickview-spec-value js-quickview-year">—</span>
+                      </div>
+                      <div class="quickview-spec">
+                        <span class="quickview-spec-label">CONDITION</span>
+                        <span class="quickview-spec-value js-quickview-condition">—</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Price Section -->
+                  <div class="quickview-price-section">
+                    <div class="quickview-price">
+                      <span class="quickview-price-currency">$</span>
+                      <span class="quickview-price-amount js-quickview-price">0</span>
+                      <span class="quickview-price-currency">USD</span>
+                    </div>
+                  </div>
+
+                  <!-- Financing Info -->
+                  <div class="quickview-financing">
+                    <p class="affirm-as-low-as" data-page-type="product" data-amount="0" style="margin: 0;"></p>
+                  </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="quickview-cta">
+                  <!-- Error Message -->
+                  <div class="quickview-error-message-wrapper" role="alert" hidden>
+                    <span class="svg-wrapper">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                    </span>
+                    <span class="quickview-error-message"></span>
+                  </div>
+
+                  <div class="quickview-cta-buttons">
+                    <button type="button" class="quickview-btn quickview-btn-primary" data-quickview-add-to-cart>Add to Cart</button>
+                    <button type="button" class="quickview-btn quickview-btn-secondary" data-quickview-buy-now>Buy Now</button>
+                  </div>
+                  <button type="button" class="quickview-expert-link">Consult an Expert</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="quickview-description-panel">
+              <div class="quickview-description-section">
+                <h3 class="quickview-description-title">PRODUCT DESCRIPTION</h3>
+                <p class="quickview-description-text js-quickview-description"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Import Swiper CSS */
+  @import url('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+
+  /* Carousel Container */
+  .quickview-carousel-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 620 / 603.76;
+    flex-shrink: 0;
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .quickview-swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .quickview-swiper .swiper-wrapper {
+    height: 100%;
+  }
+
+  .quickview-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-light);
+  }
+
+  .quickview-swiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Navigation Buttons */
+  .quickview-swiper-prev,
+  .quickview-swiper-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    transition: all 200ms ease;
+    z-index: 10;
+    padding: 0;
+    gap: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .quickview-swiper-prev:hover,
+  .quickview-swiper-next:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .quickview-swiper-prev:focus-visible,
+  .quickview-swiper-next:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .quickview-swiper-prev:active,
+  .quickview-swiper-next:active {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .quickview-swiper-prev {
+    left: var(--spacing-md);
+  }
+
+  .quickview-swiper-next {
+    right: var(--spacing-md);
+  }
+
+  .quickview-swiper-prev:disabled,
+  .quickview-swiper-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  .quickview-swiper-prev svg,
+  .quickview-swiper-next svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  :root {
+    /* Typography */
+    --font-garamond: "EB Garamond", serif;
+    --font-montserrat: "Montserrat", sans-serif;
+    --font-inter: "Inter", sans-serif;
+
+    /* Colors */
+    --color-text-primary: #151515;
+    --color-text-secondary: #707070;
+    --color-text-muted: #2f2f2f;
+    --color-accent-primary: #78686f;
+    --color-accent-secondary: #69575f;
+    --color-accent-dark: #57434c;
+    --color-bg-light: #f5f5f5;
+    --color-bg-lighter: #fcfcfc;
+    --color-border: #e0e0e0;
+    --color-border-light: #15151580;
+
+    /* Spacing System */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 32px;
+    --spacing-4xl: 40px;
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+
+    /* Scrollbar */
+    --dimensions-scrollbar-margin-top: 33.5px;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ============================================
+     MODAL BACKDROP & CONTAINER
+     ============================================ */
+
+  .quickview-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+    padding-bottom: max(var(--spacing-lg), env(safe-area-inset-bottom));
+  }
+
+  .quickview-modal-container {
+    position: relative;
+    background-color: #ffffff;
+    border-radius: var(--radius-md);
+    max-height: min(95vh, 100% - 32px);
+    overflow-y: auto;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .quickview-modal-close {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: 1001;
+    background: none;
+    border: none;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-primary);
+    transition: color 200ms ease, background-color 200ms ease;
+    border-radius: var(--radius-sm);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .quickview-modal-close:hover {
+    color: var(--color-accent-primary);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .quickview-modal-close:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .quickview-modal-close:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* ============================================
+     LOADING & ERROR STATES
+     ============================================ */
+
+  .quickview-loading-state,
+  .quickview-error-state {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    text-align: center;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quickview-spinner {
+    border: 4px solid #f3f3f3;
+    border-top-color: var(--color-accent-primary);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto var(--spacing-lg);
+  }
+
+  .quickview-loading-state p,
+  .quickview-error-state p {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-family: var(--font-montserrat);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .quickview-error-retry {
+    margin-top: var(--spacing-lg);
+    min-width: 150px;
+    min-height: 44px;
+    padding: 12px 24px;
+    background-color: var(--color-accent-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: var(--font-montserrat);
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 200ms ease;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .quickview-error-retry:hover {
+    background-color: var(--color-accent-secondary);
+  }
+
+  .quickview-error-retry:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .quickview-error-retry:active {
+    transform: scale(0.98);
+  }
+
+  /* ============================================
+     MODAL MAIN LAYOUT
+     ============================================ */
+
+  .quickview-modal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    position: relative;
+    background-color: #ffffff;
+  }
+
+  
+  .quickview-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: auto;
+    align-items: stretch;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+
+  .quickview-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  /* ============================================
+     DETAILS PANEL
+     ============================================ */
+
+  .quickview-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    position: relative;
+    overflow: visible;
+  }
+
+  /* Scrollbar - Hidden by default, shown on desktop only */
+  .quickview-scrollbar {
+    display: none;
+  }
+
+  .quickview-scrollbar-track {
+    position: relative;
+    flex: 1;
+    width: 6px;
+    background-color: #ffffff24;
+    border-radius: 50px;
+    backdrop-filter: blur(12px) brightness(100%);
+    -webkit-backdrop-filter: blur(12px) brightness(100%);
+  }
+
+  .quickview-scrollbar-spacer {
+    position: absolute;
+    top: 32px;
+    left: 0;
+    width: 6px;
+    height: 214px;
+    background-color: #e6e6e6;
+    border-radius: 50px;
+  }
+
+  .quickview-scrollbar-thumb {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 6px;
+    height: 47px;
+    background-color: #cccccc;
+    border-radius: 50px;
+  }
+
+  /* Content Area */
+  .quickview-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: 0;
+    position: relative;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .quickview-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    position: relative;
+    width: 100%;
+  }
+
+  /* ============================================
+     HEADER SECTION
+     ============================================ */
+
+  .quickview-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    position: relative;
+    width: 100%;
+  }
+
+  .quickview-title-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .quickview-title {
+    margin: 0;
+    font-family: var(--font-garamond);
+    font-size: clamp(20px, 5vw, 27px);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+
+  .quickview-subtitle {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: clamp(11px, 2.5vw, 14px);
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    line-height: 1.3;
+  }
+
+  /* Specs Grid */
+  .quickview-specs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: var(--spacing-md);
+    position: relative;
+  }
+
+  .quickview-spec-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 140px;
+    gap: var(--spacing-sm);
+  }
+
+  .quickview-spec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--spacing-sm);
+  }
+
+  .quickview-spec-label {
+    font-family: var(--font-montserrat);
+    font-size: clamp(10px, 2.5vw, 11px);
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .quickview-spec-value {
+    font-family: var(--font-montserrat);
+    font-size: clamp(10px, 2.5vw, 11px);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+    text-align: right;
+  }
+
+  /* Price Section */
+  .quickview-price-section {
+    display: flex;
+    gap: var(--spacing-sm);
+    position: relative;
+    width: 100%;
+  }
+
+  .quickview-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .quickview-price-currency {
+    font-family: var(--font-montserrat);
+    font-size: clamp(20px, 4vw, 27px);
+    font-weight: 500;
+    color: var(--color-accent-secondary);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  .quickview-price-amount {
+    font-family: var(--font-montserrat);
+    font-size: clamp(24px, 7vw, 36px);
+    font-weight: 500;
+    color: var(--color-accent-secondary);
+    line-height: 1;
+  }
+
+  .quickview-price-currency:last-child {
+    font-family: var(--font-montserrat);
+    font-size: clamp(14px, 3vw, 20px);
+    font-weight: 600;
+    color: var(--color-accent-secondary);
+    letter-spacing: 0;
+  }
+
+  /* Financing Info */
+  .quickview-financing {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .quickview-financing .affirm-as-low-as {
+    font-family: var(--font-montserrat);
+    font-size: clamp(11px, 2.5vw, 13px);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     CTA SECTION
+     ============================================ */
+
+  .quickview-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-md);
+    position: relative;
+    width: 100%;
+  }
+
+  /* Error Message */
+  .quickview-error-message-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: #fee;
+    border: 1px solid #f4d4d4;
+    border-radius: var(--radius-sm);
+    color: #d32f2f;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .quickview-error-message-wrapper[hidden] {
+    display: none;
+  }
+
+  .quickview-error-message-wrapper .svg-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+    color: #d32f2f;
+    margin-top: 2px;
+  }
+
+  .quickview-error-message-wrapper .svg-wrapper svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .quickview-cta-buttons {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    gap: var(--spacing-md);
+    flex-direction: column;
+  }
+
+  .quickview-btn {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 20px;
+    font-family: var(--font-montserrat);
+    font-size: clamp(13px, 2.5vw, 15px);
+    font-weight: 500;
+    line-height: 1.3;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 200ms ease;
+    flex: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .quickview-btn-primary {
+    background-color: var(--color-accent-primary);
+    color: #ffffff;
+  }
+
+  .quickview-btn-primary:hover {
+    background-color: var(--color-accent-secondary);
+  }
+
+  .quickview-btn-primary:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .quickview-btn-primary:active {
+    transform: scale(0.98);
+    background-color: var(--color-accent-secondary);
+  }
+
+  .quickview-btn-secondary {
+    background-color: transparent;
+    color: #594242;
+    border: 1px solid #68565e;
+    text-decoration: none;
+  }
+
+  .quickview-btn-secondary:hover {
+    background-color: var(--color-bg-light);
+    border-color: var(--color-accent-primary);
+  }
+
+  .quickview-btn-secondary:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  .quickview-btn-secondary:active {
+    transform: scale(0.98);
+    background-color: var(--color-bg-light);
+  }
+
+  .quickview-expert-link {
+    all: unset;
+    font-family: var(--font-montserrat);
+    font-size: clamp(12px, 2.5vw, 13px);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--color-accent-dark);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 200ms ease;
+    padding: var(--spacing-sm);
+    margin: 0 calc(-1 * var(--spacing-sm));
+    border-radius: var(--radius-sm);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .quickview-expert-link:hover {
+    color: #3d2e35;
+  }
+
+  .quickview-expert-link:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+     DESCRIPTION SECTION
+     ============================================ */
+
+  .quickview-description-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-lg);
+    padding: 0;
+    position: relative;
+  }
+
+  .quickview-description-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+    background-color: #ffffff;
+  }
+
+  .quickview-description-title {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: clamp(13px, 3vw, 16px);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+
+  .quickview-description-text {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-size: clamp(14px, 2.5vw, 16px);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+
+  /* ============================================
+     MOBILE & TABLET RESPONSIVE
+     Desktop design (1024px+) remains unchanged
+     ============================================ */
+
+  /* SMALL PHONES: 320px - 479px */
+  @media (max-width: 479px) {
+    .quickview-modal-backdrop {
+      padding: var(--spacing-sm);
+      padding-bottom: max(var(--spacing-sm), env(safe-area-inset-bottom));
+    }
+
+    .quickview-modal-container {
+      max-height: min(95vh, 100% - 16px);
+      border-radius: var(--radius-sm);
+      width: calc(100% - 16px);
+    }
+
+    .quickview-modal {
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+    }
+
+    .quickview-main {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-panel {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-content {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-cta {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-cta-buttons {
+      gap: var(--spacing-xs);
+    }
+
+    .quickview-btn {
+      min-height: 40px;
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+
+    .quickview-title {
+      font-size: 20px;
+    }
+
+    .quickview-subtitle {
+      font-size: 12px;
+    }
+
+    .quickview-spec-label,
+    .quickview-spec-value {
+      font-size: 10px;
+    }
+
+    .quickview-price-amount {
+      font-size: 24px;
+    }
+
+    .quickview-price-currency {
+      font-size: 18px;
+    }
+
+    .quickview-financing {
+      gap: var(--spacing-xs);
+    }
+
+    .quickview-affirm-logo {
+      width: 40px;
+    }
+
+    .quickview-scrollbar {
+      display: none !important;
+    }
+  }
+
+  /* PHONES & SMALL TABLETS: 480px - 767px */
+  @media (min-width: 480px) and (max-width: 767px) {
+    .quickview-modal-backdrop {
+      padding: var(--spacing-md);
+      padding-bottom: max(var(--spacing-md), env(safe-area-inset-bottom));
+    }
+
+    .quickview-modal-container {
+      max-height: min(95vh, 100% - 32px);
+    }
+
+    .quickview-modal {
+      gap: var(--spacing-lg);
+      padding: var(--spacing-lg);
+    }
+
+    .quickview-main {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-panel {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-cta-buttons {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-financing {
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+
+    .quickview-scrollbar {
+      display: none !important;
+    }
+
+    .quickview-btn {
+      min-height: 44px;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    .quickview-specs-grid {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-spec-column {
+      min-width: 120px;
+    }
+  }
+
+  /* TABLETS: 768px - 1023px */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .quickview-modal-backdrop {
+      padding: var(--spacing-lg);
+      padding-bottom: max(var(--spacing-lg), env(safe-area-inset-bottom));
+    }
+
+    .quickview-modal-container {
+      max-width: min(95vw, 900px);
+      max-height: min(90vh, 100% - 32px);
+    }
+
+    .quickview-modal {
+      gap: var(--spacing-lg);
+      padding: var(--spacing-lg);
+    }
+
+    .quickview-main {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-panel {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-content {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-scrollbar {
+      display: none !important;
+    }
+
+    .quickview-cta-buttons {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-btn {
+      min-height: 48px;
+      padding: 14px 24px;
+      font-size: 14px;
+    }
+
+    .quickview-specs-grid {
+      gap: var(--spacing-lg);
+    }
+
+    .quickview-spec-column {
+      min-width: 140px;
+    }
+
+    .quickview-swiper-prev,
+    .quickview-swiper-next {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+    }
+
+    .quickview-financing {
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+
+    .quickview-description-panel {
+      gap: var(--spacing-lg);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--spacing-md);
+    }
+  }
+
+  /* LANDSCAPE ORIENTATION: Prevents modal from being too tall */
+  @media (max-height: 600px) {
+    .quickview-modal-container {
+      max-height: 95vh;
+    }
+
+    .quickview-carousel-container {
+      min-height: 200px;
+      max-height: 350px;
+    }
+
+    .quickview-main {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-panel {
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-wrapper {
+      gap: var(--spacing-md);
+    }
+
+    .quickview-cta {
+      gap: var(--spacing-xs);
+    }
+
+    .quickview-description-panel {
+      display: none;
+    }
+  }
+
+  /* DESKTOP: 1024px+ - Restore original side-by-side layout */
+  @media (min-width: 1024px) {
+    .quickview-main {
+      flex-direction: row;
+      gap: 0;
+      height: 600px;
+      align-items: flex-start;
+    }
+
+    .quickview-carousel-container {
+      width: 620px;
+      height: 603.76px;
+      flex-shrink: 0;
+    }
+
+    .quickview-panel {
+      width: 544px;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .quickview-content {
+      gap: 6.63px;
+      padding: 0 22.49px;
+      overflow-y: auto;
+    }
+
+    .quickview-wrapper {
+      gap: 33.17px;
+    }
+
+    .quickview-scrollbar {
+      display: inline-flex;
+      flex-direction: column;
+      height: 291px;
+      align-items: center;
+      padding: var(--dimensions-scrollbar-margin-top) 2px var(--dimensions-scrollbar-margin-top) 2px;
+      position: absolute;
+      top: 309px;
+      left: 534px;
+      z-index: 2;
+    }
+
+    .quickview-header {
+      gap: 7.96px;
+      width: 447.56px;
+    }
+
+    .quickview-title-section {
+      gap: 6.75px;
+      width: 447.56px;
+    }
+
+    .quickview-title {
+      font-size: 27px;
+    }
+
+    .quickview-subtitle {
+      font-size: 13.3px;
+    }
+
+    .quickview-specs-grid {
+      width: 498.15px;
+      gap: 13.49px;
+      flex-wrap: nowrap;
+    }
+
+    .quickview-spec-column {
+      
+      min-width: auto;
+      max-width: 169.81px;
+      gap: 7.96px;
+    }
+
+    .quickview-spec-label,
+    .quickview-spec-value {
+      font-size: 10.6px;
+      letter-spacing: 0.47px;
+    }
+
+    .quickview-price-section {
+      gap: 3.37px;
+    }
+
+    .quickview-price {
+      gap: 3.37px;
+    }
+
+    .quickview-price-currency {
+      font-size: 27px;
+      letter-spacing: 2.25px;
+    }
+
+    .quickview-price-amount {
+      font-size: 36px;
+    }
+
+    .quickview-price-currency:last-child {
+      font-size: 20.2px;
+      letter-spacing: -0.56px;
+    }
+
+    .quickview-financing {
+      flex-direction: row;
+      gap: var(--spacing-sm);
+    }
+
+    .quickview-financing-text {
+      font-size: 13.3px;
+      opacity: 0.6;
+    }
+
+    .quickview-financing-amount {
+      font-weight: 600;
+    }
+
+    .quickview-affirm-logo {
+      width: 52.41px;
+      height: 22.12px;
+      aspect-ratio: auto;
+      background-size: cover;
+    }
+
+    .quickview-financing-link {
+      font-size: 13.3px;
+    }
+
+    .quickview-cta {
+      align-items: flex-end;
+      gap: 11.06px;
+    }
+
+    .quickview-cta-buttons {
+      flex-direction: row;
+      gap: 0;
+      align-items: center;
+    }
+
+    .quickview-btn {
+      min-height: auto;
+      padding: 17.99px 35.98px;
+      font-size: 15.7px;
+      line-height: 1;
+    }
+
+    .quickview-btn-primary {
+      margin-right: 11.25px;
+    }
+
+    .quickview-expert-link {
+      font-size: 13.3px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .quickview-description-panel {
+      width: 544px;
+      gap: var(--spacing-xl);
+      padding: 0 22.5px;
+      border-top: none;
+      margin-top: 0;
+    }
+
+    .quickview-description-title {
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      line-height: 1;
+    }
+
+    .quickview-description-text {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+<script>
+  /**
+   * Quick View Modal Manager
+   * Handles single modal instance with dynamic product data loading
+   */
+  (function() {
+    'use strict';
+
+    class QuickViewModal {
+      constructor() {
+        this.backdrop = document.querySelector('[data-quick-view-modal-backdrop]');
+        this.closeBtn = document.querySelector('[data-quick-view-close]');
+        this.loadingEl = document.querySelector('[data-quick-view-loading]');
+        this.errorEl = document.querySelector('[data-quick-view-error]');
+        this.contentEl = document.querySelector('[data-quick-view-content]');
+        this.retryBtn = document.querySelector('[data-quick-view-retry]');
+
+        // DOM element cache
+        this.titleEl = document.querySelector('.js-quickview-title');
+        this.subtitleEl = document.querySelector('.js-quickview-subtitle');
+        this.modelEl = document.querySelector('.js-quickview-model');
+        this.yearEl = document.querySelector('.js-quickview-year');
+        this.conditionEl = document.querySelector('.js-quickview-condition');
+        this.priceEl = document.querySelector('.js-quickview-price');
+        this.descriptionEl = document.querySelector('.js-quickview-description');
+        this.addToCartBtn = document.querySelector('[data-quickview-add-to-cart]');
+        this.buyNowBtn = document.querySelector('[data-quickview-buy-now]');
+        this.affirm_widget = document.querySelector('.quickview-financing .affirm-as-low-as');
+
+        // Error message elements
+        this.errorMessageWrapper = document.querySelector('.quickview-error-message-wrapper');
+        this.errorMessage = this.errorMessageWrapper ? this.errorMessageWrapper.querySelector('.quickview-error-message') : null;
+
+        // Cart notification (use existing theme component)
+        this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+
+        // Carousel elements
+        this.swiperContainer = document.querySelector('.quickview-swiper');
+        this.swiperWrapper = document.querySelector('.swiper-wrapper');
+        this.swiperPrevBtn = document.querySelector('.quickview-swiper-prev');
+        this.swiperNextBtn = document.querySelector('.quickview-swiper-next');
+
+        // Product data
+        this.currentTrigger = null;
+        this.currentProductHandle = null;
+        this.currentVariantId = null;
+        this.currentProductUrl = null;
+        this.swiper = null;
+        this.init();
+      }
+
+      init() {
+        // Event delegation for quick view triggers
+        document.addEventListener('click', (e) => {
+          const trigger = e.target.closest('[data-quick-view-trigger]');
+          if (trigger) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.open(trigger);
+          }
+        });
+
+        // Close button
+        if (this.closeBtn) {
+          this.closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.close();
+          });
+        }
+
+        // Backdrop click
+        if (this.backdrop) {
+          this.backdrop.addEventListener('click', (e) => {
+            if (e.target === this.backdrop) {
+              this.close();
+            }
+          });
+        }
+
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.backdrop && this.backdrop.style.display === 'flex') {
+            this.close();
+          }
+        });
+
+        // Retry button
+        if (this.retryBtn) {
+          this.retryBtn.addEventListener('click', () => {
+            if (this.currentTrigger) {
+              this.loadProductData(this.currentTrigger);
+            }
+          });
+        }
+
+        // Prevent modal content from closing
+        const modalContainer = document.querySelector('.quickview-modal-container');
+        if (modalContainer) {
+          modalContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+          });
+        }
+
+        // Add to Cart button
+        if (this.addToCartBtn) {
+          this.addToCartBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.addToCart();
+          });
+        }
+
+        // Buy Now button
+        if (this.buyNowBtn) {
+          this.buyNowBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.buyNow();
+          });
+        }
+      }
+
+      open(trigger) {
+        this.currentTrigger = trigger;
+        this.showLoading();
+        this.backdrop.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+          if (this.closeBtn) this.closeBtn.focus();
+        }, 100);
+
+        this.loadProductData(trigger);
+      }
+
+      close() {
+        this.backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+        this.currentTrigger = null;
+        // Clear error message when closing
+        this.handleErrorMessage(false);
+      }
+
+      handleErrorMessage(errorMessage = false) {
+        if (!this.errorMessageWrapper || !this.errorMessage) return;
+
+        this.errorMessageWrapper.toggleAttribute('hidden', !errorMessage);
+
+        if (errorMessage) {
+          this.errorMessage.textContent = errorMessage;
+        }
+      }
+
+      loadProductData(trigger) {
+        try {
+          const productData = {
+            title: trigger.getAttribute('data-product-title') || 'Product',
+            price: trigger.getAttribute('data-product-price') || '0',
+            featured_image: {
+              src: trigger.getAttribute('data-product-featured-image') || ''
+            },
+            url: trigger.getAttribute('data-product-url') || '#',
+            handle: trigger.getAttribute('data-product-handle') || '',
+            metafields: {
+              dial_color: trigger.getAttribute('data-product-dial-color') || 'N/A',
+              case_size: trigger.getAttribute('data-product-case-size') || 'N/A',
+              model: trigger.getAttribute('data-product-model') || '—',
+              year: trigger.getAttribute('data-product-year') || '—',
+              condition: trigger.getAttribute('data-product-condition') || '—'
+            }
+          };
+
+          // Store product info for cart operations
+          this.currentProductHandle = productData.handle;
+          this.currentProductUrl = productData.url;
+
+          this.populateModal(productData);
+          this.fetchProductDescriptionAndImages(productData.handle, productData.featured_image.src);
+          this.showContent();
+        } catch (error) {
+          console.error('Error loading product data:', error);
+          this.showError();
+        }
+      }
+
+      populateModal(productData) {
+        const cleanTitle = productData.title.replace('Pre-Owned Rolex ', '');
+
+        if (this.titleEl) this.titleEl.textContent = cleanTitle;
+
+        if (this.subtitleEl) {
+          const dialColor = productData.metafields.dial_color || 'N/A';
+          const caseSize = productData.metafields.case_size || 'N/A';
+          this.subtitleEl.textContent = `${dialColor} | ${caseSize}`;
+        }
+
+        if (this.modelEl) this.modelEl.textContent = productData.metafields.model || '—';
+        if (this.yearEl) this.yearEl.textContent = productData.metafields.year || '—';
+        if (this.conditionEl) this.conditionEl.textContent = productData.metafields.condition || '—';
+
+        // Format price for display: convert cents to dollars with comma separator
+        const priceInCents = parseInt(productData.price) || 0;
+        const priceInDollars = (priceInCents / 100).toFixed(2);
+        const formattedPrice = new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(Math.floor(priceInDollars));
+
+        if (this.priceEl) this.priceEl.textContent = formattedPrice;
+
+        if (productData.featured_image.src && this.imageEl) {
+          this.imageEl.src = productData.featured_image.src;
+          this.imageEl.alt = cleanTitle;
+        }
+
+        if (this.buyNowBtn) this.buyNowBtn.href = productData.url;
+
+        // Update Affirm widget with dynamic price
+        // Affirm requires recreating the widget element for it to update with new price
+        if (this.affirm_widget) {
+          const container = this.affirm_widget.parentElement;
+          if (container) {
+            // Create new widget element with updated price (use raw cents value for Affirm)
+            const newWidget = document.createElement('p');
+            newWidget.className = 'affirm-as-low-as';
+            newWidget.setAttribute('data-page-type', 'product');
+            newWidget.setAttribute('data-amount', productData.price);
+            newWidget.style.margin = '0';
+
+            // Replace old widget with new one
+            container.replaceChild(newWidget, this.affirm_widget);
+            this.affirm_widget = newWidget;
+
+            // Refresh Affirm UI to render the new widget
+            if (window.affirm && window.affirm.ui && window.affirm.ui.refresh) {
+              window.affirm.ui.refresh();
+            }
+          }
+        }
+      }
+
+      async fetchProductDescriptionAndImages(productHandle, featuredImageSrc) {
+        try {
+          // Always initialize carousel with at least featured image
+          if (!productHandle) {
+            console.log('No product handle provided, using featured image');
+            this.setDefaultDescription();
+            this.initializeCarousel([{ src: featuredImageSrc, alt: 'Product' }]);
+            return;
+          }
+
+          const response = await fetch(`/products/${productHandle}.js`);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+          const fullProductData = await response.json();
+          console.log('Fetched product data:', fullProductData);
+
+          // Store first available variant ID for cart operations
+          if (fullProductData.variants && fullProductData.variants.length > 0) {
+            this.currentVariantId = fullProductData.variants[0].id;
+            console.log('Stored variant ID:', this.currentVariantId);
+          }
+
+          // Extract description
+          const description = fullProductData.body_html || '';
+          const plainText = description.replace(/<[^>]*>/g, '').substring(0, 300);
+          if (this.descriptionEl) {
+            this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
+          }
+
+          // Extract images - handle different response formats
+          let images = [];
+          if (fullProductData.images && Array.isArray(fullProductData.images)) {
+            images = fullProductData.images.map((img) => ({
+              src: typeof img === 'string' ? img : (img.src || ''),
+              alt: img.alt || 'Product image'
+            })).filter(img => img.src);
+          } else if (fullProductData.featured_image) {
+            images = [{ src: fullProductData.featured_image.src, alt: 'Product' }];
+          }
+
+          console.log('Extracted images:', images);
+
+          // Use product images if available, otherwise use featured image
+          const imagesToUse = images.length > 0 ? images : [{ src: featuredImageSrc, alt: 'Product' }];
+          console.log('Images to use:', imagesToUse);
+          this.initializeCarousel(imagesToUse);
+        } catch (error) {
+          console.error('Error fetching product description and images:', error);
+          this.setDefaultDescription();
+          // Fallback to featured image on error
+          console.log('Using fallback featured image:', featuredImageSrc);
+          this.initializeCarousel([{ src: featuredImageSrc, alt: 'Product' }]);
+        }
+      }
+
+      setDefaultDescription() {
+        if (this.descriptionEl) {
+          this.descriptionEl.textContent = 'Experience the refined craftsmanship of premium timepieces.';
+        }
+      }
+
+      initializeCarousel(images) {
+        try {
+          // Query the wrapper fresh to ensure we have the current element
+          const swiperWrapper = document.querySelector('.swiper-wrapper');
+          console.log('Swiper wrapper element:', swiperWrapper);
+          console.log('Images to populate:', images);
+
+          if (!swiperWrapper) {
+            console.error('Swiper wrapper element not found!');
+            return;
+          }
+
+          // Clear previous slides
+          swiperWrapper.innerHTML = '';
+
+          // Populate carousel with images
+          images.forEach((img, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'swiper-slide';
+            const imgElement = document.createElement('img');
+            imgElement.src = img.src;
+            imgElement.alt = img.alt || `Product image ${index + 1}`;
+            imgElement.loading = 'lazy';
+            slide.appendChild(imgElement);
+            swiperWrapper.appendChild(slide);
+            console.log(`Added image ${index + 1}:`, img.src);
+          });
+
+          console.log('Carousel populated with', images.length, 'images');
+
+          // Destroy existing Swiper instance if it exists
+          if (this.swiper) {
+            this.swiper.destroy();
+            this.swiper = null;
+          }
+
+          // Initialize Swiper - wait for library to be available
+          const initSwiper = () => {
+            if (typeof Swiper === 'undefined') {
+              console.log('Swiper library not yet available, retrying...');
+              setTimeout(initSwiper, 100);
+              return;
+            }
+
+            const swiperContainer = document.querySelector('.quickview-swiper');
+            if (!swiperContainer) {
+              console.error('Swiper container not found!');
+              return;
+            }
+
+            try {
+              this.swiper = new Swiper(swiperContainer, {
+                loop: images.length > 1,
+                navigation: {
+                  nextEl: '.quickview-swiper-next',
+                  prevEl: '.quickview-swiper-prev',
+                  disabledClass: 'swiper-button-disabled'
+                },
+                keyboard: {
+                  enabled: true,
+                  onlyInViewport: false
+                },
+                touchEventsTarget: 'container',
+                spaceBetween: 0,
+                speed: 300
+              });
+              console.log('Swiper initialized successfully');
+            } catch (error) {
+              console.error('Error initializing Swiper:', error);
+            }
+          };
+
+          initSwiper();
+        } catch (error) {
+          console.error('Error initializing carousel:', error);
+        }
+      }
+
+      async addToCart() {
+        if (!this.currentVariantId) {
+          console.error('No variant ID available');
+          this.handleErrorMessage('Unable to add product to cart. Please try again.');
+          return;
+        }
+
+        try {
+          this.addToCartBtn.disabled = true;
+          this.addToCartBtn.textContent = 'Adding...';
+          this.handleErrorMessage(false);
+
+          const config = fetchConfig('javascript');
+          config.headers['X-Requested-With'] = 'XMLHttpRequest';
+          delete config.headers['Content-Type'];
+
+          const formData = new FormData();
+          formData.append('id', this.currentVariantId);
+          formData.append('quantity', 1);
+
+          // Request sections from cart so renderContents() works
+          if (this.cart) {
+            // Get sections to render from cart component
+            const sectionIds = this.cart.getSectionsToRender().map((section) => section.id);
+            console.log('Requesting sections:', sectionIds);
+
+            formData.append('sections', sectionIds);
+            formData.append('sections_url', window.location.pathname);
+            this.cart.setActiveElement(document.activeElement);
+          } else {
+            // Fallback: request common cart sections if cart component not found
+            formData.append('sections', 'cart-drawer,cart-notification');
+            formData.append('sections_url', window.location.pathname);
+          }
+
+          config.body = formData;
+
+          console.log('Adding to cart with variant ID:', this.currentVariantId);
+          const response = await fetch(window.routes.cart_add_url, config);
+
+          if (!response.ok) {
+            const errorData = await response.text();
+            console.error('Cart API error response:', errorData);
+
+            // Try to parse JSON error response
+            try {
+              const errorJson = JSON.parse(errorData);
+              const errorMessage = errorJson.message || errorJson.description || `Failed to add to cart (Error ${response.status})`;
+              throw new Error(errorMessage);
+            } catch (e) {
+              if (e instanceof SyntaxError) {
+                throw new Error(`Failed to add to cart (Error ${response.status})`);
+              }
+              throw e;
+            }
+          }
+
+          const data = await response.json();
+          console.log('Added to cart:', data);
+
+          // Update cart UI using theme's existing cart notification component
+          if (this.cart) {
+            // Render the updated cart content with the response
+            if (this.cart.renderContents) {
+              this.cart.renderContents(data);
+            }
+
+            // Remove the 'is-empty' class if cart was previously empty
+            // This is critical for proper display when transitioning from empty to full cart
+            if (this.cart.classList.contains('is-empty')) {
+              this.cart.classList.remove('is-empty');
+              console.log('Removed is-empty class from cart');
+            }
+          }
+
+          // Reset button state
+          this.addToCartBtn.disabled = false;
+          this.addToCartBtn.textContent = 'Add to Cart';
+
+          // Close modal after successful add
+          this.close();
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          this.addToCartBtn.disabled = false;
+          this.addToCartBtn.textContent = 'Add to Cart';
+          this.handleErrorMessage(error.message || 'Failed to add product to cart. Please try again.');
+        }
+      }
+
+      async buyNow() {
+        if (!this.currentVariantId) {
+          console.error('No variant ID available');
+          this.handleErrorMessage('Unable to complete purchase. Please try again.');
+          return;
+        }
+
+        try {
+          this.buyNowBtn.disabled = true;
+          this.buyNowBtn.textContent = 'Loading...';
+          this.handleErrorMessage(false);
+
+          const config = fetchConfig('javascript');
+          config.headers['X-Requested-With'] = 'XMLHttpRequest';
+          delete config.headers['Content-Type'];
+
+          const formData = new FormData();
+          formData.append('id', this.currentVariantId);
+          formData.append('quantity', 1);
+          config.body = formData;
+
+          console.log('Adding to cart with variant ID:', this.currentVariantId);
+          const response = await fetch(window.routes.cart_add_url, config);
+
+          if (!response.ok) {
+            const errorData = await response.text();
+            console.error('Cart API error response:', errorData);
+
+            // Try to parse JSON error response
+            try {
+              const errorJson = JSON.parse(errorData);
+              const errorMessage = errorJson.message || errorJson.description || `Failed to add to cart (Error ${response.status})`;
+              throw new Error(errorMessage);
+            } catch (e) {
+              if (e instanceof SyntaxError) {
+                throw new Error(`Failed to add to cart (Error ${response.status})`);
+              }
+              throw e;
+            }
+          }
+
+          const data = await response.json();
+          console.log('Added to cart:', data);
+
+          // Redirect to cart after successful add
+          window.location.href = window.routes.cart_url;
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          this.buyNowBtn.disabled = false;
+          this.buyNowBtn.textContent = 'Buy Now';
+          this.handleErrorMessage(error.message || 'Failed to add product to cart. Please try again.');
+        }
+      }
+
+      showLoading() {
+        if (this.loadingEl) this.loadingEl.style.display = 'block';
+        if (this.errorEl) this.errorEl.style.display = 'none';
+        if (this.contentEl) this.contentEl.style.display = 'none';
+      }
+
+      showContent() {
+        if (this.loadingEl) this.loadingEl.style.display = 'none';
+        if (this.errorEl) this.errorEl.style.display = 'none';
+        if (this.contentEl) this.contentEl.style.display = 'block';
+      }
+
+      showError() {
+        if (this.loadingEl) this.loadingEl.style.display = 'none';
+        if (this.contentEl) this.contentEl.style.display = 'none';
+        if (this.errorEl) this.errorEl.style.display = 'block';
+      }
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        new QuickViewModal();
+      });
+    } else {
+      new QuickViewModal();
+    }
+  })();
+</script>

@@ -245,6 +245,9 @@ $(document).ready(function() {
     position:relative;
     cursor: pointer;
     padding-right: 40px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 .m-faq .m-accordion-open {
     
@@ -286,20 +289,30 @@ $(document).ready(function() {
     font-weight: 500;
     line-height: normal;
     opacity: 0.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 100%;
+    box-sizing: border-box;
 }
 .m-faq .faqpage div.content ul {
     padding:0;
     margin:0;
     padding:3px;
+    width: 100%;
 }
 .m-faq .faqpage div.content p {
     padding:0;
     margin:3px 0 10px;
     padding:3px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 .m-faq .faqpage div.content ul li {
     list-style-position:inside;
     line-height:25px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 @media only screen and (max-width: 749px) {
@@ -323,7 +336,9 @@ $(document).ready(function() {
   }
   .m-faq .m-accordion {
       padding:20px 0;
-      font-size: 16px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
   }
   .m-faq .m-accordion svg {
       width: 20px;
@@ -364,6 +379,22 @@ $(document).ready(function() {
       line-height:25px;
   }
 }
+
+@media only screen and (max-width: 375px) {
+  .m-faq .m-accordion {
+      font-size: 13px;
+      padding:16px 0;
+  }
+  .m-faq .faqpage div.content {
+      font-size: 13px;
+  }
+  .m-faq .faqpage div.content p {
+      margin:2px 0 8px;
+  }
+  .m-faq .faqpage div.content ul li {
+      line-height:22px;
+  }
+}
 </style>
 <style>
   .m-multi-tabs-section {
@@ -390,8 +421,16 @@ $(document).ready(function() {
     font-weight: 400;
     line-height: 140%; /* 21px */
     border: none;
-    border-right: 1px solid rgba(21, 21, 21, 0.10);
+    border-bottom: 2px solid rgba(21, 21, 21, 0.10);
     background: var(--Primary-Light, #F8F6F2);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .m-multi-tabs__tablist>.m-multi-tabs__tab:last-child {
     border-right: none;
@@ -405,7 +444,6 @@ $(document).ready(function() {
     font-style: normal;
     font-weight: 600;
     line-height: 140%; /* 22.4px */
-    border-right: none;
     background: #fff;
   }
   .m-multi-tabs__panel-inner {
@@ -413,6 +451,33 @@ $(document).ready(function() {
     max-width: 1000px;
     text-align: center;
     margin: auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .m-multi-tabs__panel-inner.rte {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .m-multi-tabs__panel-inner.rte img,
+  .m-multi-tabs__panel-inner.rte table,
+  .m-multi-tabs__panel-inner.rte iframe,
+  .m-multi-tabs__panel-inner.rte video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .m-multi-tabs__panel-inner.rte ul,
+  .m-multi-tabs__panel-inner.rte ol {
+    margin: 16px auto;
+    padding: 0 20px;
+  }
+  .m-multi-tabs__panel-inner.rte p,
+  .m-multi-tabs__panel-inner.rte li {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   .m-multi-tabs__panels { display: grid; }
   .m-multi-tabs__panel { min-height: 12rem; padding: .5rem 0; }
@@ -437,8 +502,12 @@ $(document).ready(function() {
     font-weight: 400;
     line-height: 140%; /* 22.4px */
     text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
-  .m-product-specs { 
+  .m-product-specs {
     display: flex;
     width: 100%;
     max-width: 496px;
@@ -453,6 +522,8 @@ $(document).ready(function() {
   }
   .m-product-specs tbody tr {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
   }
   .m-product-specs tbody>tr.product-specs__row {
     background: #fff;
@@ -466,45 +537,136 @@ $(document).ready(function() {
     font-style: normal;
     font-weight: 400;
     line-height: 130%; /* 15.6px */
-    padding: 10px 12px;
+    padding: 12px 12px;
     width: 35%;
     border: 1px solid #15151555;
     text-transform: capitalize;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
   .m-product-specs tbody tr>td:last-child {
     width: 65%;
   }
+  .product-specs__cell {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .product-specs__cell--label {
+    font-weight: 600;
+  }
+  .product-specs__cell--value {
+    text-align: right;
+  }
 
   @media only screen and (max-width: 749px) {
     .m-multi-tabs-section {
-        margin-top: 62px;
+        margin-top: 40px;
         background: #FFF;
     }
     .m-multi-tabs__tablist {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0;
         flex-wrap: wrap;
         width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     .m-multi-tabs__tab {
-        padding: 12px 10px;
-        width: 50%;
-        font-size: 14px;
+        padding: 14px 12px;
+        width: auto;
+        flex: 1 1 50%;
+        min-width: 100px;
+        font-size: 13px;
+        line-height: 1.3;
+        min-height: 44px;
     }
     .m-multi-tabs__tab[aria-selected="true"] {
-        font-size: 14px;
+        font-size: 13px;
     }
     .m-multi-tabs__panel-inner {
-        padding: 40px 20px;
+        padding: 30px 16px;
         max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    .m-multi-tabs__panel-inner.rte img,
+    .m-multi-tabs__panel-inner.rte table,
+    .m-multi-tabs__panel-inner.rte iframe,
+    .m-multi-tabs__panel-inner.rte video {
+        max-width: 100%;
+        width: 100%;
+    }
+    .m-multi-tabs__panel-inner.rte ul,
+    .m-multi-tabs__panel-inner.rte ol {
+        padding: 0 16px;
+        text-align: left;
     }
     .m-multi-tabs__panel-inner h3 {
-        font-size: 32px;
-        margin-bottom: 20px;
+        font-size: 28px;
+        margin-bottom: 16px;
+        line-height: 1.2;
     }
     .m-multi-tabs__panel-inner-content {
         font-size: 14px;
+        line-height: 1.6;
+    }
+    .m-product-specs {
+        max-width: 100%;
+        margin-top: 30px;
+    }
+    .m-product-specs tbody td {
+        font-size: 11px;
+        padding: 10px 8px;
+    }
+  }
+
+  @media only screen and (max-width: 375px) {
+    .m-multi-tabs__tab {
+        padding: 12px 8px;
+        flex: 1 1 50%;
+        min-width: 80px;
+        font-size: 12px;
+        min-height: 42px;
+    }
+    .m-multi-tabs__panel-inner {
+        padding: 24px 12px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    .m-multi-tabs__panel-inner.rte img,
+    .m-multi-tabs__panel-inner.rte table,
+    .m-multi-tabs__panel-inner.rte iframe,
+    .m-multi-tabs__panel-inner.rte video {
+        max-width: 100%;
+        width: 100%;
+    }
+    .m-multi-tabs__panel-inner.rte ul,
+    .m-multi-tabs__panel-inner.rte ol {
+        padding: 0 12px;
+        text-align: left;
+    }
+    .m-multi-tabs__panel-inner h3 {
+        font-size: 24px;
+        margin-bottom: 12px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    .m-multi-tabs__panel-inner-content {
+        font-size: 13px;
+    }
+    .m-product-specs {
+        max-width: 100%;
+        width: 100%;
+    }
+    .m-product-specs tbody td {
+        font-size: 10px;
+        padding: 8px 6px;
+        word-break: break-word;
+        overflow-wrap: break-word;
     }
   }
 </style>
