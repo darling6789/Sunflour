@@ -37,6 +37,59 @@
         padding-bottom: {{ section.settings.padding_bottom }}px;
       }
     }
+
+    /* Breadcrumbs Styles */
+    .breadcrumbs {
+      margin-bottom: 1rem;
+    }
+
+    .breadcrumbs__list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.875rem;
+      color: rgba(var(--color-foreground), 0.7);
+    }
+
+    .breadcrumbs__item {
+      display: flex;
+      align-items: center;
+    }
+
+    .breadcrumbs__item:not(:last-child)::after {
+      content: '/';
+      margin: 0 0.5rem;
+      color: rgba(var(--color-foreground), 0.5);
+    }
+
+    .breadcrumbs__link {
+      color: rgba(var(--color-foreground), 0.7);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .breadcrumbs__link:hover {
+      color: rgba(var(--color-foreground), 1);
+      text-decoration: underline;
+    }
+
+    .breadcrumbs__item--current {
+      color: rgba(var(--color-foreground), 1);
+      font-weight: 500;
+    }
+
+    @media screen and (max-width: 749px) {
+      .breadcrumbs__list {
+        font-size: 0.8rem;
+      }
+      
+      .breadcrumbs__item:not(:last-child)::after {
+        margin: 0 0.25rem;
+      }
+    }
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -74,6 +127,75 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
+    {%- comment -%} Breadcrumbs positioned at top-left of main product section {%- endcomment -%}
+    {%- if section.settings.show_breadcrumbs -%}
+      {%- comment -%} Get collection from referrer or URL parameters {%- endcomment -%}
+      {%- assign breadcrumb_collection = collection -%}
+      {%- unless breadcrumb_collection -%}
+        {%- comment -%} Check for collection in URL parameters {%- endcomment -%}
+        {%- if request.page_type == 'product' and request.query_string contains 'collection=' -%}
+          {%- assign collection_handle = request.query_string | split: 'collection=' | last | split: '&' | first -%}
+          {%- assign breadcrumb_collection = collections[collection_handle] -%}
+        {%- endif -%}
+      {%- endunless -%}
+      
+      {%- comment -%} Fallback to first non-"All products" collection {%- endcomment -%}
+      {%- unless breadcrumb_collection -%}
+        {%- for product_collection in product.collections -%}
+          {%- unless product_collection.handle == 'all' -%}
+            {%- assign breadcrumb_collection = product_collection -%}
+            {%- break -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endunless -%}
+      
+      <nav class="breadcrumbs breadcrumbs--product" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item">
+            <a href="{{ routes.root_url }}" class="breadcrumbs__link">
+              Home
+            </a>
+          </li>
+          {%- if breadcrumb_collection -%}
+            <li class="breadcrumbs__item">
+              <a href="{{ breadcrumb_collection.url }}" class="breadcrumbs__link">
+                {{ breadcrumb_collection.title | escape }}
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if product.metafields.custom.brand != blank -%}
+            <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+              {{ product.metafields.custom.brand | escape }}
+            </li>
+          {%- else -%}
+            <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+              {{ product.title | escape }}
+            </li>
+          {%- endif -%}
+        </ol>
+      </nav>
+      
+      {%- comment -%} JavaScript to track collection referrer {%- endcomment -%}
+      <script>
+        (function() {
+          // Check if we came from a collection page
+          const referrer = document.referrer;
+          if (referrer && referrer.includes('/collections/')) {
+            const collectionMatch = referrer.match(/\/collections\/([^\/\?]+)/);
+            if (collectionMatch) {
+              const collectionHandle = collectionMatch[1];
+              // Update breadcrumb link if it exists
+              const breadcrumbLink = document.querySelector('.breadcrumbs--product .breadcrumbs__link[href*="/collections/"]');
+              if (breadcrumbLink) {
+                breadcrumbLink.href = '/collections/' + collectionHandle;
+                breadcrumbLink.textContent = collectionHandle.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+              }
+            }
+          }
+        })();
+      </script>
+    {%- endif -%}
+    
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
@@ -2711,6 +2833,12 @@
       "id": "enable_video_looping",
       "default": false,
       "label": "t:sections.main-product.settings.enable_video_looping.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "default": true,
+      "label": "Show breadcrumbs"
     },
     {
       "type": "header",
