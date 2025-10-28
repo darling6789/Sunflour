@@ -773,37 +773,52 @@
                 </div>
               {% when 'rolex_watch_metafields' %}
                 <div class="rolex-watch-metafields">
-                  <div>{{ product.metafields.custom.watch_band_type }} | {{ product.metafields.custom.watch_case_size }}</div>
+                  <div>
+                    {{ product.metafields.custom.watch_band_type }} | {{ product.metafields.custom.watch_case_size }}
+                  </div>
                   <div class="rolex-watch-metafields__content">
                     <div class="rolex-watch-metafields__content-item-wrapper">
                       <div class="rolex-watch-metafields__content-item">
                         <div class="rolex-watch-metafields__content-item-label">MODEL</div>
-                        <div class="rolex-watch-metafields__content-item-value">{{ product.metafields.custom.watch_reference }}</div>
+                        <div class="rolex-watch-metafields__content-item-value">
+                          {{ product.metafields.custom.watch_reference }}
+                        </div>
                       </div>
                       <div class="rolex-watch-metafields__content-item">
                         <div class="rolex-watch-metafields__content-item-label">YEAR</div>
-                        <div class="rolex-watch-metafields__content-item-value">{{ product.metafields.custom.watch_year }}</div>
+                        <div class="rolex-watch-metafields__content-item-value">
+                          {{ product.metafields.custom.watch_year }}
+                        </div>
                       </div>
                       <div class="rolex-watch-metafields__content-item">
                         <div class="rolex-watch-metafields__content-item-label">CONDITION</div>
                         <div class="rolex-watch-metafields__content-item-value">
                           {% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}
                           {% case raw_condition %}
-                            {% when 'unworn' %}UNWORN
-                            {% when 'unworn (nos)' %}UNWORN
-                            {% when 'as is' %}RETAIL READY
-                            {% when 'slider' %}EXCELLENT
-                            {% when 'mint' %}VERY GOOD
-                            {% when 'very good' %}VERY GOOD
-                            {% when 'pre-owned' %}GOOD
-                            {% when 'good' %}GOOD
-                            {% else %}{{ product.metafields.custom.watch_condition | upcase }}
+                            {% when 'unworn' -%}
+                              UNWORN
+                            {% when 'unworn (nos)' -%}
+                              UNWORN
+                            {% when 'as is' -%}
+                              RETAIL READY
+                            {% when 'slider' -%}
+                              EXCELLENT
+                            {% when 'mint' -%}
+                              VERY GOOD
+                            {% when 'very good' -%}
+                              VERY GOOD
+                            {% when 'pre-owned' -%}
+                              GOOD
+                            {% when 'good' -%}
+                              GOOD
+                            {% else -%}
+                              {{- product.metafields.custom.watch_condition | upcase }}
                           {% endcase %}
                         </div>
                       </div>
                     </div>
                   </div>
-                  </div>
+                </div>
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -868,6 +883,7 @@
   </div>
 </product-info>
 <style>
+
     .rolex-watch-metafields__content-item-value {
       color: #1A1A1A;
   font-family: Montserrat;
@@ -1094,6 +1110,25 @@
                       }
                       .m-main-product-section .accordion details[open]>summary .icon-caret {
                           transform: rotate(-180deg);
+                      }
+                      @media (max-width: 749px) {
+                        .consult-an-expert h3{
+                          font-size: 16px;
+                        }
+                        .consult-an-expert {
+                      margin: auto;
+                      justify-content: center;
+                      font-size: 16px;
+                    }
+                    .trust-badge__image{
+                      width:46px;
+                    }
+                    .trust-badge__image img{
+                      width:100%;
+                    }
+                    .trust-badge__content h3, .trust-badge__content p{
+                      font-size: 14px;
+                    }
                       }
 </style>
 {% schema %}
