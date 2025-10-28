@@ -33,7 +33,19 @@
     </div>
     <div class="product-details">
       <div class="product-header">
-        <div class="product-title"><div class="product-title-text">{{product.title | remove: "Pre-Owned Rolex "}}</div></div>
+        <div class="product-title"><div class="product-title-text">{% assign title = product.title %}
+{%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
+{% assign title = title | remove_first: "Pre-Owned Rolex " | remove_first: "Pre Owned Rolex " %}
+{%- comment -%} Remove everything from the first number to the end {%- endcomment -%}
+{% assign filtered_title = '' %}
+{% assign title_chars = title | split: '' %}
+{% for char in title_chars %}
+  {% if char == '0' or char == '1' or char == '2' or char == '3' or char == '4' or char == '5' or char == '6' or char == '7' or char == '8' or char == '9' %}
+    {% break %}
+  {% endif %}
+  {% assign filtered_title = filtered_title | append: char %}
+{% endfor %}
+{{ filtered_title | strip }}</div></div>
         <div class="product-specs-header">
           <div class="spec-detail">{{product.metafields.custom.watch_dial_color}}</div>
           <div class="divider">|</div>
