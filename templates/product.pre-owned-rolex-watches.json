@@ -71,6 +71,7 @@
         "image_zoom": "lightbox",
         "hide_variants": true,
         "enable_video_looping": false,
+        "show_breadcrumbs": true,
         "padding_top": 36,
         "padding_bottom": 12
       }
@@ -129,7 +130,9 @@
     "p_o_r_cta_section_Xxdy6a": {
       "type": "p-o-r-cta-section",
       "name": "POR - CTA Section",
-      "settings": {}
+      "settings": {
+        "search_button_link": "shopify://pages/find-your-dream-watch"
+      }
     }
   },
   "order": [
