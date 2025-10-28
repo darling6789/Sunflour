@@ -33,12 +33,15 @@
       "type": "p-o-r-in-stock-products",
       "settings": {
         "section_title": "Pre-Owned Rolex Watches",
-        "collection": "rolex-1"
+        "collection": "rolex-1",
+        "enable_quick_view": true
       }
     },
     "p-o-r-in-request-section1": {
       "type": "p-o-r-request-section",
-      "settings": {}
+      "settings": {
+        "request_form_url": ""
+      }
     }
   },
   "order": [

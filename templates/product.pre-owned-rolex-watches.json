@@ -12,32 +12,16 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {}
         },
-        "price": {
-          "type": "price",
+        "rolex_watch_metafields_pBFEPX": {
+          "type": "rolex_watch_metafields",
           "settings": {}
         },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "disabled": true,
+        "price": {
+          "type": "price",
           "settings": {}
         },
         "buy_buttons": {
@@ -47,40 +31,33 @@
             "show_gift_card_recipient": false
           }
         },
-        "guarantee_xFq7iY": {
-          "type": "guarantee",
-          "settings": {
-            "certified_title": "CERTIFIED GEMS",
-            "certified_text": "Every diamond and gemstone is GIA or IGI-certified and sourced with full transparency.",
-            "warranty_title": "lifetime warranty",
-            "warranty_text": "All 10K, 14K, and 18K gold and silver jewelry comes with a lifetime warranty against manufacturing defects.",
-            "shipping_title": "Fast Insured Shipping",
-            "shipping_text": "Rest easy with insured shipping!"
-          }
-        },
-        "description": {
-          "type": "description",
-          "disabled": true,
+        "disclaimer_badge_zPGjjb": {
+          "type": "disclaimer_badge",
           "settings": {}
         },
-        "share": {
-          "type": "share",
-          "disabled": true,
+        "consult_an_expert_VWrQyP": {
+          "type": "consult_an_expert",
           "settings": {
-            "share_label": "Share"
+            "consult_link": ""
+          }
+        },
+        "trust_badge_tYxFnc": {
+          "type": "trust_badge",
+          "settings": {
+            "image1": "shopify://shop_images/Group_145478.svg",
+            "image2": "shopify://shop_images/Frame_183309.svg",
+            "image3": "shopify://shop_images/Frame_183310.svg"
           }
         }
       },
       "block_order": [
-        "vendor",
         "title",
+        "rolex_watch_metafields_pBFEPX",
         "price",
-        "variant_picker",
-        "quantity_selector",
         "buy_buttons",
-        "guarantee_xFq7iY",
-        "description",
-        "share"
+        "disclaimer_badge_zPGjjb",
+        "consult_an_expert_VWrQyP",
+        "trust_badge_tYxFnc"
       ],
       "settings": {
         "enable_sticky_info": true,
