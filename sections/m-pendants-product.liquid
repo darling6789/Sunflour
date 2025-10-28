@@ -1338,6 +1338,24 @@ document.addEventListener('DOMContentLoaded', function() {
             clearErrorMessage();
             selectProduct(letter);
             updateSelectionSummary(letter);
+            
+            // Dispatch custom event to sync with select-letter section
+            $(document).trigger('productLetterChanged', [letter]);
+        }
+    });
+    
+    // Listen for letter selection from select-letter section
+    $(document).on('letterSelected', function(event, letter) {
+        // Find the slide with this letter in the product section
+        const targetSlide = $(`.m-pendants-letter-slide[data-letter="${letter}"]`);
+        if (targetSlide.length) {
+            // Find the index of the slide
+            const slideIndex = targetSlide.closest('.m-pendants-letter-slider-wrap').index();
+            
+            // Go to that slide in the slick slider
+            $('#m-pendants-letter-slider').slick('slickGoTo', slideIndex);
+            
+            // The afterChange event will automatically handle the product update
         }
     });
     
