@@ -1340,8 +1340,11 @@ document.addEventListener('DOMContentLoaded', function() {
             selectProduct(letter);
             updateSelectionSummary(letter);
             
-            // Dispatch custom event to sync with select-letter section
-            $(document).trigger('productLetterChanged', [letter]);
+            // Dispatch custom event to sync with select-letter section (only if not syncing from other section)
+            if (!isSyncingFromOtherSection) {
+                $(document).trigger('productLetterChanged', [letter]);
+            }
+            isSyncingFromOtherSection = false; // Reset flag
         }
     });
     
@@ -1350,6 +1353,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Find the slide with this letter in the product section
         const targetSlide = $(`.m-pendants-letter-slide[data-letter="${letter}"]`);
         if (targetSlide.length) {
+            // Set flag to prevent infinite loop
+            isSyncingFromOtherSection = true;
+            
             // Find the index of the slide
             const slideIndex = targetSlide.closest('.m-pendants-letter-slider-wrap').index();
             
