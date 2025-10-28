@@ -575,14 +575,11 @@
         {% endcomment %}
         <form
           class="form-contact"
+          id="dream-watch-form"
           method="post"
-          action="/contact#contact_form"
           accept-charset="UTF-8"
           aria-label="Dream Watch Request Form"
         >
-          <input type="hidden" name="form_type" value="contact">
-          <input type="hidden" name="utf8" value="✓">
-          <input type="hidden" name="contact[subject]" value="Dream Watch Request">
 
           <div class="div-2">
             <label for="contact-name" class="label-2">Name <abbr title="required" aria-label="required">*</abbr></label>
@@ -802,10 +799,97 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 {% endcomment %}
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('dream-watch-form');
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Get form configuration from section settings
+      const recipientEmail = "{{ section.settings.recipient_email }}";
+      const fromEmail = "{{ section.settings.from_email }}";
+
+      if (!recipientEmail || !fromEmail) {
+        alert('Form email configuration is missing. Please contact the site administrator.');
+        return;
+      }
+
+      // Collect form data
+      const formData = new FormData(form);
+      const data = {
+        recipient_email: recipientEmail,
+        from_email: fromEmail,
+        form_data: Object.fromEntries(formData),
+        submitted_at: new Date().toISOString()
+      };
+
+      try {
+        // Submit to Shopify contact form endpoint
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: new URLSearchParams({
+            'form_type': 'contact',
+            'contact[email]': fromEmail,
+            'contact[name]': formData.get('contact[name]') || 'Dream Watch Request',
+            'contact[subject]': 'Dream Watch Request - ' + (formData.get('contact[collection]') || 'Inquiry'),
+            'contact[body]': generateEmailBody(Object.fromEntries(formData))
+          })
+        });
+
+        if (response.ok) {
+          // Show success message
+          alert('Thank you! Your dream watch request has been submitted. We\'ll be in touch shortly.');
+          form.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('There was an error submitting your form. Please try again.');
+      }
+    });
+
+    // Helper function to generate email body from form data
+    function generateEmailBody(data) {
+      let body = 'Dream Watch Request Form Submission\n\n';
+      for (let [key, value] of Object.entries(data)) {
+        if (value && key.startsWith('contact[')) {
+          const label = key.replace('contact[', '').replace(']', '').replace(/-/g, ' ').toUpperCase();
+          body += label + ': ' + value + '\n';
+        }
+      }
+      return body;
+    }
+  });
+</script>
+
 {% schema %}
 {
   "name": "Service Form Layout",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "recipient_email",
+      "label": "Recipient Email Address",
+      "placeholder": "eshop@marcrobinsonjewelers.com",
+      "default": "eshop@marcrobinsonjewelers.com",
+      "info": "The email address where form submissions will be sent"
+    },
+    {
+      "type": "text",
+      "id": "from_email",
+      "label": "From Email Address",
+      "placeholder": "lp-rolex@marcrobinsonjewelers.com",
+      "default": "lp-rolex@marcrobinsonjewelers.com",
+      "info": "The email address that will appear as the sender"
+    }
+  ],
   "presets": [
     {
       "name": "Service Form Layout"
