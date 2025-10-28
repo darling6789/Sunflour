@@ -1353,36 +1353,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Find the slide with this letter in the product section
         const slider = $('#m-pendants-letter-slider');
         
-        // Get all slides in the slider
-        const $slides = slider.find('.slick-slide');
+        // Get only non-cloned slides
+        const $slides = slider.find('.slick-slide').not('.slick-cloned');
         
-        // Find the first non-cloned slide with the matching letter
-        let targetSlide = null;
         let slideIndex = -1;
         
+        // Count only non-cloned slides to get the correct index
         $slides.each(function(index) {
-            const $slide = $(this);
-            // Skip cloned slides
-            if (!$slide.hasClass('slick-cloned')) {
-                const slideLetter = $slide.find('.m-pendants-letter-slide').data('letter');
-                if (slideLetter === letter && slideIndex === -1) {
-                    // Get the actual slide index from Slick
-                    const currentIndex = slider.slick('slickCurrentSlide');
-                    const totalSlides = slider.slick('getOption', 'slidesToShow');
-                    
-                    // Calculate the correct index accounting for center mode
-                    slideIndex = index;
-                    return false; // break the loop
-                }
+            const slideLetter = $(this).find('.m-pendants-letter-slide').data('letter');
+            if (slideLetter === letter) {
+                slideIndex = index;
+                return false; // break the loop
             }
         });
         
         if (slideIndex >= 0) {
             // Set flag to prevent infinite loop
             isSyncingFromOtherSection = true;
-            
-            // Get the slider instance
-            const sliderInstance = slider.slick('getSlick');
             
             // Go to that slide in the slick slider
             slider.slick('slickGoTo', slideIndex, true);
