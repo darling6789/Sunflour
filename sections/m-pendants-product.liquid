@@ -1351,11 +1351,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Listen for letter selection from select-letter section
     $(document).on('letterSelected', function(event, letter) {
         // Find the slide with this letter in the product section
-        const allSlides = $('#m-pendants-letter-slider .slick-slide');
+        // Only check non-cloned slides to get the correct index
+        const allSlides = $('#m-pendants-letter-slider .slick-slide:not(.slick-cloned)');
         
         let slideIndex = -1;
         
-        // Loop through all slides to find the one with matching letter
+        // Loop through non-cloned slides to find the one with matching letter
         allSlides.each(function(index) {
             const slideLetter = $(this).find('.m-pendants-letter-slide').data('letter');
             if (slideLetter === letter) {
