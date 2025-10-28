@@ -22,7 +22,7 @@
       "name": "Special fine jewelry hero",
       "settings": {
         "back_image": "shopify://shop_images/special-jewelry-hero-min.jpg",
-        "heading": "White Gold Fine Jewelry"
+        "heading": "Rose Gold Fine Jewelry"
       }
     },
     "m_collection_list_2_Ex9aff": {
@@ -90,7 +90,7 @@
       ],
       "name": "Custom collection list 2",
       "settings": {
-        "heading": "Shop White Gold by Product Type"
+        "heading": "Shop Rose Gold by Product Type"
       }
     },
     "m_jewelry_trust_CBGxUP": {
@@ -136,28 +136,28 @@
       "type": "m-featured-collection-2",
       "name": "Custom collection 2",
       "settings": {
-        "collection": "white-gold-earrings",
-        "image": "shopify://shop_images/earrings-background.png",
+        "collection": "rose-gold-earrings",
+        "image": "shopify://shop_images/EM3861-050-RWA--3.jpg",
         "image_left": false,
         "heading": "Earrings",
-        "back_color": "#f9f5f7",
-        "collection_link_text": "Shop All White Gold Earrings",
-        "collection_link": "shopify://collections/white-gold-earrings"
+        "back_color": "#f9f5f5",
+        "collection_link_text": "Shop All Rose Gold Earrings",
+        "collection_link": "shopify://collections/rose-gold-earrings"
       }
     },
     "m_featured_product_47KrmH": {
       "type": "m-featured-product",
       "name": "Custom featured product",
       "settings": {
-        "back_color": "#f8feff",
+        "back_color": "#fffbf8",
         "product": "",
-        "image": "shopify://shop_images/blueberry-sapphire-vanillagold.jpg",
-        "title": "Le Vian Vanilla Gold",
-        "description": "<p>One of Le Vian's delicious gold metal shades is their unique Vanilla Gold®. By creating a blend with yellow gold using more of a strong white gold alloy, they achieve a very brilliant white color that is sure to dazzle in any combination. <br/><br/>Especially stunning with Vanilla Gold are cool harmonious combinations such as their Costa Smeralda Emeralds™ or Blueberry Sapphires™. For a combination that instead hits the craving for contrast, look no further than their warm Chocolate Diamonds®.<br/></p>",
+        "image": "shopify://shop_images/le-vian-strawberry-gold.webp",
+        "title": "Le Vian Strawberry Gold",
+        "description": "<p>One of Le Vian's undeniably appealing gold metal shades is their unique Strawberry Gold®. By creating a special blend with yellow gold and copper, they achieve the perfect balance of a warm, glowing strawberry hue. <br/><br/>Especially stunning with Strawberry Gold are cool harmonious combinations such as their decadent Chocolate Diamonds® or subtle nude toned Vanilla Diamonds®. For a combination that instead hits the craving for contrast, look no further than their stunning Blueberry Tanzanite®.<br/></p>",
         "link_text": "",
         "link": "",
-        "collection_heading": "More Vanilla Gold Designs",
-        "collection": "le-vian-vanilla-gold",
+        "collection_heading": "More Strawberry Gold Designs",
+        "collection": "le-vian-strawberry-gold",
         "type_engagement_ring": false,
         "type_wedding_band": false,
         "type_womens_wedding_band": false,
@@ -179,13 +179,13 @@
       "type": "m-featured-collection-2",
       "name": "Custom collection 2",
       "settings": {
-        "collection": "white-gold-bracelets",
+        "collection": "rose-gold-bracelets",
         "image": "shopify://shop_images/bracelet-wg.png",
         "image_left": true,
         "heading": "Bracelets",
-        "back_color": "#efeee8",
-        "collection_link_text": "Shop All White Gold Bracelets",
-        "collection_link": "shopify://collections/white-gold-bracelets"
+        "back_color": "#f4f1e9",
+        "collection_link_text": "Shop All Rose Gold Bracelets",
+        "collection_link": "shopify://collections/rose-gold-bracelets"
       }
     },
     "m_featured_collection_1_Yi6Lic": {

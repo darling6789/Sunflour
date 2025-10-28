@@ -5,7 +5,10 @@
 <style>
 .m-special-jewelry-hero-section {
     width: 100%;
-    background: linear-gradient(41deg, rgba(177, 177, 177, 0.80) 19.13%, rgba(177, 177, 177, 0.75) 23.05%, rgba(177, 177, 177, 0.00) 51.78%), url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat;
+   {% assign overlay_color = section.settings.overlay_color | default: '#b1b1b1' %}
+    background: linear-gradient(41deg, {{ overlay_color | color_modify: 'alpha', 0.80 }} 19.13%, {{ overlay_color | color_modify: 'alpha', 0.75 }} 23.05%, {{ overlay_color | color_modify: 'alpha', 0 }} 51.78%), url({{ section.settings.back_image | img_url: 'master' }}) lightgray no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 28vw;
     position: relative;
     background-size: cover;
@@ -22,7 +25,7 @@
     justify-content: flex-start;
 }
 .m-special-jewelry-hero h1 {
-    color: #000;
+    color: {{ section.settings.text_color }};
     font-family: Legitima;
     font-size: 48px;
     font-style: normal;
@@ -61,7 +64,6 @@
     }
 
     .m-special-jewelry-hero h1 {
-        color: #000;
         font-family: Legitima;
         font-size: 36px;
         font-style: normal;
@@ -93,6 +95,17 @@
             "type": "text",
             "id": "heading",
             "label": "Heading"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "overlay_color",
+            "label": "Overlay color"
         }
     ],
     "presets": [

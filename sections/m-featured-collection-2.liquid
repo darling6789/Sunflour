@@ -61,7 +61,7 @@
   width: 70%;
 }
 #shopify-section-{{ section.id }} .m-collection-2-body>h2 {
-    color: #333;
+    color: {{ section.settings.heading_color }};
     font-family: Legitima;
     font-size: 44px;
     font-style: normal;
@@ -72,7 +72,7 @@
 }
 #shopify-section-{{ section.id }} .m-collection-2-body>h2 a {
     text-decoration: none;
-    color: #333;
+    color: {{ section.settings.heading_color }};
 }
 #shopify-section-{{ section.id }} .m-collection-2-body>h2 a:hover {
     color: #69575f;
@@ -109,7 +109,7 @@
     height: inherit !important;
 }
 #shopify-section-{{ section.id }} .m-collection-2-link {
-    color: #333;
+    color: {{ section.settings.link_color }};
     font-family: Montserrat;
     font-size: 18px;
     font-style: italic;
@@ -136,7 +136,7 @@
     padding: 30px 37.5px 30px;
   }
   .fine-jewelry #shopify-section-{{ section.id }} .m-collection-2-body>h2, #shopify-section-{{ section.id }} .m-collection-2-body>h2 {
-    color: #333;
+    color: {{ section.settings.heading_color }};
     /* Heading/Medium */
     font-family: Legitima;
     font-size: 34px;
@@ -165,7 +165,7 @@
     margin-top: 5px;
   }
   #shopify-section-{{ section.id }} .m-collection-2-link {
-    color: #333;
+    color: {{ section.settings.link_color }};
     font-family: Montserrat;
     font-size: 13.5px;
     font-style: italic;
@@ -268,6 +268,12 @@ $(document).ready(function(){
     },
     {
       "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#333"
+    },
+    {
+      "type": "color",
       "id": "back_color",
       "label": "Background color"
     },
@@ -280,6 +286,12 @@ $(document).ready(function(){
       "type": "url",
       "id": "collection_link",
       "label": "Collection link"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#333"
     }
   ],
   "presets": [
