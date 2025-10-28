@@ -1351,17 +1351,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Listen for letter selection from select-letter section
     $(document).on('letterSelected', function(event, letter) {
         // Find the slide with this letter in the product section
-        // Only check non-cloned slides to get the correct index
-        const allSlides = $('#m-pendants-letter-slider .slick-slide:not(.slick-cloned)');
+        const slider = $('#m-pendants-letter-slider');
         
+        // Get all slides in the slider
+        const $slides = slider.find('.slick-slide');
+        
+        // Find the first non-cloned slide with the matching letter
+        let targetSlide = null;
         let slideIndex = -1;
         
-        // Loop through non-cloned slides to find the one with matching letter
-        allSlides.each(function(index) {
-            const slideLetter = $(this).find('.m-pendants-letter-slide').data('letter');
-            if (slideLetter === letter) {
-                slideIndex = index;
-                return false; // break the loop
+        $slides.each(function(index) {
+            const $slide = $(this);
+            // Skip cloned slides
+            if (!$slide.hasClass('slick-cloned')) {
+                const slideLetter = $slide.find('.m-pendants-letter-slide').data('letter');
+                if (slideLetter === letter && slideIndex === -1) {
+                    // Get the actual slide index from Slick
+                    const currentIndex = slider.slick('slickCurrentSlide');
+                    const totalSlides = slider.slick('getOption', 'slidesToShow');
+                    
+                    // Calculate the correct index accounting for center mode
+                    slideIndex = index;
+                    return false; // break the loop
+                }
             }
         });
         
@@ -1369,8 +1381,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set flag to prevent infinite loop
             isSyncingFromOtherSection = true;
             
+            // Get the slider instance
+            const sliderInstance = slider.slick('getSlick');
+            
             // Go to that slide in the slick slider
-            $('#m-pendants-letter-slider').slick('slickGoTo', slideIndex, false);
+            slider.slick('slickGoTo', slideIndex, true);
             
             // The afterChange event will automatically handle the product update
         }
