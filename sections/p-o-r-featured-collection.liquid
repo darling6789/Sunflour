@@ -49,6 +49,45 @@
 </div>
 
 <style>
+    .product-details:has(.price-action-wrapper .sold-out) {
+        background: rgba(26, 26, 26, 0.08) !important;
+    }
+    .btn-notify-me .btn-text {
+        color: #4D3942 !important;
+    }
+    .product-card-wrapper.product-card-unavailable .product-details {
+        background: rgba(26, 26, 26, 0.08);
+    }
+    .availability-tag:has(.sold-out) {
+        background-color: #9c5556 !important;
+      }
+    .btn-notify-me {
+        all: unset;
+        box-sizing: border-box;
+        display: inline-flex
+    ;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8.94px;
+        padding: 7.15px 19.66px;
+        position: relative;
+        flex: 1;
+        width: 100%;
+        background-color: transparent;
+        border: 1.5px solid #4D3942;
+        border-radius: 3.57px;
+        cursor: pointer;
+        transition: all 0.3s 
+    ease;
+        font-family: 'Montserrat';
+        font-weight: 500;
+        color: #4D3942;
+        font-size: 12.5px;
+        letter-spacing: 0;
+        line-height: 17.9px;
+        white-space: nowrap;
+    }
     main#MainContent {
         overflow: hidden;
     }
@@ -308,6 +347,19 @@
     width: 100%;
     flex: 0 0 auto;
   }
+
+  /* Sold Out Product Details Styling */
+  .product-card.sold-out .product-details {
+    background: rgba(26, 26, 26, 0.08) !important;
+  }
+
+  {% comment %} .product-card.sold-out .product-title-text,
+  .product-card.sold-out .spec-detail,
+  .product-card.sold-out .spec-label,
+  .product-card.sold-out .spec-value,
+  .product-card.sold-out .product-price {
+    color: #999999;
+  } {% endcomment %}
 
   .product-card .product-header {
     display: flex;
@@ -676,6 +728,13 @@
     }
   }
 
+  /* 768px: 3 columns */
+  @media (max-width: 768px) {
+    .carousel-nav-button {
+      display: none;
+    }
+  }
+
   /* 480px: 2 columns */
   @media (max-width: 480px) {
     .featured-collection-container {
@@ -690,30 +749,29 @@
 
     .carousel-slide {
       flex: 0 0 160px;
-      width: 160px;
+      width: 260px;
       scroll-snap-align: start;
       scroll-snap-stop: always;
     }
 
     .product-card {
-      width: 160px;
+      width: 260px;
     }
 
     .product-card .product-images {
-      height: 160px;
+      height: 260px;
     }
 
     .featured-collection-title {
       font-size: 20px;
     }
 
-    .carousel-nav-button {
-      width: 36px;
-      height: 36px;
-    }
-
     .carousel-wrapper {
       gap: 12px;
+    }
+
+    .carousel-nav-button {
+      display: none;
     }
   }
 </style>
@@ -809,81 +867,83 @@
     }
   })();
 
-  // Product Card Navigation & Button Handlers
+  // Notify Me & Buy Now Button Handlers
   (function () {
-    const productCards = document.querySelectorAll('.product-card-link');
-
-    productCards.forEach((card) => {
-      const filterBtn = card.querySelector('[data-quick-view-trigger]');
-      const buyNowBtn = card.querySelector('.btn-buy-now');
-
-      if (buyNowBtn) {
-        buyNowBtn.addEventListener('click', async (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          const productHandle = filterBtn?.getAttribute('data-product-handle');
-
-          if (!productHandle) {
-            alert('Unable to add product to cart.');
-            return;
-          }
-
-          try {
-            buyNowBtn.disabled = true;
-            buyNowBtn.querySelector('.btn-text').textContent = 'Adding...';
-
-            const response = await fetch(`/products/${productHandle}.js`);
-            if (!response.ok) throw new Error('Failed to fetch product');
-
-            const productData = await response.json();
-            const variantId = productData.variants?.[0]?.id;
-
-            if (!variantId) throw new Error('No variant found');
-
-            const config = fetchConfig('javascript');
-            config.headers['X-Requested-With'] = 'XMLHttpRequest';
-            delete config.headers['Content-Type'];
-
-            const formData = new FormData();
-            formData.append('id', variantId);
-            formData.append('quantity', 1);
-            config.body = formData;
-
-            const cartResponse = await fetch(window.routes.cart_add_url, config);
-
-            if (!cartResponse.ok) {
-              const errorData = await cartResponse.text();
-              try {
-                const errorJson = JSON.parse(errorData);
-                throw new Error(errorJson.message || `Error ${cartResponse.status}`);
-              } catch (e) {
-                throw new Error(`Failed to add to cart (Error ${cartResponse.status})`);
-              }
-            }
-
-            window.location.href = window.routes.cart_url;
-          } catch (error) {
-            console.error('Error adding to cart:', error);
-            buyNowBtn.disabled = false;
-            buyNowBtn.querySelector('.btn-text').textContent = 'Buy Now';
-            alert(error.message || 'Failed to add product to cart.');
-          }
-        });
-      }
-    });
-  })();
-
-  // Notify Me Button Handler
-  (function () {
-    const notifyMeButtons = document.querySelectorAll('[data-notify-me-trigger]');
-    notifyMeButtons.forEach((button) => {
-      button.addEventListener('click', (e) => {
+    document.addEventListener('click', function(e) {
+      // Notify Me Button Handler
+      const notifyBtn = e.target.closest('[data-notify-me-trigger]');
+      if (notifyBtn) {
         e.preventDefault();
         e.stopPropagation();
         alert('Thank you for your interest! We will notify you when this item is back in stock.');
-      });
-    });
+        return;
+      }
+
+      // Buy Now Button Handler
+      const buyNowBtn = e.target.closest('.btn-buy-now');
+      if (buyNowBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const card = buyNowBtn.closest('.product-card');
+        const quickViewTrigger = card?.querySelector('[data-quick-view-trigger]');
+        const productHandle = quickViewTrigger?.getAttribute('data-product-handle');
+
+        if (!productHandle) {
+          alert('Unable to add product to cart.');
+          return;
+        }
+
+        handleBuyNow(buyNowBtn, productHandle);
+        return;
+      }
+    }, true);
+
+    // Handle Buy Now functionality
+    async function handleBuyNow(btn, productHandle) {
+      try {
+        btn.disabled = true;
+        const btnText = btn.querySelector('.btn-text');
+        btnText.textContent = 'Adding...';
+
+        const response = await fetch(`/products/${productHandle}.js`);
+        if (!response.ok) throw new Error('Failed to fetch product');
+
+        const productData = await response.json();
+        const variantId = productData.variants?.[0]?.id;
+
+        if (!variantId) throw new Error('No variant found');
+
+        const config = fetchConfig('javascript');
+        config.headers['X-Requested-With'] = 'XMLHttpRequest';
+        delete config.headers['Content-Type'];
+
+        const formData = new FormData();
+        formData.append('id', variantId);
+        formData.append('quantity', 1);
+        config.body = formData;
+
+        const cartResponse = await fetch(window.routes.cart_add_url, config);
+
+        if (!cartResponse.ok) {
+          const errorData = await cartResponse.text();
+          try {
+            const errorJson = JSON.parse(errorData);
+            throw new Error(errorJson.message || `Error ${cartResponse.status}`);
+          } catch (e) {
+            throw new Error(`Failed to add to cart (Error ${cartResponse.status})`);
+          }
+        }
+
+        window.location.href = window.routes.cart_url;
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        btn.disabled = false;
+        const btnText = btn.querySelector('.btn-text');
+        btnText.textContent = 'Buy Now';
+        alert(error.message || 'Failed to add product to cart.');
+      }
+    }
   })();
 </script>
 
