@@ -1351,16 +1351,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Listen for letter selection from select-letter section
     $(document).on('letterSelected', function(event, letter) {
         // Find the slide with this letter in the product section
-        const targetSlide = $(`.m-pendants-letter-slide[data-letter="${letter}"]`);
-        if (targetSlide.length) {
+        const allSlides = $('#m-pendants-letter-slider .slick-slide');
+        
+        let slideIndex = -1;
+        
+        // Loop through all slides to find the one with matching letter
+        allSlides.each(function(index) {
+            const slideLetter = $(this).find('.m-pendants-letter-slide').data('letter');
+            if (slideLetter === letter) {
+                slideIndex = index;
+                return false; // break the loop
+            }
+        });
+        
+        if (slideIndex >= 0) {
             // Set flag to prevent infinite loop
             isSyncingFromOtherSection = true;
             
-            // Find the index of the slide
-            const slideIndex = targetSlide.closest('.m-pendants-letter-slider-wrap').index();
-            
             // Go to that slide in the slick slider
-            $('#m-pendants-letter-slider').slick('slickGoTo', slideIndex);
+            $('#m-pendants-letter-slider').slick('slickGoTo', slideIndex, false);
             
             // The afterChange event will automatically handle the product update
         }
