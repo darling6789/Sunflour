@@ -1364,6 +1364,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (firstLetter) {
         selectProduct(firstLetter);
         updateSelectionSummary(firstLetter);
+        // Sync with select-letter section on initial load
+        $(document).trigger('productLetterChanged', [firstLetter]);
     }
     
     // Update variant ID in the form when variant changes
