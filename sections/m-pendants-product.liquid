@@ -1353,14 +1353,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set flag to prevent infinite loop
         isSyncingFromOtherSection = true;
         
-        // Find the slide element with this letter (skip cloned slides)
-        const targetSlide = $('#m-pendants-letter-slider .slick-slide').not('.slick-cloned').filter(function() {
-            return $(this).find('.m-pendants-letter-slide').data('letter') === letter;
-        }).first();
+        // Find all non-cloned slides
+        const nonClonedSlides = [];
+        $('#m-pendants-letter-slider .slick-slide').each(function() {
+            if (!$(this).hasClass('slick-cloned')) {
+                nonClonedSlides.push($(this));
+            }
+        });
         
-        if (targetSlide.length) {
-            // Click on the target slide to change to it
-            targetSlide.click();
+        // Find the index of the matching slide
+        let targetIndex = -1;
+        for (let i = 0; i < nonClonedSlides.length; i++) {
+            const slideLetter = nonClonedSlides[i].find('.m-pendants-letter-slide').data('letter');
+            if (slideLetter === letter) {
+                targetIndex = i;
+                break;
+            }
+        }
+        
+        if (targetIndex >= 0) {
+            // Navigate to the target slide
+            $('#m-pendants-letter-slider').slick('slickGoTo', targetIndex, false);
         }
     });
     
