@@ -1350,30 +1350,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Listen for letter selection from select-letter section
     $(document).on('letterSelected', function(event, letter) {
-        // Set flag to prevent infinite loop
-        isSyncingFromOtherSection = true;
+        // Find the letter slide wrapper element in the original DOM (before Slick cloning)
+        const letterSlideWrap = $('.m-pendants-letter-slider-wrap').filter(function() {
+            return $(this).find('.m-pendants-letter-slide').data('letter') === letter;
+        }).first();
         
-        // Find all non-cloned slides
-        const nonClonedSlides = [];
-        $('#m-pendants-letter-slider .slick-slide').each(function() {
-            if (!$(this).hasClass('slick-cloned')) {
-                nonClonedSlides.push($(this));
+        if (letterSlideWrap.length) {
+            // Set flag to prevent infinite loop
+            isSyncingFromOtherSection = true;
+            
+            // Find the Slick slide that corresponds to this element
+            // We need to find the Slick slide that contains or matches this wrapper
+            const slider = $('#m-pendants-letter-slider');
+            const $allSlides = slider.find('.slick-slide');
+            let targetSlideIndex = -1;
+            
+            $allSlides.each(function(index) {
+                const $slide = $(this);
+                // Check if this slide contains the letter we're looking for
+                const slideLetter = $slide.find('.m-pendants-letter-slide').data('letter');
+                if (slideLetter === letter && !$slide.hasClass('slick-cloned')) {
+                    targetSlideIndex = index;
+                    return false;
+                }
+            });
+            
+            if (targetSlideIndex >= 0) {
+                // Use slickGoTo with the specific index
+                slider.slick('slickGoTo', targetSlideIndex, false);
             }
-        });
-        
-        // Find the index of the matching slide
-        let targetIndex = -1;
-        for (let i = 0; i < nonClonedSlides.length; i++) {
-            const slideLetter = nonClonedSlides[i].find('.m-pendants-letter-slide').data('letter');
-            if (slideLetter === letter) {
-                targetIndex = i;
-                break;
-            }
-        }
-        
-        if (targetIndex >= 0) {
-            // Navigate to the target slide
-            $('#m-pendants-letter-slider').slick('slickGoTo', targetIndex, false);
         }
     });
     
