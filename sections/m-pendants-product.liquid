@@ -1350,35 +1350,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Listen for letter selection from select-letter section
     $(document).on('letterSelected', function(event, letter) {
-        // Find the letter slide wrapper element in the original DOM (before Slick cloning)
-        const letterSlideWrap = $('.m-pendants-letter-slider-wrap').filter(function() {
-            return $(this).find('.m-pendants-letter-slide').data('letter') === letter;
-        }).first();
+        // Set flag to prevent infinite loop
+        isSyncingFromOtherSection = true;
         
-        if (letterSlideWrap.length) {
-            // Set flag to prevent infinite loop
-            isSyncingFromOtherSection = true;
-            
-            // Find the Slick slide that corresponds to this element
-            // We need to find the Slick slide that contains or matches this wrapper
-            const slider = $('#m-pendants-letter-slider');
-            const $allSlides = slider.find('.slick-slide');
-            let targetSlideIndex = -1;
-            
-            $allSlides.each(function(index) {
-                const $slide = $(this);
-                // Check if this slide contains the letter we're looking for
-                const slideLetter = $slide.find('.m-pendants-letter-slide').data('letter');
-                if (slideLetter === letter && !$slide.hasClass('slick-cloned')) {
-                    targetSlideIndex = index;
-                    return false;
-                }
-            });
-            
-            if (targetSlideIndex >= 0) {
-                // Use slickGoTo with the specific index
-                slider.slick('slickGoTo', targetSlideIndex, false);
+        // Get the slider instance
+        const slider = $('#m-pendants-letter-slider');
+        const slickInstance = slider.slick('getSlick');
+        
+        // Get the total number of actual slides (not clones)
+        const slideCount = slickInstance.slideCount;
+        
+        // Find the correct index by checking each slide
+        let targetIndex = -1;
+        for (let i = 0; i < slideCount; i++) {
+            // Get the slide element
+            const slide = slickInstance.$slides.eq(i);
+            const slideLetter = slide.find('.m-pendants-letter-slide').data('letter');
+            if (slideLetter === letter) {
+                targetIndex = i;
+                break;
             }
+        }
+        
+        if (targetIndex >= 0) {
+            // Navigate to the target slide
+            slider.slick('slickGoTo', targetIndex, false);
         }
     });
     
