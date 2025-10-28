@@ -1,0 +1,915 @@
+<div class="featured-collection-container" data-section-id="{{ section.id }}">
+  <!-- Featured Collection Header -->
+  <div class="featured-collection-header">
+    <h2 class="featured-collection-title">{{ section.settings.collection_title }}</h2>
+  </div>
+
+  <!-- Carousel Wrapper -->
+  <div class="carousel-wrapper">
+    <!-- Left Navigation Button -->
+    <button
+      class="carousel-nav-button carousel-nav-prev"
+      aria-label="Previous products"
+      data-carousel-prev
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <!-- Carousel Viewport (shows 6 columns) -->
+    <div class="carousel-viewport">
+      <!-- Carousel Track (scrollable) -->
+      <div class="carousel-track" data-carousel-track>
+        {% if section.settings.collection != blank %}
+          {% assign product_count = 0 %}
+          {% for product in section.settings.collection.products %}
+            {% if product_count < 26 %}
+              <div class="carousel-slide">
+                {% render 'product-card', product: product %}
+              </div>
+              {% assign product_count = product_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Navigation Button -->
+    <button
+      class="carousel-nav-button carousel-nav-next"
+      aria-label="Next products"
+      data-carousel-next
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+    main#MainContent {
+        overflow: hidden;
+    }
+  .featured-collection-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 50px;
+    gap: 36px;
+    background-color: #f8f6f2;
+  }
+
+  /* Header Styling */
+  .featured-collection-header {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .featured-collection-title {
+    color: #000;
+    font-family: 'EB Garamond';
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    margin: 0;
+  }
+
+  /* Carousel Wrapper */
+  .carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+
+  /* Navigation Buttons */
+  .carousel-nav-button {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: #ffffff;
+    border: 1.5px solid #4d3942;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #4d3942;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .carousel-nav-button:hover {
+    background-color: #4d3942;
+    color: #ffffff;
+  }
+
+  .carousel-nav-button:active {
+    transform: scale(0.95);
+  }
+
+  .carousel-nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .carousel-nav-button svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Carousel Viewport - Contains exactly 6 columns */
+  .carousel-viewport {
+    flex: 1;
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Carousel Track - Scrollable container */
+  .carousel-track {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    margin: 0;
+    align-items: flex-start;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Individual Slide */
+  .carousel-slide {
+    flex: 0 0 262.27px;
+    width: 262.27px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Product Card Styling */
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    width: 262.27px;
+    align-items: flex-start;
+    position: relative;
+    background-color: #fcfcfc;
+    border-radius: 14.3px;
+    overflow: hidden;
+    box-shadow: 1.787px 1.787px 8.936px 0 rgba(34, 34, 34, 0.1);
+  }
+
+  .product-card .product-images {
+    display: flex;
+    flex-direction: column;
+    height: 262.27px;
+    align-items: flex-start;
+    gap: 69.7px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: #c5c5c5;
+    overflow: hidden;
+  }
+
+  .product-card .product-image-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+    margin-right: -1049.08px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+
+  .product-card .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .product-card .product-image-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-card:has(.product-image-hover) .product-image {
+    transition: opacity 0.3s ease;
+  }
+
+  .product-card:has(.product-image-hover):hover .product-image {
+    opacity: 0;
+  }
+
+  .product-card:has(.product-image-hover):hover .product-image-hover {
+    opacity: 1;
+  }
+
+  .product-card .availability-tag {
+    position: absolute;
+    top: 15px;
+    left: 186px;
+    width: 65px;
+    height: 19px;
+    background-color: #1b8168;
+    border-radius: 3.57px;
+    overflow: hidden;
+    border: 0.71px solid;
+    border-color: transparent;
+    z-index: 2;
+  }
+
+  .product-card .availability-badge-text {
+    position: absolute;
+    top: 3px;
+    left: 8px;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 10.7px;
+    letter-spacing: 0;
+    line-height: 14.3px;
+    white-space: nowrap;
+  }
+
+  .product-card .availability-badge-text.sold-out {
+    background-color: #9c5556;
+  }
+
+  .product-card .filter-button {
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 1.79px;
+    position: absolute;
+    top: 223px;
+    left: 11px;
+    background-color: #ffffff80;
+    border-radius: 4.47px;
+    z-index: 3;
+    transition: all 0.3s ease;
+  }
+
+  .product-card .filter-button:hover {
+    background-color: #ffffff;
+    transform: scale(1.05);
+  }
+
+  .product-card .quick-view-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+  }
+
+  .product-card .product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14.3px 21.45px 21.45px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .product-card .product-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    flex: 0 0 auto;
+    position: relative;
+    align-self: stretch;
+  }
+
+  .product-card .product-title {
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    height: 21.45px;
+  }
+
+  .product-card .product-title-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 16.1px;
+    letter-spacing: 0;
+    line-height: 21.45px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-card .product-specs-header {
+    align-items: flex-end;
+    gap: 1.79px;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    position: relative;
+    margin-top: 5px;
+  }
+
+  .product-card .spec-detail {
+    align-items: flex-end;
+    justify-content: center;
+    width: fit-content;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: #1a1a1a;
+    font-size: 10.7px;
+    letter-spacing: 0.45px;
+    line-height: 12.5px;
+    white-space: nowrap;
+    display: flex;
+    position: relative;
+  }
+
+  .product-card .divider {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat';
+    font-weight: 200;
+    color: #78686f;
+    font-size: 15.2px;
+    letter-spacing: 0.45px;
+    line-height: 15.2px;
+    white-space: nowrap;
+  }
+
+  .product-card .divider-section {
+    display: flex;
+    padding: 7.149px 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8.936px;
+    align-self: stretch;
+  }
+
+  .product-card .divider-line {
+    display: flex;
+    height: 0.894px;
+    padding: 1px 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8.936px;
+    align-self: stretch;
+    border-top: 0.715px solid #c5c5c5;
+  }
+
+  .product-card .specs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5.36px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    margin-top: 8px;
+  }
+
+  .product-card .spec-row {
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    position: relative;
+  }
+
+  .product-card .spec-label {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: #707070;
+    font-size: 12.5px;
+    letter-spacing: 0.71px;
+    line-height: 12.5px;
+    white-space: nowrap;
+  }
+
+  .product-card .spec-value {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: #1a1a1a;
+    font-size: 12.5px;
+    letter-spacing: 0;
+    line-height: 12.5px;
+    white-space: nowrap;
+  }
+
+  .product-card .divider-section-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 3.57px 0px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    margin-top: 8px;
+  }
+
+  .product-card .divider-line-2 {
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    height: 1px;
+    margin-bottom: -0.11px;
+    border-top-width: 0.71px;
+    border-top-style: solid;
+    border-color: #c5c5c5;
+  }
+
+  .product-card .price-action-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .product-card .price-container {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3.57px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  .product-card .product-price {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'EB Garamond';
+    font-weight: 500;
+    color: #78686f;
+    font-size: 32.2px;
+    letter-spacing: 0;
+    line-height: 21.4px;
+    white-space: nowrap;
+  }
+
+  .product-card .btn-primary {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8.94px;
+    padding: 7.15px 19.66px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #78686f;
+    border-radius: 3.57px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+  }
+
+  .product-card .btn-primary:hover {
+    background-color: #4d3942;
+  }
+
+  .product-card .btn-text {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.89px;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 12.5px;
+    letter-spacing: 0;
+    line-height: 17.9px;
+    white-space: nowrap;
+  }
+
+  .product-card-link {
+    display: contents;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .product-card-wrapper {
+    display: contents;
+    cursor: pointer;
+  }
+
+  /* Responsive Design */
+  /* 1440px: 5 columns */
+  @media (max-width: 1440px) {
+    .featured-collection-container {
+      padding: 40px;
+    }
+
+    .carousel-track {
+      gap: 35px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-slide {
+      flex: 0 0 240px;
+      width: 240px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .product-card {
+      width: 240px;
+    }
+
+    .product-card .product-images {
+      height: 240px;
+    }
+
+    .carousel-nav-button {
+      width: 44px;
+      height: 44px;
+    }
+
+    .carousel-nav-button svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  /* 1200px: 4 columns */
+  @media (max-width: 1200px) {
+    .featured-collection-container {
+      padding: 30px 20px;
+      gap: 30px;
+    }
+
+    .carousel-track {
+      gap: 30px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-slide {
+      flex: 0 0 220px;
+      width: 220px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .product-card {
+      width: 220px;
+    }
+
+    .product-card .product-images {
+      height: 220px;
+    }
+
+    .featured-collection-title {
+      font-size: 28px;
+    }
+
+    .carousel-wrapper {
+      gap: 16px;
+    }
+  }
+
+  /* 768px: 3 columns */
+  @media (max-width: 768px) {
+    .featured-collection-container {
+      padding: 20px 16px;
+      gap: 24px;
+    }
+
+    .carousel-track {
+      gap: 20px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-slide {
+      flex: 0 0 180px;
+      width: 180px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .product-card {
+      width: 180px;
+    }
+
+    .product-card .product-images {
+      height: 180px;
+    }
+
+    .featured-collection-title {
+      font-size: 24px;
+    }
+
+    .carousel-nav-button {
+      width: 40px;
+      height: 40px;
+    }
+
+    .carousel-nav-button svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  /* 480px: 2 columns */
+  @media (max-width: 480px) {
+    .featured-collection-container {
+      padding: 16px;
+      gap: 16px;
+    }
+
+    .carousel-track {
+      gap: 16px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-slide {
+      flex: 0 0 160px;
+      width: 160px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .product-card {
+      width: 160px;
+    }
+
+    .product-card .product-images {
+      height: 160px;
+    }
+
+    .featured-collection-title {
+      font-size: 20px;
+    }
+
+    .carousel-nav-button {
+      width: 36px;
+      height: 36px;
+    }
+
+    .carousel-wrapper {
+      gap: 12px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    // Wait for DOM to be fully ready
+    function initCarousel() {
+      const container = document.querySelector('[data-section-id="{{ section.id }}"]');
+      if (!container) return;
+
+      const carouselTrack = container.querySelector('[data-carousel-track]');
+      const carouselViewport = container.querySelector('.carousel-viewport');
+      const prevButton = container.querySelector('[data-carousel-prev]');
+      const nextButton = container.querySelector('[data-carousel-next]');
+
+      if (!carouselTrack || !carouselViewport || !prevButton || !nextButton) return;
+
+      // Configuration for different breakpoints
+      function getCarouselConfig() {
+        const width = window.innerWidth;
+        if (width >= 1441) {
+          return { columns: 6, cardWidth: 262.27, gap: 15 };
+        } else if (width >= 1201) {
+          return { columns: 5, cardWidth: 240, gap: 35 };
+        } else if (width >= 769) {
+          return { columns: 4, cardWidth: 220, gap: 30 };
+        } else if (width >= 481) {
+          return { columns: 3, cardWidth: 180, gap: 20 };
+        } else {
+          return { columns: 2, cardWidth: 160, gap: 16 };
+        }
+      }
+
+      // Calculate scroll amount - scroll by exactly one column batch
+      function getScrollAmount() {
+        const config = getCarouselConfig();
+        const singleSlideWidth = config.cardWidth + config.gap;
+        const totalScrollWidth = singleSlideWidth * config.columns;
+        return totalScrollWidth - config.gap;
+      }
+
+      // Update button disabled states
+      function updateButtonStates() {
+        const maxScroll = Math.max(0, carouselTrack.scrollWidth - carouselViewport.clientWidth);
+        const isAtStart = carouselTrack.scrollLeft <= 1;
+        const isAtEnd = carouselTrack.scrollLeft >= maxScroll - 1;
+
+        prevButton.disabled = isAtStart;
+        nextButton.disabled = isAtEnd;
+      }
+
+      // Navigation handlers
+      prevButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const scrollAmount = getScrollAmount();
+        carouselTrack.scrollBy({
+          left: -scrollAmount,
+          behavior: 'smooth',
+        });
+        setTimeout(updateButtonStates, 400);
+      });
+
+      nextButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const scrollAmount = getScrollAmount();
+        carouselTrack.scrollBy({
+          left: scrollAmount,
+          behavior: 'smooth',
+        });
+        setTimeout(updateButtonStates, 400);
+      });
+
+      // Update on scroll
+      carouselTrack.addEventListener('scroll', updateButtonStates);
+
+      // Update on window resize
+      window.addEventListener('resize', () => {
+        setTimeout(updateButtonStates, 150);
+      });
+
+      // Initialize button states after a small delay to ensure DOM is painted
+      setTimeout(updateButtonStates, 200);
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCarousel);
+    } else {
+      initCarousel();
+    }
+  })();
+
+  // Product Card Navigation & Button Handlers
+  (function () {
+    const productCards = document.querySelectorAll('.product-card-link');
+
+    productCards.forEach((card) => {
+      const filterBtn = card.querySelector('[data-quick-view-trigger]');
+      const buyNowBtn = card.querySelector('.btn-buy-now');
+
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const productHandle = filterBtn?.getAttribute('data-product-handle');
+
+          if (!productHandle) {
+            alert('Unable to add product to cart.');
+            return;
+          }
+
+          try {
+            buyNowBtn.disabled = true;
+            buyNowBtn.querySelector('.btn-text').textContent = 'Adding...';
+
+            const response = await fetch(`/products/${productHandle}.js`);
+            if (!response.ok) throw new Error('Failed to fetch product');
+
+            const productData = await response.json();
+            const variantId = productData.variants?.[0]?.id;
+
+            if (!variantId) throw new Error('No variant found');
+
+            const config = fetchConfig('javascript');
+            config.headers['X-Requested-With'] = 'XMLHttpRequest';
+            delete config.headers['Content-Type'];
+
+            const formData = new FormData();
+            formData.append('id', variantId);
+            formData.append('quantity', 1);
+            config.body = formData;
+
+            const cartResponse = await fetch(window.routes.cart_add_url, config);
+
+            if (!cartResponse.ok) {
+              const errorData = await cartResponse.text();
+              try {
+                const errorJson = JSON.parse(errorData);
+                throw new Error(errorJson.message || `Error ${cartResponse.status}`);
+              } catch (e) {
+                throw new Error(`Failed to add to cart (Error ${cartResponse.status})`);
+              }
+            }
+
+            window.location.href = window.routes.cart_url;
+          } catch (error) {
+            console.error('Error adding to cart:', error);
+            buyNowBtn.disabled = false;
+            buyNowBtn.querySelector('.btn-text').textContent = 'Buy Now';
+            alert(error.message || 'Failed to add product to cart.');
+          }
+        });
+      }
+    });
+  })();
+
+  // Notify Me Button Handler
+  (function () {
+    const notifyMeButtons = document.querySelectorAll('[data-notify-me-trigger]');
+    notifyMeButtons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        alert('Thank you for your interest! We will notify you when this item is back in stock.');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "POR Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Collection Title",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "POR Featured Collection",
+      "settings": {
+        "collection_title": "Featured Collection"
+      }
+    }
+  ]
+}
+{% endschema %}
