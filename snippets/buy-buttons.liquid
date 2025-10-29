@@ -6,11 +6,12 @@
   - product_form_id: {String} product form id.
   - section_id: {String} id of section to which this snippet belongs.
   - show_pickup_availability: {Boolean} for the pickup availability. If true the pickup availability is rendered, false - not rendered (optional).
+  - buttons_layout: {String} layout option for buttons - 'stacked' or 'row' (optional).
 
   Usage:
-  {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
+  {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true, buttons_layout: 'stacked' %}
 {% endcomment %}
-<div {{ block.shopify_attributes }}>
+<div {{ block.shopify_attributes }}{% if buttons_layout == 'row' %} class="hide-wishlist"{% endif %}>
   {%- if product != blank -%}
     {%- liquid
       assign gift_card_recipient_feature_active = false
@@ -60,7 +61,7 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
 
-        <div class="product-form__buttons">
+        <div class="product-form__buttons{% if buttons_layout == 'row' %} product-form__buttons--row{% endif %}">
           {%- liquid
             assign check_against_inventory = true
             if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
@@ -102,14 +103,14 @@
             <button
               id="PayNowButton-{{ section_id }}"
               type="button"
-              class="product-form__submit button button--full-width button--primary pay-now-btn"
+              class="product-form__submit button button--full-width button--outline pay-now-btn"
               {% if product.selected_or_first_available_variant.available == false
                 or quantity_rule_soldout
                 or product.selected_or_first_available_variant == null
               %}disabled{% endif %}
               data-variant-id="{{ product.selected_or_first_available_variant.id }}"
             >
-              <span>Pay now</span>
+              <span>Buy Now</span>
               {%- render 'loading-spinner' -%}
             </button>
           </div>

@@ -82,6 +82,7 @@
     }
 
     @media screen and (max-width: 749px) {
+      
       .breadcrumbs__list {
         font-size: 0.8rem;
       }
@@ -650,7 +651,8 @@
                   product: product,
                   product_form_id: product_form_id,
                   section_id: section.id,
-                  show_pickup_availability: true
+                  show_pickup_availability: true,
+                  buttons_layout: block.settings.button_layout
                 -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
@@ -895,7 +897,7 @@
                 </div>
               {% when 'rolex_watch_metafields' %}
                 <div class="rolex-watch-metafields">
-                  <div>
+                  <div class="rolex-watch-metafields__band-size">
                     {{ product.metafields.custom.watch_band_type }} | {{ product.metafields.custom.watch_case_size }}
                   </div>
                   <div class="rolex-watch-metafields__content">
@@ -1047,8 +1049,9 @@
           }
             .rolex-watch-metafields {
               color: var(--NotBlack, #151515);
+              margin-top:0px;
           font-family: Montserrat;
-          font-size: 20px;
+          font-size: 16px;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
@@ -1056,6 +1059,9 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+            }
+            .rolex-watch-metafields__band-size {
+              font-size:20px;
             }
               .consult-an-expert h3 {
                 margin: 0;
@@ -1234,6 +1240,15 @@
                           transform: rotate(-180deg);
                       }
                       @media (max-width: 749px) {
+                        .rolex-watch-metafields__content-item-value{
+                          font-size:14px;
+                        }
+                        .rolex-watch-metafields__content-item-label{
+                          font-size:14px;
+                        }
+                        .rolex-watch-metafields__band-size{
+                          font-size:16px;
+                        }
                         .consult-an-expert h3{
                           font-size: 16px;
                         }
@@ -1520,6 +1535,23 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
+        },
+        {
+          "type": "select",
+          "id": "button_layout",
+          "options": [
+            {
+              "value": "stacked",
+              "label": "Stacked (Default)"
+            },
+            {
+              "value": "row",
+              "label": "Single Row (Desktop)"
+            }
+          ],
+          "default": "stacked",
+          "label": "Button Layout",
+          "info": "On desktop, buttons will appear in a single row. Mobile will remain stacked. Wishlist button will be hidden in row layout."
         }
       ]
     },
@@ -2761,6 +2793,10 @@
         {
           "value": "thumbnail_slider",
           "label": "t:sections.main-product.settings.gallery_layout.options__4.label"
+        },
+        {
+          "value": "thumbnail_slider_left",
+          "label": "t:sections.main-product.settings.gallery_layout.options__5.label"
         }
       ],
       "default": "stacked",

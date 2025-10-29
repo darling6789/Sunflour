@@ -31,7 +31,7 @@
           Looking for a specific model or year? We will personally source your ideal timepiece based on your style,
           preferences, and budget.
         </p>
-        <button class="get-started-wrapper" type="button" aria-label="Start searching for your dream watch">
+        <button class="get-started-wrapper" type="button" aria-label="Start searching for your dream watch" {% if section.settings.search_button_link %}onclick="window.location.href='{{ section.settings.search_button_link }}'"{% endif %}>
           <span class="get-started">Start My Search</span>
         </button>
       </article>
@@ -538,20 +538,86 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('.input-action');
+    const emailInput = document.querySelector('#email-input');
     const button = document.querySelector('.CTA-section .button');
     const buttonText = button.querySelector('.get-started');
+    const errorMessage = document.querySelector('#email-error');
+
+    // Klaviyo configuration
+    const KLAVIYO_PUBLIC_API_KEY = 'R6UT2Q';
+    const KLAVIYO_LIST_ID = 'XT4BKB';
+    const KLAVIYO_ENDPOINT = 'https://a.klaviyo.com/client/subscriptions/?company_id=' + KLAVIYO_PUBLIC_API_KEY;
 
     button.addEventListener('click', function(e) {
       e.preventDefault();
 
-      // Change button text
-      buttonText.textContent = "You're Subscribed!";
+      // Validate email
+      if (!emailInput.value || !emailInput.validity.valid) {
+        errorMessage.textContent = 'Please enter a valid email address';
+        errorMessage.style.display = 'block';
+        return;
+      }
 
-      // Add the subscribed class
-      button.classList.add('subscribed');
-
-      // Disable the button to prevent multiple clicks
+      // Disable button to prevent multiple submissions
       button.disabled = true;
+      buttonText.textContent = 'Subscribing...';
+
+      // Prepare request data - correct JSON:API format
+      const requestData = {
+        data: {
+          type: 'subscription',
+          attributes: {
+            profile: {
+              data: {
+                type: 'profile',
+                attributes: {
+                  email: emailInput.value
+                }
+              }
+            }
+          },
+          relationships: {
+            list: {
+              data: {
+                type: 'list',
+                id: KLAVIYO_LIST_ID
+              }
+            }
+          }
+        }
+      };
+
+      // Send to Klaviyo
+      fetch(KLAVIYO_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'revision': '2024-10-15'
+        },
+        body: JSON.stringify(requestData)
+      })
+      .then(response => {
+        if (response.ok) {
+          // Success
+          buttonText.textContent = "You're Subscribed!";
+          button.classList.add('subscribed');
+          errorMessage.style.display = 'none';
+          emailInput.value = '';
+        } else {
+          // Error response
+          errorMessage.textContent = 'There was an error subscribing. Please try again.';
+          errorMessage.style.display = 'block';
+          button.disabled = false;
+          buttonText.textContent = 'Subscribe';
+        }
+      })
+      .catch(error => {
+        console.error('Subscription error:', error);
+        errorMessage.textContent = 'There was an error subscribing. Please try again.';
+        errorMessage.style.display = 'block';
+        button.disabled = false;
+        buttonText.textContent = 'Subscribe';
+      });
     });
   });
 </script>
@@ -560,7 +626,13 @@
 {
   "name": "POR - CTA Section",
   "class": "p-o-r-cta-section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "url",
+      "id": "search_button_link",
+      "label": "Search Button Link",
+    }
+  ],
   "presets": [
     {
       "name": "POR - CTA Section"

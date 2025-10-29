@@ -4,11 +4,41 @@
       Want to be the first to find out about flash sales and special inventory drops for our Pre-Owned Rolex watches?
       Subscribe to be sure you won't miss some epic deals!
     </p>
-    <button class="button" type="button" aria-label="Subscribe to receive deals on pre-owned Rolex watches">
+    <button class="button" type="button" aria-label="Subscribe to receive deals on pre-owned Rolex watches" id="deals-button">
       <span class="get-started">Send Me Deals</span>
     </button>
   </div>
 </section>
+
+<!-- Popup Modal -->
+<div class="modal-overlay" id="dealsModal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close subscription form" id="closeModal">&times;</button>
+    <article class="modal-form-container">
+      <h2 class="modal-title" id="modalTitle">Subscribe for Exclusive Offers</h2>
+      <p class="modal-description">
+        Join our insider list to receive early access to special pricing, flash sales, and limited-time offers on Pre-Owned Rolex watches and other fine timepieces.
+      </p>
+      <form class="input-action" aria-label="Email subscription form" novalidate>
+        <label for="modal-email-input" class="visually-hidden">Email Address</label>
+        <input
+          class="modal-input"
+          id="modal-email-input"
+          name="email"
+          placeholder="Email Address"
+          type="email"
+          required
+          aria-required="true"
+          aria-describedby="modal-email-error"
+        >
+        <button class="modal-button" type="submit" aria-label="Subscribe to newsletter">
+          <span class="modal-button-text">Subscribe</span>
+        </button>
+        <span id="modal-email-error" class="modal-error-message" role="alert" aria-live="polite"></span>
+      </form>
+    </article>
+  </div>
+</div>
 
 <style>
   :root {
@@ -174,4 +204,433 @@
       padding: 14px 20px;
     }
   }
+
+  /* Modal Styles */
+  :root {
+    --primary-accent: rgba(120, 104, 111, 1);
+    --accent-darkest: rgba(77, 57, 66, 1);
+    --primary-light: rgba(248, 246, 242, 1);
+    --text-dark: rgba(21, 21, 21, 1);
+    --error-color: #d32f2f;
+  }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-content {
+    position: relative;
+    background-color: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--accent-darkest);
+  }
+
+  .modal-close:focus-visible {
+    outline: 2px solid var(--accent-darkest);
+    outline-offset: 2px;
+  }
+
+  .modal-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .modal-title {
+    margin: 0;
+    font-family: 'EB Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text-dark);
+    line-height: 1.2;
+  }
+
+  .modal-description {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--accent-darkest);
+    line-height: 1.5;
+  }
+
+  .modal-form-container .input-action {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .modal-input {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4e4e4e;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .modal-input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 3px rgba(120, 104, 111, 0.1);
+  }
+
+  .modal-input::placeholder {
+    color: #999;
+  }
+
+  .modal-button {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background-color: var(--primary-accent);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-height: 48px;
+  }
+
+  .modal-button:hover {
+    background-color: var(--accent-darkest);
+  }
+
+  .modal-button:focus-visible {
+    outline: 2px solid var(--text-dark);
+    outline-offset: 2px;
+  }
+
+  .modal-button:active {
+    transform: scale(0.98);
+  }
+
+  .modal-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .modal-button-text {
+    position: relative;
+    width: fit-content;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+
+  .modal-error-message {
+    display: none;
+    color: var(--error-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    width: 100%;
+    text-align: left;
+    margin-top: 4px;
+  }
+
+  .modal-error-message.show {
+    display: block;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Tablet and below: Stack layout */
+  @media (max-width: 768px) {
+    .modal-content {
+      padding: 30px 24px;
+      margin: 0 15px;
+    }
+
+    .modal-title {
+      font-size: 24px;
+    }
+
+    .modal-description {
+      font-size: 15px;
+    }
+
+    .modal-form-container .input-action {
+      gap: 10px;
+    }
+
+    .modal-input {
+      padding: 12px 14px;
+      font-size: 16px;
+    }
+
+    .modal-button {
+      padding: 12px 24px;
+      min-height: 44px;
+    }
+
+    .modal-button-text {
+      font-size: 16px;
+    }
+  }
+
+  /* Mobile: Extra small devices */
+  @media (max-width: 480px) {
+    .modal-overlay {
+      padding: 16px;
+    }
+
+    .modal-content {
+      padding: 24px 20px;
+    }
+
+    .modal-close {
+      top: 12px;
+      right: 12px;
+      font-size: 24px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .modal-description {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .modal-form-container .input-action {
+      gap: 8px;
+    }
+
+    .modal-input {
+      padding: 12px 12px;
+      font-size: 16px;
+      height: 44px;
+    }
+
+    .modal-button {
+      padding: 12px 20px;
+      min-height: 44px;
+    }
+
+    .modal-button-text {
+      font-size: 14px;
+    }
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Modal elements
+    const modal = document.getElementById('dealsModal');
+    const dealsButton = document.getElementById('deals-button');
+    const closeModalButton = document.getElementById('closeModal');
+    const emailInput = document.getElementById('modal-email-input');
+    const submitButton = modal.querySelector('.modal-button');
+    const buttonText = submitButton.querySelector('.modal-button-text');
+    const errorMessage = document.getElementById('modal-email-error');
+
+    // Klaviyo configuration
+    const KLAVIYO_PUBLIC_API_KEY = 'R6UT2Q';
+    const KLAVIYO_LIST_ID = 'XT4BKB';
+    const KLAVIYO_ENDPOINT = 'https://a.klaviyo.com/client/subscriptions/?company_id=' + KLAVIYO_PUBLIC_API_KEY;
+
+    // Open modal when button is clicked
+    dealsButton.addEventListener('click', function() {
+      modal.classList.add('active');
+      emailInput.focus();
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close modal function
+    function closeModal() {
+      modal.classList.remove('active');
+      emailInput.value = '';
+      errorMessage.textContent = '';
+      errorMessage.classList.remove('show');
+      submitButton.disabled = false;
+      buttonText.textContent = 'Subscribe';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when close button is clicked
+    closeModalButton.addEventListener('click', closeModal);
+
+    // Close modal when clicking outside of modal content
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Handle form submission
+    submitButton.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // Validate email
+      if (!emailInput.value || !emailInput.validity.valid) {
+        errorMessage.textContent = 'Please enter a valid email address';
+        errorMessage.classList.add('show');
+        return;
+      }
+
+      // Clear previous error
+      errorMessage.textContent = '';
+      errorMessage.classList.remove('show');
+
+      // Disable button to prevent multiple submissions
+      submitButton.disabled = true;
+      buttonText.textContent = 'Subscribing...';
+
+      // Prepare request data - correct JSON:API format
+      const requestData = {
+        data: {
+          type: 'subscription',
+          attributes: {
+            profile: {
+              data: {
+                type: 'profile',
+                attributes: {
+                  email: emailInput.value
+                }
+              }
+            }
+          },
+          relationships: {
+            list: {
+              data: {
+                type: 'list',
+                id: KLAVIYO_LIST_ID
+              }
+            }
+          }
+        }
+      };
+
+      // Send to Klaviyo
+      fetch(KLAVIYO_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'revision': '2024-10-15'
+        },
+        body: JSON.stringify(requestData)
+      })
+      .then(response => {
+        if (response.ok) {
+          // Success
+          buttonText.textContent = "You're Subscribed!";
+          submitButton.style.backgroundColor = '#4D3942';
+          errorMessage.style.display = 'none';
+
+          // Close modal after 2 seconds
+          setTimeout(() => {
+            closeModal();
+            submitButton.style.backgroundColor = '';
+          }, 2000);
+        } else {
+          // Error response
+          errorMessage.textContent = 'There was an error subscribing. Please try again.';
+          errorMessage.classList.add('show');
+          submitButton.disabled = false;
+          buttonText.textContent = 'Subscribe';
+        }
+      })
+      .catch(error => {
+        console.error('Subscription error:', error);
+        errorMessage.textContent = 'There was an error subscribing. Please try again.';
+        errorMessage.classList.add('show');
+        submitButton.disabled = false;
+        buttonText.textContent = 'Subscribe';
+      });
+    });
+
+    // Allow Enter key to submit form
+    emailInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && modal.classList.contains('active')) {
+        submitButton.click();
+      }
+    });
+  });
+</script>

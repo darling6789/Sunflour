@@ -28,7 +28,8 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
-            "show_gift_card_recipient": false
+            "show_gift_card_recipient": false,
+            "button_layout": "row"
           }
         },
         "disclaimer_badge_zPGjjb": {
@@ -62,15 +63,16 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "media_size": "small",
+        "media_size": "medium",
         "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "thumbnail_slider",
+        "media_fit": "cover",
+        "gallery_layout": "thumbnail_slider_left",
         "mobile_thumbnails": "hide",
         "media_position": "left",
         "image_zoom": "lightbox",
         "hide_variants": true,
         "enable_video_looping": false,
+        "show_breadcrumbs": true,
         "padding_top": 36,
         "padding_bottom": 12
       }
@@ -129,7 +131,9 @@
     "p_o_r_cta_section_Xxdy6a": {
       "type": "p-o-r-cta-section",
       "name": "POR - CTA Section",
-      "settings": {}
+      "settings": {
+        "search_button_link": "shopify://pages/find-your-dream-watch"
+      }
     }
   },
   "order": [
