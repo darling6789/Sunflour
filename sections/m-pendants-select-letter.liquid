@@ -568,39 +568,6 @@ $(document).ready(function(){
                 }
             }
         }
-        
-        // Dispatch custom event to sync with product section
-        $(document).trigger('letterSelected', [selectedLetter]);
-    });
-    
-    // Listen for letter changes from product section
-    $(document).on('productLetterChanged', function(event, letter) {
-        // Find the button with this letter and activate it
-        const letterBtn = $('.m-pendants-letter-btn[data-letter="' + letter + '"]');
-        if (letterBtn.length) {
-            // Remove active class from all buttons
-            $('.m-pendants-letter-btn').removeClass('active');
-            // Add active class to the current button
-            letterBtn.addClass('active');
-            
-            // Update media display
-            const currentMediaType = $('.m-pendants-media-btn.active').data('media');
-            $('.m-pendants-media-image, .m-pendants-media-video').removeClass('active');
-            $('.m-pendants-media-' + currentMediaType + '[data-letter="' + letter + '"]').addClass('active');
-            
-            // Handle video play/pause
-            if (currentMediaType === 'video') {
-                const video = $('.m-pendants-media-video[data-letter="' + letter + '"] video')[0];
-                if (video) {
-                    const playPromise = video.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            // Video play was interrupted, ignore the error
-                        });
-                    }
-                }
-            }
-        }
     });
     
     // Carousel navigation
