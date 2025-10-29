@@ -18,7 +18,7 @@
         data-product-price="{{ product.price }}"
         data-product-featured-image="{{ product.featured_image | image_url: width: 620 }}"
         data-product-dial-color="{{ product.metafields.custom.watch_dial_color | escape }}"
-        data-product-bezel-type="{{ product.metafields.custom.watch_bezel_type | escape }}"
+        data-product-band-type="{{ product.metafields.custom.watch_band_type | escape }}"
         data-product-case-size="{{ product.metafields.custom.watch_case_size | escape }}"
         data-product-model="{{ product.metafields.custom.watch_reference | escape }}"
         data-product-year="{{ product.metafields.custom.watch_year | escape }}"
@@ -47,7 +47,7 @@
 {% endfor %}
 {{ filtered_title | strip }}</div></div>
         <div class="product-specs-header">
-          <div class="spec-detail">{{product.metafields.custom.watch_dial_color}}</div>
+          <div class="spec-detail">{{product.metafields.custom.watch_band_type}}</div>
           <div class="divider">|</div>
           <div class="spec-detail">{{product.metafields.custom.watch_case_size}}</div>
         </div>
