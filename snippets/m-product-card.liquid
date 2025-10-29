@@ -106,7 +106,7 @@
         </div>
         <div class="m-product-card-price-wrap">
             <div class="m-product-card-price">
-                {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
+                {% comment %} {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%} {% endcomment %}
                 {% comment %} {%- if _promo contains 'promo-price-block' -%}
                   {{ _promo }}
                 {%- else -%} {% endcomment %}

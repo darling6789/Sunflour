@@ -1051,6 +1051,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentProduct = null;
     let currentVariant = null;
     let productData = {};
+    let isSyncingFromOtherSection = false;
     
     // Load product data from hidden elements
     function loadProductData() {
@@ -1338,6 +1339,42 @@ document.addEventListener('DOMContentLoaded', function() {
             clearErrorMessage();
             selectProduct(letter);
             updateSelectionSummary(letter);
+            
+            // Dispatch custom event to sync with select-letter section (only if not syncing from other section)
+            if (!isSyncingFromOtherSection) {
+                $(document).trigger('productLetterChanged', [letter]);
+            }
+            isSyncingFromOtherSection = false; // Reset flag
+        }
+    });
+    
+    // Listen for letter selection from select-letter section
+    $(document).on('letterSelected', function(event, letter) {
+        // Set flag to prevent infinite loop
+        isSyncingFromOtherSection = true;
+        
+        // Get the slider instance
+        const slider = $('#m-pendants-letter-slider');
+        const slickInstance = slider.slick('getSlick');
+        
+        // Get the total number of actual slides (not clones)
+        const slideCount = slickInstance.slideCount;
+        
+        // Find the correct index by checking each slide
+        let targetIndex = -1;
+        for (let i = 0; i < slideCount; i++) {
+            // Get the slide element
+            const slide = slickInstance.$slides.eq(i);
+            const slideLetter = slide.find('.m-pendants-letter-slide').data('letter');
+            if (slideLetter === letter) {
+                targetIndex = i;
+                break;
+            }
+        }
+        
+        if (targetIndex >= 0) {
+            // Navigate to the target slide
+            slider.slick('slickGoTo', targetIndex, false);
         }
     });
     
@@ -1346,6 +1383,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (firstLetter) {
         selectProduct(firstLetter);
         updateSelectionSummary(firstLetter);
+        // Sync with select-letter section on initial load
+        $(document).trigger('productLetterChanged', [firstLetter]);
     }
     
     // Update variant ID in the form when variant changes

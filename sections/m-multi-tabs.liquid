@@ -460,7 +460,7 @@ $(document).ready(function() {
     overflow-wrap: break-word;
     word-break: break-word;
   }
-  .m-multi-tabs__panel-inner.rte img,
+  {% comment %} .m-multi-tabs__panel-inner.rte img,
   .m-multi-tabs__panel-inner.rte table,
   .m-multi-tabs__panel-inner.rte iframe,
   .m-multi-tabs__panel-inner.rte video {
@@ -468,7 +468,7 @@ $(document).ready(function() {
     height: auto;
     display: block;
     margin: 0 auto;
-  }
+  } {% endcomment %}
   .m-multi-tabs__panel-inner.rte ul,
   .m-multi-tabs__panel-inner.rte ol {
     margin: 16px auto;
