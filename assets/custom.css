@@ -187,7 +187,7 @@ h1.collection-hero__title {
   min-height: 3em;             /* Reserve space = 2 lines (1.5em each) */
   line-height: 1.5em;
 }
-.m-product-card .price .price-item.price-item--sale {
+.m-product-card .price .price-item.price-item--sale, .m-product-card .price .price-item.price-item--regular {
     font-size: 24px;
 }
 .m-product-card .price--sold-out .price__badge-sold-out, .m-product-card .price--on-sale .price__badge-sale, .m-product-card .volume-pricing--sale-badge .price__badge-sale {
