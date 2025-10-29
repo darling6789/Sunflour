@@ -299,6 +299,7 @@ a.product__text {
 
   .product__info-container > *:first-child {
     margin-top: 0;
+    margin-bottom: 0px;
   }
 }
 

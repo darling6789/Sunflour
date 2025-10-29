@@ -82,6 +82,7 @@
     }
 
     @media screen and (max-width: 749px) {
+      
       .breadcrumbs__list {
         font-size: 0.8rem;
       }
@@ -896,7 +897,7 @@
                 </div>
               {% when 'rolex_watch_metafields' %}
                 <div class="rolex-watch-metafields">
-                  <div>
+                  <div class="rolex-watch-metafields__band-size">
                     {{ product.metafields.custom.watch_band_type }} | {{ product.metafields.custom.watch_case_size }}
                   </div>
                   <div class="rolex-watch-metafields__content">
@@ -1048,8 +1049,9 @@
           }
             .rolex-watch-metafields {
               color: var(--NotBlack, #151515);
+              margin-top:0px;
           font-family: Montserrat;
-          font-size: 20px;
+          font-size: 16px;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
@@ -1057,6 +1059,9 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+            }
+            .rolex-watch-metafields__band-size {
+              font-size:20px;
             }
               .consult-an-expert h3 {
                 margin: 0;
@@ -1235,6 +1240,15 @@
                           transform: rotate(-180deg);
                       }
                       @media (max-width: 749px) {
+                        .rolex-watch-metafields__content-item-value{
+                          font-size:14px;
+                        }
+                        .rolex-watch-metafields__content-item-label{
+                          font-size:14px;
+                        }
+                        .rolex-watch-metafields__band-size{
+                          font-size:16px;
+                        }
                         .consult-an-expert h3{
                           font-size: 16px;
                         }
