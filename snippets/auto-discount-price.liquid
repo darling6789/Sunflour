@@ -54,6 +54,13 @@ CONFIG:
 {%- if show_promo -%}
   <div class="promo-price-block">
     <div class="price__sale">
+      <span class="price-item price-item--sale price-item--last">
+        {% if settings.currency_code_enabled %}
+          {{ best_price | money_with_currency }}
+        {% else %}
+          {{ best_price | money }}
+        {% endif %}
+      </span>
       <span class="visually-hidden visually-hidden--inline">
         {{ 'products.product.price.regular_price' | t }}
       </span>
@@ -69,13 +76,6 @@ CONFIG:
 
       <span class="visually-hidden visually-hidden--inline">
         {{ 'products.product.price.sale_price' | t }}
-      </span>
-      <span class="price-item price-item--sale price-item--last">
-        {% if settings.currency_code_enabled %}
-          {{ best_price | money_with_currency }}
-        {% else %}
-          {{ best_price | money }}
-        {% endif %}
       </span>
     </div>
 
