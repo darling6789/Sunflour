@@ -106,17 +106,17 @@
         </div>
         <div class="m-product-card-price-wrap">
             <div class="m-product-card-price">
-                {% comment %} {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%} {% endcomment %}
-                {% comment %} {%- if _promo contains 'promo-price-block' -%}
+                {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
+                {%- if _promo contains 'promo-price-block' -%}
                   {{ _promo }}
-                {%- else -%} {% endcomment %}
+                {%- else -%}
                   {%- render 'price',
                     product: product,
                     use_variant: true,
                     show_badges: true,
                     price_class: 'price--large'
                   -%}
-                {% comment %} {%- endif -%} {% endcomment %}
+                {%- endif -%}
             </div>
         </div>
     </div>
