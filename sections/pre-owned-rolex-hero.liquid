@@ -11,16 +11,20 @@
       </div>
     </div>
     <nav class="hero-actions" role="navigation" aria-label="Primary actions">
-      <div class="hero-action-item">
-        <button class="hero-button" data-scroll-to="in-stock-products" {% if section.settings.button_one_url %}data-button-url="{{ section.settings.button_one_url }}"{% endif %} aria-label="{{ section.settings.button_one_text }}">
-          <span class="hero-button-text">{{ section.settings.button_one_text }}</span>
-        </button>
-      </div>
-      <div class="hero-action-item">
-        <button class="hero-button" data-scroll-to="looking-for-something-else" {% if section.settings.button_two_url %}data-button-url="{{ section.settings.button_two_url }}"{% endif %} aria-label="{{ section.settings.button_two_text }}">
-          <span class="hero-button-text">{{ section.settings.button_two_text }}</span>
-        </button>
-      </div>
+      {% if section.settings.button_one_text != blank %}
+        <div class="hero-action-item">
+          <button class="hero-button" data-scroll-to="in-stock-products" {% if section.settings.button_one_url %}data-button-url="{{ section.settings.button_one_url }}"{% endif %} aria-label="{{ section.settings.button_one_text }}">
+            <span class="hero-button-text">{{ section.settings.button_one_text }}</span>
+          </button>
+        </div>
+      {% endif %}
+      {% if section.settings.button_two_text != blank %}
+        <div class="hero-action-item">
+          <button class="hero-button" data-scroll-to="looking-for-something-else" {% if section.settings.button_two_url %}data-button-url="{{ section.settings.button_two_url }}"{% endif %} aria-label="{{ section.settings.button_two_text }}">
+            <span class="hero-button-text">{{ section.settings.button_two_text }}</span>
+          </button>
+        </div>
+      {% endif %}
     </nav>
   </section>
 </main>

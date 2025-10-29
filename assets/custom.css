@@ -406,7 +406,7 @@ h1.collection-hero__title {
 .product .product-form__buttons {
   max-width: unset;
 }
-.product .product-form__submit {
+/* .product .product-form__submit {
   padding: 20px 53.345px;
   gap: 16.67px;
   border-radius: 6.668px;
@@ -416,7 +416,7 @@ h1.collection-hero__title {
   line-height: 100%;
   border: 1px solid #78686F;
   transition: background .2s ease-in-out;
-}
+} */
 .product .product-form__submit:hover {
     background: #f8f6f2;
     color: #78686F;
