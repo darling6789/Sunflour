@@ -14,7 +14,7 @@
       "settings": {
         "hero_image": "shopify://shop_images/a09702bacbe33de7eaafcd751c3585424155c72f_1.jpg",
         "hero_title": "Find Your Dream Watch",
-        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches, or work with one of our experts to locate the Pre-Owned Rolex of your dreams.",
+        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches and find the Pre-Owned Rolex of your dreams.",
         "button_one_text": "Shop In-Stock",
         "button_one_url": "shopify://pages/pre-owned-rolex-watches",
         "button_two_text": "Find My Watch",
@@ -33,7 +33,10 @@
     "service_form_layout_eJDQqM": {
       "type": "service-form-layout",
       "name": "Service Form Layout",
-      "settings": {}
+      "settings": {
+        "recipient_email": "eshop@marcrobinsonjewelers.com",
+        "from_email": "lp-rolex@marcrobinsonjewelers.com"
+      }
     },
     "find_your_dream_watch_HMXjLN": {
       "type": "find-your-dream-watch",
