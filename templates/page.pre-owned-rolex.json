@@ -14,10 +14,10 @@
       "settings": {
         "hero_image": "shopify://shop_images/a09702bacbe33de7eaafcd751c3585424155c72f_1.jpg",
         "hero_title": "Find Your Dream Watch",
-        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches, or work with one of our experts to locate the Pre-Owned Rolex of your dreams.",
+        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches to find the watch of your dreams.",
         "button_one_text": "Shop In-Stock",
         "button_one_url": "",
-        "button_two_text": "Find My Watch",
+        "button_two_text": "",
         "button_two_url": ""
       }
     },
