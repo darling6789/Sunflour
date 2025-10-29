@@ -736,6 +736,8 @@
     // Check if a product passes the active filters
     function productPassesFilters(productElement) {
       const customFilterState = window.customFilterState;
+
+      // If filter state doesn't exist yet, show all products (initial load)
       if (!customFilterState || !customFilterState.selectedFilters) {
         return true; // No filters applied
       }
@@ -743,13 +745,20 @@
       const selectedFilters = customFilterState.selectedFilters;
 
       // If no active filters, all products pass
-      if (Object.keys(selectedFilters).length === 0 || !customFilterState.hasActiveFilters()) {
+      if (!selectedFilters || Object.keys(selectedFilters).length === 0) {
         return true;
+      }
+
+      // Check if there are any active filters
+      if (typeof customFilterState.hasActiveFilters === 'function') {
+        if (!customFilterState.hasActiveFilters()) {
+          return true;
+        }
       }
 
       // Check if product matches all selected filters (AND logic)
       for (let filterName in selectedFilters) {
-        if (selectedFilters[filterName].length > 0) {
+        if (selectedFilters[filterName] && selectedFilters[filterName].length > 0) {
           const filterConfig = window.customFilterConfig.find(f => f.name === filterName);
           if (filterConfig) {
             const productValue = productElement.getAttribute(filterConfig.dataAttr);
@@ -829,7 +838,16 @@
 
     // ==================== INITIALIZE ====================
     // Show first page on load
-    showPage(1);
+    // Use a small delay to ensure filter state is initialized
+    function initializePagination() {
+      if (window.customFilterState) {
+        showPage(1);
+      } else {
+        // If filter state isn't ready, wait longer and try again
+        setTimeout(initializePagination, 150);
+      }
+    }
+    initializePagination();
 
     // ==================== LISTEN FOR FILTER CHANGES ====================
     document.addEventListener('customFiltersChanged', function (e) {
@@ -840,6 +858,13 @@
       recalculatePagination();
 
       // Show page 1 with new filters applied
+      showPage(1);
+    });
+
+    // Also listen for filter system initialization
+    document.addEventListener('customFiltersReady', function (e) {
+      // Reinitialize pagination when filter system is ready
+      recalculatePagination();
       showPage(1);
     });
   })();

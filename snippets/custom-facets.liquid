@@ -184,6 +184,15 @@
         updateProductCount(allProducts.length);
 
         logInfo('Filter initialization complete');
+
+        // Dispatch event to notify pagination that filters are ready
+        const event = new CustomEvent('customFiltersReady', {
+          detail: {
+            filterConfig: filterConfig,
+            selectedFilters: window.customFilterState.selectedFilters
+          }
+        });
+        document.dispatchEvent(event);
       } catch (error) {
         logError('Initialization failed', error);
         initialized = false;
