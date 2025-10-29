@@ -190,6 +190,9 @@ h1.collection-hero__title {
 .m-product-card .price .price-item.price-item--sale {
     font-size: 24px;
 }
+.m-product-card .price--sold-out .price__badge-sold-out, .m-product-card .price--on-sale .price__badge-sale, .m-product-card .volume-pricing--sale-badge .price__badge-sale {
+    margin-top: 5px;
+}
 .quick-add-modal__content-info .product__title h2.h1 {
     font-size: 20px;
 }
