@@ -1,0 +1,111 @@
+<div class="p-o-r-homepage-section">
+  <div class="p-o-r-wrapper">
+    <div class="p-o-r-content">
+      <div class="p-o-r-content-left">
+        <h2 class="p-o-r-content-left-title">Featured Pre-Owned Rolex</h2>
+        <div class="p-o-r-content-left-featured-product"></div>
+      </div>
+      <div class="p-o-r-content-right">
+        <h2 class="p-o-r-content-right-title">Pre-Owned Rolex in Stock</h2>
+        <div class="p-o-r-content-right-featured-collection">
+            {% for product in collections[section.settings.collection].products limit: 4 %}
+                {% render 'product-card', product: product %}
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .p-o-r-content-right-featured-collection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+  }
+  .p-o-r-content-right-title {
+    align-self: stretch;
+    color: #fff;
+    font-family: Legitima;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .p-o-r-content-left-featured-product {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .p-o-r-content-left-title {
+    color: #fff;
+    font-family: Legitima;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .p-o-r-content-right {
+    display: flex;
+    padding-top: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    flex: 1 0 0;
+    align-self: stretch;
+  }
+  .p-o-r-content-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    align-self: stretch;
+  }
+  .p-o-r-content {
+    display: flex;
+    max-width: 1200px;
+    padding: 30px 0;
+    align-items: flex-start;
+    gap: 85px;
+    flex: 1 0 0;
+    align-self: stretch;
+  }
+  .p-o-r-homepage-section {
+    display: flex;
+    padding: 30px 0;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+    background: linear-gradient(137deg, #202020 12.21%, rgba(32, 32, 32, 0.8) 62.16%), #4d3942;
+  }
+  .p-o-r-wrapper {
+    display: flex;
+    height: 600px;
+    max-width: 1200px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 auto;
+    align-self: stretch;
+  }
+</style>
+{% schema %}
+{
+  "name": "P.O.R. Homepage Section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "P.O.R. Homepage Section"
+    }
+  ]
+}
+{% endschema %}
