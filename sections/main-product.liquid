@@ -306,7 +306,9 @@
                   {%- endform -%}
                 </div>
 
+                {% unless template.suffix == 'pre-owned-rolex-watches' %}
                 <p class="affirm-as-low-as" data-page-type="product" data-amount="{{product.price}}"></p>
+                {% endunless %}
 
               {%- when 'inventory' -%}
                 <p
