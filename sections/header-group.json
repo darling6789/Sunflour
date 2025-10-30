@@ -47,6 +47,14 @@
         "show_line_separator": false,
         "color_scheme": "scheme-1",
         "menu_color_scheme": "scheme-1",
+        "call_us_text": "Call Us",
+        "our_locations_text": "Our Locations",
+        "location_list": [
+          "round-rock",
+          "broadway-square",
+          "dallas",
+          "mississuaga"
+        ],
         "enable_country_selector": true,
         "enable_language_selector": true,
         "enable_customer_avatar": true,
