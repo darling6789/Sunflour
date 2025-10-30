@@ -301,18 +301,25 @@
         <div class="top-menu-item">
           <div class="top-menu-trigger">
             {{ 'icon-phone.svg' | inline_asset_content }}
-            Call Us
+            {{ section.settings.call_us_text }}
             {{ 'icon-down.svg' | inline_asset_content }}
           </div>
           <div class="top-menu-dropdown">
-            {%- assign locations_meta = metaobjects.location_data.values -%}
-            {%- assign sorted_locations = locations_meta | sort: "order" -%}
-
-            {%- for location in sorted_locations -%}
-              <a href="tel:{{ location.phone_number.value | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' }}" class="dropdown-item">
-                {{ location.name.value }}
-              </a>
-            {%- endfor -%}
+            {%- if section.settings.location_list != blank -%}
+              {%- for location in section.settings.location_list -%}
+                <a href="tel:{{ location.phone_number.value | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' }}" class="dropdown-item">
+                  {{ location.name.value }}
+                </a>
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign locations_meta = metaobjects.location_data.values -%}
+              {%- assign sorted_locations = locations_meta | sort: "order" -%}
+              {%- for location in sorted_locations -%}
+                <a href="tel:{{ location.phone_number.value | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' }}" class="dropdown-item">
+                  {{ location.name.value }}
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
           </div>
         </div>
 
@@ -320,18 +327,25 @@
         <div class="top-menu-item">
           <div class="top-menu-trigger">
             {{ 'icon-marker.svg' | inline_asset_content }}
-            Our Locations
+            {{ section.settings.our_locations_text }}
             {{ 'icon-down.svg' | inline_asset_content }}
           </div>
           <div class="top-menu-dropdown">
-            {%- assign locations_meta = metaobjects.location_data.values -%}
-            {%- assign sorted_locations = locations_meta | sort: "order" -%}
-
-            {%- for location in sorted_locations -%}
-              <a href="{{ location.page_link.value }}" class="dropdown-item">
-                {{ location.name.value }}
-              </a>
-            {%- endfor -%}
+            {%- if section.settings.location_list != blank -%}
+              {%- for location in section.settings.location_list -%}
+                <a href="{{ location.page_link.value }}" class="dropdown-item">
+                  {{ location.name.value }}
+                </a>
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign locations_meta = metaobjects.location_data.values -%}
+              {%- assign sorted_locations = locations_meta | sort: "order" -%}
+              {%- for location in sorted_locations -%}
+                <a href="{{ location.page_link.value }}" class="dropdown-item">
+                  {{ location.name.value }}
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
           </div>
         </div>
 
@@ -814,6 +828,29 @@
       "id": "menu_color_scheme",
       "label": "t:sections.header.settings.menu_color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Top Menu Settings"
+    },
+    {
+      "type": "text",
+      "id": "call_us_text",
+      "label": "Call Us Text",
+      "default": "Call Us"
+    },
+    {
+      "type": "text",
+      "id": "our_locations_text",
+      "label": "Our Locations Text",
+      "default": "Our Locations"
+    },
+    {
+      "type": "metaobject_list",
+      "id": "location_list",
+      "label": "Select Locations",
+      "metaobject_type": "location_data",
+      "info": "Choose which locations to display in the dropdowns. Leave empty to show all locations from the location_data metaobject."
     },
     {
       "type": "header",
