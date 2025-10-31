@@ -1,4 +1,7 @@
 {% if section.settings.featured_product %}
+  {% if section.settings.enable_quick_view %}
+    {% render 'quick-view-modal' %}
+  {% endif %}
   <div class="p-o-r-homepage-section">
     <div class="p-o-r-wrapper">
       <div class="p-o-r-content">
@@ -47,7 +50,7 @@
                 <div class="p-o-r-product-title-wrapper">
                   <div class="p-o-r-product-series"><h3>Daytona</h3></div>
                   <h2 class="p-o-r-product-title">
-                    {% assign title = product.title %}
+                    {% assign title = section.settings.featured_product.title %}
                     {%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
                     {% assign title = title | remove_first: 'Pre-Owned Rolex ' | remove_first: 'Pre Owned Rolex ' %}
                     {%- comment -%} Remove everything from the first number to the end {%- endcomment -%}
@@ -1165,6 +1168,12 @@
       "type": "url",
       "id": "appointment_link",
       "label": "Appointment link"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_view",
+      "label": "Enable quick view modal",
+      "default": true
     }
   ],
   "presets": [
