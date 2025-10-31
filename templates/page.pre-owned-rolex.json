@@ -39,7 +39,6 @@
     },
     "p-o-r-in-request-section1": {
       "type": "p-o-r-request-section",
-      "disabled": true,
       "settings": {
         "request_form_url": "shopify://pages/find-your-dream-watch"
       }
