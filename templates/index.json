@@ -315,8 +315,14 @@
         "call_phone_number": "",
         "appointment_text": "Make Appointment",
         "appointment_link": "",
-        "enable_quick_view": true
+        "enable_quick_view": true,
+        "product_series_text": "Daytona"
       }
+    },
+    "pre_owned_rolex_disclaimer_4FAirF": {
+      "type": "pre-owned-rolex-disclaimer",
+      "name": "POR - Disclaimer",
+      "settings": {}
     }
   },
   "order": [
@@ -328,6 +334,7 @@
     "1755802282dfe1f035",
     "m_image_background_GtVPfT",
     "1755802285ad7b85d7",
-    "p_o_r_homepage_section_n8iDny"
+    "p_o_r_homepage_section_n8iDny",
+    "pre_owned_rolex_disclaimer_4FAirF"
   ]
 }
