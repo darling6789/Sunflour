@@ -186,6 +186,19 @@
         "description": "Discover the dazzling jewelry options we carry by category."
       }
     },
+    "p_o_r_homepage_section_n8iDny": {
+      "type": "p-o-r-homepage-section",
+      "name": "P.O.R. Homepage Section",
+      "settings": {
+        "featured_product": "pre-owned-rolex-daytona",
+        "collection": "rolex-1",
+        "call_phone_number": "5128680300",
+        "appointment_text": "Make Appointment",
+        "appointment_link": "shopify://pages/contact",
+        "enable_quick_view": true,
+        "product_series_text": "Daytona"
+      }
+    },
     "m_image_background_XtgQgy": {
       "type": "m-image-background",
       "name": "Custom image background",
@@ -306,19 +319,6 @@
         "include_margins": true
       }
     },
-    "p_o_r_homepage_section_n8iDny": {
-      "type": "p-o-r-homepage-section",
-      "name": "P.O.R. Homepage Section",
-      "settings": {
-        "featured_product": "pre-owned-rolex-daytona",
-        "collection": "rolex-1",
-        "call_phone_number": "5128680300",
-        "appointment_text": "Make Appointment",
-        "appointment_link": "shopify://pages/contact",
-        "enable_quick_view": true,
-        "product_series_text": "Daytona"
-      }
-    },
     "pre_owned_rolex_disclaimer_4FAirF": {
       "type": "pre-owned-rolex-disclaimer",
       "name": "POR - Disclaimer",
@@ -328,13 +328,13 @@
   "order": [
     "m_slideshow_2_Emq8JH",
     "m_collection_list_HdxhjL",
+    "p_o_r_homepage_section_n8iDny",
+    "pre_owned_rolex_disclaimer_4FAirF",
     "m_image_background_XtgQgy",
     "m_featured_collection_1_gdb8ee",
     "m_featured_collection_2_AMxdBk",
     "1755802282dfe1f035",
     "m_image_background_GtVPfT",
-    "1755802285ad7b85d7",
-    "p_o_r_homepage_section_n8iDny",
-    "pre_owned_rolex_disclaimer_4FAirF"
+    "1755802285ad7b85d7"
   ]
 }
