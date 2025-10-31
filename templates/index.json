@@ -120,8 +120,8 @@
           "settings": {
             "collection": "luxury-timepieces",
             "image": "shopify://shop_images/Marc_Robinson_Jewelers_Round_Rock_TX_2_-min.png",
-            "title": "",
-            "link": ""
+            "title": "Luxury Timepieces",
+            "link": "shopify://collections/watches"
           }
         },
         "collection_DxEd9D": {
@@ -203,9 +203,11 @@
       "settings": {
         "collection": "bracelets",
         "heading": "Shop Bracelets",
-        "back_color": "",
         "collection_link_text": "",
-        "collection_link": ""
+        "collection_link": "",
+        "back_color": "",
+        "heading_color": "#333333",
+        "link_color": "#333333"
       }
     },
     "m_featured_collection_2_AMxdBk": {
@@ -216,9 +218,11 @@
         "image": "shopify://shop_images/Rado1-432934756_822310889933516_8492968429999032239_n-jpeg.webp",
         "image_left": true,
         "heading": "Shop Rado Luxury Timepieces",
+        "heading_color": "#333333",
         "back_color": "",
         "collection_link_text": "",
-        "collection_link": ""
+        "collection_link": "",
+        "link_color": "#333333"
       }
     },
     "1755802282dfe1f035": {
