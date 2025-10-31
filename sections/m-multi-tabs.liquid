@@ -48,7 +48,9 @@
                   {%- comment %}Skip VENDOR SKU and VIDEO LINK fields for Rolex products{%- endcomment -%}
                   {%- assign should_skip = false -%}
                   {%- if product.vendor == 'Rolex' -%}
-                    {%- if key_lower == 'vendor_sku' or key_lower == 'video_link' -%}
+                    {%- if key_lower contains 'vendor_sku' -%}
+                      {%- assign should_skip = true -%}
+                    {%- elsif key_lower contains 'video_link' -%}
                       {%- assign should_skip = true -%}
                     {%- endif -%}
                   {%- endif -%}
