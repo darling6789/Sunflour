@@ -134,15 +134,25 @@
         {% if section.settings.collection %}
           <div class="p-o-r-content-right">
             <h2 class="p-o-r-content-right-title">Pre-Owned Rolex in Stock</h2>
-            <div class="p-o-r-content-right-featured-collection">
-              {% assign selected_collection = collections[section.settings.collection] %}
-              {% if selected_collection %}
-                {% for product in selected_collection.products limit: 4 %}
-                  {% render 'product-card', product: product %}
-                {% endfor %}
-              {% endif %}
-            </div>
+            {% assign selected_collection = collections[section.settings.collection] %}
             {% if selected_collection %}
+              <button class="collection-carousel-button prev" data-collection-carousel-prev aria-label="Previous products">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button class="collection-carousel-button next" data-collection-carousel-next aria-label="Next products">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+              <div class="collection-carousel-wrapper" data-collection-carousel>
+                <div class="p-o-r-content-right-featured-collection" data-collection-carousel-track>
+                  {% for product in selected_collection.products limit: 4 %}
+                    {% render 'product-card', product: product %}
+                  {% endfor %}
+                </div>
+              </div>
               <a class="p-o-r-content-right-view-all" href="{{ selected_collection.url }}">Shop all Pre-Owned Rolex</a>
             {% endif %}
           </div>
@@ -384,6 +394,40 @@
   .p-o-r-content-left-featured-product-image .indicator:hover {
     background-color: rgba(255, 255, 255, 0.7);
   }
+  .collection-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    max-width: 395px;
+    min-height: 340px;
+  }
+  .collection-carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    z-index: 50;
+  }
+  .collection-carousel-button.prev {
+    left: -50px;
+  }
+  .collection-carousel-button.next {
+    right: -50px;
+  }
+  .collection-carousel-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
   .p-o-r-content-right-featured-collection .product-card {
     min-width: 262.27px;
   }
@@ -392,13 +436,19 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 20px;
-    align-self: stretch;
+    flex: 1;
     overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+  .p-o-r-content-right-featured-collection .product-card {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
   .p-o-r-content-right-view-all {
     color: #fff;
@@ -447,12 +497,8 @@
     flex: 1 0 0;
     width: 40%;
     align-self: stretch;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    position: relative;
+    {% comment %} overflow-x: hidden; {% endcomment %}
   }
   .p-o-r-content-left {
     display: flex;
@@ -570,6 +616,39 @@
       this.indicators[this.currentIndex].classList.add('active');
     }
   }
+
+  class CollectionCarousel {
+    constructor(container) {
+      this.container = container;
+      this.track = container.querySelector('[data-collection-carousel-track]');
+
+      // Find buttons from parent container since they're siblings of the wrapper
+      const parentContainer = container.parentElement;
+      this.prevBtn = parentContainer.querySelector('[data-collection-carousel-prev]');
+      this.nextBtn = parentContainer.querySelector('[data-collection-carousel-next]');
+
+      if (!this.track || !this.prevBtn || !this.nextBtn) return;
+
+      this.prevBtn.addEventListener('click', () => this.scroll(-1));
+      this.nextBtn.addEventListener('click', () => this.scroll(1));
+    }
+
+    scroll(direction) {
+      const cardWidth = 262.27;
+      const gap = 20;
+      const scrollAmount = (cardWidth + gap) * Math.abs(direction);
+      const scrollDirection = direction > 0 ? scrollAmount : -scrollAmount;
+
+      this.track.scrollBy({
+        left: scrollDirection,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  document.querySelectorAll('[data-collection-carousel]').forEach((carousel) => {
+    new CollectionCarousel(carousel);
+  });
 
   document.querySelectorAll('[data-por-featured-carousel]').forEach((carousel) => {
     new PORFeaturedProductCarousel(carousel);
