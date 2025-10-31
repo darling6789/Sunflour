@@ -360,6 +360,8 @@
     width: 100%;
     height: 100%;
     transition: transform 0.3s ease;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
   }
   .p-o-r-content-left-featured-product-image .carousel-slide {
     min-width: 100%;
@@ -768,14 +770,9 @@
       display: none;
     }
 
+    /* Hide featured product carousel buttons on mobile - use swipe instead */
     .p-o-r-content-left-featured-product-image .carousel-button {
-      width: 32px;
-      height: 32px;
-    }
-
-    .p-o-r-content-left-featured-product-image .carousel-button svg {
-      width: 18px;
-      height: 18px;
+      display: none;
     }
 
     .p-o-r-content-left-featured-product-image .carousel-indicators {
@@ -904,22 +901,9 @@
       display: none;
     }
 
+    /* Hide featured product carousel buttons on mobile - use swipe instead */
     .p-o-r-content-left-featured-product-image .carousel-button {
-      width: 28px;
-      height: 28px;
-    }
-
-    .p-o-r-content-left-featured-product-image .carousel-button svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    .p-o-r-content-left-featured-product-image .carousel-button.prev {
-      left: 8px;
-    }
-
-    .p-o-r-content-left-featured-product-image .carousel-button.next {
-      right: 8px;
+      display: none;
     }
 
     .p-o-r-content-left-featured-product-image .carousel-indicators {
@@ -1008,10 +992,13 @@
       width: 100%;
     }
 
-   
-
     /* Hide collection carousel buttons on mobile */
     .collection-carousel-button {
+      display: none;
+    }
+
+    /* Hide featured product carousel buttons on mobile - use swipe instead */
+    .p-o-r-content-left-featured-product-image .carousel-button {
       display: none;
     }
   }
@@ -1029,6 +1016,18 @@
       this.isDragging = false;
 
       if (!this.track || this.indicators.length === 0) return;
+
+      // Set track and slide widths based on container width
+      const containerWidth = this.track.parentElement.offsetWidth;
+      const slideCount = this.indicators.length;
+      this.track.style.width = `${containerWidth * slideCount}px`;
+
+      // Set explicit slide widths to match container width
+      const slides = this.container.querySelectorAll('.carousel-slide');
+      slides.forEach(slide => {
+        slide.style.width = `${containerWidth}px`;
+        slide.style.minWidth = `${containerWidth}px`;
+      });
 
       this.track.addEventListener('touchstart', (e) => this.handleTouchStart(e), false);
       this.track.addEventListener('touchmove', (e) => this.handleTouchMove(e), false);
@@ -1087,8 +1086,9 @@
     }
 
     updateCarousel() {
-      const offset = -this.currentIndex * 100;
-      this.track.style.transform = `translateX(${offset}%)`;
+      const containerWidth = this.track.parentElement.offsetWidth;
+      const offset = -this.currentIndex * containerWidth;
+      this.track.style.transform = `translateX(${offset}px)`;
       this.indicators.forEach((indicator) => {
         indicator.classList.remove('active');
       });
