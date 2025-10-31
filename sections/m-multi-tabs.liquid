@@ -43,6 +43,17 @@
                 {%- if mf and mf != blank -%}
 
                   {%- assign key = key_pair[0] -%}
+                  {%- assign key_lower = key | downcase -%}
+                  
+                  {%- comment %}Skip VENDOR SKU and VIDEO LINK fields for Rolex products{%- endcomment -%}
+                  {%- assign should_skip = false -%}
+                  {%- if product.vendor == 'Rolex' -%}
+                    {%- if key_lower == 'vendor_sku' or key_lower == 'video_link' -%}
+                      {%- assign should_skip = true -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  
+                  {%- unless should_skip -%}
 
                   {%- comment %}
                     Step 1: Normalize key -> underscores to spaces, add spaces before capitals
@@ -117,6 +128,7 @@
                     <td class="product-specs__cell product-specs__cell--label">{{ final_label }}</td>
                     <td class="product-specs__cell product-specs__cell--value">{{ display_value }}</td>
                   </tr>
+                  {%- endunless -%}
                 {%- endif -%}
               {%- endfor -%}
               </tbody>
