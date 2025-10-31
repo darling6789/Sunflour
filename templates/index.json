@@ -203,9 +203,11 @@
       "settings": {
         "collection": "bracelets",
         "heading": "Shop Bracelets",
-        "back_color": "",
         "collection_link_text": "",
-        "collection_link": ""
+        "collection_link": "",
+        "back_color": "",
+        "heading_color": "#333333",
+        "link_color": "#333333"
       }
     },
     "m_featured_collection_2_AMxdBk": {
@@ -216,9 +218,11 @@
         "image": "shopify://shop_images/Rado1-432934756_822310889933516_8492968429999032239_n-jpeg.webp",
         "image_left": true,
         "heading": "Shop Rado Luxury Timepieces",
+        "heading_color": "#333333",
         "back_color": "",
         "collection_link_text": "",
-        "collection_link": ""
+        "collection_link": "",
+        "link_color": "#333333"
       }
     },
     "1755802282dfe1f035": {
@@ -301,6 +305,17 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "p_o_r_homepage_section_QjMr48": {
+      "type": "p-o-r-homepage-section",
+      "name": "P.O.R. Homepage Section",
+      "settings": {
+        "featured_product": "rolex-datejust-126334-9882",
+        "collection": "rolex-1",
+        "call_phone_number": "",
+        "appointment_text": "Make Appointment",
+        "appointment_link": ""
+      }
     }
   },
   "order": [
@@ -311,6 +326,7 @@
     "m_featured_collection_2_AMxdBk",
     "1755802282dfe1f035",
     "m_image_background_GtVPfT",
-    "1755802285ad7b85d7"
+    "1755802285ad7b85d7",
+    "p_o_r_homepage_section_QjMr48"
   ]
 }
