@@ -45,7 +45,7 @@
             <div class="p-o-r-content-left-product-content">
               <div class="p-o-r-content-top">
                 <div class="p-o-r-product-title-wrapper">
-                  <div class="p-o-r-product-series"><h3>Daytona</h3></div>
+                  <div class="p-o-r-product-series"><h3>{{ section.settings.product_series_text }}</h3></div>
                   <h2 class="p-o-r-product-title">
                     {% assign title = section.settings.featured_product.title %}
                     {%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
@@ -1171,6 +1171,12 @@
       "id": "enable_quick_view",
       "label": "Enable quick view modal",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_series_text",
+      "label": "Product Series",
+      "default": "Daytona"
     }
   ],
   "presets": [
