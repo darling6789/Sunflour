@@ -6,7 +6,8 @@
       "Read(//c/Users/Daniel-PC/Documents/Dev Builds/shopify/Bonto/**)",
       "WebFetch(domain:docs.affirm.com)",
       "WebFetch(domain:fonts.google.com)",
-      "WebSearch"
+      "WebSearch",
+      "Read(//c/Users/Daniel-PC/Desktop/dream-watch-api/**)"
     ],
     "deny": [],
     "ask": []

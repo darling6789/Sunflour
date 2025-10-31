@@ -580,7 +580,6 @@
           accept-charset="UTF-8"
           aria-label="Dream Watch Request Form"
         >
-
           <div class="div-2">
             <label for="contact-name" class="label-2">Name <abbr title="required" aria-label="required">*</abbr></label>
             <input
@@ -619,11 +618,13 @@
             <div class="select-wrapper">
               <select class="select" id="contact-collection" name="contact[collection]">
                 <option value="">Select Brand Collection</option>
-                <option value="submariner">Submariner</option>
-                <option value="datejust">Datejust</option>
-                <option value="gmt-master">GMT-Master II</option>
                 <option value="daytona">Daytona</option>
+                <option value="datejust">Datejust</option>
                 <option value="explorer">Explorer</option>
+                <option value="explorer-2">Explorer II</option>
+                <option value="gmt-master">GMT-Master</option> 
+                <option value="gmt-master-2">GMT-Master II</option>                
+                <option value="submariner">Submariner</option>
                 <option value="yacht-master">Yacht-Master</option>
                 <option value="other">Other</option>
               </select>
@@ -711,12 +712,12 @@
             <div class="select-wrapper">
               <select class="select" id="contact-bracelet" name="contact[bracelet]">
                 <option value="">Select Style</option>
-                <option value="oyster">Oyster</option>
+                <option value="flat-jubilee">Flat Jubilee</option>
                 <option value="jubilee">Jubilee</option>
+                <option value="oyster">Oyster</option>
+                <option value="oysterflex">Oysterflex</option>
                 <option value="president">President</option>
-                <option value="leather">Leather</option>
-                <option value="rubber">Rubber</option>
-                <option value="other">Other</option>
+                <option value="settimo">Settimo</option>
               </select>
               <svg
                 class="chevron-down"
@@ -800,72 +801,47 @@
 {% endcomment %}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('dream-watch-form');
     if (!form) return;
 
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
-
-      // Get form configuration from section settings
-      const recipientEmail = "{{ section.settings.recipient_email }}";
-      const fromEmail = "{{ section.settings.from_email }}";
-
-      if (!recipientEmail || !fromEmail) {
-        alert('Form email configuration is missing. Please contact the site administrator.');
-        return;
-      }
+      console.log('Form submission started');
 
       // Collect form data
       const formData = new FormData(form);
-      const data = {
-        recipient_email: recipientEmail,
-        from_email: fromEmail,
-        form_data: Object.fromEntries(formData),
-        submitted_at: new Date().toISOString()
-      };
+      const payload = Object.fromEntries(formData);
+      console.log('Sending request to Vercel API with payload:', payload);
 
       try {
-        // Submit to Shopify contact form endpoint
-        const response = await fetch('/contact', {
+        // Submit to Vercel SendGrid API
+        const response = await fetch('https://dream-watch-api.vercel.app/api/send-email', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
+            'Content-Type': 'application/json',
           },
-          body: new URLSearchParams({
-            'form_type': 'contact',
-            'contact[email]': fromEmail,
-            'contact[name]': formData.get('contact[name]') || 'Dream Watch Request',
-            'contact[subject]': 'Dream Watch Request - ' + (formData.get('contact[collection]') || 'Inquiry'),
-            'contact[body]': generateEmailBody(Object.fromEntries(formData))
-          })
+          body: JSON.stringify(payload),
         });
 
+        console.log('Response status:', response.status, response.statusText);
+
         if (response.ok) {
+          const responseData = await response.json();
+          console.log('Success response:', responseData);
           // Show success message
-          alert('Thank you! Your dream watch request has been submitted. We\'ll be in touch shortly.');
+          alert("Thank you! Your dream watch request has been submitted. We'll be in touch shortly.");
           form.reset();
         } else {
-          throw new Error('Form submission failed');
+          const errorData = await response.json().catch(() => ({}));
+          console.error('Error response:', response.status, errorData);
+          throw new Error(`API returned ${response.status}: ${errorData.error || response.statusText}`);
         }
       } catch (error) {
-        console.error('Error submitting form:', error);
-        alert('There was an error submitting your form. Please try again.');
+        console.error('Error submitting form:', error.message);
+        alert('There was an error submitting your form. Please check the browser console for details.');
       }
     });
-
-    // Helper function to generate email body from form data
-    function generateEmailBody(data) {
-      let body = 'Dream Watch Request Form Submission\n\n';
-      for (let [key, value] of Object.entries(data)) {
-        if (value && key.startsWith('contact[')) {
-          const label = key.replace('contact[', '').replace(']', '').replace(/-/g, ' ').toUpperCase();
-          body += label + ': ' + value + '\n';
-        }
-      }
-      return body;
-    }
   });
 </script>
 
