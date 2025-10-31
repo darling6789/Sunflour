@@ -46,7 +46,31 @@
               <div class="p-o-r-content-top">
                 <div class="p-o-r-product-title-wrapper">
                   <div class="p-o-r-product-series"><h3>Daytona</h3></div>
-                  <h2 class="p-o-r-product-title">{{ section.settings.featured_product.title }}</h2>
+                  <h2 class="p-o-r-product-title">
+                    {% assign title = product.title %}
+                    {%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
+                    {% assign title = title | remove_first: 'Pre-Owned Rolex ' | remove_first: 'Pre Owned Rolex ' %}
+                    {%- comment -%} Remove everything from the first number to the end {%- endcomment -%}
+                    {% assign filtered_title = '' %}
+                    {% assign title_chars = title | split: '' %}
+                    {% for char in title_chars %}
+                      {% if char == '0'
+                        or char == '1'
+                        or char == '2'
+                        or char == '3'
+                        or char == '4'
+                        or char == '5'
+                        or char == '6'
+                        or char == '7'
+                        or char == '8'
+                        or char == '9'
+                      %}
+                        {% break %}
+                      {% endif %}
+                      {% assign filtered_title = filtered_title | append: char %}
+                    {% endfor %}
+                    {{ filtered_title | strip }}
+                  </h2>
                 </div>
                 {% assign band_type = section.settings.featured_product.metafields.custom.watch_band_type
                   | default: 'N/A'
@@ -136,7 +160,11 @@
             <h2 class="p-o-r-content-right-title">Pre-Owned Rolex in Stock</h2>
             {% assign selected_collection = collections[section.settings.collection] %}
             {% if selected_collection %}
-              <button class="collection-carousel-button prev" data-collection-carousel-prev aria-label="Previous products">
+              <button
+                class="collection-carousel-button prev"
+                data-collection-carousel-prev
+                aria-label="Previous products"
+              >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
@@ -641,7 +669,7 @@
 
       this.track.scrollBy({
         left: scrollDirection,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
