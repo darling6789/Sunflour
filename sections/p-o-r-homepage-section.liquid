@@ -1,117 +1,163 @@
 {% if section.settings.featured_product %}
-<div class="p-o-r-homepage-section">
-  <div class="p-o-r-wrapper">
-    <div class="p-o-r-content">
-      <div class="p-o-r-content-left">
-        <h2 class="p-o-r-content-left-title">Featured Pre-Owned Rolex</h2>
-        <div class="p-o-r-content-left-featured-product">
-          <div class="p-o-r-content-left-featured-product-image">
-            {% if section.settings.featured_product.featured_image %}
-              <img
-                src="{{ section.settings.featured_product.featured_image | image_url: width: 400, height: 500 }}"
-                alt="{{ section.settings.featured_product.title }}"
-                width="361"
-                height="478"
-              >
-            {% endif %}
-          </div>
-          <div class="p-o-r-content-left-product-content">
-            <div class="p-o-r-content-top">
-              <div class="p-o-r-product-title-wrapper">
-                <div class="p-o-r-product-series"><h3>Daytona</h3></div>
-                <h2 class="p-o-r-product-title">{{ section.settings.featured_product.title }}</h2>
+  <div class="p-o-r-homepage-section">
+    <div class="p-o-r-wrapper">
+      <div class="p-o-r-content">
+        <div class="p-o-r-content-left">
+          <h2 class="p-o-r-content-left-title">Featured Pre-Owned Rolex</h2>
+          <div class="p-o-r-content-left-featured-product">
+            <div class="p-o-r-content-left-featured-product-image" data-por-featured-carousel>
+              <div class="carousel-container">
+                <div class="carousel-track" data-por-featured-carousel-track>
+                  {% for image in section.settings.featured_product.images %}
+                    <div class="carousel-slide">
+                      <img
+                        src="{{ image | image_url: width: 400, height: 500 }}"
+                        alt="{{ section.settings.featured_product.title }}"
+                        width="361"
+                        height="478"
+                      >
+                    </div>
+                  {% endfor %}
+                </div>
               </div>
-              {% assign band_type = section.settings.featured_product.metafields.custom.watch_band_type | default: 'N/A' %}
-              {% assign case_size = section.settings.featured_product.metafields.custom.watch_case_size | default: 'N/A' %}
-              {% if band_type != 'N/A' or case_size != 'N/A' %}
-                <div class="p-o-r-featured-product-features">
-                  <h4>
-                    {{ band_type }} |
-                    {{ case_size }}
-                  </h4>
-                  <div class="features-list">
-                    {% assign reference = section.settings.featured_product.metafields.custom.watch_reference | default: '' %}
-                    {% if reference != '' %}
-                      <div class="features-list-content">
-                        <h5>MODEL</h5>
-                        <p>{{ reference }}</p>
-                      </div>
-                    {% endif %}
-                    {% assign year = section.settings.featured_product.metafields.custom.watch_year | default: '' %}
-                    {% if year != '' %}
-                      <div class="features-list-content">
-                        <h5>YEAR</h5>
-                        <p>{{ year }}</p>
-                      </div>
-                    {% endif %}
-                    {% assign condition = section.settings.featured_product.metafields.custom.watch_condition | default: '' %}
-                    {% if condition != '' %}
-                      <div class="features-list-content">
-                        <h5>CONDITION</h5>
-                        <p>
-                          {% assign raw_condition = condition | downcase | strip %}
-                          {% case raw_condition %}
-                            {% when 'unworn' -%}
-                              UNWORN
-                            {% when 'unworn (nos)' -%}
-                              UNWORN
-                            {% when 'as is' -%}
-                              RETAIL READY
-                            {% when 'slider' -%}
-                              EXCELLENT
-                            {% when 'mint' -%}
-                              VERY GOOD
-                            {% when 'very good' -%}
-                              VERY GOOD
-                            {% when 'pre-owned' -%}
-                              GOOD
-                            {% when 'good' -%}
-                              GOOD
-                            {% else -%}
-                              {{- condition | upcase }}
-                          {% endcase %}
-                        </p>
-                      </div>
-                    {% endif %}
-                  </div>
+              {% if section.settings.featured_product.images.size > 1 %}
+                <button class="carousel-button prev" data-por-featured-carousel-prev aria-label="Previous slide">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button class="carousel-button next" data-por-featured-carousel-next aria-label="Next slide">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+                <div class="carousel-indicators" data-por-featured-carousel-indicators>
+                  {% for image in section.settings.featured_product.images %}
+                    <button
+                      class="indicator {% if forloop.first %}active{% endif %}"
+                      data-slide="{{ forloop.index0 }}"
+                      aria-label="Slide {{ forloop.index }}"
+                    ></button>
+                  {% endfor %}
                 </div>
               {% endif %}
             </div>
-            <div class="p-o-r-content-bottom">
-              <h4>Call for Price</h4>
-              <h5>Make Appointment</h5>
+            <div class="p-o-r-content-left-product-content">
+              <div class="p-o-r-content-top">
+                <div class="p-o-r-product-title-wrapper">
+                  <div class="p-o-r-product-series"><h3>Daytona</h3></div>
+                  <h2 class="p-o-r-product-title">{{ section.settings.featured_product.title }}</h2>
+                </div>
+                {% assign band_type = section.settings.featured_product.metafields.custom.watch_band_type
+                  | default: 'N/A'
+                %}
+                {% assign case_size = section.settings.featured_product.metafields.custom.watch_case_size
+                  | default: 'N/A'
+                %}
+                {% if band_type != 'N/A' or case_size != 'N/A' %}
+                  <div class="p-o-r-featured-product-features">
+                    <h4>
+                      {{ band_type }} |
+                      {{ case_size }}
+                    </h4>
+                    <div class="features-list">
+                      {% assign reference = section.settings.featured_product.metafields.custom.watch_reference
+                        | default: ''
+                      %}
+                      {% if reference != '' %}
+                        <div class="features-list-content">
+                          <h5>MODEL</h5>
+                          <p>{{ reference }}</p>
+                        </div>
+                      {% endif %}
+                      {% assign year = section.settings.featured_product.metafields.custom.watch_year | default: '' %}
+                      {% if year != '' %}
+                        <div class="features-list-content">
+                          <h5>YEAR</h5>
+                          <p>{{ year }}</p>
+                        </div>
+                      {% endif %}
+                      {% assign condition = section.settings.featured_product.metafields.custom.watch_condition
+                        | default: ''
+                      %}
+                      {% if condition != '' %}
+                        <div class="features-list-content">
+                          <h5>CONDITION</h5>
+                          <p>
+                            {% assign raw_condition = condition | downcase | strip %}
+                            {% case raw_condition %}
+                              {% when 'unworn' -%}
+                                UNWORN
+                              {% when 'unworn (nos)' -%}
+                                UNWORN
+                              {% when 'as is' -%}
+                                RETAIL READY
+                              {% when 'slider' -%}
+                                EXCELLENT
+                              {% when 'mint' -%}
+                                VERY GOOD
+                              {% when 'very good' -%}
+                                VERY GOOD
+                              {% when 'pre-owned' -%}
+                                GOOD
+                              {% when 'good' -%}
+                                GOOD
+                              {% else -%}
+                                {{- condition | upcase }}
+                            {% endcase %}
+                          </p>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="p-o-r-content-bottom">
+                {% if section.settings.call_phone_number %}
+                  <a href="tel:{{ section.settings.call_phone_number }}" class="call-for-price-link">
+                    <h4>Call for Price</h4>
+                  </a>
+                {% else %}
+                  <h4>Call for Price</h4>
+                {% endif %}
+                {% if section.settings.appointment_link %}
+                  <a href="{{ section.settings.appointment_link }}" class="make-appointment-link">
+                    <h5>{{ section.settings.appointment_text }}</h5>
+                  </a>
+                {% else %}
+                  <h5>{{ section.settings.appointment_text }}</h5>
+                {% endif %}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {% if section.settings.collection %}
-        <div class="p-o-r-content-right">
-          <h2 class="p-o-r-content-right-title">Pre-Owned Rolex in Stock</h2>
-          <div class="p-o-r-content-right-featured-collection">
-            {% assign selected_collection = collections[section.settings.collection] %}
+        {% if section.settings.collection %}
+          <div class="p-o-r-content-right">
+            <h2 class="p-o-r-content-right-title">Pre-Owned Rolex in Stock</h2>
+            <div class="p-o-r-content-right-featured-collection">
+              {% assign selected_collection = collections[section.settings.collection] %}
+              {% if selected_collection %}
+                {% for product in selected_collection.products limit: 4 %}
+                  {% render 'product-card', product: product %}
+                {% endfor %}
+              {% endif %}
+            </div>
             {% if selected_collection %}
-              {% for product in selected_collection.products limit: 4 %}
-                {% render 'product-card', product: product %}
-              {% endfor %}
+              <a class="p-o-r-content-right-view-all" href="{{ selected_collection.url }}">Shop all Pre-Owned Rolex</a>
             {% endif %}
           </div>
-          {% if selected_collection %}
-            <a class="p-o-r-content-right-view-all" href="{{ selected_collection.url }}"
-              >Shop all Pre-Owned Rolex</a
-            >
-          {% endif %}
-        </div>
-      {% endif %}
+        {% endif %}
+      </div>
     </div>
   </div>
-</div>
 {% endif %}
 <style>
   h2,
   h3,
   h4,
   h5,
-  h6,p {
+  h6,
+  p {
     margin: 0px;
   }
   .p-o-r-content-bottom h4 {
@@ -121,6 +167,14 @@
     font-style: italic;
     font-weight: 500;
     line-height: normal;
+  }
+  .call-for-price-link {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .make-appointment-link {
+    text-decoration: none;
+    cursor: pointer;
   }
   .p-o-r-content-bottom h5 {
     color: #fff;
@@ -238,7 +292,7 @@
   .p-o-r-content-left-product-content {
     display: flex;
     width: 322px;
-    height: 439px;
+    height: 476px;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
@@ -251,11 +305,84 @@
   .p-o-r-content-left-featured-product-image {
     display: flex;
     width: 361.29px;
-    height: 478px;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-container {
+    width: 361.29px;
+    height: 478px;
+    position: relative;
+    overflow: hidden;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    z-index: 10;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .p-o-r-content-left-featured-product-image .carousel-button.prev {
+    left: 12px;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-button.next {
+    right: 12px;
+  }
+  .p-o-r-content-left-featured-product-image .carousel-indicators {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-o-r-content-left-featured-product-image .indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s ease;
+  }
+  .p-o-r-content-left-featured-product-image .indicator.active {
+    background-color: rgba(255, 255, 255, 1);
+  }
+  .p-o-r-content-left-featured-product-image .indicator:hover {
+    background-color: rgba(255, 255, 255, 0.7);
   }
   .p-o-r-content-right-featured-collection .product-card {
     min-width: 262.27px;
@@ -364,6 +491,90 @@
     align-self: stretch;
   }
 </style>
+<script>
+  class PORFeaturedProductCarousel {
+    constructor(container) {
+      this.container = container;
+      this.track = container.querySelector('[data-por-featured-carousel-track]');
+      this.indicators = container.querySelectorAll('[data-por-featured-carousel-indicators] .indicator');
+      this.prevBtn = container.querySelector('[data-por-featured-carousel-prev]');
+      this.nextBtn = container.querySelector('[data-por-featured-carousel-next]');
+      this.currentIndex = 0;
+      this.startX = 0;
+      this.isDragging = false;
+
+      if (!this.track || this.indicators.length === 0) return;
+
+      this.track.addEventListener('touchstart', (e) => this.handleTouchStart(e), false);
+      this.track.addEventListener('touchmove', (e) => this.handleTouchMove(e), false);
+      this.track.addEventListener('touchend', (e) => this.handleTouchEnd(e), false);
+
+      this.indicators.forEach((indicator) => {
+        indicator.addEventListener('click', (e) => this.goToSlide(parseInt(e.target.dataset.slide)));
+      });
+
+      if (this.prevBtn) {
+        this.prevBtn.addEventListener('click', () => this.prevSlide());
+      }
+
+      if (this.nextBtn) {
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
+      }
+    }
+
+    handleTouchStart(e) {
+      this.isDragging = true;
+      this.startX = e.touches[0].clientX;
+    }
+
+    handleTouchMove(e) {
+      if (!this.isDragging) return;
+    }
+
+    handleTouchEnd(e) {
+      if (!this.isDragging) return;
+      this.isDragging = false;
+      const endX = e.changedTouches[0].clientX;
+      const diff = this.startX - endX;
+
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          this.nextSlide();
+        } else {
+          this.prevSlide();
+        }
+      }
+    }
+
+    goToSlide(index) {
+      this.currentIndex = index;
+      this.updateCarousel();
+    }
+
+    nextSlide() {
+      this.currentIndex = (this.currentIndex + 1) % this.indicators.length;
+      this.updateCarousel();
+    }
+
+    prevSlide() {
+      this.currentIndex = (this.currentIndex - 1 + this.indicators.length) % this.indicators.length;
+      this.updateCarousel();
+    }
+
+    updateCarousel() {
+      const offset = -this.currentIndex * 100;
+      this.track.style.transform = `translateX(${offset}%)`;
+      this.indicators.forEach((indicator) => {
+        indicator.classList.remove('active');
+      });
+      this.indicators[this.currentIndex].classList.add('active');
+    }
+  }
+
+  document.querySelectorAll('[data-por-featured-carousel]').forEach((carousel) => {
+    new PORFeaturedProductCarousel(carousel);
+  });
+</script>
 {% schema %}
 {
   "name": "P.O.R. Homepage Section",
@@ -378,8 +589,24 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "call_phone_number",
+      "label": "Call for Price phone number",
+      "placeholder": "+1 (555) 123-4567"
+    },
+    {
+      "type": "text",
+      "id": "appointment_text",
+      "label": "Appointment text",
+      "default": "Make Appointment"
+    },
+    {
+      "type": "url",
+      "id": "appointment_link",
+      "label": "Appointment link"
     }
-    
   ],
   "presets": [
     {
