@@ -312,9 +312,9 @@
       "settings": {
         "featured_product": "pre-owned-rolex-daytona",
         "collection": "rolex-1",
-        "call_phone_number": "",
+        "call_phone_number": "5128680300",
         "appointment_text": "Make Appointment",
-        "appointment_link": "",
+        "appointment_link": "shopify://pages/contact",
         "enable_quick_view": true,
         "product_series_text": "Daytona"
       }
