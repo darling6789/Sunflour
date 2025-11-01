@@ -35,7 +35,8 @@
       "name": "Service Form Layout",
       "settings": {
         "recipient_email": "eshop@marcrobinsonjewelers.com",
-        "from_email": "lp-rolex@marcrobinsonjewelers.com"
+        "from_email": "lp-rolex@marcrobinsonjewelers.com",
+        "thank_you_page_url": "shopify://pages/thank-you"
       }
     },
     "find_your_dream_watch_HMXjLN": {
