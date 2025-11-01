@@ -194,10 +194,15 @@
         "collection": "rolex-1",
         "call_phone_number": "5128680300",
         "appointment_text": "Make Appointment",
-        "appointment_link": "shopify://pages/contact",
+        "appointment_link": "https://calendly.com/marc-robinson-jewelers",
         "enable_quick_view": true,
         "product_series_text": "Daytona"
       }
+    },
+    "pre_owned_rolex_disclaimer_4FAirF": {
+      "type": "pre-owned-rolex-disclaimer",
+      "name": "POR - Disclaimer",
+      "settings": {}
     },
     "m_image_background_XtgQgy": {
       "type": "m-image-background",
@@ -318,11 +323,6 @@
       "settings": {
         "include_margins": true
       }
-    },
-    "pre_owned_rolex_disclaimer_4FAirF": {
-      "type": "pre-owned-rolex-disclaimer",
-      "name": "POR - Disclaimer",
-      "settings": {}
     }
   },
   "order": [
