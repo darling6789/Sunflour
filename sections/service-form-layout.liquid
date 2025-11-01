@@ -829,9 +829,17 @@
         if (response.ok) {
           const responseData = await response.json();
           console.log('Success response:', responseData);
-          // Show success message
-          alert("Thank you! Your dream watch request has been submitted. We'll be in touch shortly.");
-          form.reset();
+          // Get the thank you page URL from section settings
+          const thankYouUrl = '{{ section.settings.thank_you_page_url }}';
+
+          if (thankYouUrl) {
+            // Redirect to the thank you page
+            window.location.href = thankYouUrl;
+          } else {
+            // Fallback to alert if no URL is configured
+            alert("Thank you! Your dream watch request has been submitted. We'll be in touch shortly.");
+            form.reset();
+          }
         } else {
           const errorData = await response.json().catch(() => ({}));
           console.error('Error response:', response.status, errorData);
@@ -864,6 +872,12 @@
       "placeholder": "lp-rolex@marcrobinsonjewelers.com",
       "default": "lp-rolex@marcrobinsonjewelers.com",
       "info": "The email address that will appear as the sender"
+    },
+    {
+      "type": "url",
+      "id": "thank_you_page_url",
+      "label": "Thank You Page URL",
+      "info": "The page users will be redirected to after successful form submission"
     }
   ],
   "presets": [
