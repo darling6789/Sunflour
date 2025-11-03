@@ -14,11 +14,11 @@
       "settings": {
         "hero_image": "shopify://shop_images/a09702bacbe33de7eaafcd751c3585424155c72f_1.jpg",
         "hero_title": "Find Your Dream Watch",
-        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches to locate the Pre-Owned Rolex of your dreams.",
+        "hero_description": "Shop our in-stock Pre-Owned Rolex Watches, or work with one of our experts to locate the Pre-Owned Rolex of your dreams.",
         "button_one_text": "Shop In-Stock",
-        "button_one_url": "",
-        "button_two_text": "",
-        "button_two_url": ""
+        "button_one_url": "#template--19645003628729__p-o-r-in-stock-products1",
+        "button_two_text": "Work With an Expert",
+        "button_two_url": "#shopify-section-template--19645003628729__p-o-r-in-request-section1"
       }
     },
     "pre-owned-rolex-disclaimer1": {
