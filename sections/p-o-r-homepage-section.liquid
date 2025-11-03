@@ -45,9 +45,9 @@
             <div class="p-o-r-content-left-product-content">
               <div class="p-o-r-content-top">
                 <div class="p-o-r-product-title-wrapper">
-                  <div class="p-o-r-product-series"><h3>{{ section.settings.product_series_text }}</h3></div>
+                  <div class="p-o-r-product-series"><h3>{{ section.settings.featured_product.metafields.custom.brand_collection | default: 'N/A' }}</h3></div>
                   <h2 class="p-o-r-product-title">
-                    {% assign title = section.settings.featured_product.title %}
+                    {% assign title = section.settings.featured_product.metafields.custom.watch_nickname | default: 'N/A' %}
                     {%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
                     {% assign title = title | remove_first: 'Pre-Owned Rolex ' | remove_first: 'Pre Owned Rolex ' %}
                     {%- comment -%} Remove everything from the first number to the end {%- endcomment -%}
