@@ -158,6 +158,7 @@
   .quickview-carousel-container {
     position: relative;
     width: 100%;
+    height:100%;
     aspect-ratio: 620 / 603.76;
     flex-shrink: 0;
     background-color: var(--color-bg-light);
@@ -517,7 +518,7 @@
     padding: 0;
     position: relative;
     width: 100%;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .quickview-wrapper {
@@ -1078,7 +1079,7 @@
 
     .quickview-carousel-container {
       min-height: 200px;
-      max-height: 350px;
+      
     }
 
     .quickview-main {
@@ -1097,9 +1098,7 @@
       gap: var(--spacing-xs);
     }
 
-    .quickview-description-panel {
-      display: none;
-    }
+    
   }
 
   /* DESKTOP: 1024px+ - Restore original side-by-side layout */
@@ -1107,7 +1106,7 @@
     .quickview-main {
       flex-direction: row;
       gap: 0;
-      height: 600px;
+      height: 100%;
       align-items: flex-start;
     }
 
@@ -1119,7 +1118,7 @@
 
     .quickview-panel {
       width: 544px;
-      height: 600px;
+      height: auto;
       overflow: hidden;
     }
 
