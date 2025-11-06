@@ -169,7 +169,7 @@
   /* ===== BUTTONS ===== */
   .card-main__button {
     flex: 1;
-    padding: 10px 14px;
+    padding: 8px;
     font-size: 12px;
     font-weight: 600;
     border: none;
@@ -184,6 +184,7 @@
   .card-main__button--primary {
     background-color: #78686f;
     color: white;
+    max-width: 180px;
   }
 
   .card-main__button--primary:hover:not(:disabled) {
@@ -237,7 +238,9 @@
   }
 
   @keyframes card-main-spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* ===== UNAVAILABLE STATE ===== */
@@ -249,7 +252,20 @@
     background-color: rgba(26, 26, 26, 0.05);
   }
 
-  /* ===== RESPONSIVE DESIGN ===== */
+  @media (max-width: 1199px) {
+    .card-main__footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    button.card-main__button--primary.btn-buy-now {
+    width: 100%;
+    max-width: 100%;
+}
+  }
+  @media (max-width: 768px) {
+    
+  }
   @media (max-width: 640px) {
     .card-main__content {
       padding: 12px;
@@ -266,7 +282,7 @@
 
     .card-main__price {
       font-size: 24px;
-      margin:auto;
+      margin: 0;
     }
 
     .card-main__button {
@@ -287,7 +303,6 @@
 
 <a href="{{ product.url }}" class="card-main-link">
   <div class="card-main{% if product.available == false %} is-unavailable{% endif %}">
-
     <!-- Image Section -->
     <div class="card-main__image-section">
       <img
@@ -297,7 +312,7 @@
         width="500"
         height="500"
         loading="lazy"
-      />
+      >
 
       {% if product.images.size > 1 %}
         <img
@@ -306,7 +321,7 @@
           alt="{{ product.title }}"
           width="500"
           height="500"
-        />
+        >
       {% endif %}
 
       <!-- Availability Badge -->
@@ -333,7 +348,6 @@
 
     <!-- Content Section -->
     <div class="card-main__content">
-
       <!-- Title -->
       <h3 class="card-main__title">
         {{ product.title }}
@@ -342,9 +356,7 @@
       <!-- Footer: Price & Button -->
       <div class="card-main__footer">
         {% if product.available %}
-          <div class="card-main__price">
-            ${{ product.price | money_without_currency | remove: '.00' }}
-          </div>
+          <div class="card-main__price">${{ product.price | money_without_currency | remove: '.00' }}</div>
           <button
             type="button"
             class="card-main__button card-main__button--primary btn-buy-now"
