@@ -1,5 +1,5 @@
 <!-- Quick View Modal -->
-<div class="quickview-modal-backdrop" data-quick-view-modal-backdrop style="display: none;">
+<div class="quickview-modal-backdrop" data-quick-view-modal-backdrop data-template-suffix="{{ template.suffix }}" style="display: none;">
   <div class="quickview-modal-container" role="dialog" aria-labelledby="quickview-product-title" aria-modal="true">
     <!-- Close Button -->
     <button
@@ -158,6 +158,7 @@
   .quickview-carousel-container {
     position: relative;
     width: 100%;
+    height:100%;
     aspect-ratio: 620 / 603.76;
     flex-shrink: 0;
     background-color: var(--color-bg-light);
@@ -517,7 +518,7 @@
     padding: 0;
     position: relative;
     width: 100%;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .quickview-wrapper {
@@ -1078,7 +1079,7 @@
 
     .quickview-carousel-container {
       min-height: 200px;
-      max-height: 350px;
+      
     }
 
     .quickview-main {
@@ -1097,9 +1098,7 @@
       gap: var(--spacing-xs);
     }
 
-    .quickview-description-panel {
-      display: none;
-    }
+    
   }
 
   /* DESKTOP: 1024px+ - Restore original side-by-side layout */
@@ -1107,19 +1106,19 @@
     .quickview-main {
       flex-direction: row;
       gap: 0;
-      height: 600px;
+      height: 100%;
       align-items: flex-start;
     }
 
     .quickview-carousel-container {
       width: 620px;
-      height: 603.76px;
+      height: 564px;
       flex-shrink: 0;
     }
 
     .quickview-panel {
       width: 544px;
-      height: 600px;
+      height: auto;
       overflow: hidden;
     }
 
@@ -1464,19 +1463,39 @@
       }
 
       populateModal(productData) {
-        const cleanTitle = productData.title.replace('Pre-Owned Rolex ', '');
+        // Check if we should show metafields (only on pre-owned-rolex template)
+        const templateSuffix = this.backdrop.getAttribute('data-template-suffix');
+        const isPreOwnedRolex = templateSuffix === 'pre-owned-rolex';
+
+        // Only clean title (remove 'Pre-Owned Rolex') for pre-owned-rolex template
+        const cleanTitle = isPreOwnedRolex
+          ? productData.title.replace('Pre-Owned Rolex ', '')
+          : productData.title;
 
         if (this.titleEl) this.titleEl.textContent = cleanTitle;
 
         if (this.subtitleEl) {
-          const dialColor = productData.metafields.dial_color || 'N/A';
-          const caseSize = productData.metafields.case_size || 'N/A';
-          this.subtitleEl.textContent = `${dialColor} | ${caseSize}`;
+          if (isPreOwnedRolex) {
+            const dialColor = productData.metafields.dial_color || 'N/A';
+            const caseSize = productData.metafields.case_size || 'N/A';
+            this.subtitleEl.textContent = `${dialColor} | ${caseSize}`;
+            this.subtitleEl.style.display = '';
+          } else {
+            this.subtitleEl.style.display = 'none';
+          }
         }
 
-        if (this.modelEl) this.modelEl.textContent = productData.metafields.model || '—';
-        if (this.yearEl) this.yearEl.textContent = productData.metafields.year || '—';
-        if (this.conditionEl) this.conditionEl.textContent = productData.metafields.condition || '—';
+        // Hide specs grid if not on pre-owned-rolex template
+        const specsGrid = document.querySelector('.quickview-specs-grid');
+        if (specsGrid) {
+          specsGrid.style.display = isPreOwnedRolex ? '' : 'none';
+        }
+
+        if (isPreOwnedRolex) {
+          if (this.modelEl) this.modelEl.textContent = productData.metafields.model || '—';
+          if (this.yearEl) this.yearEl.textContent = productData.metafields.year || '—';
+          if (this.conditionEl) this.conditionEl.textContent = productData.metafields.condition || '—';
+        }
 
         // Format price for display: convert cents to dollars with comma separator
         const priceInCents = parseInt(productData.price) || 0;
