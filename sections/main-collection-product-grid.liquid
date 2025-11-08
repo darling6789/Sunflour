@@ -208,6 +208,321 @@
   {%- endif -%}
 </div>
 
+<!-- Dream Watch Notify Me Modal - Rendered Once at Section Level -->
+<style>
+  .dream-watch-notify-me-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .dream-watch-notify-me-overlay[style*="display: flex"] {
+    animation: dream-watch-fadeIn 0.3s ease;
+  }
+
+  @keyframes dream-watch-fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .dream-watch-notify-me-modal {
+    position: relative;
+    background-color: #f8f6f2;
+    border-radius: 16px;
+    padding: 45px 38px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: dream-watch-slideUp 0.3s ease;
+  }
+
+  @keyframes dream-watch-slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .dream-watch-notify-me-close {
+    all: unset;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    color: #4d3942;
+    transition: color 0.3s ease;
+  }
+
+  .dream-watch-notify-me-close:hover {
+    color: #78686f;
+  }
+
+  .dream-watch-notify-me-title {
+    margin: 0 0 16px 0;
+    font-family: 'EB Garamond';
+    font-weight: 400;
+    font-size: 32px;
+    color: #151515;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .dream-watch-notify-me-description {
+    margin: 0 0 28px 0;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16px;
+    color: #4d3942;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .dream-watch-notify-me-description strong {
+    font-weight: 600;
+    color: #151515;
+  }
+
+  .dream-watch-notify-me-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .dream-watch-notify-me-input {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 14px;
+    color: #4e4e4e;
+    box-sizing: border-box;
+  }
+
+  .dream-watch-notify-me-input:focus {
+    outline: 2px solid #78686f;
+    outline-offset: 2px;
+  }
+
+  .dream-watch-notify-me-input::placeholder {
+    color: #999;
+  }
+
+  .dream-watch-notify-me-submit {
+    all: unset;
+    padding: 16px 32px;
+    background-color: #78686f;
+    color: #ffffff;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+  }
+
+  .dream-watch-notify-me-submit:hover:not(:disabled) {
+    background-color: #4d3942;
+  }
+
+  .dream-watch-notify-me-submit:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .dream-watch-notify-me-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .dream-watch-notify-me-error {
+    display: block;
+    font-family: 'Montserrat';
+    font-size: 12px;
+    color: #d32f2f;
+    text-align: center;
+    line-height: 1.4;
+    min-height: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .dream-watch-notify-me-modal {
+      padding: 32px 24px;
+      border-radius: 12px;
+    }
+    .dream-watch-notify-me-title {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .dream-watch-notify-me-description {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .dream-watch-notify-me-form {
+      gap: 12px;
+    }
+    .dream-watch-notify-me-input {
+      padding: 14px 12px;
+      font-size: 16px;
+      height: 44px;
+    }
+    .dream-watch-notify-me-submit {
+      padding: 14px 24px;
+      height: 44px;
+      font-size: 14px;
+    }
+  }
+</style>
+
+<div id="dream-watch-notify-overlay" class="dream-watch-notify-me-overlay" style="display: none;">
+  <div class="dream-watch-notify-me-modal">
+    <button type="button" id="dream-watch-notify-close" class="dream-watch-notify-me-close" aria-label="Close modal">&times;</button>
+    <h2 class="dream-watch-notify-me-title">Get Notified</h2>
+    <p class="dream-watch-notify-me-description">Be the first to know when <strong id="dream-watch-notify-product-name"></strong> is back in stock.</p>
+
+    <form id="dream-watch-notify-form" class="dream-watch-notify-me-form">
+      <label for="dream-watch-notify-email" class="visually-hidden">Email Address</label>
+      <input
+        type="email"
+        id="dream-watch-notify-email"
+        class="dream-watch-notify-me-input"
+        placeholder="Enter your email"
+        required
+        aria-required="true"
+      />
+      <button type="submit" id="dream-watch-notify-submit" class="dream-watch-notify-me-submit">
+        <span>Notify Me</span>
+      </button>
+      <span id="dream-watch-notify-error" class="dream-watch-notify-me-error" role="alert" aria-live="polite"></span>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Dream Watch Notify Me - Centralized Script (runs once per page)
+  (function() {
+    const notifyButtons = document.querySelectorAll('[data-dream-watch-notify-trigger]');
+    const overlay = document.getElementById('dream-watch-notify-overlay');
+    const form = document.getElementById('dream-watch-notify-form');
+    const emailInput = document.getElementById('dream-watch-notify-email');
+    const submitBtn = document.getElementById('dream-watch-notify-submit');
+    const closeBtn = document.getElementById('dream-watch-notify-close');
+    const errorMsg = document.getElementById('dream-watch-notify-error');
+    const productName = document.getElementById('dream-watch-notify-product-name');
+
+    let currentWatchRef = '';
+    let currentProductId = '';
+    let isSubmitting = false;
+
+    notifyButtons.forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const watchRef = this.getAttribute('data-watch-reference');
+        const productId = this.getAttribute('data-product-id');
+        const title = this.getAttribute('data-product-title');
+
+        if (!watchRef) {
+          alert('This product does not have a watch reference assigned.');
+          return;
+        }
+
+        currentWatchRef = watchRef;
+        currentProductId = productId;
+
+        productName.textContent = title;
+        emailInput.value = '';
+        errorMsg.textContent = '';
+        submitBtn.disabled = false;
+        submitBtn.querySelector('span').textContent = 'Notify Me';
+
+        overlay.style.display = 'flex';
+        emailInput.focus();
+      });
+    });
+
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      overlay.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.style.display = 'none';
+      }
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (isSubmitting) return;
+
+      const email = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        errorMsg.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      isSubmitting = true;
+      submitBtn.disabled = true;
+      const originalText = submitBtn.querySelector('span').textContent;
+      submitBtn.querySelector('span').textContent = 'Submitting...';
+      errorMsg.textContent = '';
+
+      fetch('https://dream-watch-api.vercel.app/api/notify-submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          watch_reference: currentWatchRef,
+          product_id: currentProductId,
+        }),
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.error || data.reason === 'already_subscribed') {
+          errorMsg.textContent = 'This email is already subscribed for this model.';
+          submitBtn.disabled = false;
+          submitBtn.querySelector('span').textContent = originalText;
+          isSubmitting = false;
+        } else {
+          submitBtn.querySelector('span').textContent = '✓ Subscribed!';
+          setTimeout(function() {
+            overlay.style.display = 'none';
+            submitBtn.disabled = false;
+            submitBtn.querySelector('span').textContent = originalText;
+            isSubmitting = false;
+          }, 1500);
+        }
+      })
+      .catch(function(error) {
+        console.error('Notify Me Error:', error);
+        errorMsg.textContent = 'Failed to subscribe. Please try again.';
+        submitBtn.disabled = false;
+        submitBtn.querySelector('span').textContent = originalText;
+        isSubmitting = false;
+      });
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "t:sections.main-collection-product-grid.name",
