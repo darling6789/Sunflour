@@ -5,7 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
-    <link rel="canonical" href="{{ canonical_url }}">
+    
+    {%- comment -%} SEO: Determine if page should be noindexed and set canonical URL {%- endcomment -%}
+    {%- liquid
+      assign should_noindex = false
+      assign canonical_url_final = canonical_url
+      
+      # Noindex search result pages
+      if request.page_type == 'search'
+        assign should_noindex = true
+      endif
+      
+      # Noindex cart page
+      if request.page_type == 'cart'
+        assign should_noindex = true
+      endif
+      
+      # Noindex pagination pages (page 2+)
+      if current_page > 1
+        assign should_noindex = true
+        # Canonicalize pagination to page 1
+        if request.page_type == 'collection'
+          assign canonical_url_final = collection.url
+        elsif request.page_type == 'search'
+          assign canonical_url_final = routes.search_url
+        endif
+      endif
+      
+      # Noindex collection pages with active filters (query parameters)
+      # Check for filter parameters, sort parameters, or pagination (but not section_id which is for AJAX)
+      if request.page_type == 'collection' and request.query_string != blank
+        assign query_string_lower = request.query_string | downcase
+        # Check if query string contains filter, sort_by, or page parameters
+        if query_string_lower contains 'filter.' or query_string_lower contains 'sort_by=' or query_string_lower contains '&page=' or query_string_lower contains '?page='
+          assign should_noindex = true
+          # Canonicalize filtered collections to base collection URL
+          assign canonical_url_final = collection.url
+        endif
+      endif
+    -%}
+    
+    {%- if should_noindex -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- endif -%}
+    
+    <link rel="canonical" href="{{ canonical_url_final }}">
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
