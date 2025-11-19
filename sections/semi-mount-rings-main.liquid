@@ -940,18 +940,33 @@
                     <div class="s-m-center-diamond-selection" {{ block.shopify_attributes }}>
                       <div class="s-m-center-diamond-selection__header">
                         <h3 class="s-m-center-diamond-selection__title">CENTER DIAMOND SELECTION:</h3>
-                        <p class="s-m-center-diamond-selection__status">{{ block.settings.status_text | default: 'None Selected' }}</p>
                       </div>
                       <button 
                         type="button" 
                         class="s-m-center-diamond-selection__add-button"
                         data-diamond-picker-trigger
+                        id="addDiamondButton-{{ section.id }}"
                       >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M11 13H5V11H11V5H13V11H19V13H13V19H11V13Z" fill="var(--Accent-Darkest, #4D3942)"/>
                         </svg>
                         <span>{{ block.settings.add_button_text | default: 'Add Center Diamond' }}</span>
                       </button>
+                      <div class="s-m-center-diamond-selection__selected" id="selectedDiamondDisplay-{{ section.id }}" style="display: none;">
+                        <div class="s-m-center-diamond-selection__selected-image">
+                          <img id="selectedDiamondImage-{{ section.id }}" src="" alt="Selected Diamond">
+                        </div>
+                        <div class="s-m-center-diamond-selection__selected-content">
+                          <div class="s-m-center-diamond-selection__selected-info">
+                            <div class="s-m-center-diamond-selection__selected-price" id="selectedDiamondPrice-{{ section.id }}"></div>
+                            <div class="s-m-center-diamond-selection__selected-details" id="selectedDiamondDetails-{{ section.id }}"></div>
+                          </div>
+                          <div class="s-m-center-diamond-selection__selected-actions">
+                            <button type="button" class="s-m-center-diamond-selection__clear-button" data-clear-diamond>Clear</button>
+                            <button type="button" class="s-m-center-diamond-selection__edit-button" data-diamond-picker-trigger-edit>Edit</button>
+                          </div>
+                        </div>
+                      </div>
                       <div class="s-m-center-diamond-selection__disclaimer">
                         <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M7.3612 12.2687H8.99702V7.3612H7.3612V12.2687ZM8.17911 5.72538C8.41085 5.72538 8.60511 5.64699 8.76187 5.49023C8.91864 5.33346 8.99702 5.13921 8.99702 4.90747C8.99702 4.67573 8.91864 4.48147 8.76187 4.32471C8.60511 4.16794 8.41085 4.08956 8.17911 4.08956C7.94737 4.08956 7.75312 4.16794 7.59635 4.32471C7.43958 4.48147 7.3612 4.67573 7.3612 4.90747C7.3612 5.13921 7.43958 5.33346 7.59635 5.49023C7.75312 5.64699 7.94737 5.72538 8.17911 5.72538ZM8.17911 16.3582C7.04767 16.3582 5.98438 16.1435 4.98926 15.7141C3.99413 15.2847 3.12851 14.702 2.39239 13.9658C1.65627 13.2297 1.07351 12.3641 0.644105 11.369C0.214702 10.3738 0 9.31056 0 8.17911C0 7.04767 0.214702 5.98438 0.644105 4.98926C1.07351 3.99413 1.65627 3.12851 2.39239 2.39239C3.12851 1.65627 3.99413 1.07351 4.98926 0.644105C5.98438 0.214702 7.04767 0 8.17911 0C9.31056 0 10.3738 0.214702 11.369 0.644105C12.3641 1.07351 13.2297 1.65627 13.9658 2.39239C14.702 3.12851 15.2847 3.99413 15.7141 4.98926C16.1435 5.98438 16.3582 7.04767 16.3582 8.17911C16.3582 9.31056 16.1435 10.3738 15.7141 11.369C15.2847 12.3641 14.702 13.2297 13.9658 13.9658C13.2297 14.702 12.3641 15.2847 11.369 15.7141C10.3738 16.1435 9.31056 16.3582 8.17911 16.3582ZM8.17911 14.7224C10.0058 14.7224 11.553 14.0885 12.8208 12.8208C14.0885 11.553 14.7224 10.0058 14.7224 8.17911C14.7224 6.35244 14.0885 4.80523 12.8208 3.53747C11.553 2.2697 10.0058 1.63582 8.17911 1.63582C6.35244 1.63582 4.80523 2.2697 3.53747 3.53747C2.2697 4.80523 1.63582 6.35244 1.63582 8.17911C1.63582 10.0058 2.2697 11.553 3.53747 12.8208C4.80523 14.0885 6.35244 14.7224 8.17911 14.7224Z" fill="var(--Accent-Darkest, #4D3942)"/>
@@ -966,6 +981,7 @@
                           type="submit"
                           name="add"
                           class="s-m-center-diamond-selection__add-to-cart-button"
+                          id="addToCartButton-{{ section.id }}"
                           {% if product.selected_or_first_available_variant.available == false
                             or quantity_rule_soldout
                             or product.selected_or_first_available_variant == null
@@ -1028,6 +1044,331 @@
         </div>
       </modal-dialog>
     {%- endfor -%}
+
+    <!-- Diamond Picker Modal -->
+    <modal-dialog id="DiamondPickerModal-{{ section.id }}" class="s-m-diamond-picker-modal">
+      <div
+        role="dialog"
+        aria-label="Select Center Diamond"
+        aria-modal="true"
+        class="s-m-diamond-picker-modal__content"
+        tabindex="-1"
+      >
+        <div class="s-m-diamond-picker-modal__header">
+          <h2 class="s-m-diamond-picker-modal__title">Select Center Diamond</h2>
+          <button
+            id="DiamondPickerClose-{{ section.id }}"
+            type="button"
+            class="s-m-diamond-picker-modal__close"
+            aria-label="{{ 'accessibility.close' | t }}"
+          >
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.53366 25.3337L6.66699 23.467L14.1337 16.0003L6.66699 8.53366L8.53366 6.66699L16.0003 14.1337L23.467 6.66699L25.3337 8.53366L17.867 16.0003L25.3337 23.467L23.467 25.3337L16.0003 17.867L8.53366 25.3337Z" fill="var(--Schemes-On-Surface, #1D1B20)"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="s-m-diamond-picker-modal__body">
+          <div class="s-m-diamond-picker-modal__body-header">
+            <button
+              type="button"
+              class="s-m-diamond-picker-modal__hide-filters-btn"
+              id="hideFiltersBtn-{{ section.id }}"
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.16699 10H15.8337" stroke="var(--Primary-Accent, #78686F)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Hide Filters
+            </button>
+            <div class="s-m-diamond-picker-modal__filters" id="diamondFilters-{{ section.id }}">
+              <div class="s-m-diamond-picker-modal__filters-header">
+                <h3>FILTERS</h3>
+                <div class="s-m-diamond-picker-modal__filters-actions">
+                  <button type="button" class="s-m-diamond-picker-modal__clear-btn" id="clearFilters-{{ section.id }}">Clear</button>
+                  <button type="button" class="s-m-diamond-picker-modal__apply-btn" id="applyFilters-{{ section.id }}">Apply</button>
+                </div>
+              </div>
+              
+              <div class="s-m-diamond-picker-modal__filter-group">
+                <h4>SHAPE</h4>
+                <div class="s-m-diamond-picker-modal__shape-grid" id="shapeFilters-{{ section.id }}">
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Cushion">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none">
+                      <path d="M19.2985 11.955L19.4285 22.3315M19.2985 11.955L33.892 18.6412M19.2985 11.955L33.6534 2.881L48.9408 13.2575M19.2985 11.955L16.9782 5.50769M19.2985 11.955L9.62726 10.5223L11.9041 20.4429M19.4285 22.3315L16.5445 32.6646M19.4285 22.3315L33.892 18.6412M19.4285 22.3315L11.9041 20.4429M33.892 18.6412L47.7482 22.744M33.892 18.6412L48.9408 13.2575M48.9408 13.2575L57.4194 10.2184L56.1183 22.0276M48.9408 13.2575L47.7482 22.744M48.9408 13.2575L51.955 6.00698M11.9041 20.4429L16.5445 32.6646M11.9041 20.4429L3.23039 32.6646L10.8199 44.1483M11.9041 20.4429L6.20114 17.4472M16.5445 32.6646L19.1901 43.714M16.5445 32.6646L10.8199 44.1483M19.1901 43.714L10.8199 44.1483M19.1901 43.714L17.8673 53.0703M19.1901 43.714L33.0463 47.7952M10.8199 44.1483L5.52893 47.0137M10.8199 44.1483L9.62726 55.9575L17.8673 53.0703M17.8673 53.0703L33.4149 63.6638L48.3554 54.2209M17.8673 53.0703L33.0463 47.7952M17.8673 53.0703L15.1785 60.2991M33.0463 47.7952L48.3554 54.2209M33.0463 47.7952L47.4013 43.866M48.3554 54.2209L51.0226 60.7115M48.3554 54.2209L47.4013 43.866M48.3554 54.2209L57.6796 55.9575M47.4013 43.866L55.2726 45.733M47.4013 43.866L50.2636 32.6646M57.9615 55.5885L55.2726 45.733M55.2726 45.733L61.4743 49.1845M55.2726 45.733L63.9464 32.6646L56.1183 22.0276M55.2726 45.733L50.2636 32.6646M56.1183 22.0276L50.2636 32.6646M56.1183 22.0276L47.7482 22.744M56.1183 22.0276L61.9298 19.0753M50.2636 32.6646L47.7482 22.744M33.6318 2.77246C30.2924 2.77246 15.9591 2.77246 9.60557 10.4137C3.25208 18.055 3.10029 32.5778 3.10029 32.5778C3.10029 32.5778 2.81839 47.7735 9.60557 55.8707C16.3928 63.9678 29.9454 63.5553 33.4149 63.5553C36.8844 63.5553 51.2177 63.5553 57.6796 55.8489C64.1415 48.1426 63.9897 42.0425 63.9897 32.6646C63.9897 23.2867 63.5777 17.4689 57.4845 10.2184C51.3912 2.96783 39.0311 2.77246 33.6318 2.77246Z" stroke="#78686F" stroke-width="0.986667"/>
+                    </svg>
+                    <span>Cushion</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none">
+                      <path d="M25.4944 14.0722L33.3703 3.01982L41.3767 13.9852M25.4944 14.0722L12.0705 11.9618L14.3114 25.364M25.4944 14.0722L22.8617 22.5138L18.4234 33.3922L14.3984 41.2464M25.4944 14.0722L33.3485 18.0972L44.2486 22.5573L52.6685 25.1681M25.4944 14.0722L21.861 5.43481M41.3767 13.9852L54.7789 11.7442L52.6685 25.1681M41.3767 13.9852L33.5661 18.0972L22.7095 22.6662L14.3114 25.364M41.3767 13.9852L44.0964 22.4051L48.6435 33.24L52.7556 41.0506M41.3767 13.9852L44.9449 5.26075M14.3114 25.364L18.4234 33.1746L22.9923 44.0312L25.7119 52.4293M14.3114 25.364L3.34598 33.3705L14.3984 41.2464M14.3114 25.364L5.6522 21.8394M14.3984 41.2464L22.84 43.879L33.7401 48.3173L41.5943 52.3641M14.3984 41.2464L12.3097 54.6921L25.7119 52.4293M14.3984 41.2464L5.76098 44.9016M52.6685 25.1681L63.7427 33.0659L52.7556 41.0506M52.6685 25.1681L48.6435 33.0224L44.2051 43.9225L41.5943 52.3641M52.7556 41.0506L55.0183 54.4527L41.5943 52.3641M52.7556 41.0506L44.3575 43.7702L33.5226 48.3173L25.7119 52.4293M41.5943 52.3641L33.6966 63.4165L25.7119 52.4293M41.5943 52.3641L45.2277 61.0233M25.7119 52.4293L22.122 61.1974M61.3494 21.5348L52.6902 25.1681M61.5018 44.6187L52.7556 41.0723M44.2486 43.8137L48.6 33.1311L44.1399 22.5138L33.4574 18.1407L22.84 22.6008L18.4669 33.2835L22.9489 43.9225L33.6314 48.2738L44.2486 43.8137ZM45.04 5.03481C60.6053 11.3837 68.0766 29.1487 61.7277 44.7138C55.3788 60.2791 37.6139 67.7504 22.0486 61.4015C6.48343 55.0526 -0.98791 37.2878 5.36098 21.7225C11.7098 6.15725 29.4748 -1.31408 45.04 5.03481Z" stroke="#78686F" stroke-width="0.986667"/>
+                    </svg>
+                    <span>Round</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Princess">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none">
+                      <path d="M10.3616 18.0808V17.5875H9.8683V18.0808H10.3616ZM18.4921 18.0808V18.5741H18.9854V18.0808H18.4921ZM18.4921 9.75332V9.25998H17.9987V9.75332H18.4921ZM48.3313 9.75332H48.8247V9.25998H48.3313V9.75332ZM48.3313 18.4527H47.838V18.946H48.3313V18.4527ZM57.0086 18.4527H57.5019V17.9593H57.0086V18.4527ZM57.0086 48.0705V48.5639H57.5019V48.0705H57.0086ZM3.0988 2.77165V2.27832H2.60547V2.77165H3.0988ZM63.9902 2.77165H64.4836V2.27832H63.9902V2.77165ZM63.9902 63.663V64.1564H64.4836V63.663H63.9902ZM3.0988 63.663H2.60547V64.1564H3.0988V63.663ZM48.1587 9.66477L48.2924 10.1396C48.314 10.1336 48.3351 10.126 48.3556 10.1171L48.1587 9.66477ZM18.5851 17.9945L18.4513 17.5197C18.2847 17.5666 18.1549 17.6974 18.1092 17.8644L18.5851 17.9945ZM3.59908 63.663L3.14648 63.4668C3.06347 63.6582 3.10983 63.8811 3.26227 64.0236C3.41472 64.1659 3.64028 64.1971 3.82561 64.1013L3.59908 63.663ZM56.5525 18.7117L56.1055 18.5031C56.0939 18.528 56.0845 18.5536 56.0772 18.5801L56.5525 18.7117ZM3.33787 3.28963L3.52814 2.83446C3.33938 2.75556 3.12152 2.80135 2.98048 2.94956C2.83946 3.09778 2.80454 3.31766 2.89272 3.50226L3.33787 3.28963ZM18.3238 9.55409L18.1336 10.0093C18.1501 10.0161 18.1669 10.0221 18.1839 10.0271L18.3238 9.55409ZM48.3313 18.4306L48.806 18.2962C48.7598 18.1334 48.6335 18.0055 48.4712 17.9575L48.3313 18.4306ZM56.7496 48.159L56.2749 48.2935C56.2821 48.319 56.2914 48.3438 56.3026 48.3678L56.7496 48.159ZM10.3616 17.9945L10.8385 17.8683C10.8306 17.8386 10.82 17.8097 10.8067 17.7818L10.3616 17.9945ZM10.855 48.0705V18.0808H9.8683V48.0705H10.855ZM10.3616 18.5741H18.4921V17.5875H10.3616V18.5741ZM18.9854 18.0808V9.75332H17.9987V18.0808H18.9854ZM18.4921 10.2467H48.3313V9.25998H18.4921V10.2467ZM47.838 9.75332V18.4527H48.8247V9.75332H47.838ZM48.3313 18.946H57.0086V17.9593H48.3313V18.946ZM56.5152 18.4527V48.0705H57.5019V18.4527H56.5152ZM57.0086 47.5772H48.4198V48.5639H57.0086V47.5772ZM47.9265 48.0705V56.0528H48.9132V48.0705H47.9265ZM48.4198 55.5594H18.3217V56.5461H48.4198V55.5594ZM18.815 56.0528V48.0705H17.8283V56.0528H18.815ZM18.3217 47.5772H10.3616V48.5639H18.3217V47.5772ZM3.0988 3.26499H63.9902V2.27832H3.0988V3.26499ZM63.4969 2.77165V63.663H64.4836V2.77165H63.4969ZM63.9902 63.1697H3.0988V64.1564H63.9902V63.1697ZM3.59214 63.663V2.77165H2.60547V63.663H3.59214ZM63.7933 2.31934L47.9617 9.21246L48.3556 10.1171L64.1872 3.22397L63.7933 2.31934ZM48.0249 9.18991L18.4513 17.5197L18.7188 18.4694L48.2924 10.1396L48.0249 9.18991ZM18.1092 17.8644L9.88577 47.9404L10.8375 48.2007L19.061 18.1246L18.1092 17.8644ZM9.90895 47.8743L3.14648 63.4668L4.05168 63.8594L10.8142 48.2669L9.90895 47.8743ZM3.82561 64.1013L18.5482 56.4909L18.0951 55.6145L3.37254 63.2248L3.82561 64.1013ZM18.4482 56.5296L48.5463 48.5474L48.2933 47.5937L18.1952 55.5759L18.4482 56.5296ZM48.8953 48.2023L57.028 18.8434L56.0772 18.5801L47.9445 47.9388L48.8953 48.2023ZM56.9996 18.9204L64.4373 2.98025L63.5432 2.56305L56.1055 18.5031L56.9996 18.9204ZM3.1476 3.7448L18.1336 10.0093L18.5142 9.09893L3.52814 2.83446L3.1476 3.7448ZM18.1839 10.0271L48.1913 18.9037L48.4712 17.9575L18.4638 9.08102L18.1839 10.0271ZM47.8566 18.565L56.2749 48.2935L57.2243 48.0247L48.806 18.2962L47.8566 18.565ZM56.3026 48.3678L63.5433 63.8718L64.4372 63.4543L57.1965 47.9504L56.3026 48.3678ZM64.2069 63.2198L48.6365 55.6096L48.2032 56.496L63.7737 64.1063L64.2069 63.2198ZM48.5463 55.5759L18.4482 47.5937L18.1952 48.5474L48.2933 56.5296L48.5463 55.5759ZM18.7986 47.9443L10.8385 17.8683L9.88468 18.1208L17.8447 48.1967L18.7986 47.9443ZM10.8067 17.7818L3.78304 3.07701L2.89272 3.50226L9.91645 18.2071L10.8067 17.7818Z" fill="#78686F"/>
+                    </svg>
+                    <span>Princess</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Pear">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none">
+                      <path d="M40.3302 54.2473L52.2607 55.9626L49.5787 44.3561M40.3302 54.2473L41.5854 46.9425M40.3302 54.2473L33.6801 63.4668M49.5787 44.3561L44.437 37.4636L49.3629 30.8946M49.5787 44.3561L56.7948 38.4188L49.3629 30.8946M49.5787 44.3561L41.5854 46.9425M41.5854 46.9425L44.437 37.4591L41.5193 25.3075M41.5854 46.9425L33.6757 50.7256M49.3629 30.8946L50.3318 19.348L39.445 16.3693L33.5039 19.8045L41.5193 25.3075M49.3629 30.8946L41.5193 25.3075M49.3629 30.8946L54.6126 27.7188M41.5193 25.3075L39.445 16.3671M39.445 16.3671L42.9242 10.1682M39.445 16.3671L33.5039 3.18935M33.6757 50.7256L40.3324 54.2494L44.0296 61.3126M33.6757 50.7256L25.7484 46.9402L22.6149 38.0464M33.6757 50.7256L27.0035 54.2472L23.4583 61.3569M49.5787 44.3539L56.515 47.1796M22.6149 38.0464L17.7529 44.3539M22.6149 38.0464L17.8189 30.8924M22.6149 38.0464L25.3124 25.3053L27.7346 16.3671M27.0014 54.2472L15.139 55.9005L17.7529 44.3539M17.7529 44.3539L10.6667 46.353M17.8189 30.8924L16.9755 19.1507L27.7346 16.3671M17.8189 30.8924L12.4812 27.9581M27.7346 16.3671L33.6757 19.8023L25.3146 25.3053L17.821 30.8902L10.4091 38.4166L17.7572 44.3561L25.7506 46.9402L27.0057 54.245L33.6779 63.6641M27.7346 16.3671L24.861 9.58541M27.7346 16.3671L33.6757 3.18935M33.592 2.77268C33.592 2.77268 10.1272 16.0613 10.1272 42.2884C10.1272 62.8995 32.077 63.6641 33.592 63.6641C35.1004 63.6641 56.9665 63.5089 56.9665 42.2884C57.0568 16.0414 33.592 2.77268 33.592 2.77268Z" stroke="#78686F" stroke-width="0.986667"/>
+                    </svg>
+                    <span>Pear</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Marquise">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="39" height="62" viewBox="0 0 39 62" fill="none">
+                      <path d="M27.3357 6.47407L23.8479 9.08598M23.8479 9.08598L24.4204 17.2406L31.8665 23.0666L28.2959 30.5925L31.5921 38.6164M23.8479 9.08598L19.2279 11.0848M23.8479 9.08598L19.402 0.929221H19.0537L14.6123 9.08381L5.75102 13.8251L6.58712 23.0687M23.8479 9.08598L32.7047 13.8251L31.8708 23.0666L37.4749 30.5925L31.5921 38.6164M31.5921 38.6164L24.7035 43.8115M31.5921 38.6164L32.8767 47.9463L23.7434 52.6213L19.4042 60.9507H19.0558L14.7146 52.6213M19.2279 11.0848L24.4249 17.2384L28.3002 30.5925L24.7035 43.8115M19.2279 11.0848L14.6078 9.09042L14.0331 17.245L6.58712 23.0687M19.2279 11.0848L14.0309 17.2384L10.1773 30.5925L13.7522 43.8115M6.58712 23.0687L0.983052 30.5947L6.88322 38.6164L5.58121 47.9463L14.7146 52.6213M6.58712 23.0687L10.1795 30.5969L6.88322 38.6209L13.7522 43.8115M23.7412 52.6213L24.7035 43.8115M23.7412 52.6213L19.2279 50.9058M23.7412 52.6213L27.573 55.2333M24.7035 43.8115L19.2279 50.9058M19.2279 50.9058L13.7522 43.8115M19.2279 50.9058L14.7146 52.6213M14.7146 52.6213L13.7522 43.8115M14.7146 52.6213L10.8827 55.2333M11.1418 6.47407L14.6078 9.08598M19.402 61.3845C24.9911 58.4958 29.6841 54.0898 32.9606 48.6551C36.2371 43.2203 37.9692 36.9691 37.9648 30.5947C37.9648 9.75671 19.402 0.493164 19.402 0.493164H19.0537C19.0537 0.493164 0.493172 9.75671 0.493172 30.5925C0.488929 36.9671 2.22132 43.2184 5.49824 48.6532C8.77515 54.088 13.4686 58.4939 19.0581 61.3824L19.402 61.3845Z" stroke="#78686F" stroke-width="0.986667"/>
+                    </svg>
+                    <span>Marquise</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Oval">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none">
+                      <path d="M51.4466 43.4405L46.8287 39.3277M39.7075 54.2694L41.3807 45.8754L46.8308 39.3299M39.7075 54.2694L33.6129 51.5755L41.3829 45.8777L43.2702 33.3089L46.8308 39.3299M39.7075 54.2694L42.9251 60.1863M39.7075 54.2694L33.6129 63.6638M39.7075 54.2694L48.4408 53.052L46.8308 39.3299M46.8308 39.3299L52.2635 33.8047V33.4793L46.833 27.1042L49.1529 15.7109L39.7075 12.1891M39.7075 12.1891L33.6129 2.77246M39.7075 12.1891L40.2864 21.9288L46.8308 27.1086L43.2702 33.4793L40.2885 21.9288L33.6129 16.4303L39.7075 12.1891ZM39.7075 12.1891L43.7421 7.25277M51.6388 25.0191L46.833 27.1065M15.4778 42.44L20.3709 39.3299M20.3709 39.3299L26.2295 45.725M20.3709 39.3299L23.9315 33.3067L26.2295 45.725M20.3709 39.3299L18.4813 52.5738L27.4965 54.2694M20.3709 39.3299L14.9404 33.807V33.4816L20.3709 27.1065L18.0554 15.432L27.49 12.1891L33.591 2.77246M26.2295 45.725L27.4965 54.2694M26.2295 45.725L33.591 51.5732L27.4965 54.2694M27.4965 54.2694L23.8704 59.945M27.4965 54.2694L33.591 63.6638M15.5412 24.3859L20.3687 27.1086M20.3687 27.1086L26.9155 21.9288M20.3687 27.1086L23.9315 33.4793L26.9155 21.9288M26.9155 21.9288L27.4965 12.1891M26.9155 21.9288L33.591 16.4303L27.4965 12.1891M27.4965 12.1891L23.4379 7.16422M14.8115 33.652C14.8115 14.6018 23.2041 2.77246 33.5473 2.77246C43.8907 2.77246 52.2831 14.5797 52.2831 33.6299C52.2831 52.6822 43.8907 63.6638 33.5473 63.6638C23.2041 63.6638 14.8115 52.7907 14.8115 33.652Z" stroke="#78686F" stroke-width="0.986667"/>
+                    </svg>
+                    <span>Oval</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Heart">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none">
+                      <path d="M33.5133 12.524V20.869M27.5047 48.4027L33.3392 47.1205M27.5047 48.4027L15.5094 48.5329L16.3584 38.0584L16.8374 30.561L10.1975 26.0409M27.5047 48.4027L23.1072 54.7481M33.3392 47.1205H33.6875M33.3392 47.1205L25.0013 41.9918L17.3817 31.1478L13.9637 21.3469L33.557 16.0879L22.3017 6.4391L13.9201 15.0449M10.1975 26.0409L6.54009 35.2768L24.8271 41.6441L27.8532 48.0549L33.4264 60.0072H33.6005L39.1737 48.0549L42.5481 42.5134L60.5086 35.2768L56.8292 26.041M10.1975 26.0409L4.4066 16.327L13.9201 15.0449M10.1975 26.0409L13.6154 21.3469L13.9201 15.0449M10.1975 26.0409L3.88408 28.5183M33.6875 47.1205L39.5219 48.4027M33.6875 47.1205L42.5481 42.1656L49.6452 31.1478L53.0631 21.3469L33.4699 16.0879L44.7251 6.4391L53.1284 15.0449M13.9201 15.0449L24.0215 18.6523L33.4262 20.9341H33.6004L43.0052 18.6523L53.1284 15.0449M13.9201 15.0449L10.8723 7.65619M39.5219 48.4027L51.0601 48.9678L50.6683 38.0585L50.1894 30.5612L56.8292 26.041M39.5219 48.4027L43.2664 55.183M53.1284 15.0449L53.4113 21.347L56.8292 26.041M53.1284 15.0449L62.6203 16.327L56.8292 26.041M53.1284 15.0449L56.1544 7.65619M56.8292 26.041L63.1426 28.5184M50.7118 39.232L56.6116 42.7743M16.119 38.8842L10.6982 43.1436M33.5136 60.5938C33.5136 60.5938 63.9921 48.12 63.9921 21.3468C63.9921 14.5014 58.5494 5.7002 49.493 5.7002C37.9983 5.7002 33.5136 12.4587 33.5136 12.4587C33.5136 12.4587 29.1596 5.7002 17.5996 5.7002C8.56492 5.7002 3.10059 14.5014 3.10059 21.3468C3.10059 48.12 33.5789 60.5938 33.5789 60.5938H33.5136Z" stroke="#78686F" stroke-width="0.986667" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Heart</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Radiant">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none">
+                      <path d="M57.4243 50.4399L47.6181 47.2457L50.7702 57.0962M57.4243 50.4399V16.0186M57.4243 50.4399L50.7702 57.0962M50.7702 57.0962L54.3142 63.6638M50.7702 57.0962L33.5463 49.5257L16.3467 57.0962M50.7702 57.0962H16.3467M57.4243 16.0186L50.0309 33.2182L57.4243 50.4443L63.9921 53.986M57.4243 16.0186L63.9921 12.4702M57.4243 16.0186L50.7681 9.35568H16.3467M57.4243 16.0186L47.6181 19.2128L50.7702 9.36232M54.3142 63.6638L63.9921 53.986M54.3142 63.6638H12.7984M16.3467 57.0962L12.7984 63.6638M16.3467 57.0962L9.6838 50.4399V16.0186L16.3467 9.35568M63.9921 53.986V12.4702M63.9921 12.4702L54.3142 2.77246M16.3467 9.35568L33.5463 16.9306L50.7725 9.3601L54.3142 2.77246M16.3467 9.35568L12.7961 2.77246M54.3142 2.77246L12.7984 2.77467L3.1028 12.4702L3.10059 53.986M12.7984 63.6638L3.10059 53.986M3.10059 53.986L9.68822 50.4443L17.0595 33.2182L9.68822 16.0186M9.68822 50.4399L19.4945 47.2457L16.3445 57.0962M9.68822 16.0186L3.10059 12.468M9.68822 16.0186L19.4945 19.2128L16.3445 9.36232M33.5463 17.0811L47.4211 19.3877L49.5506 33.2182L47.4211 47.0708L33.5463 49.3774L19.6715 47.0708L17.5642 33.2182L19.6715 19.3877L33.5463 17.0811Z" stroke="#78686F" stroke-width="0.986667"/>
+                    </svg>
+                    <span>Radiant</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Asscher">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                      <path d="M47.1839 21.3268L61.3846 12.9542M0.493164 48.5973L14.52 40.4641M0.493164 48.5973L13.3239 61.3845M0.493164 48.5973V12.7584M13.3239 61.3845H48.4451M13.3239 61.3845L21.4137 47.3361M0.493164 12.7584L12.6497 0.493164H48.8148M0.493164 12.7584L14.7375 21.3485M40.1596 47.3361L48.4451 61.3845M48.4451 61.3845L61.2542 48.6191M61.2542 48.6191V12.9107L48.8148 0.493164M61.2542 48.6191L47.1839 40.4641M12.6497 0.667143L21.0875 14.6504M21.0875 14.6504L14.5634 21.218V40.4641L21.4572 47.3361H40.3119L47.1839 40.4641M21.0875 14.6504H40.5075L47.1839 21.305V40.4641M48.8148 0.493164L40.464 14.6287M43.139 10.1488L51.6637 18.6301V43.0519L42.8997 51.7941H18.8693L10.0835 43.0519V18.5214L18.4127 10.1488H43.139ZM45.8573 5.58195L56.2523 15.9552V45.7702L45.5528 56.4481H16.2162L5.49496 45.7485V15.803L15.6508 5.58195H45.8573Z" stroke="#78686F" stroke-width="0.986667"/>
+                    </svg>
+                    <span>Asscher</span>
+                  </button>
+                  <button type="button" class="s-m-diamond-picker-modal__shape-btn" data-value="Emerald">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none">
+                      <path d="M57.1767 10.6653L47.8281 17.2542M50.879 2.5957L45.3829 14.2231M50.879 2.5957H15.8847M50.879 2.5957L57.1793 10.6653V56.4275L50.879 64.4971M45.3829 14.2231L47.8281 17.252V25.4296M45.3829 14.2231H21.3808M15.8847 2.5957L21.3808 14.2231M15.8847 2.5957L9.5625 10.6653V56.4275L15.8847 64.4971M50.879 64.4971L45.3829 52.87M50.879 64.4971H15.8847M21.3808 14.2231L18.9356 17.2542M54.0621 25.4318V12.9426L49.0396 6.57426H17.724L12.6796 12.9426V25.4318M9.5647 10.6653L18.9356 17.2542M18.9356 17.2542V25.4318M15.8847 64.4971L21.3808 52.87M15.8869 25.4318V15.1749L19.6692 10.6653H47.0945L50.879 15.1749V51.918L47.0945 56.4275H19.6692L15.8847 51.918V25.4318M57.1767 56.4275L47.8281 49.8185M47.8281 49.8185L45.3829 52.87M47.8281 49.8185V25.4341M45.3829 52.87H21.3808M21.3808 52.87L18.9356 49.8185M54.0621 25.4341V54.128L49.0396 60.4961H17.724L12.6796 54.128V25.4341M9.5647 56.4275L18.9356 49.8185M18.9356 49.8185V25.4341" stroke="#78686F" stroke-width="0.984743"/>
+                    </svg>
+                    <span>Emerald</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="s-m-diamond-picker-modal__filter-group">
+                <h4>SOURCE <span class="s-m-diamond-picker-modal__info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10.8 18H13.2V10.8H10.8V18ZM12 8.4C12.34 8.4 12.625 8.285 12.855 8.055C13.085 7.825 13.2 7.54 13.2 7.2C13.2 6.86 13.085 6.575 12.855 6.345C12.625 6.115 12.34 6 12 6C11.66 6 11.375 6.115 11.145 6.345C10.915 6.575 10.8 6.86 10.8 7.2C10.8 7.54 10.915 7.825 11.145 8.055C11.375 8.285 11.66 8.4 12 8.4ZM12 24C10.34 24 8.78 23.685 7.32 23.055C5.86 22.425 4.59 21.57 3.51 20.49C2.43 19.41 1.575 18.14 0.945 16.68C0.315 15.22 0 13.66 0 12C0 10.34 0.315 8.78 0.945 7.32C1.575 5.86 2.43 4.59 3.51 3.51C4.59 2.43 5.86 1.575 7.32 0.945C8.78 0.315 10.34 0 12 0C13.66 0 15.22 0.315 16.68 0.945C18.14 1.575 19.41 2.43 20.49 3.51C21.57 4.59 22.425 5.86 23.055 7.32C23.685 8.78 24 10.34 24 12C24 13.66 23.685 15.22 23.055 16.68C22.425 18.14 21.57 19.41 20.49 20.49C19.41 21.57 18.14 22.425 16.68 23.055C15.22 23.685 13.66 24 12 24ZM12 21.6C14.68 21.6 16.95 20.67 18.81 18.81C20.67 16.95 21.6 14.68 21.6 12C21.6 9.32 20.67 7.05 18.81 5.19C16.95 3.33 14.68 2.4 12 2.4C9.32 2.4 7.05 3.33 5.19 5.19C3.33 7.05 2.4 9.32 2.4 12C2.4 14.68 3.33 16.95 5.19 18.81C7.05 20.67 9.32 21.6 12 21.6Z" fill="var(--Accent-Darkest, #4D3942)"/></svg></span></h4>
+                <div class="s-m-diamond-picker-modal__pill-toggle" data-name="type" role="tablist">
+                  <button role="tab" data-value="all" class="s-m-diamond-picker-modal__pill">All</button>
+                  <button role="tab" data-value="lab" class="s-m-diamond-picker-modal__pill is-active">Lab Grown</button>
+                  <button role="tab" data-value="natural" class="s-m-diamond-picker-modal__pill">Natural</button>
+                </div>
+              </div>
+              
+              <div class="s-m-diamond-picker-modal__filter-group">
+                <h4>CARATS</h4>
+                <div class="s-m-diamond-picker-modal__range-controls">
+                  <input type="number" class="s-m-diamond-picker-modal__range-input min" data-name="caratMin" value="0.25" step="0.01" min="0" max="10">
+                  <input type="number" class="s-m-diamond-picker-modal__range-input max" data-name="caratMax" value="10" step="0.01" min="0" max="10">
+                </div>
+                <div class="s-m-diamond-picker-modal__range-slider" data-name="carats">
+                  <div class="s-m-diamond-picker-modal__slider-container">
+                    <div class="s-m-diamond-picker-modal__slider-handle min">
+                      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18Z" fill="var(--Darker-Accent, #69575F)"/>
+                      </svg>
+                    </div>
+                    <div class="s-m-diamond-picker-modal__slider-track"></div>
+                    <div class="s-m-diamond-picker-modal__slider-handle max">
+                      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18Z" fill="var(--Darker-Accent, #69575F)"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="s-m-diamond-picker-modal__filter-group">
+                <h4>COLOR <span class="s-m-diamond-picker-modal__info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10.8 18H13.2V10.8H10.8V18ZM12 8.4C12.34 8.4 12.625 8.285 12.855 8.055C13.085 7.825 13.2 7.54 13.2 7.2C13.2 6.86 13.085 6.575 12.855 6.345C12.625 6.115 12.34 6 12 6C11.66 6 11.375 6.115 11.145 6.345C10.915 6.575 10.8 6.86 10.8 7.2C10.8 7.54 10.915 7.825 11.145 8.055C11.375 8.285 11.66 8.4 12 8.4ZM12 24C10.34 24 8.78 23.685 7.32 23.055C5.86 22.425 4.59 21.57 3.51 20.49C2.43 19.41 1.575 18.14 0.945 16.68C0.315 15.22 0 13.66 0 12C0 10.34 0.315 8.78 0.945 7.32C1.575 5.86 2.43 4.59 3.51 3.51C4.59 2.43 5.86 1.575 7.32 0.945C8.78 0.315 10.34 0 12 0C13.66 0 15.22 0.315 16.68 0.945C18.14 1.575 19.41 2.43 20.49 3.51C21.57 4.59 22.425 5.86 23.055 7.32C23.685 8.78 24 10.34 24 12C24 13.66 23.685 15.22 23.055 16.68C22.425 18.14 21.57 19.41 20.49 20.49C19.41 21.57 18.14 22.425 16.68 23.055C15.22 23.685 13.66 24 12 24ZM12 21.6C14.68 21.6 16.95 20.67 18.81 18.81C20.67 16.95 21.6 14.68 21.6 12C21.6 9.32 20.67 7.05 18.81 5.19C16.95 3.33 14.68 2.4 12 2.4C9.32 2.4 7.05 3.33 5.19 5.19C3.33 7.05 2.4 9.32 2.4 12C2.4 14.68 3.33 16.95 5.19 18.81C7.05 20.67 9.32 21.6 12 21.6Z" fill="var(--Accent-Darkest, #4D3942)"/></svg></span></h4>
+                <div class="s-m-diamond-picker-modal__color-grid" data-name="color">
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">D</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="D" value="D">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">E</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="E" value="E">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">F</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="F" value="F">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">G</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="G" value="G">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">H</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="H" value="H">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">I</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="I" value="I">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">J</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="J" value="J">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">K</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__color-option" data-value="K" value="K">
+                  </label>
+                </div>
+              </div>
+              
+              <div class="s-m-diamond-picker-modal__filter-group">
+                <h4>CLARITY <span class="s-m-diamond-picker-modal__info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10.8 18H13.2V10.8H10.8V18ZM12 8.4C12.34 8.4 12.625 8.285 12.855 8.055C13.085 7.825 13.2 7.54 13.2 7.2C13.2 6.86 13.085 6.575 12.855 6.345C12.625 6.115 12.34 6 12 6C11.66 6 11.375 6.115 11.145 6.345C10.915 6.575 10.8 6.86 10.8 7.2C10.8 7.54 10.915 7.825 11.145 8.055C11.375 8.285 11.66 8.4 12 8.4ZM12 24C10.34 24 8.78 23.685 7.32 23.055C5.86 22.425 4.59 21.57 3.51 20.49C2.43 19.41 1.575 18.14 0.945 16.68C0.315 15.22 0 13.66 0 12C0 10.34 0.315 8.78 0.945 7.32C1.575 5.86 2.43 4.59 3.51 3.51C4.59 2.43 5.86 1.575 7.32 0.945C8.78 0.315 10.34 0 12 0C13.66 0 15.22 0.315 16.68 0.945C18.14 1.575 19.41 2.43 20.49 3.51C21.57 4.59 22.425 5.86 23.055 7.32C23.685 8.78 24 10.34 24 12C24 13.66 23.685 15.22 23.055 16.68C22.425 18.14 21.57 19.41 20.49 20.49C19.41 21.57 18.14 22.425 16.68 23.055C15.22 23.685 13.66 24 12 24ZM12 21.6C14.68 21.6 16.95 20.67 18.81 18.81C20.67 16.95 21.6 14.68 21.6 12C21.6 9.32 20.67 7.05 18.81 5.19C16.95 3.33 14.68 2.4 12 2.4C9.32 2.4 7.05 3.33 5.19 5.19C3.33 7.05 2.4 9.32 2.4 12C2.4 14.68 3.33 16.95 5.19 18.81C7.05 20.67 9.32 21.6 12 21.6Z" fill="var(--Accent-Darkest, #4D3942)"/></svg></span></h4>
+                <div class="s-m-diamond-picker-modal__clarity-grid" data-name="clarity">
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">IF</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="IF" value="IF">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">VVS1</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="VVS1" value="VVS1">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">VVS2</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="VVS2" value="VVS2">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">VS1</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="VS1" value="VS1">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">VS2</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="VS2" value="VS2">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">SI1</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="SI1" value="SI1">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">SI2</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="SI2" value="SI2">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">SI3</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__clarity-option" data-value="SI3" value="SI3">
+                  </label>
+                </div>
+              </div>
+              
+              <div class="s-m-diamond-picker-modal__filter-group">
+                <h4>CUT QUALITY <span class="s-m-diamond-picker-modal__info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10.8 18H13.2V10.8H10.8V18ZM12 8.4C12.34 8.4 12.625 8.285 12.855 8.055C13.085 7.825 13.2 7.54 13.2 7.2C13.2 6.86 13.085 6.575 12.855 6.345C12.625 6.115 12.34 6 12 6C11.66 6 11.375 6.115 11.145 6.345C10.915 6.575 10.8 6.86 10.8 7.2C10.8 7.54 10.915 7.825 11.145 8.055C11.375 8.285 11.66 8.4 12 8.4ZM12 24C10.34 24 8.78 23.685 7.32 23.055C5.86 22.425 4.59 21.57 3.51 20.49C2.43 19.41 1.575 18.14 0.945 16.68C0.315 15.22 0 13.66 0 12C0 10.34 0.315 8.78 0.945 7.32C1.575 5.86 2.43 4.59 3.51 3.51C4.59 2.43 5.86 1.575 7.32 0.945C8.78 0.315 10.34 0 12 0C13.66 0 15.22 0.315 16.68 0.945C18.14 1.575 19.41 2.43 20.49 3.51C21.57 4.59 22.425 5.86 23.055 7.32C23.685 8.78 24 10.34 24 12C24 13.66 23.685 15.22 23.055 16.68C22.425 18.14 21.57 19.41 20.49 20.49C19.41 21.57 18.14 22.425 16.68 23.055C15.22 23.685 13.66 24 12 24ZM12 21.6C14.68 21.6 16.95 20.67 18.81 18.81C20.67 16.95 21.6 14.68 21.6 12C21.6 9.32 20.67 7.05 18.81 5.19C16.95 3.33 14.68 2.4 12 2.4C9.32 2.4 7.05 3.33 5.19 5.19C3.33 7.05 2.4 9.32 2.4 12C2.4 14.68 3.33 16.95 5.19 18.81C7.05 20.67 9.32 21.6 12 21.6Z" fill="var(--Accent-Darkest, #4D3942)"/></svg></span></h4>
+                <div class="s-m-diamond-picker-modal__cut-grid" data-name="cut">
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">Ideal</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__cut-option" data-value="Ideal" value="Ideal">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">Excellent</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__cut-option" data-value="Excellent" value="Excellent">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">Very Good</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__cut-option" data-value="Very Good" value="Very Good">
+                  </label>
+                  <label class="s-m-diamond-picker-modal__filter-option">
+                    <span class="s-m-diamond-picker-modal__filter-label">Good</span>
+                    <input type="checkbox" class="s-m-diamond-picker-modal__cut-option" data-value="Good" value="Good">
+                  </label>
+                </div>
+              </div>
+              
+              <div class="s-m-diamond-picker-modal__filter-group">
+                <h4>PRICE</h4>
+                <div class="s-m-diamond-picker-modal__range-controls">
+                  <input type="text" class="s-m-diamond-picker-modal__range-input min" data-name="priceMin" value="$0" placeholder="$0">
+                  <input type="text" class="s-m-diamond-picker-modal__range-input max" data-name="priceMax" value="$14,523" placeholder="$14,523">
+                </div>
+                <div class="s-m-diamond-picker-modal__range-slider" data-name="price">
+                  <div class="s-m-diamond-picker-modal__slider-container">
+                    <div class="s-m-diamond-picker-modal__slider-handle min">
+                      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18Z" fill="var(--Darker-Accent, #69575F)"/>
+                      </svg>
+                    </div>
+                    <div class="s-m-diamond-picker-modal__slider-track"></div>
+                    <div class="s-m-diamond-picker-modal__slider-handle max">
+                      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18Z" fill="var(--Darker-Accent, #69575F)"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <div class="s-m-diamond-picker-modal__results">
+            <div class="s-m-diamond-picker-modal__results-bar">
+              <div class="s-m-diamond-picker-modal__results-meta" id="pageInfo-{{ section.id }}">1-24 of 0</div>
+              <div class="s-m-diamond-picker-modal__results-sort">
+                <label for="sort-{{ section.id }}">Sort By:</label>
+                <select id="sort-{{ section.id }}" class="s-m-diamond-picker-modal__sort">
+                  <option value="priceAsc">Price: Low to High</option>
+                  <option value="priceDesc">Price: High to Low</option>
+                  <option value="caratDesc">Carat: High to Low</option>
+                  <option value="caratAsc">Carat: Low to High</option>
+                  <option value="newest">Newest</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="s-m-diamond-picker-modal__results-wrapper">
+              <div class="s-m-diamond-picker-modal__grid" id="diamondGrid-{{ section.id }}"></div>
+              <div class="s-m-diamond-picker-modal__loading" id="diamondLoading-{{ section.id }}" style="display: none;">
+                <div class="s-m-diamond-picker-modal__spinner"><!-- Spinner --></div>
+              </div>
+            </div>
+            
+            <div class="s-m-diamond-picker-modal__pager" id="pager-{{ section.id }}">
+              <button type="button" class="s-m-diamond-picker-modal__pager-btn" id="prevPage-{{ section.id }}" disabled>Prev</button>
+              <span class="s-m-diamond-picker-modal__pager-info" id="pagerInfo-{{ section.id }}"></span>
+              <button type="button" class="s-m-diamond-picker-modal__pager-btn" id="nextPage-{{ section.id }}">Next</button>
+            </div>
+            
+            <div class="s-m-diamond-picker-modal__error" id="diamondError-{{ section.id }}" hidden></div>
+          </div>
+        </div>
+        
+        <div class="s-m-diamond-picker-modal__footer">
+          <div class="s-m-diamond-picker-modal__footer-left">
+            <div class="s-m-diamond-picker-modal__footer-product">{{ product.title }}</div>
+            <div class="s-m-diamond-picker-modal__footer-price">
+              <span class="s-m-diamond-picker-modal__footer-price-current">{{ product.selected_or_first_available_variant.price | money }}</span>
+              {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+                <span class="s-m-diamond-picker-modal__footer-price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="s-m-diamond-picker-modal__footer-middle" id="footerMiddle-{{ section.id }}" style="display: none;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="s-m-diamond-picker-modal__footer-diamond" id="selectedDiamondInfo-{{ section.id }}">
+              <div class="s-m-diamond-picker-modal__footer-diamond-details">No diamond selected</div>
+              <div class="s-m-diamond-picker-modal__footer-diamond-price">$0.00 USD</div>
+            </div>
+          </div>
+          <div class="s-m-diamond-picker-modal__footer-right">
+            <div class="s-m-diamond-picker-modal__footer-total" id="totalPrice-{{ section.id }}">{{ product.selected_or_first_available_variant.price | money }} USD</div>
+            <button type="button" class="s-m-diamond-picker-modal__footer-add-btn" id="addDiamondBtn-{{ section.id }}" disabled>Add Center Diamond</button>
+          </div>
+        </div>
+      </div>
+    </modal-dialog>
 
     {%- if product.media.size > 0 -%}
       <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
@@ -1287,6 +1628,112 @@ h3.s-m-variant-picker-title {
    font-style: normal;
    font-weight: 600;
    line-height: normal;
+ }
+
+ .s-m-center-diamond-selection__selected {
+   display: flex;
+   align-items: center;
+   gap: 16px;
+   padding: 0;
+   background: transparent;
+   border-radius: 8px;
+   margin-bottom: 20px;
+ }
+
+ .s-m-center-diamond-selection__selected-image {
+   width: 80px;
+   height: 80px;
+   flex-shrink: 0;
+   border-radius: 6px;
+   overflow: hidden;
+   background: #F8F6F2;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .s-m-center-diamond-selection__selected-image img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
+
+ .s-m-center-diamond-selection__selected-image img[src*="data:image/svg"] {
+   width: 80%;
+   height: auto;
+   object-fit: contain;
+ }
+
+ .s-m-center-diamond-selection__selected-content {
+   flex: 1;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 16px;
+ }
+
+ .s-m-center-diamond-selection__selected-info {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+ }
+
+ .s-m-center-diamond-selection__selected-price {
+   color: #594242;
+   font-family: Montserrat;
+   font-size: 24px;
+   font-weight: 600;
+   line-height: normal;
+ }
+
+ .s-m-center-diamond-selection__selected-details {
+   color: #594242;
+   font-family: Montserrat;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 1.4;
+ }
+
+ .s-m-center-diamond-selection__selected-details div {
+   margin-bottom: 2px;
+ }
+
+ .s-m-center-diamond-selection__selected-actions {
+   display: flex;
+   gap: 12px;
+   flex-shrink: 0;
+   align-items: center;
+ }
+
+ .s-m-center-diamond-selection__clear-button,
+ .s-m-center-diamond-selection__edit-button {
+   padding: 10px 20px;
+   border-radius: 4px;
+   font-family: Montserrat;
+   font-size: 14px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.2s;
+   border: 1px solid #69575f;
+ }
+
+ .s-m-center-diamond-selection__clear-button {
+   background: #EBEBEB;
+   color: #594242;
+ }
+
+ .s-m-center-diamond-selection__clear-button:hover {
+   background: #D6D6D6;
+ }
+
+ .s-m-center-diamond-selection__edit-button {
+   background: #E4D1C9;
+   color: #4D3942;
+ }
+
+ .s-m-center-diamond-selection__edit-button:hover {
+   background: #D6C4B8;
  }
 
  .s-m-center-diamond-selection__disclaimer {
@@ -2136,6 +2583,1054 @@ h3.s-m-variant-picker-title {
    }
    .s-m-breadcrumbs__list .breadcrumbs__item--current {
      font-size: 10px;
+   }
+ }
+
+ /* Diamond Picker Modal Styles */
+ .s-m-diamond-picker-modal {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 1000;
+   display: none;
+   align-items: center;
+   justify-content: center;
+   background: rgba(0, 0, 0, 0.5);
+ }
+
+ .s-m-diamond-picker-modal[open] {
+   display: flex;
+ }
+
+.s-m-diamond-picker-modal__content {
+   position: relative;
+   width: 95%;
+   max-width: 1786px;
+   max-height: 90vh;
+   background: #fff;
+   border-radius: 8px;
+   display: flex;
+   flex-direction: column;
+   overflow: hidden;
+   overflow-x: hidden;
+ }
+
+.s-m-diamond-picker-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 35px 0 54px;
+  border-bottom: none;
+}
+
+.s-m-diamond-picker-modal__hide-filters-btn {
+  height: 32px;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.50);
+  border: 0.25px solid rgba(96, 77, 62, 0.50);
+  border-radius: 4px;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Primary-Accent, #78686F);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 0 54px;
+  width: fit-content;
+}
+
+.s-m-diamond-picker-modal__hide-filters-btn:hover {
+  background: rgba(255, 255, 255, 0.70);
+  border-color: rgba(96, 77, 62, 0.70);
+}
+
+.s-m-diamond-picker-modal__hide-filters-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+ .s-m-diamond-picker-modal__filters.hidden {
+   display: none;
+ }
+
+.s-m-diamond-picker-modal__results.full-width {
+  width: 100%;
+}
+
+.s-m-diamond-picker-modal__results.full-width .s-m-diamond-picker-modal__grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.s-m-diamond-picker-modal__title {
+  font-family: "EB Garamond", serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--NotBlack, #151515);
+  margin-top: 8px;
+  margin: 0;
+}
+
+ .s-m-diamond-picker-modal__close {
+   background: none;
+   border: none;
+   cursor: pointer;
+   padding: 0px;
+   color: #151515;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+.s-m-diamond-picker-modal__body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  overflow-x: hidden;
+  padding-top: 24px;
+}
+
+.s-m-diamond-picker-modal__body-header {
+  display: grid;
+  gap: 15px;
+}
+
+ .s-m-diamond-picker-modal__filters {
+   width: 504px;
+   padding: 24px 28px;
+   border-right: none;
+   overflow-y: auto;
+   background: #FCFCFC;
+   box-shadow: 1.79px 1.79px 8.94px rgba(34, 34, 34, 0.10);
+   border-radius: 16px;
+   margin-left: 54px;
+   scrollbar-width: thin;
+   scrollbar-color: rgba(120, 104, 111, 0.3) transparent;
+ }
+
+ .s-m-diamond-picker-modal__filters::-webkit-scrollbar {
+   width: 4px;
+ }
+
+ .s-m-diamond-picker-modal__filters::-webkit-scrollbar-track {
+   background: transparent;
+ }
+
+ .s-m-diamond-picker-modal__filters::-webkit-scrollbar-thumb {
+   background: rgba(120, 104, 111, 0.3);
+   border-radius: 2px;
+ }
+
+ .s-m-diamond-picker-modal__filters::-webkit-scrollbar-thumb:hover {
+   background: rgba(120, 104, 111, 0.5);
+ }
+
+ .s-m-diamond-picker-modal__filters-header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 24px;
+   padding-bottom: 11px;
+   border-bottom: 1px solid var(--Mid, #E4D1C9);
+ }
+
+ .s-m-diamond-picker-modal__filters-header h3 {
+    font-family: Montserrat;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 90%;
+    font-variant: all-small-caps;
+    letter-spacing: 1.5px;
+    font-synthesis: unset;
+    margin: 0;
+ }
+
+ .s-m-diamond-picker-modal__filters-actions {
+   display: flex;
+   gap: 16px;
+ }
+
+ .s-m-diamond-picker-modal__clear-btn {
+   padding: 0;
+   border: none;
+   border-radius: 0;
+   background: transparent;
+   font-family: Montserrat, sans-serif;
+   font-size: 16px;
+   font-weight: 500;
+   color: var(--Darker-Accent, #69575F);
+   cursor: pointer;
+   transition: all 0.2s;
+   line-height: 22.4px;
+ }
+
+ .s-m-diamond-picker-modal__apply-btn {
+   padding: 16px 32px;
+   border: none;
+   border-radius: 4px;
+   background: var(--Primary-Accent, #78686F);
+   font-family: Montserrat, sans-serif;
+   font-size: 14px;
+   font-weight: 500;
+   color: white;
+   cursor: pointer;
+   transition: all 0.2s;
+   line-height: 14px;
+ }
+
+ .s-m-diamond-picker-modal__apply-btn:hover {
+   background: #5a4d54;
+ }
+
+ .s-m-diamond-picker-modal__filter-group {
+   margin-bottom: 50px;
+   padding-top: 0;
+   border-top: none;
+ }
+
+ .s-m-diamond-picker-modal__filter-group:first-child {
+   margin-top: 0;
+ }
+
+ .s-m-diamond-picker-modal__filter-group h4 {
+  color: var(--Primary-Accent, #78686F);
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 24px */
+  font-variant: all-small-caps;
+  letter-spacing: 2.4px;
+  font-synthesis: unset;
+  margin: 0;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+ }
+
+.s-m-diamond-picker-modal__info-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.s-m-diamond-picker-modal__info-icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+ .s-m-diamond-picker-modal__shape-grid {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 8px;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 4px;
+  column-gap: 4px;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  color: #666;
+  gap: 12px;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn:hover {
+   border-color: #69575f;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn.is-selected {
+   border-color: #69575f;
+   border-radius: 8px;
+   background: #69575f;
+   color: #fff;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn.is-selected svg path {
+   stroke: #fff !important;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn.is-selected svg {
+   color: #fff;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn.is-selected span {
+   color: #fff;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn svg {
+   width: 60px;
+   height: 60px;
+ }
+
+ .s-m-diamond-picker-modal__shape-btn span {
+  color: var(--NotBlack, #151515);
+  text-align: center;
+  font-family: system-ui;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.s-m-diamond-picker-modal__color-grid,
+.s-m-diamond-picker-modal__clarity-grid,
+.s-m-diamond-picker-modal__cut-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.s-m-diamond-picker-modal__filter-option {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  flex: 1 1 0;
+}
+
+.s-m-diamond-picker-modal__filter-option:first-child {
+  padding-right: 12px;
+}
+
+.s-m-diamond-picker-modal__filter-option:last-child {
+  padding-left: 12px;
+}
+
+.s-m-diamond-picker-modal__filter-label {
+  color: #000;
+  font-size: 16px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  line-height: 22px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.s-m-diamond-picker-modal__filter-option input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--Primary-Accent, #78686F);
+  border-radius: 2px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.s-m-diamond-picker-modal__filter-option input[type="checkbox"]:checked {
+  background: var(--Primary-Accent, #78686F);
+  border-color: var(--Primary-Accent, #78686F);
+}
+
+.s-m-diamond-picker-modal__filter-option input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+ .s-m-diamond-picker-modal__pill-toggle {
+   display: flex;
+   gap: 8px;
+ }
+
+ .s-m-diamond-picker-modal__pill {
+   padding: 8px 16px;
+   border: 1px solid #e6e6e6;
+   border-radius: 999px;
+   background: #fff;
+   font-family: Montserrat, sans-serif;
+   font-size: 12px;
+   color: #666;
+   cursor: pointer;
+   transition: all 0.2s;
+ }
+
+ .s-m-diamond-picker-modal__pill.is-active {
+   background: #69575f;
+   color: #fff;
+   border-color: #69575f;
+ }
+
+ .s-m-diamond-picker-modal__range-controls {
+   display: flex;
+   gap: 8px;
+   align-items: center;
+   justify-content: space-between;
+ }
+
+ .s-m-diamond-picker-modal__range-input {
+  border-radius: 5px;
+  border: 1px solid var(--Darker-Accent, #69575F);
+  background: #EBEBEB;
+  width: 85px;
+  padding: 10px 20px;
+  gap: 10px;
+  width: 85px;
+  display: block;
+  padding: 10px 20px;
+  text-align: center;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  color: #000;
+ }
+
+.s-m-diamond-picker-modal__range-slider {
+  align-self: stretch;
+  height: 36px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.s-m-diamond-picker-modal__slider-container {
+  flex: 1 1 0;
+  height: 10px;
+  background: var(--Background-Brand-Secondary, #E6E6E6);
+  border-radius: 21643.40px;
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+}
+
+.s-m-diamond-picker-modal__slider-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10px;
+  background: #78686F80;
+  border-radius: 21643.40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.s-m-diamond-picker-modal__slider-handle {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  cursor: grab;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.s-m-diamond-picker-modal__slider-handle:active {
+  cursor: grabbing;
+}
+
+.s-m-diamond-picker-modal__slider-handle svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  pointer-events: none;
+}
+
+.s-m-diamond-picker-modal__slider-handle.min {
+  left: 0;
+}
+
+.s-m-diamond-picker-modal__slider-handle.max {
+  left: 100%;
+}
+
+ .s-m-diamond-picker-modal__results {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   overflow: hidden;
+ }
+
+.s-m-diamond-picker-modal__results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 54px;
+  border-bottom: none;
+}
+
+.s-m-diamond-picker-modal__results-meta {
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Darker-Accent, #69575F);
+}
+
+.s-m-diamond-picker-modal__results-sort {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.s-m-diamond-picker-modal__results-sort label {
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Darker-Accent, #69575F);
+}
+
+.s-m-diamond-picker-modal__sort {
+  height: 32px;
+  padding: 4px 6px 4px 16px;
+  background: rgba(255, 255, 255, 0.50);
+  border: 0.25px solid rgba(96, 77, 62, 0.50);
+  border-radius: 4px;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Primary-Accent, #78686F);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%2378686F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 32px;
+}
+
+.s-m-diamond-picker-modal__results-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.s-m-diamond-picker-modal__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 16px;
+  padding: 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120, 104, 111, 0.3) transparent;
+  padding-top: 0;
+  margin-top: 14px;
+}
+
+.s-m-diamond-picker-modal__grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.s-m-diamond-picker-modal__grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.s-m-diamond-picker-modal__grid::-webkit-scrollbar-thumb {
+  background: rgba(120, 104, 111, 0.3);
+  border-radius: 2px;
+}
+
+.s-m-diamond-picker-modal__grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 104, 111, 0.5);
+}
+
+.s-m-diamond-picker-modal__loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none !important;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+}
+
+.s-m-diamond-picker-modal__loading[style*="flex"] {
+  display: flex !important;
+}
+
+div.s-m-diamond-picker-modal__spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e6e6e6;
+  border-top-color: var(--Primary-Accent, #78686F);
+  border-radius: 50%;
+  animation: s-m-spin 0.8s linear infinite;
+  flex-shrink: 0;
+  display: block;
+}
+
+@keyframes s-m-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.s-m-diamond-picker-modal__card {
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
+  min-width: 240px;
+  width: calc(25% - 17px);
+  max-width: 280px;
+}
+
+ .s-m-diamond-picker-modal__card.is-selected {
+   border-color: #69575f;
+   box-shadow: 0 0 0 2px #69575f;
+ }
+
+ .s-m-diamond-picker-modal__card-thumb {
+   border-radius: 6px 6px 0 0;
+   aspect-ratio: 1 / 1;
+   background: #F8F6F2;
+   position: relative;
+   overflow: hidden;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .s-m-diamond-picker-modal__card-thumb img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
+
+ .s-m-diamond-picker-modal__card-thumb img[src*="data:image/svg"] {
+   width: 65%;
+   height: auto;
+   object-fit: contain;
+ }
+
+ .s-m-diamond-picker-modal__card-thumb img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
+ }
+
+.s-m-diamond-picker-modal__card-meta {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+ .s-m-diamond-picker-modal__card-title {
+   font-family: Montserrat, sans-serif;
+   font-size: 13px;
+   font-weight: 600;
+   color: #151515;
+   margin-bottom: 8px;
+ }
+
+.s-m-diamond-picker-modal__card-specs {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 5px;
+  font-family: Montserrat, sans-serif;
+  font-size: 12.51px;
+  margin-bottom: 12px;
+  padding-top: 7.15px;
+  padding-bottom: 7.15px;
+  border-top: 0.71px solid #C5C5C5;
+  justify-content: space-between;
+}
+
+.s-m-diamond-picker-modal__card-spec-col {
+  display: flex;
+    flex-direction: column;
+    gap: 5.36px;
+    width: 100%;
+}
+
+.s-m-diamond-picker-modal__card-spec-item {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.s-m-diamond-picker-modal__card-spec-label {
+  font-weight: 400;
+  color: #707070;
+  text-transform: uppercase;
+  line-height: 12.51px;
+  letter-spacing: 0.71px;
+  font-size: 12.51px;
+  margin-bottom: 0;
+}
+
+.s-m-diamond-picker-modal__card-spec-value {
+  color: #1A1A1A;
+  font-weight: 400;
+  line-height: 12.51px;
+  font-size: 12.51px;
+}
+
+.s-m-diamond-picker-modal__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.s-m-diamond-picker-modal__card-price {
+  color: #78686F;
+  font-family: "EB Garamond";
+  font-size: 32.169px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21.446px;
+}
+
+.s-m-diamond-picker-modal__card-btn {
+  padding: 10px 20px;
+  border: 1px solid #69575f;
+  border-radius: 4px;
+  background: #69575f;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.s-m-diamond-picker-modal__card-btn:hover {
+  background: #151515;
+  border-color: #151515;
+}
+
+.s-m-diamond-picker-modal__card-btn.is-selected {
+  background: #4D3942;
+  border-color: #4D3942;
+}
+
+ .s-m-diamond-picker-modal__pager {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 12px;
+   padding: 16px 24px;
+   border-top: 1px solid #e6e6e6;
+ }
+
+ .s-m-diamond-picker-modal__pager-btn {
+   padding: 8px 16px;
+   border: 1px solid #e6e6e6;
+   border-radius: 4px;
+   background: #fff;
+   font-family: Montserrat, sans-serif;
+   font-size: 13px;
+   color: #151515;
+   cursor: pointer;
+   transition: all 0.2s;
+ }
+
+ .s-m-diamond-picker-modal__pager-btn:hover:not(:disabled) {
+   border-color: #69575f;
+   color: #69575f;
+ }
+
+ .s-m-diamond-picker-modal__pager-btn:disabled {
+   opacity: 0.45;
+   cursor: not-allowed;
+ }
+
+ .s-m-diamond-picker-modal__pager-info {
+   font-family: Montserrat, sans-serif;
+   font-size: 12px;
+   color: #666;
+ }
+
+ .s-m-diamond-picker-modal__error {
+   margin: 16px 24px;
+   padding: 12px;
+   background: #fff1f1;
+   border: 1px solid #ffd9d9;
+   border-radius: 4px;
+   color: #a40000;
+   font-family: Montserrat, sans-serif;
+   font-size: 13px;
+ }
+
+ .s-m-diamond-picker-modal__footer {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 20px 32px;
+   background: var(--Primary-Accent, #78686F);
+   color: #fff;
+   gap: 30px;
+ }
+
+ .s-m-diamond-picker-modal__footer-left {
+   flex: 1;
+ }
+
+ .s-m-diamond-picker-modal__footer-product {
+   font-family: Montserrat, sans-serif;
+   font-size: 14px;
+   font-weight: 500;
+   margin-bottom: 4px;
+ }
+
+ .s-m-diamond-picker-modal__footer-price {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+ }
+
+ .s-m-diamond-picker-modal__footer-price-current {
+   font-family: Montserrat, sans-serif;
+   font-size: 16px;
+   font-weight: 600;
+ }
+
+ .s-m-diamond-picker-modal__footer-price-compare {
+   font-family: Montserrat, sans-serif;
+   font-size: 14px;
+   text-decoration: line-through;
+   opacity: 0.7;
+ }
+
+ .s-m-diamond-picker-modal__footer-middle {
+   display: flex;
+   align-items: center;
+   gap: 16px;
+   flex: 1;
+ }
+
+ .s-m-diamond-picker-modal__footer-middle svg {
+   width: 24px;
+   height: 24px;
+   color: #fff;
+ }
+
+ .s-m-diamond-picker-modal__footer-diamond {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+ }
+
+ .s-m-diamond-picker-modal__footer-diamond-details {
+   font-family: Montserrat, sans-serif;
+   font-size: 13px;
+ }
+
+ .s-m-diamond-picker-modal__footer-diamond-price {
+   font-family: Montserrat, sans-serif;
+   font-size: 14px;
+   font-weight: 600;
+ }
+
+ .s-m-diamond-picker-modal__footer-right {
+   display: flex;
+   align-items: flex-end;
+   gap: 12px;
+   flex-wrap: wrap;
+ }
+
+ .s-m-diamond-picker-modal__footer-total {
+   font-family: Montserrat, sans-serif;
+   font-size: 18px;
+   font-weight: 600;
+ }
+
+ .s-m-diamond-picker-modal__footer-add-btn {
+   padding: 12px 24px;
+   border: none;
+   border-radius: 4px;
+   background: var(--Mid-Light, #F2E7D8);
+   color: #151515;
+   font-family: Montserrat, sans-serif;
+   font-size: 14px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.2s;
+ }
+
+ .s-m-diamond-picker-modal__footer-add-btn:hover:not(:disabled) {
+   background: #4f4146;
+   color: #fff;
+ }
+
+ .s-m-diamond-picker-modal__footer-add-btn:disabled {
+   opacity: 0.5;
+   cursor: not-allowed;
+ }
+
+ @media (max-width: 1024px) {
+   .s-m-diamond-picker-modal__content {
+     width: 95%;
+     max-height: 95vh;
+     overflow-x: hidden;
+   }
+
+   .s-m-diamond-picker-modal__shape-grid {
+     grid-template-columns: repeat(3, 1fr);
+   }
+ }
+
+ @media (max-width: 900px) {
+   .s-m-diamond-picker-modal__content {
+     width: 100%;
+     max-width: 100%;
+     height: 100vh;
+     max-height: 100vh;
+     border-radius: 0;
+     margin: 0;
+   }
+
+   .s-m-diamond-picker-modal__header {
+     padding: 16px;
+     flex-shrink: 0;
+   }
+
+   .s-m-diamond-picker-modal__title {
+     font-size: 24px;
+   }
+
+   .s-m-diamond-picker-modal__body {
+     flex-direction: column;
+     overflow-x: hidden;
+     padding-top: 16px;
+   }
+
+   .s-m-diamond-picker-modal__body-header {
+     padding: 0 16px;
+   }
+
+   .s-m-diamond-picker-modal__hide-filters-btn {
+     margin-bottom: 16px;
+     margin-left: 0;
+   }
+
+   .s-m-diamond-picker-modal__filters {
+     width: 100%;
+     max-height: none;
+     border-right: none;
+     border-bottom: 1px solid #e6e6e6;
+     margin-left: 0;
+     border-radius: 0;
+     box-shadow: none;
+     padding: 16px;
+   }
+
+   .s-m-diamond-picker-modal__filters.hidden {
+     display: none;
+   }
+
+   .s-m-diamond-picker-modal__results {
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     overflow: hidden;
+     min-height: 0;
+   }
+
+   .s-m-diamond-picker-modal__results-bar {
+     padding: 0 16px;
+     flex-shrink: 0;
+     flex-wrap: nowrap;
+     gap: 12px;
+   }
+
+   .s-m-diamond-picker-modal__results-meta {
+     font-size: 12px;
+     white-space: nowrap;
+     order: 1;
+   }
+
+   .s-m-diamond-picker-modal__results-sort {
+     flex-wrap: nowrap;
+     gap: 8px;
+     white-space: nowrap;
+   }
+
+   .s-m-diamond-picker-modal__grid {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 12px;
+     padding: 16px;
+     overflow-y: auto;
+     overflow-x: hidden;
+     -webkit-overflow-scrolling: touch;
+   }
+   
+   .s-m-diamond-picker-modal__card {
+     min-width: 0;
+     width: 100%;
+   }
+
+   .s-m-diamond-picker-modal__pager {
+     padding: 16px;
+     flex-shrink: 0;
+   }
+
+   .s-m-diamond-picker-modal__footer {
+     flex-direction: column;
+     gap: 16px;
+     padding: 16px;
+     flex-shrink: 0;
+   }
+
+   .s-m-diamond-picker-modal__footer-left,
+   .s-m-diamond-picker-modal__footer-center,
+   .s-m-diamond-picker-modal__footer-right {
+     width: 100%;
+   }
+
+   .s-m-diamond-picker-modal__footer-add-btn {
+     width: 100%;
+   }
+ }
+
+ @media (max-width: 480px) {
+   .s-m-diamond-picker-modal__grid {
+     gap: 12px;
+     padding: 12px;
+     grid-template-columns: repeat(2, 1fr);
+   }
+   
+   .s-m-diamond-picker-modal__card {
+     min-width: 0;
+     width: 100%;
    }
  }
 
@@ -3849,3 +5344,935 @@ h3.s-m-variant-picker-title {
   ]
 }
 {% endschema %}
+
+<script>
+(function() {
+  'use strict';
+  
+  const sectionId = '{{ section.id }}';
+  const productId = '{{ product.id }}';
+  const productPrice = {{ product.selected_or_first_available_variant.price }};
+  const productComparePrice = {{ product.selected_or_first_available_variant.compare_at_price | default: 0 }};
+  const productTitle = {{ product.title | json }};
+  
+  // Constants from diamond-picker.liquid
+  const API_BASE = '/apps/diamond-search/diamonds/search';
+  const CUT_FULL = {
+    'EX':'Excellent','EXCELLENT':'Excellent',
+    'VG':'Very Good','VERY GOOD':'Very Good',
+    'G':'Good','GOOD':'Good',
+    'F':'Fair','FAIR':'Fair',
+    'P':'Poor','POOR':'Poor',
+    'I':'Ideal','IDEAL':'Ideal',
+    'SUPER IDEAL':'Super Ideal'
+  };
+  const CUT_CARD = {
+    'EX':'EX','EXCELLENT':'EX',
+    'VG':'VG','VERY GOOD':'VG',
+    'G':'G','GOOD':'G',
+    'F':'F','FAIR':'F',
+    'P':'P','POOR':'P',
+    'I':'Ideal','IDEAL':'Ideal',
+    'SUPER IDEAL':'Super Ideal'
+  };
+  const SHAPE_EXCLUDE = new Set(['BAGUETTE','PENTAGONAL','SHIELD','TRAPEZOID','TRILLIANT']);
+  const SHAPE_ALIASES = {
+    'CUSHION': ['CUSHION','CUSHION BRILLIANT']
+  };
+  const CLARITY_EXCLUDE = new Set(['VS2-SI1','VS-SI1']);
+  const COLOR_EXCLUDE = new Set(['VIVID YELLOW']);
+  
+  const uc = v => (v ?? '').toString().trim().toUpperCase();
+  const titleCase = s => (s ?? '').toLowerCase()
+    .split(/[\s_]+/).map(w => w ? w[0].toUpperCase()+w.slice(1) : '').join(' ');
+  const cutCardLabel = v => CUT_CARD[uc(v)] || v;
+  const shapeLabel = v => titleCase(v);
+  
+  // Shape icons mapping
+  const SHAPE_ICONS = {
+    'CUSHION': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M19.2985 11.955L19.4285 22.3315M19.2985 11.955L33.892 18.6412M19.2985 11.955L33.6534 2.881L48.9408 13.2575M19.2985 11.955L16.9782 5.50769M19.2985 11.955L9.62726 10.5223L11.9041 20.4429M19.4285 22.3315L16.5445 32.6646M19.4285 22.3315L33.892 18.6412M19.4285 22.3315L11.9041 20.4429M33.892 18.6412L47.7482 22.744M33.892 18.6412L48.9408 13.2575M48.9408 13.2575L57.4194 10.2184L56.1183 22.0276M48.9408 13.2575L47.7482 22.744M48.9408 13.2575L51.955 6.00698M11.9041 20.4429L16.5445 32.6646M11.9041 20.4429L3.23039 32.6646L10.8199 44.1483M11.9041 20.4429L6.20114 17.4472M16.5445 32.6646L19.1901 43.714M16.5445 32.6646L10.8199 44.1483M19.1901 43.714L10.8199 44.1483M19.1901 43.714L17.8673 53.0703M19.1901 43.714L33.0463 47.7952M10.8199 44.1483L5.52893 47.0137M10.8199 44.1483L9.62726 55.9575L17.8673 53.0703M17.8673 53.0703L33.4149 63.6638L48.3554 54.2209M17.8673 53.0703L33.0463 47.7952M17.8673 53.0703L15.1785 60.2991M33.0463 47.7952L48.3554 54.2209M33.0463 47.7952L47.4013 43.866M48.3554 54.2209L51.0226 60.7115M48.3554 54.2209L47.4013 43.866M48.3554 54.2209L57.6796 55.9575M47.4013 43.866L55.2726 45.733M47.4013 43.866L50.2636 32.6646M57.9615 55.5885L55.2726 45.733M55.2726 45.733L61.4743 49.1845M55.2726 45.733L63.9464 32.6646L56.1183 22.0276M55.2726 45.733L50.2636 32.6646M56.1183 22.0276L50.2636 32.6646M56.1183 22.0276L47.7482 22.744M56.1183 22.0276L61.9298 19.0753M50.2636 32.6646L47.7482 22.744M33.6318 2.77246C30.2924 2.77246 15.9591 2.77246 9.60557 10.4137C3.25208 18.055 3.10029 32.5778 3.10029 32.5778C3.10029 32.5778 2.81839 47.7735 9.60557 55.8707C16.3928 63.9678 29.9454 63.5553 33.4149 63.5553C36.8844 63.5553 51.2177 63.5553 57.6796 55.8489C64.1415 48.1426 63.9897 42.0425 63.9897 32.6646C63.9897 23.2867 63.5777 17.4689 57.4845 10.2184C51.3912 2.96783 39.0311 2.77246 33.6318 2.77246Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
+    'ROUND': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M25.4944 14.0722L33.3703 3.01982L41.3767 13.9852M25.4944 14.0722L12.0705 11.9618L14.3114 25.364M25.4944 14.0722L22.8617 22.5138L18.4234 33.3922L14.3984 41.2464M25.4944 14.0722L33.3485 18.0972L44.2486 22.5573L52.6685 25.1681M25.4944 14.0722L21.861 5.43481M41.3767 13.9852L54.7789 11.7442L52.6685 25.1681M41.3767 13.9852L33.5661 18.0972L22.7095 22.6662L14.3114 25.364M41.3767 13.9852L44.0964 22.4051L48.6435 33.24L52.7556 41.0506M41.3767 13.9852L44.9449 5.26075M14.3114 25.364L18.4234 33.1746L22.9923 44.0312L25.7119 52.4293M14.3114 25.364L3.34598 33.3705L14.3984 41.2464M14.3114 25.364L5.6522 21.8394M14.3984 41.2464L22.84 43.879L33.7401 48.3173L41.5943 52.3641M14.3984 41.2464L12.3097 54.6921L25.7119 52.4293M14.3984 41.2464L5.76098 44.9016M52.6685 25.1681L63.7427 33.0659L52.7556 41.0506M52.6685 25.1681L48.6435 33.0224L44.2051 43.9225L41.5943 52.3641M52.7556 41.0506L55.0183 54.4527L41.5943 52.3641M52.7556 41.0506L44.3575 43.7702L33.5226 48.3173L25.7119 52.4293M41.5943 52.3641L33.6966 63.4165L25.7119 52.4293M41.5943 52.3641L45.2277 61.0233M25.7119 52.4293L22.122 61.1974M61.3494 21.5348L52.6902 25.1681M61.5018 44.6187L52.7556 41.0723M44.2486 43.8137L48.6 33.1311L44.1399 22.5138L33.4574 18.1407L22.84 22.6008L18.4669 33.2835L22.9489 43.9225L33.6314 48.2738L44.2486 43.8137ZM45.04 5.03481C60.6053 11.3837 68.0766 29.1487 61.7277 44.7138C55.3788 60.2791 37.6139 67.7504 22.0486 61.4015C6.48343 55.0526 -0.98791 37.2878 5.36098 21.7225C11.7098 6.15725 29.4748 -1.31408 45.04 5.03481Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
+    'PRINCESS': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M10.3616 18.0808V17.5875H9.8683V18.0808H10.3616ZM18.4921 18.0808V18.5741H18.9854V18.0808H18.4921ZM18.4921 9.75332V9.25998H17.9987V9.75332H18.4921ZM48.3313 9.75332H48.8247V9.25998H48.3313V9.75332ZM48.3313 18.4527H47.838V18.946H48.3313V18.4527ZM57.0086 18.4527H57.5019V17.9593H57.0086V18.4527ZM57.0086 48.0705V48.5639H57.5019V48.0705H57.0086ZM3.0988 2.77165V2.27832H2.60547V2.77165H3.0988ZM63.9902 2.77165H64.4836V2.27832H63.9902V2.77165ZM63.9902 63.663V64.1564H64.4836V63.663H63.9902ZM3.0988 63.663H2.60547V64.1564H3.0988V63.663ZM48.1587 9.66477L48.2924 10.1396C48.314 10.1336 48.3351 10.126 48.3556 10.1171L48.1587 9.66477ZM18.5851 17.9945L18.4513 17.5197C18.2847 17.5666 18.1549 17.6974 18.1092 17.8644L18.5851 17.9945ZM3.59908 63.663L3.14648 63.4668C3.06347 63.6582 3.10983 63.8811 3.26227 64.0236C3.41472 64.1659 3.64028 64.1971 3.82561 64.1013L3.59908 63.663ZM56.5525 18.7117L56.1055 18.5031C56.0939 18.528 56.0845 18.5536 56.0772 18.5801L56.5525 18.7117ZM3.33787 3.28963L3.52814 2.83446C3.33938 2.75556 3.12152 2.80135 2.98048 2.94956C2.83946 3.09778 2.80454 3.31766 2.89272 3.50226L3.33787 3.28963ZM18.3238 9.55409L18.1336 10.0093C18.1501 10.0161 18.1669 10.0221 18.1839 10.0271L18.3238 9.55409ZM48.3313 18.4306L48.806 18.2962C48.7598 18.1334 48.6335 18.0055 48.4712 17.9575L48.3313 18.4306ZM56.7496 48.159L56.2749 48.2935C56.2821 48.319 56.2914 48.3438 56.3026 48.3678L56.7496 48.159ZM10.3616 17.9945L10.8385 17.8683C10.8306 17.8386 10.82 17.8097 10.8067 17.7818L10.3616 17.9945ZM10.855 48.0705V18.0808H9.8683V48.0705H10.855ZM10.3616 18.5741H18.4921V17.5875H10.3616V18.5741ZM18.9854 18.0808V9.75332H17.9987V18.0808H18.9854ZM18.4921 10.2467H48.3313V9.25998H18.4921V10.2467ZM47.838 9.75332V18.4527H48.8247V9.75332H47.838ZM48.3313 18.946H57.0086V17.9593H48.3313V18.946ZM56.5152 18.4527V48.0705H57.5019V18.4527H56.5152ZM57.0086 47.5772H48.4198V48.5639H57.0086V47.5772ZM47.9265 48.0705V56.0528H48.9132V48.0705H47.9265ZM48.4198 55.5594H18.3217V56.5461H48.4198V55.5594ZM18.815 56.0528V48.0705H17.8283V56.0528H18.815ZM18.3217 47.5772H10.3616V48.5639H18.3217V47.5772ZM3.0988 3.26499H63.9902V2.27832H3.0988V3.26499ZM63.4969 2.77165V63.663H64.4836V2.77165H63.4969ZM63.9902 63.1697H3.0988V64.1564H63.9902V63.1697ZM3.59214 63.663V2.77165H2.60547V63.663H3.59214ZM63.7933 2.31934L47.9617 9.21246L48.3556 10.1171L64.1872 3.22397L63.7933 2.31934ZM48.0249 9.18991L18.4513 17.5197L18.7188 18.4694L48.2924 10.1396L48.0249 9.18991ZM18.1092 17.8644L9.88577 47.9404L10.8375 48.2007L19.061 18.1246L18.1092 17.8644ZM9.90895 47.8743L3.14648 63.4668L4.05168 63.8594L10.8142 48.2669L9.90895 47.8743ZM3.82561 64.1013L18.5482 56.4909L18.0951 55.6145L3.37254 63.2248L3.82561 64.1013ZM18.4482 56.5296L48.5463 48.5474L48.2933 47.5937L18.1952 55.5759L18.4482 56.5296ZM48.8953 48.2023L57.028 18.8434L56.0772 18.5801L47.9445 47.9388L48.8953 48.2023ZM56.9996 18.9204L64.4373 2.98025L63.5432 2.56305L56.1055 18.5031L56.9996 18.9204ZM3.1476 3.7448L18.1336 10.0093L18.5142 9.09893L3.52814 2.83446L3.1476 3.7448ZM18.1839 10.0271L48.1913 18.9037L48.4712 17.9575L18.4638 9.08102L18.1839 10.0271ZM47.8566 18.565L56.2749 48.2935L57.2243 48.0247L48.806 18.2962L47.8566 18.565ZM56.3026 48.3678L63.5433 63.8718L64.4372 63.4543L57.1965 47.9504L56.3026 48.3678ZM64.2069 63.2198L48.6365 55.6096L48.2032 56.496L63.7737 64.1063L64.2069 63.2198ZM48.5463 55.5759L18.4482 47.5937L18.1952 48.5474L48.2933 56.5296L48.5463 55.5759ZM18.7986 47.9443L10.8385 17.8683L9.88468 18.1208L17.8447 48.1967L18.7986 47.9443ZM10.8067 17.7818L3.78304 3.07701L2.89272 3.50226L9.91645 18.2071L10.8067 17.7818Z" fill="#78686F"/></svg>',
+    'PEAR': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M40.3302 54.2473L52.2607 55.9626L49.5787 44.3561M40.3302 54.2473L41.5854 46.9425M40.3302 54.2473L33.6801 63.4668M49.5787 44.3561L44.437 37.4636L49.3629 30.8946M49.5787 44.3561L56.7948 38.4188L49.3629 30.8946M49.5787 44.3561L41.5854 46.9425M41.5854 46.9425L44.437 37.4591L41.5193 25.3075M41.5854 46.9425L33.6757 50.7256M49.3629 30.8946L50.3318 19.348L39.445 16.3693L33.5039 19.8045L41.5193 25.3075M49.3629 30.8946L41.5193 25.3075M49.3629 30.8946L54.6126 27.7188M41.5193 25.3075L39.445 16.3671M39.445 16.3671L42.9242 10.1682M39.445 16.3671L33.5039 3.18935M33.6757 50.7256L40.3324 54.2494L44.0296 61.3126M33.6757 50.7256L25.7484 46.9402L22.6149 38.0464M33.6757 50.7256L27.0035 54.2472L23.4583 61.3569M49.5787 44.3539L56.515 47.1796M22.6149 38.0464L17.7529 44.3539M22.6149 38.0464L17.8189 30.8924M22.6149 38.0464L25.3124 25.3053L27.7346 16.3671M27.0014 54.2472L15.139 55.9005L17.7529 44.3539M17.7529 44.3539L10.6667 46.353M17.8189 30.8924L16.9755 19.1507L27.7346 16.3671M17.8189 30.8924L12.4812 27.9581M27.7346 16.3671L33.6757 19.8023L25.3146 25.3053L17.821 30.8902L10.4091 38.4166L17.7572 44.3561L25.7506 46.9402L27.0057 54.245L33.6779 63.6641M27.7346 16.3671L24.861 9.58541M27.7346 16.3671L33.6757 3.18935M33.592 2.77268C33.592 2.77268 10.1272 16.0613 10.1272 42.2884C10.1272 62.8995 32.077 63.6641 33.592 63.6641C35.1004 63.6641 56.9665 63.5089 56.9665 42.2884C57.0568 16.0414 33.592 2.77268 33.592 2.77268Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
+    'MARQUISE': '<svg xmlns="http://www.w3.org/2000/svg" width="39" height="62" viewBox="0 0 39 62" fill="none"><path d="M27.3357 6.47407L23.8479 9.08598M23.8479 9.08598L24.4204 17.2406L31.8665 23.0666L28.2959 30.5925L31.5921 38.6164M23.8479 9.08598L19.2279 11.0848M23.8479 9.08598L19.402 0.929221H19.0537L14.6123 9.08381L5.75102 13.8251L6.58712 23.0687M23.8479 9.08598L32.7047 13.8251L31.8708 23.0666L37.4749 30.5925L31.5921 38.6164M31.5921 38.6164L24.7035 43.8115M31.5921 38.6164L32.8767 47.9463L23.7434 52.6213L19.4042 60.9507H19.0558L14.7146 52.6213M19.2279 11.0848L24.4249 17.2384L28.3002 30.5925L24.7035 43.8115M19.2279 11.0848L14.6078 9.09042L14.0331 17.245L6.58712 23.0687M19.2279 11.0848L14.0309 17.2384L10.1773 30.5925L13.7522 43.8115M6.58712 23.0687L0.983052 30.5947L6.88322 38.6164L5.58121 47.9463L14.7146 52.6213M6.58712 23.0687L10.1795 30.5969L6.88322 38.6209L13.7522 43.8115M23.7412 52.6213L24.7035 43.8115M23.7412 52.6213L19.2279 50.9058M23.7412 52.6213L27.573 55.2333M24.7035 43.8115L19.2279 50.9058M19.2279 50.9058L13.7522 43.8115M19.2279 50.9058L14.7146 52.6213M14.7146 52.6213L13.7522 43.8115M14.7146 52.6213L10.8827 55.2333M11.1418 6.47407L14.6078 9.08598M19.402 61.3845C24.9911 58.4958 29.6841 54.0898 32.9606 48.6551C36.2371 43.2203 37.9692 36.9691 37.9648 30.5947C37.9648 9.75671 19.402 0.493164 19.402 0.493164H19.0537C19.0537 0.493164 0.493172 9.75671 0.493172 30.5925C0.488929 36.9671 2.22132 43.2184 5.49824 48.6532C8.77515 54.088 13.4686 58.4939 19.0581 61.3824L19.402 61.3845Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
+    'OVAL': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M51.4466 43.4405L46.8287 39.3277M39.7075 54.2694L41.3807 45.8754L46.8308 39.3299M39.7075 54.2694L33.6129 51.5755L41.3829 45.8777L43.2702 33.3089L46.8308 39.3299M39.7075 54.2694L42.9251 60.1863M39.7075 54.2694L33.6129 63.6638M39.7075 54.2694L48.4408 53.052L46.8308 39.3299M46.8308 39.3299L52.2635 33.8047V33.4793L46.833 27.1042L49.1529 15.7109L39.7075 12.1891M39.7075 12.1891L33.6129 2.77246M39.7075 12.1891L40.2864 21.9288L46.8308 27.1086L43.2702 33.4793L40.2885 21.9288L33.6129 16.4303L39.7075 12.1891ZM39.7075 12.1891L43.7421 7.25277M51.6388 25.0191L46.833 27.1065M15.4778 42.44L20.3709 39.3299M20.3709 39.3299L26.2295 45.725M20.3709 39.3299L23.9315 33.3067L26.2295 45.725M20.3709 39.3299L18.4813 52.5738L27.4965 54.2694M20.3709 39.3299L14.9404 33.807V33.4816L20.3709 27.1065L18.0554 15.432L27.49 12.1891L33.591 2.77246M26.2295 45.725L27.4965 54.2694M26.2295 45.725L33.591 51.5732L27.4965 54.2694M27.4965 54.2694L23.8704 59.945M27.4965 54.2694L33.591 63.6638M15.5412 24.3859L20.3687 27.1086M20.3687 27.1086L26.9155 21.9288M20.3687 27.1086L23.9315 33.4793L26.9155 21.9288M26.9155 21.9288L27.4965 12.1891M26.9155 21.9288L33.591 16.4303L27.4965 12.1891M27.4965 12.1891L23.4379 7.16422M14.8115 33.652C14.8115 14.6018 23.2041 2.77246 33.5473 2.77246C43.8907 2.77246 52.2831 14.5797 52.2831 33.6299C52.2831 52.6822 43.8907 63.6638 33.5473 63.6638C23.2041 63.6638 14.8115 52.7907 14.8115 33.652Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
+    'HEART': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M33.5133 12.524V20.869M27.5047 48.4027L33.3392 47.1205M27.5047 48.4027L15.5094 48.5329L16.3584 38.0584L16.8374 30.561L10.1975 26.0409M27.5047 48.4027L23.1072 54.7481M33.3392 47.1205H33.6875M33.3392 47.1205L25.0013 41.9918L17.3817 31.1478L13.9637 21.3469L33.557 16.0879L22.3017 6.4391L13.9201 15.0449M10.1975 26.0409L6.54009 35.2768L24.8271 41.6441L27.8532 48.0549L33.4264 60.0072H33.6005L39.1737 48.0549L42.5481 42.5134L60.5086 35.2768L56.8292 26.041M10.1975 26.0409L4.4066 16.327L13.9201 15.0449M10.1975 26.0409L13.6154 21.3469L13.9201 15.0449M10.1975 26.0409L3.88408 28.5183M33.6875 47.1205L39.5219 48.4027M33.6875 47.1205L42.5481 42.1656L49.6452 31.1478L53.0631 21.3469L33.4699 16.0879L44.7251 6.4391L53.1284 15.0449M13.9201 15.0449L24.0215 18.6523L33.4262 20.9341H33.6004L43.0052 18.6523L53.1284 15.0449M13.9201 15.0449L10.8723 7.65619M39.5219 48.4027L51.0601 48.9678L50.6683 38.0585L50.1894 30.5612L56.8292 26.041M39.5219 48.4027L43.2664 55.183M53.1284 15.0449L53.4113 21.347L56.8292 26.041M53.1284 15.0449L62.6203 16.327L56.8292 26.041M53.1284 15.0449L56.1544 7.65619M56.8292 26.041L63.1426 28.5184M50.7118 39.232L56.6116 42.7743M16.119 38.8842L10.6982 43.1436M33.5136 60.5938C33.5136 60.5938 63.9921 48.12 63.9921 21.3468C63.9921 14.5014 58.5494 5.7002 49.493 5.7002C37.9983 5.7002 33.5136 12.4587 33.5136 12.4587C33.5136 12.4587 29.1596 5.7002 17.5996 5.7002C8.56492 5.7002 3.10059 14.5014 3.10059 21.3468C3.10059 48.12 33.5789 60.5938 33.5789 60.5938H33.5136Z" stroke="#78686F" stroke-width="0.986667" stroke-linejoin="round"/></svg>',
+    'RADIANT': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M57.4243 50.4399L47.6181 47.2457L50.7702 57.0962M57.4243 50.4399V16.0186M57.4243 50.4399L50.7702 57.0962M50.7702 57.0962L54.3142 63.6638M50.7702 57.0962L33.5463 49.5257L16.3467 57.0962M50.7702 57.0962H16.3467M57.4243 16.0186L50.0309 33.2182L57.4243 50.4443L63.9921 53.986M57.4243 16.0186L63.9921 12.4702M57.4243 16.0186L50.7681 9.35568H16.3467M57.4243 16.0186L47.6181 19.2128L50.7702 9.36232M54.3142 63.6638L63.9921 53.986M54.3142 63.6638H12.7984M16.3467 57.0962L12.7984 63.6638M16.3467 57.0962L9.6838 50.4399V16.0186L16.3467 9.35568M63.9921 53.986V12.4702M63.9921 12.4702L54.3142 2.77246M16.3467 9.35568L33.5463 16.9306L50.7725 9.3601L54.3142 2.77246M16.3467 9.35568L12.7961 2.77246M54.3142 2.77246L12.7984 2.77467L3.1028 12.4702L3.10059 53.986M12.7984 63.6638L3.10059 53.986M3.10059 53.986L9.68822 50.4443L17.0595 33.2182L9.68822 16.0186M9.68822 50.4399L19.4945 47.2457L16.3445 57.0962M9.68822 16.0186L3.10059 12.468M9.68822 16.0186L19.4945 19.2128L16.3445 9.36232M33.5463 17.0811L47.4211 19.3877L49.5506 33.2182L47.4211 47.0708L33.5463 49.3774L19.6715 47.0708L17.5642 33.2182L19.6715 19.3877L33.5463 17.0811Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
+    'ASSCHER': '<svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none"><path d="M47.1839 21.3268L61.3846 12.9542M0.493164 48.5973L14.52 40.4641M0.493164 48.5973L13.3239 61.3845M0.493164 48.5973V12.7584M13.3239 61.3845H48.4451M13.3239 61.3845L21.4137 47.3361M0.493164 12.7584L12.6497 0.493164H48.8148M0.493164 12.7584L14.7375 21.3485M40.1596 47.3361L48.4451 61.3845M48.4451 61.3845L61.2542 48.6191M61.2542 48.6191V12.9107L48.8148 0.493164M61.2542 48.6191L47.1839 40.4641M12.6497 0.667143L21.0875 14.6504M21.0875 14.6504L14.5634 21.218V40.4641L21.4572 47.3361H40.3119L47.1839 40.4641M21.0875 14.6504H40.5075L47.1839 21.305V40.4641M48.8148 0.493164L40.464 14.6287M43.139 10.1488L51.6637 18.6301V43.0519L42.8997 51.7941H18.8693L10.0835 43.0519V18.5214L18.4127 10.1488H43.139ZM45.8573 5.58195L56.2523 15.9552V45.7702L45.5528 56.4481H16.2162L5.49496 45.7485V15.803L15.6508 5.58195H45.8573Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
+    'EMERALD': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none"><path d="M57.1767 10.6653L47.8281 17.2542M50.879 2.5957L45.3829 14.2231M50.879 2.5957H15.8847M50.879 2.5957L57.1793 10.6653V56.4275L50.879 64.4971M45.3829 14.2231L47.8281 17.252V25.4296M45.3829 14.2231H21.3808M15.8847 2.5957L21.3808 14.2231M15.8847 2.5957L9.5625 10.6653V56.4275L15.8847 64.4971M50.879 64.4971L45.3829 52.87M50.879 64.4971H15.8847M21.3808 14.2231L18.9356 17.2542M54.0621 25.4318V12.9426L49.0396 6.57426H17.724L12.6796 12.9426V25.4318M9.5647 10.6653L18.9356 17.2542M18.9356 17.2542V25.4318M15.8847 64.4971L21.3808 52.87M15.8869 25.4318V15.1749L19.6692 10.6653H47.0945L50.879 15.1749V51.918L47.0945 56.4275H19.6692L15.8847 51.918V25.4318M57.1767 56.4275L47.8281 49.8185M47.8281 49.8185L45.3829 52.87M47.8281 49.8185V25.4341M45.3829 52.87H21.3808M21.3808 52.87L18.9356 49.8185M54.0621 25.4341V54.128L49.0396 60.4961H17.724L12.6796 54.128V25.4341M9.5647 56.4275L18.9356 49.8185M18.9356 49.8185V25.4341" stroke="#78686F" stroke-width="0.984743"/></svg>'
+  };
+  
+  // State
+  const state = {
+    page: 1,
+    pageSize: 24,
+    type: 'lab',
+    sort: 'priceAsc',
+    shape: [],
+    caratMin: 0.25,
+    caratMax: 10,
+    color: [],
+    clarity: [],
+    cut: [],
+    priceMin: 0,
+    priceMax: 14523,
+    selectedDiamond: null
+  };
+  
+  // Elements
+  const modal = document.getElementById(`DiamondPickerModal-${sectionId}`);
+  const trigger = document.querySelector(`[data-diamond-picker-trigger]`);
+  const closeBtn = document.getElementById(`DiamondPickerClose-${sectionId}`);
+  const grid = document.getElementById(`diamondGrid-${sectionId}`);
+  const loadingEl = document.getElementById(`diamondLoading-${sectionId}`);
+  const pageInfo = document.getElementById(`pageInfo-${sectionId}`);
+  const pagerInfo = document.getElementById(`pagerInfo-${sectionId}`);
+  const prevBtn = document.getElementById(`prevPage-${sectionId}`);
+  const nextBtn = document.getElementById(`nextPage-${sectionId}`);
+  const sortSelect = document.getElementById(`sort-${sectionId}`);
+  const applyBtn = document.getElementById(`applyFilters-${sectionId}`);
+  const clearBtn = document.getElementById(`clearFilters-${sectionId}`);
+  const pillToggle = modal?.querySelector('.s-m-diamond-picker-modal__pill-toggle');
+  const shapeGrid = document.getElementById(`shapeFilters-${sectionId}`);
+  const caratMinInput = modal?.querySelector('input[data-name="caratMin"]');
+  const caratMaxInput = modal?.querySelector('input[data-name="caratMax"]');
+  const selectedDiamondInfo = document.getElementById(`selectedDiamondInfo-${sectionId}`);
+  const footerMiddle = document.getElementById(`footerMiddle-${sectionId}`);
+  const totalPriceEl = document.getElementById(`totalPrice-${sectionId}`);
+  const addDiamondBtn = document.getElementById(`addDiamondBtn-${sectionId}`);
+  const errorEl = document.getElementById(`diamondError-${sectionId}`);
+  const hideFiltersBtn = document.getElementById(`hideFiltersBtn-${sectionId}`);
+  const filtersPanel = document.getElementById(`diamondFilters-${sectionId}`);
+  
+  // Helper functions
+  function money(n) {
+    if (!n || n <= 0) return '$0.00';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  }
+  
+  const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="164" height="161" viewBox="0 0 164 161" fill="none">
+      <path d="M62.3174 34.271L81.569 7.3534L101.14 34.059M62.3174 34.271L29.5046 29.1312L34.9822 61.7717M62.3174 34.271L55.8823 54.8302L45.0335 81.3241L35.1949 100.453M62.3174 34.271L81.5157 44.0737L108.159 54.9362L128.741 61.2947M62.3174 34.271L53.436 13.235M101.14 34.059L133.899 28.6014L128.741 61.2947M101.14 34.059L82.0475 44.0737L55.5102 55.2012L34.9822 61.7717M101.14 34.059L107.787 54.5654L118.902 80.9533L128.953 99.9758M101.14 34.059L109.861 12.8111M34.9822 61.7717L45.0335 80.7942L56.2014 107.235L62.8492 127.688M34.9822 61.7717L8.17883 81.2712L35.1949 100.453M34.9822 61.7717L13.816 53.1878M35.1949 100.453L55.8292 106.864L82.473 117.674L101.671 127.529M35.1949 100.453L30.0894 133.199L62.8492 127.688M35.1949 100.453L14.0819 109.355M128.741 61.2947L155.81 80.5294L128.953 99.9758M128.741 61.2947L118.902 80.4234L108.053 106.97L101.671 127.529M128.953 99.9758L134.484 132.616L101.671 127.529M128.953 99.9758L108.425 106.599L81.9412 117.674L62.8492 127.688M101.671 127.529L82.3666 154.447L62.8492 127.688M101.671 127.529L110.553 148.618M62.8492 127.688L54.0742 149.042M149.96 52.446L128.794 61.2947M150.332 108.666L128.953 100.029M108.159 106.705L118.796 80.6883L107.894 54.8302L81.7818 44.1797L55.8292 55.0422L45.1398 81.0593L56.0952 106.97L82.2072 117.568L108.159 106.705ZM110.094 12.2608C148.141 27.7233 166.404 70.9891 150.885 108.897C135.366 146.806 91.9418 165.002 53.8948 149.54C15.8479 134.077 -2.41475 90.8116 13.1042 52.903C28.6231 14.9945 72.0469 -3.20161 110.094 12.2608Z" stroke="#78686F" stroke-width="0.986667"/>
+    </svg>
+  `);
+  
+  // Wire image fallbacks
+  function wireImageFallbacks(scope=document) {
+    scope.querySelectorAll('img[data-fallback="1"]').forEach(img => {
+      if (img._fallbackWired) return;
+      img._fallbackWired = true;
+      const applyFallback = () => {
+        if (img.dataset.fallbackApplied) return;
+        img.dataset.fallbackApplied = '1';
+        img.src = PLACEHOLDER_IMG;
+        const t = img.closest('.s-m-diamond-picker-modal__card-thumb');
+        if (t) t.classList.add('no-image');
+      };
+      img.addEventListener('error', applyFallback, { passive: true });
+      if ('decode' in img) img.decode().catch(applyFallback);
+      else requestAnimationFrame(() => { if (!img.naturalWidth) applyFallback(); });
+    });
+  }
+  
+  // Build query string
+  function buildQuery() {
+    const u = new URLSearchParams();
+    u.set('page', state.page);
+    u.set('pageSize', state.pageSize);
+    u.set('type', state.type === 'all' ? '' : state.type);
+    if (state.sort) u.set('sort', state.sort);
+    u.set('caratMin', state.caratMin);
+    u.set('caratMax', state.caratMax);
+    if (state.shape.length) {
+      const shapesToSend = new Set();
+      state.shape.forEach(v => {
+        const key = uc(v);
+        if (SHAPE_ALIASES['CUSHION'] && key === 'CUSHION') {
+          SHAPE_ALIASES['CUSHION'].forEach(s => shapesToSend.add(s));
+        } else {
+          shapesToSend.add(v);
+        }
+      });
+      if (shapesToSend.size) u.set('shape', Array.from(shapesToSend).join(','));
+    }
+    if (state.color.length) u.set('color', state.color.join(','));
+    if (state.clarity.length) u.set('clarity', state.clarity.join(','));
+    if (state.cut.length) u.set('cut', state.cut.join(','));
+    if (state.priceMin > 0) u.set('priceMin', state.priceMin);
+    if (state.priceMax < 14523) u.set('priceMax', state.priceMax);
+    return u.toString();
+  }
+  
+  // Fetch diamonds
+  async function fetchDiamonds() {
+    if (errorEl) errorEl.hidden = true;
+    try {
+      const url = `${API_BASE}?${buildQuery()}`;
+      console.log('Fetching diamonds from:', url);
+      const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      console.log('Diamond API response:', data);
+      console.log('Items count:', data.items?.length || 0);
+      if (data.items && data.items.length > 0) {
+        console.log('First item:', data.items[0]);
+      }
+      return data;
+    } catch (err) {
+      if (errorEl) {
+        errorEl.hidden = false;
+        errorEl.textContent = `Error loading diamonds: ${err.message}`;
+      }
+      console.error('Diamond fetch error:', err);
+      return { items: [], total: 0, facets: {} };
+    }
+  }
+  
+  // Render diamond grid
+  function renderGrid(items) {
+    if (!grid) return;
+    grid.innerHTML = items.map((item, index) => {
+      const shapeTxt = shapeLabel(item.shape || '');
+      const cutTxt = cutCardLabel(item.cut || '—');
+      const colorTxt = item.color || '—';
+      const clarTxt = item.clarity || '—';
+      const src = (item.images && item.images[0]) ? item.images[0] : PLACEHOLDER_IMG;
+      const isSelected = state.selectedDiamond && state.selectedDiamond.stockNumber === item.stockNumber;
+      // Get source type from item if available, otherwise use filter state
+      const itemType = item.type || state.type;
+      const sourceType = itemType === 'lab' ? 'Lab Grown' : itemType === 'natural' ? 'Natural' : 'All';
+      
+      return `
+        <article class="s-m-diamond-picker-modal__card ${isSelected ? 'is-selected' : ''}" data-diamond-index="${index}">
+          <div class="s-m-diamond-picker-modal__card-thumb">
+            <img data-fallback="1" src="${src}" loading="lazy" alt="${shapeTxt} ${item.carat || ''}ct">
+          </div>
+          <div class="s-m-diamond-picker-modal__card-meta">
+            <div class="s-m-diamond-picker-modal__card-title">${shapeTxt} • ${item.carat?.toFixed?.(2) ?? item.carat}ct</div>
+            <div class="s-m-diamond-picker-modal__card-specs">
+              <div class="s-m-diamond-picker-modal__card-spec-col">
+                <div class="s-m-diamond-picker-modal__card-spec-item">
+                  <div class="s-m-diamond-picker-modal__card-spec-label">COLOR</div>
+                  <div class="s-m-diamond-picker-modal__card-spec-value">${colorTxt}</div>
+                </div>
+                <div class="s-m-diamond-picker-modal__card-spec-item">
+                  <div class="s-m-diamond-picker-modal__card-spec-label">CLARITY</div>
+                  <div class="s-m-diamond-picker-modal__card-spec-value">${clarTxt}</div>
+                </div>
+              </div>
+              <div class="s-m-diamond-picker-modal__card-spec-col">
+                <div class="s-m-diamond-picker-modal__card-spec-item">
+                  <div class="s-m-diamond-picker-modal__card-spec-label">SOURCE</div>
+                  <div class="s-m-diamond-picker-modal__card-spec-value">${sourceType}</div>
+                </div>
+                <div class="s-m-diamond-picker-modal__card-spec-item">
+                  <div class="s-m-diamond-picker-modal__card-spec-label">QUALITY</div>
+                  <div class="s-m-diamond-picker-modal__card-spec-value">${cutTxt}</div>
+                </div>
+              </div>
+            </div>
+            <div class="s-m-diamond-picker-modal__card-footer">
+              <div class="s-m-diamond-picker-modal__card-price">${money(item.priceRetail)}</div>
+              <button type="button" class="s-m-diamond-picker-modal__card-btn ${isSelected ? 'is-selected' : ''}" data-stock="${item.stockNumber}" data-diamond='${JSON.stringify(item)}'>
+                ${isSelected ? 'Selected' : 'Select'}
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
+    
+    // Wire image fallbacks
+    wireImageFallbacks(grid);
+    
+    // Wire up select buttons
+    grid.querySelectorAll('.s-m-diamond-picker-modal__card-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const diamondData = JSON.parse(btn.dataset.diamond);
+        selectDiamond(diamondData);
+      });
+    });
+  }
+  
+  // Select diamond
+  function selectDiamond(diamond) {
+    state.selectedDiamond = diamond;
+    updateSelectedDiamondDisplay();
+    updateTotalPrice();
+    
+    // Re-render grid to update button states
+    if (grid) {
+      renderGrid(grid.querySelectorAll('.s-m-diamond-picker-modal__card').length ? 
+        Array.from(grid.querySelectorAll('.s-m-diamond-picker-modal__card')).map(card => {
+          const btn = card.querySelector('.s-m-diamond-picker-modal__card-btn');
+          return JSON.parse(btn.dataset.diamond);
+        }) : []);
+    }
+    
+    // Enable Add Center Diamond button
+    if (addDiamondBtn) addDiamondBtn.disabled = false;
+  }
+  
+  // Update selected diamond display
+  function updateSelectedDiamondDisplay() {
+    if (!selectedDiamondInfo) return;
+    
+    if (!state.selectedDiamond) {
+      // Hide footer-middle when no diamond is selected
+      if (footerMiddle) footerMiddle.style.display = 'none';
+      return;
+    }
+    
+    // Show footer-middle when diamond is selected
+    if (footerMiddle) footerMiddle.style.display = 'flex';
+    
+    const d = state.selectedDiamond;
+    const shapeTxt = shapeLabel(d.shape || '');
+    const cutTxt = cutCardLabel(d.cut || '');
+    const sourceType = state.type === 'lab' ? 'Lab Grown' : state.type === 'natural' ? 'Natural' : 'All';
+    selectedDiamondInfo.innerHTML = `
+      <div class="s-m-diamond-picker-modal__footer-diamond-details">
+        ${d.carat?.toFixed?.(2) ?? d.carat}ct ${shapeTxt}, ${d.color} ${sourceType} ${d.clarity} ${cutTxt}
+      </div>
+      <div class="s-m-diamond-picker-modal__footer-diamond-price">${money(d.priceRetail)} USD</div>
+    `;
+  }
+  
+  // Update total price
+  function updateTotalPrice() {
+    if (!totalPriceEl) return;
+    const diamondPrice = state.selectedDiamond ? (state.selectedDiamond.priceRetail || 0) : 0;
+    const total = productPrice + diamondPrice;
+    totalPriceEl.textContent = `${money(total)} USD`;
+  }
+  
+  // Build shape filters
+  function buildShapeFilters(facets) {
+    if (!shapeGrid) return;
+    const shapes = (facets.shape || []).filter(s => !SHAPE_EXCLUDE.has(uc(s)));
+    const uniqueShapes = Array.from(new Set(shapes.map(s => {
+      const k = uc(s);
+      return SHAPE_ALIASES['CUSHION']?.includes(k) ? 'CUSHION' : k;
+    }))).sort();
+    
+    shapeGrid.innerHTML = uniqueShapes.map(shape => {
+      const icon = SHAPE_ICONS[shape] || SHAPE_ICONS['ROUND'];
+      const label = shapeLabel(shape);
+      const isSelected = state.shape.includes(shape);
+      return `
+        <button type="button" class="s-m-diamond-picker-modal__shape-btn ${isSelected ? 'is-selected' : ''}" data-shape="${shape}">
+          ${icon}
+          <span>${label}</span>
+        </button>
+      `;
+    }).join('');
+    
+    shapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const shape = btn.dataset.shape;
+        const index = state.shape.indexOf(shape);
+        if (index > -1) {
+          state.shape.splice(index, 1);
+        } else {
+          state.shape.push(shape);
+        }
+        btn.classList.toggle('is-selected');
+      });
+    });
+  }
+  
+  // Do search
+  async function doSearch() {
+    console.log('doSearch called, state:', state);
+    
+    // Show loading spinner and clear grid
+    if (loadingEl) {
+      loadingEl.style.setProperty('display', 'flex', 'important');
+    }
+    if (grid) grid.innerHTML = '';
+    
+    try {
+      const data = await fetchDiamonds();
+      console.log('doSearch received data:', data);
+      
+      if (data.facets && !state.facetsLoaded) {
+        buildShapeFilters(data.facets);
+        state.facetsLoaded = true;
+      }
+      
+      renderGrid(data.items || []);
+      
+      const first = (state.page - 1) * state.pageSize + 1;
+      const last = Math.min(state.page * state.pageSize, data.total || 0);
+      if (pageInfo) pageInfo.textContent = `${first}-${last} of ${data.total || 0}`;
+      if (pagerInfo) pagerInfo.textContent = `${first}-${last} of ${data.total || 0}`;
+      if (prevBtn) prevBtn.disabled = state.page <= 1;
+      if (nextBtn) nextBtn.disabled = state.page * state.pageSize >= (data.total || 0);
+    } finally {
+      // Hide loading spinner
+      if (loadingEl) {
+        loadingEl.style.setProperty('display', 'none', 'important');
+      }
+    }
+  }
+  
+  // Read filters
+  function readFilters() {
+    const active = pillToggle?.querySelector('.is-active');
+    if (active) state.type = active.dataset.value || 'lab';
+    
+    if (caratMinInput) state.caratMin = parseFloat(caratMinInput.value) || 0.25;
+    if (caratMaxInput) state.caratMax = parseFloat(caratMaxInput.value) || 10;
+    
+    const priceMinInput = modal?.querySelector('input[data-name="priceMin"]');
+    const priceMaxInput = modal?.querySelector('input[data-name="priceMax"]');
+    if (priceMinInput) {
+      const val = priceMinInput.value.replace(/[$,]/g, '');
+      state.priceMin = parseFloat(val) || 0;
+    }
+    if (priceMaxInput) {
+      const val = priceMaxInput.value.replace(/[$,]/g, '');
+      state.priceMax = parseFloat(val) || 14523;
+    }
+    
+    // Read color selections (checkboxes)
+    const colorOptions = modal?.querySelectorAll('.s-m-diamond-picker-modal__color-option:checked');
+    state.color = Array.from(colorOptions || []).map(cb => cb.dataset.value || cb.value);
+    
+    // Read clarity selections (checkboxes)
+    const clarityOptions = modal?.querySelectorAll('.s-m-diamond-picker-modal__clarity-option:checked');
+    state.clarity = Array.from(clarityOptions || []).map(cb => cb.dataset.value || cb.value);
+    
+    // Read cut selections (checkboxes)
+    const cutOptions = modal?.querySelectorAll('.s-m-diamond-picker-modal__cut-option:checked');
+    state.cut = Array.from(cutOptions || []).map(cb => cb.dataset.value || cb.value);
+    
+    if (sortSelect) state.sort = sortSelect.value || 'priceAsc';
+  }
+  
+  // Clear filters
+  function clearFilters() {
+    state.shape = [];
+    state.caratMin = 0.25;
+    state.caratMax = 10;
+    state.color = [];
+    state.clarity = [];
+    state.cut = [];
+    state.priceMin = 0;
+    state.priceMax = 14523;
+    state.type = 'lab';
+    state.sort = 'priceAsc';
+    state.page = 1;
+    
+    if (caratMinInput) caratMinInput.value = '0.25';
+    if (caratMaxInput) caratMaxInput.value = '10';
+    const priceMinInput = modal?.querySelector('input[data-name="priceMin"]');
+    const priceMaxInput = modal?.querySelector('input[data-name="priceMax"]');
+    if (priceMinInput) priceMinInput.value = '$0';
+    if (priceMaxInput) priceMaxInput.value = '$14,523';
+    if (sortSelect) sortSelect.value = 'priceAsc';
+    if (pillToggle) {
+      pillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+      const labBtn = pillToggle.querySelector('[data-value="lab"]');
+      if (labBtn) labBtn.classList.add('is-active');
+    }
+    // Clear color selections (checkboxes)
+    modal?.querySelectorAll('.s-m-diamond-picker-modal__color-option').forEach(cb => cb.checked = false);
+    // Clear clarity selections (checkboxes)
+    modal?.querySelectorAll('.s-m-diamond-picker-modal__clarity-option').forEach(cb => cb.checked = false);
+    // Clear cut selections (checkboxes)
+    modal?.querySelectorAll('.s-m-diamond-picker-modal__cut-option').forEach(cb => cb.checked = false);
+    if (shapeGrid) {
+      shapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn').forEach(btn => {
+        btn.classList.remove('is-selected');
+      });
+    }
+  }
+  
+  // Initialize
+  function init() {
+    if (!modal || !trigger) return;
+    
+    // Open modal
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (modal && typeof modal.show === 'function') {
+        modal.show(trigger);
+        state.page = 1;
+        // Don't reset selectedDiamond - keep it if already selected
+        // state.selectedDiamond = null;
+        state.facetsLoaded = false;
+        clearFilters();
+        doSearch();
+        updateTotalPrice();
+        updateSelectedDiamondDisplay();
+        // Enable button if diamond is already selected
+        if (addDiamondBtn) {
+          addDiamondBtn.disabled = !state.selectedDiamond;
+        }
+      }
+    });
+    
+    // Close modal
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        if (modal && typeof modal.hide === 'function') {
+          modal.hide();
+          // Update product page after modal closes
+          if (state.selectedDiamond) {
+            setTimeout(() => {
+              updateProductPageDiamondDisplay();
+            }, 100);
+          }
+        }
+      });
+    }
+    
+    // Apply filters
+    if (applyBtn) {
+      applyBtn.addEventListener('click', () => {
+        state.page = 1;
+        readFilters();
+        doSearch();
+      });
+    }
+    
+    // Clear filters
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        clearFilters();
+        doSearch();
+      });
+    }
+    
+    // Sort
+    if (sortSelect) {
+      sortSelect.addEventListener('change', () => {
+        state.page = 1;
+        readFilters();
+        doSearch();
+      });
+    }
+    
+    // Pills
+    if (pillToggle) {
+      pillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          pillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          state.page = 1;
+          readFilters();
+          doSearch();
+        });
+      });
+    }
+    
+    // Color filters (checkboxes - change event)
+    modal?.querySelectorAll('.s-m-diamond-picker-modal__color-option').forEach(cb => {
+      cb.addEventListener('change', () => {
+        // Checkbox state is handled automatically
+      });
+    });
+    
+    // Clarity filters (checkboxes - change event)
+    modal?.querySelectorAll('.s-m-diamond-picker-modal__clarity-option').forEach(cb => {
+      cb.addEventListener('change', () => {
+        // Checkbox state is handled automatically
+      });
+    });
+    
+    // Cut filters (checkboxes - change event)
+    modal?.querySelectorAll('.s-m-diamond-picker-modal__cut-option').forEach(cb => {
+      cb.addEventListener('change', () => {
+        // Checkbox state is handled automatically
+      });
+    });
+    
+    // Pagination
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (state.page > 1) {
+          state.page--;
+          doSearch();
+        }
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        state.page++;
+        doSearch();
+      });
+    }
+    
+    // Initialize range sliders
+    function initRangeSlider(sliderEl, minInput, maxInput, minVal, maxVal, isPrice = false) {
+      if (!sliderEl || !minInput || !maxInput) return;
+      
+      const container = sliderEl.querySelector('.s-m-diamond-picker-modal__slider-container');
+      const track = sliderEl.querySelector('.s-m-diamond-picker-modal__slider-track');
+      const handleMin = sliderEl.querySelector('.s-m-diamond-picker-modal__slider-handle.min');
+      const handleMax = sliderEl.querySelector('.s-m-diamond-picker-modal__slider-handle.max');
+      
+      if (!container || !track || !handleMin || !handleMax) return;
+      
+      const formatValue = (val) => {
+        if (isPrice) {
+          return '$' + Math.round(val).toLocaleString();
+        }
+        return val.toFixed(2);
+      };
+      
+      const parseValue = (val) => {
+        if (isPrice) {
+          return parseFloat(val.replace(/[$,]/g, '')) || 0;
+        }
+        return parseFloat(val) || 0;
+      };
+      
+      const updateSlider = () => {
+        const min = parseValue(minInput.value);
+        const max = parseValue(maxInput.value);
+        const minPct = ((min - minVal) / (maxVal - minVal)) * 100;
+        const maxPct = ((max - minVal) / (maxVal - minVal)) * 100;
+        
+        handleMin.style.left = `${Math.max(0, Math.min(100, minPct))}%`;
+        handleMax.style.left = `${Math.max(0, Math.min(100, maxPct))}%`;
+        
+        const left = Math.min(minPct, maxPct);
+        const right = Math.max(minPct, maxPct);
+        track.style.left = `${left}%`;
+        track.style.width = `${right - left}%`;
+      };
+      
+      const getValueFromPosition = (x) => {
+        const rect = container.getBoundingClientRect();
+        const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+        return minVal + (percent / 100) * (maxVal - minVal);
+      };
+      
+      let isDragging = false;
+      let dragHandle = null;
+      
+      const startDrag = (e, handle) => {
+        isDragging = true;
+        dragHandle = handle;
+        e.preventDefault();
+      };
+      
+      const onDrag = (e) => {
+        if (!isDragging || !dragHandle) return;
+        const value = getValueFromPosition(e.clientX || e.touches?.[0]?.clientX);
+        const currentMin = parseValue(minInput.value);
+        const currentMax = parseValue(maxInput.value);
+        
+        if (dragHandle === handleMin) {
+          const newMin = Math.max(minVal, Math.min(value, currentMax));
+          minInput.value = isPrice ? formatValue(newMin) : newMin.toFixed(2);
+        } else {
+          const newMax = Math.min(maxVal, Math.max(value, currentMin));
+          maxInput.value = isPrice ? formatValue(newMax) : newMax.toFixed(2);
+        }
+        
+        updateSlider();
+        if (isPrice) {
+          state.priceMin = parseValue(minInput.value);
+          state.priceMax = parseValue(maxInput.value);
+        } else {
+          state.caratMin = parseValue(minInput.value);
+          state.caratMax = parseValue(maxInput.value);
+        }
+      };
+      
+      const stopDrag = () => {
+        isDragging = false;
+        dragHandle = null;
+      };
+      
+      // Click on container to set value
+      container.addEventListener('click', (e) => {
+        if (e.target === container || e.target === track || e.target.closest('.s-m-diamond-picker-modal__slider-track')) {
+          const value = getValueFromPosition(e.clientX);
+          const currentMin = parseValue(minInput.value);
+          const currentMax = parseValue(maxInput.value);
+          const minDist = Math.abs(value - currentMin);
+          const maxDist = Math.abs(value - currentMax);
+          
+          if (minDist < maxDist) {
+            const newMin = Math.max(minVal, Math.min(value, currentMax));
+            minInput.value = isPrice ? formatValue(newMin) : newMin.toFixed(2);
+            if (isPrice) {
+              state.priceMin = parseValue(minInput.value);
+            } else {
+              state.caratMin = parseValue(minInput.value);
+            }
+          } else {
+            const newMax = Math.min(maxVal, Math.max(value, currentMin));
+            maxInput.value = isPrice ? formatValue(newMax) : newMax.toFixed(2);
+            if (isPrice) {
+              state.priceMax = parseValue(maxInput.value);
+            } else {
+              state.caratMax = parseValue(maxInput.value);
+            }
+          }
+          updateSlider();
+        }
+      });
+      
+      handleMin.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        startDrag(e, handleMin);
+      });
+      handleMax.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        startDrag(e, handleMax);
+      });
+      document.addEventListener('mousemove', onDrag);
+      document.addEventListener('mouseup', stopDrag);
+      handleMin.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        startDrag(e, handleMin);
+      });
+      handleMax.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        startDrag(e, handleMax);
+      });
+      document.addEventListener('touchmove', onDrag);
+      document.addEventListener('touchend', stopDrag);
+      
+      minInput.addEventListener('input', () => {
+        updateSlider();
+        if (isPrice) {
+          state.priceMin = parseValue(minInput.value);
+        } else {
+          state.caratMin = parseValue(minInput.value);
+        }
+      });
+      
+      maxInput.addEventListener('input', () => {
+        updateSlider();
+        if (isPrice) {
+          state.priceMax = parseValue(maxInput.value);
+        } else {
+          state.caratMax = parseValue(maxInput.value);
+        }
+      });
+      
+      updateSlider();
+    }
+    
+    // Initialize carat range slider
+    const caratSlider = modal?.querySelector('.s-m-diamond-picker-modal__range-slider[data-name="carats"]');
+    if (caratSlider && caratMinInput && caratMaxInput) {
+      initRangeSlider(caratSlider, caratMinInput, caratMaxInput, 0, 10, false);
+    }
+    
+    // Initialize price range slider
+    const priceSlider = modal?.querySelector('.s-m-diamond-picker-modal__range-slider[data-name="price"]');
+    const priceMinInput = modal?.querySelector('input[data-name="priceMin"]');
+    const priceMaxInput = modal?.querySelector('input[data-name="priceMax"]');
+    if (priceSlider && priceMinInput && priceMaxInput) {
+      initRangeSlider(priceSlider, priceMinInput, priceMaxInput, 0, 14523, true);
+    }
+    
+    // Hide/show filters
+    if (hideFiltersBtn && filtersPanel) {
+      const hideIcon = hideFiltersBtn.querySelector('svg');
+      const hideIconClone = hideIcon ? hideIcon.cloneNode(true) : null;
+      const showIcon = hideIcon ? hideIcon.cloneNode(true) : null;
+      if (showIcon) {
+        const path = showIcon.querySelector('path');
+        if (path) {
+          path.setAttribute('d', 'M4.16699 10H15.8337M10 4.16699V15.8337');
+        }
+      }
+      
+      hideFiltersBtn.addEventListener('click', () => {
+        const isHidden = filtersPanel.classList.contains('hidden');
+        if (isHidden) {
+          filtersPanel.classList.remove('hidden');
+          document.querySelector('.s-m-diamond-picker-modal__results')?.classList.remove('full-width');
+          hideFiltersBtn.innerHTML = '';
+          if (hideIconClone) hideFiltersBtn.appendChild(hideIconClone.cloneNode(true));
+          hideFiltersBtn.appendChild(document.createTextNode(' Hide Filters'));
+        } else {
+          filtersPanel.classList.add('hidden');
+          document.querySelector('.s-m-diamond-picker-modal__results')?.classList.add('full-width');
+          hideFiltersBtn.innerHTML = '';
+          if (showIcon) hideFiltersBtn.appendChild(showIcon.cloneNode(true));
+          hideFiltersBtn.appendChild(document.createTextNode(' Show Filters'));
+        }
+      });
+    }
+    
+    // Update selected diamond display on product page
+    function updateProductPageDiamondDisplay() {
+      const selectedDisplay = document.getElementById(`selectedDiamondDisplay-${sectionId}`);
+      const addDiamondBtnEl = document.getElementById(`addDiamondButton-${sectionId}`);
+      const addToCartBtn = document.getElementById(`addToCartButton-${sectionId}`);
+      
+      if (!state.selectedDiamond) {
+        // Hide selected display, show add button
+        if (selectedDisplay) selectedDisplay.style.display = 'none';
+        if (addDiamondBtnEl) addDiamondBtnEl.style.display = 'inline-flex';
+        if (addToCartBtn) {
+          const span = addToCartBtn.querySelector('span');
+          if (span) span.textContent = 'Add Setting Only to Cart';
+        }
+        return;
+      }
+      
+      // Show selected display, hide add button
+      if (selectedDisplay) selectedDisplay.style.display = 'flex';
+      if (addDiamondBtnEl) {
+        addDiamondBtnEl.style.display = 'none';
+        addDiamondBtnEl.disabled = false;
+      }
+      if (addToCartBtn) {
+        const span = addToCartBtn.querySelector('span');
+        if (span) span.textContent = 'Add to Cart';
+      }
+      
+      const diamond = state.selectedDiamond;
+      const shapeTxt = shapeLabel(diamond.shape || '');
+      const cutTxt = cutCardLabel(diamond.cut || '');
+      const sourceType = state.type === 'lab' ? 'Lab Grown' : state.type === 'natural' ? 'Natural' : 'All';
+      
+      // Update image
+      const diamondImage = document.getElementById(`selectedDiamondImage-${sectionId}`);
+      if (diamondImage) {
+        const imageSrc = (diamond.images && diamond.images[0]) ? diamond.images[0] : PLACEHOLDER_IMG;
+        diamondImage.src = imageSrc;
+        diamondImage.alt = `${shapeTxt} ${diamond.carat}ct`;
+      }
+      
+      // Update price
+      const diamondPrice = document.getElementById(`selectedDiamondPrice-${sectionId}`);
+      if (diamondPrice) {
+        diamondPrice.textContent = `+ ${money(diamond.priceRetail)}`;
+      }
+      
+      // Update details
+      const diamondDetails = document.getElementById(`selectedDiamondDetails-${sectionId}`);
+      if (diamondDetails) {
+        diamondDetails.innerHTML = `
+          <div>${diamond.carat?.toFixed?.(2) ?? diamond.carat} ct ${shapeTxt}</div>
+          <div>${diamond.color} ${diamond.clarity} ${cutTxt}</div>
+          <div>${sourceType}</div>
+        `;
+      }
+      
+      // Store diamond data in a hidden input for form submission
+      const form = document.querySelector('.s-m-form');
+      if (form) {
+        let diamondInput = form.querySelector('input[name="properties[Diamond]"]');
+        if (!diamondInput) {
+          diamondInput = document.createElement('input');
+          diamondInput.type = 'hidden';
+          diamondInput.name = 'properties[Diamond]';
+          form.appendChild(diamondInput);
+        }
+        // Format diamond info for display
+        const shapeMap = {
+          'ROUND': 'Round',
+          'PRINCESS': 'Princess',
+          'CUSHION': 'Cushion',
+          'PEAR': 'Pear',
+          'MARQUISE': 'Marquise',
+          'OVAL': 'Oval',
+          'HEART': 'Heart',
+          'RADIANT': 'Radiant',
+          'ASSCHER': 'Asscher',
+          'EMERALD': 'Emerald'
+        };
+        const shapeTxt = shapeMap[diamond.shape] || diamond.shape || '—';
+        const cutTxt = diamond.cut || '—';
+        const sourceType = diamond.type === 'lab' ? 'Lab Grown' : (diamond.type === 'natural' ? 'Natural' : '—');
+        const carat = diamond.carat?.toFixed?.(2) ?? diamond.carat;
+        
+        // Format as readable string: "1.27 ct Radiant, F VS1, Lab Grown"
+        const diamondDisplay = `${carat} ct ${shapeTxt}, ${diamond.color} ${diamond.clarity}${cutTxt !== '—' ? ' ' + cutTxt : ''}, ${sourceType}`;
+        
+        diamondInput.value = diamondDisplay;
+      }
+    }
+    
+    // Add diamond button (in modal footer)
+    if (addDiamondBtn) {
+      addDiamondBtn.addEventListener('click', () => {
+        if (state.selectedDiamond) {
+          // Close modal first
+          if (modal && typeof modal.hide === 'function') {
+            modal.hide();
+          }
+          
+          // Update product page after modal closes
+          setTimeout(() => {
+            updateProductPageDiamondDisplay();
+          }, 100);
+        }
+      });
+    }
+    
+    // Update display when modal closes
+    if (modal) {
+      const observer = new MutationObserver(() => {
+        if (state.selectedDiamond && !modal.hasAttribute('open')) {
+          // Only update product page after modal closes
+          setTimeout(() => {
+            updateProductPageDiamondDisplay();
+          }, 100);
+        }
+      });
+      observer.observe(modal, { attributes: true, attributeFilter: ['open'] });
+    }
+    
+    // Clear diamond button
+    document.querySelectorAll('[data-clear-diamond]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.selectedDiamond = null;
+        updateProductPageDiamondDisplay();
+        updateSelectedDiamondDisplay();
+        updateTotalPrice();
+        
+        // Re-render grid to update button states
+        if (grid) {
+          renderGrid(grid.querySelectorAll('.s-m-diamond-picker-modal__card').length ? 
+            Array.from(grid.querySelectorAll('.s-m-diamond-picker-modal__card')).map(card => {
+              const btn = card.querySelector('.s-m-diamond-picker-modal__card-btn');
+              return JSON.parse(btn.dataset.diamond);
+            }) : []);
+        }
+        
+        // Remove diamond input from form
+        const form = document.querySelector('.s-m-form');
+        if (form) {
+          const diamondInput = form.querySelector('input[name="properties[Diamond]"]');
+          if (diamondInput) diamondInput.remove();
+        }
+      });
+    });
+    
+    // Edit button - open modal
+    document.querySelectorAll('[data-diamond-picker-trigger-edit]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (modal && typeof modal.show === 'function') {
+          modal.show(trigger);
+        }
+      });
+    });
+    
+    // Initialize display on page load if diamond is already selected
+    if (state.selectedDiamond) {
+      updateProductPageDiamondDisplay();
+    }
+  }
+  
+  // Wait for DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
