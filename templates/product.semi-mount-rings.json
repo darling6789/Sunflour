@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "main": {
       "type": "semi-mount-rings-main",
@@ -30,7 +30,7 @@
             "add_button_text": "Add Center Diamond",
             "disclaimer_text": "Center diamond is not included. Diamond shown is for illustrative purposes only.",
             "show_consult_link": true,
-            "consult_link": "",
+            "consult_link": "#",
             "add_to_cart_text": "Add Setting Only to Cart"
           }
         },
