@@ -3584,8 +3584,6 @@ div.s-m-diamond-picker-modal__spinner {
    }
 
    .s-m-diamond-picker-modal__grid {
-     display: grid;
-     grid-template-columns: repeat(2, 1fr);
      gap: 12px;
      padding: 16px;
      overflow-y: auto;
@@ -3595,7 +3593,7 @@ div.s-m-diamond-picker-modal__spinner {
    
    .s-m-diamond-picker-modal__card {
      min-width: 0;
-     width: 100%;
+     width: calc(50% - 6px);
    }
 
    .s-m-diamond-picker-modal__pager {
@@ -3621,13 +3619,7 @@ div.s-m-diamond-picker-modal__spinner {
    }
  }
 
- @media (max-width: 480px) {
-   .s-m-diamond-picker-modal__grid {
-     gap: 12px;
-     padding: 12px;
-     grid-template-columns: repeat(2, 1fr);
-   }
-   
+ @media (max-width: 380px) {
    .s-m-diamond-picker-modal__card {
      min-width: 0;
      width: 100%;
