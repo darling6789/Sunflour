@@ -953,18 +953,18 @@
                         <span>{{ block.settings.add_button_text | default: 'Add Center Diamond' }}</span>
                       </button>
                       <div class="s-m-center-diamond-selection__selected" id="selectedDiamondDisplay-{{ section.id }}" style="display: none;">
-                        <div class="s-m-center-diamond-selection__selected-image">
-                          <img id="selectedDiamondImage-{{ section.id }}" src="" alt="Selected Diamond">
-                        </div>
-                        <div class="s-m-center-diamond-selection__selected-content">
-                          <div class="s-m-center-diamond-selection__selected-info">
+                        <div class="s-m-center-diamond-selection__selected-row1">
+                          <div class="s-m-center-diamond-selection__selected-image">
+                            <img id="selectedDiamondImage-{{ section.id }}" src="" alt="Selected Diamond">
+                          </div>
+                          <div class="s-m-center-diamond-selection__selected-info-wrapper">
                             <div class="s-m-center-diamond-selection__selected-price" id="selectedDiamondPrice-{{ section.id }}"></div>
                             <div class="s-m-center-diamond-selection__selected-details" id="selectedDiamondDetails-{{ section.id }}"></div>
                           </div>
-                          <div class="s-m-center-diamond-selection__selected-actions">
-                            <button type="button" class="s-m-center-diamond-selection__clear-button" data-clear-diamond>Clear</button>
-                            <button type="button" class="s-m-center-diamond-selection__edit-button" data-diamond-picker-trigger-edit>Edit</button>
-                          </div>
+                        </div>
+                        <div class="s-m-center-diamond-selection__selected-row2">
+                          <button type="button" class="s-m-center-diamond-selection__clear-button" data-clear-diamond>Clear</button>
+                          <button type="button" class="s-m-center-diamond-selection__edit-button" data-diamond-picker-trigger-edit>Edit</button>
                         </div>
                       </div>
                       <div class="s-m-center-diamond-selection__disclaimer">
@@ -1314,6 +1314,16 @@
           <div class="s-m-diamond-picker-modal__results">
             <div class="s-m-diamond-picker-modal__results-bar">
               <div class="s-m-diamond-picker-modal__results-meta" id="pageInfo-{{ section.id }}">1-24 of 0</div>
+              <button 
+                type="button" 
+                class="s-m-diamond-picker-modal__sort-filters-btn"
+                id="sortFiltersBtn-{{ section.id }}"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 14.4444V16.2222H7.33333V14.4444H2ZM2 3.77778V5.55556H10.8889V3.77778H2ZM10.8889 18V16.2222H18V14.4444H10.8889V12.6667H9.11111V18H10.8889ZM5.55556 7.33333V9.11111H2V10.8889H5.55556V12.6667H7.33333V7.33333H5.55556ZM18 10.8889V9.11111H9.11111V10.8889H18ZM12.6667 7.33333H14.4444V5.55556H18V3.77778H14.4444V2H12.6667V7.33333Z" fill="#78686F"/>
+                </svg>
+                <span>Sort & Filter</span>
+              </button>
               <div class="s-m-diamond-picker-modal__results-sort">
                 <label for="sort-{{ section.id }}">Sort By:</label>
                 <select id="sort-{{ section.id }}" class="s-m-diamond-picker-modal__sort">
@@ -1388,13 +1398,58 @@
               <div class="s-m-diamond-picker-modal__footer-diamond-price">$0.00 USD</div>
             </div>
           </div>
+          <div class="s-m-diamond-picker-modal__footer-divider" id="footerDivider-{{ section.id }}"></div>
           <div class="s-m-diamond-picker-modal__footer-right">
-            <div class="s-m-diamond-picker-modal__footer-total" id="totalPrice-{{ section.id }}">{{ product.selected_or_first_available_variant.price | money }} USD</div>
+            <div class="s-m-diamond-picker-modal__footer-total-wrapper">
+              <div class="s-m-diamond-picker-modal__footer-total-label">Total</div>
+              <div class="s-m-diamond-picker-modal__footer-total" id="totalPrice-{{ section.id }}">{{ product.selected_or_first_available_variant.price | money }} USD</div>
+            </div>
             <button type="button" class="s-m-diamond-picker-modal__footer-add-btn" id="addDiamondBtn-{{ section.id }}" disabled>Add Center Diamond</button>
           </div>
         </div>
       </div>
     </modal-dialog>
+    
+    <!-- Filters Modal (Mobile) -->
+    <div class="s-m-filters-modal" id="filtersModal-{{ section.id }}" style="display: none;">
+      <div class="s-m-filters-modal__overlay"></div>
+      <div class="s-m-filters-modal__container">
+        <div class="s-m-filters-modal__header">
+          <h2 class="s-m-filters-modal__title">Filters</h2>
+          <button
+            type="button"
+            class="s-m-filters-modal__close"
+            id="filtersModalClose-{{ section.id }}"
+            aria-label="Close filters"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.33366 15.8337L4.16699 14.667L8.83366 10.0003L4.16699 5.33366L5.33366 4.16699L10.0003 8.83366L14.667 4.16699L15.8337 5.33366L11.167 10.0003L15.8337 14.667L14.667 15.8337L10.0003 11.167L5.33366 15.8337Z" fill="var(--Schemes-On-Surface, #1D1B20)"/>
+            </svg>
+          </button>
+        </div>
+        <div class="s-m-filters-modal__divider"></div>
+        <div class="s-m-filters-modal__content" id="filtersModalContent-{{ section.id }}">
+          <div class="s-m-filters-modal__sort-section">
+            <h4 class="s-m-filters-modal__sort-title">SORT</h4>
+            <div class="s-m-filters-modal__sort-select-wrapper">
+              <select id="filtersModalSort-{{ section.id }}" class="s-m-filters-modal__sort-select">
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="caratDesc">Carat: High to Low</option>
+                <option value="caratAsc">Carat: Low to High</option>
+                <option value="newest">Newest</option>
+              </select>
+            </div>
+          </div>
+          <!-- Filters content will be copied from main modal -->
+        </div>
+        <div class="s-m-filters-modal__gradient"></div>
+        <div class="s-m-filters-modal__footer">
+          <button type="button" class="s-m-filters-modal__clear-btn" id="filtersModalClear-{{ section.id }}">Clear</button>
+          <button type="button" class="s-m-filters-modal__apply-btn" id="filtersModalApply-{{ section.id }}">Apply Filters</button>
+        </div>
+      </div>
+    </div>
     
     <!-- Gallery Modal -->
     <div class="s-m-diamond-gallery-modal" id="diamondGallery-{{ section.id }}" style="display: none;">
@@ -1682,107 +1737,118 @@ h3.s-m-variant-picker-title {
    line-height: normal;
  }
 
- .s-m-center-diamond-selection__selected {
-   display: flex;
-   align-items: center;
-   gap: 16px;
-   padding: 0;
-   background: transparent;
-   border-radius: 8px;
-   margin-bottom: 20px;
- }
+.s-m-center-diamond-selection__selected {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  background: transparent;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
 
- .s-m-center-diamond-selection__selected-image {
-   width: 80px;
-   height: 80px;
-   flex-shrink: 0;
-   border-radius: 6px;
-   overflow: hidden;
-   background: #F8F6F2;
-   display: flex;
-   align-items: center;
-   justify-content: center;
- }
+.s-m-center-diamond-selection__selected-row1 {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
 
- .s-m-center-diamond-selection__selected-image img {
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
- }
+.s-m-center-diamond-selection__selected-image {
+  width: 67.09px;
+  height: 66.11px;
+  flex-shrink: 0;
+  border-radius: 0;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 
- .s-m-center-diamond-selection__selected-image img[src*="data:image/svg"] {
-   width: 80%;
-   height: auto;
-   object-fit: contain;
- }
+.s-m-center-diamond-selection__selected-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
- .s-m-center-diamond-selection__selected-content {
-   flex: 1;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   gap: 16px;
- }
+.s-m-center-diamond-selection__selected-image img[src*="data:image/svg"] {
+  width: 63px;
+  height: 63px;
+  object-fit: contain;
+}
 
- .s-m-center-diamond-selection__selected-info {
-   flex: 1;
-   display: flex;
-   flex-direction: column;
-   gap: 4px;
- }
+.s-m-center-diamond-selection__selected-info-wrapper {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
 
- .s-m-center-diamond-selection__selected-price {
-   color: #594242;
-   font-family: Montserrat;
-   font-size: 24px;
-   font-weight: 600;
-   line-height: normal;
- }
+.s-m-center-diamond-selection__selected-price {
+  color: #594242;
+  font-family: Montserrat, sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  letter-spacing: 3.39px;
+}
 
- .s-m-center-diamond-selection__selected-details {
-   color: #594242;
-   font-family: Montserrat;
-   font-size: 14px;
-   font-weight: 400;
-   line-height: 1.4;
- }
+.s-m-center-diamond-selection__selected-details {
+  color: #594242;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
 
- .s-m-center-diamond-selection__selected-details div {
-   margin-bottom: 2px;
- }
+.s-m-center-diamond-selection__selected-details div {
+  margin-bottom: 0;
+}
 
- .s-m-center-diamond-selection__selected-actions {
-   display: flex;
-   gap: 12px;
-   flex-shrink: 0;
-   align-items: center;
- }
+.s-m-center-diamond-selection__selected-row2 {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
 
- .s-m-center-diamond-selection__clear-button,
- .s-m-center-diamond-selection__edit-button {
-   padding: 10px 20px;
-   border-radius: 4px;
-   font-family: Montserrat;
-   font-size: 14px;
-   font-weight: 600;
-   cursor: pointer;
-   transition: all 0.2s;
-   border: 1px solid #69575f;
- }
+.s-m-center-diamond-selection__clear-button,
+.s-m-center-diamond-selection__edit-button {
+  padding: 16px;
+  border-radius: 4px;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  outline: 0.25px rgba(96, 77, 62, 0.50) solid;
+  outline-offset: -0.25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+}
 
- .s-m-center-diamond-selection__clear-button {
-   background: #EBEBEB;
-   color: #594242;
- }
+.s-m-center-diamond-selection__clear-button {
+  background: transparent;
+  color: var(--Primary-Accent, #78686F);
+}
 
- .s-m-center-diamond-selection__clear-button:hover {
-   background: #D6D6D6;
- }
+.s-m-center-diamond-selection__clear-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
 
- .s-m-center-diamond-selection__edit-button {
-   background: #E4D1C9;
-   color: #4D3942;
- }
+.s-m-center-diamond-selection__edit-button {
+  background: var(--Mid, #E4D1C9);
+  color: var(--Accent-Darkest, #4D3942);
+  outline: none;
+}
+
+.s-m-center-diamond-selection__edit-button:hover {
+  background: #D4C0B8;
+}
 
  .s-m-center-diamond-selection__edit-button:hover {
    background: #D6C4B8;
@@ -3141,6 +3207,30 @@ h3.s-m-variant-picker-title {
   color: var(--Darker-Accent, #69575F);
 }
 
+.s-m-diamond-picker-modal__sort-filters-btn {
+  display: none;
+  height: 32px;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.50);
+  border: 0.25px solid rgba(96, 77, 62, 0.50);
+  border-radius: 4px;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Primary-Accent, #78686F);
+  cursor: pointer;
+  white-space: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+}
+
+.s-m-diamond-picker-modal__sort-filters-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 .s-m-diamond-picker-modal__results-sort {
   display: flex;
   align-items: center;
@@ -3382,6 +3472,10 @@ div.s-m-diamond-picker-modal__spinner {
   font-size: 12.51px;
 }
 
+.s-m-diamond-picker-modal__card-mobile-props {
+  display: none;
+}
+
 .s-m-diamond-picker-modal__card-footer {
   display: flex;
   align-items: center;
@@ -3608,7 +3702,15 @@ div.s-m-diamond-picker-modal__spinner {
    }
 
    .s-m-diamond-picker-modal__shape-grid {
-     grid-template-columns: repeat(3, 1fr);
+     display: flex;
+     flex-wrap: wrap;
+   }
+   .s-m-diamond-picker-modal__shape-btn {
+     width: calc(33% - 6px);
+     max-width: 100px;
+   }
+   .s-m-diamond-picker-modal__filter-option {
+     flex: unset;
    }
  }
 
@@ -3641,25 +3743,32 @@ div.s-m-diamond-picker-modal__spinner {
      padding: 0 16px;
    }
 
-   .s-m-diamond-picker-modal__hide-filters-btn {
-     margin-bottom: 16px;
-     margin-left: 0;
-   }
+  .s-m-diamond-picker-modal__hide-filters-btn {
+    display: none;
+  }
 
-   .s-m-diamond-picker-modal__filters {
-     width: 100%;
-     max-height: none;
-     border-right: none;
-     border-bottom: 1px solid #e6e6e6;
-     margin-left: 0;
-     border-radius: 0;
-     box-shadow: none;
-     padding: 16px;
-   }
+  .s-m-diamond-picker-modal__filters {
+    width: 100%;
+    max-height: 60vh;
+    border-right: none;
+    border-bottom: 1px solid #e6e6e6;
+    margin-left: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 16px;
+    display: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
 
-   .s-m-diamond-picker-modal__filters.hidden {
-     display: none;
-   }
+  .s-m-diamond-picker-modal__filters.hidden {
+    display: none;
+  }
+
+  .s-m-diamond-picker-modal__filters.show {
+    display: block;
+  }
 
    .s-m-diamond-picker-modal__results {
      flex: 1;
@@ -3669,24 +3778,29 @@ div.s-m-diamond-picker-modal__spinner {
      min-height: 0;
    }
 
-   .s-m-diamond-picker-modal__results-bar {
-     padding: 0 16px;
-     flex-shrink: 0;
-     flex-wrap: nowrap;
-     gap: 12px;
-   }
+  .s-m-diamond-picker-modal__results-bar {
+    padding: 0 16px;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
 
-   .s-m-diamond-picker-modal__results-meta {
-     font-size: 12px;
-     white-space: nowrap;
-     order: 1;
-   }
+  .s-m-diamond-picker-modal__sort-filters-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 2;
+  }
 
-   .s-m-diamond-picker-modal__results-sort {
-     flex-wrap: nowrap;
-     gap: 8px;
-     white-space: nowrap;
-   }
+  .s-m-diamond-picker-modal__results-meta {
+    font-size: 12px;
+    white-space: nowrap;
+    order: 1;
+  }
+
+  .s-m-diamond-picker-modal__results-sort {
+    display: none;
+  }
 
    .s-m-diamond-picker-modal__grid {
      gap: 12px;
@@ -3696,10 +3810,119 @@ div.s-m-diamond-picker-modal__spinner {
      -webkit-overflow-scrolling: touch;
    }
    
-   .s-m-diamond-picker-modal__card {
-     min-width: 0;
-     width: calc(50% - 6px);
-   }
+  .s-m-diamond-picker-modal__card {
+    min-width: 0;
+    width: calc(50% - 6px);
+    background: #FCFCFC;
+    box-shadow: 1.7871882915496826px 1.7871882915496826px 8.935941696166992px rgba(34, 34, 34, 0.10);
+    border-radius: 14.30px;
+    border: none;
+    overflow: hidden;
+  }
+
+  .s-m-diamond-picker-modal__card.is-selected {
+    border: none;
+    box-shadow: 1.7871882915496826px 1.7871882915496826px 8.935941696166992px rgba(34, 34, 34, 0.10);
+  }
+
+  .s-m-diamond-picker-modal__card-thumb {
+    height: 110px;
+    border-radius: 0;
+    background: var(--Primary-Light, #F8F6F2);
+  }
+
+  .s-m-diamond-picker-modal__card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .s-m-diamond-picker-modal__card-thumb img[src*="data:image/svg"] {
+    width: auto;
+    height: 70%;
+    object-fit: contain;
+  }
+
+  .s-m-diamond-picker-modal__card-meta {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .s-m-diamond-picker-modal__card-title {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 21.45px;
+    color: #1A1A1A;
+    margin-bottom: 0;
+  }
+
+  .s-m-diamond-picker-modal__card-specs {
+    display: none;
+  }
+
+  .s-m-diamond-picker-modal__card-mobile-props {
+    display: block;
+    align-self: stretch;
+    color: #1A1A1A;
+    font-size: 10px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    line-height: 14px;
+  }
+
+  .s-m-diamond-picker-modal__card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 0;
+  }
+
+  .s-m-diamond-picker-modal__card-price {
+    color: #78686F;
+    font-size: 20px;
+    font-family: EB Garamond, serif;
+    font-weight: 500;
+    line-height: 21.45px;
+  }
+
+  .s-m-diamond-picker-modal__card-btn {
+    align-self: stretch;
+    padding: 7.15px 19.66px;
+    background: var(--Mid, #E4D1C9);
+    border: none;
+    border-radius: 3.57px;
+    color: var(--Accent-Darkest, #4D3942);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 17.87px;
+  }
+
+  .s-m-diamond-picker-modal__card-btn:hover {
+    background: var(--Mid, #E4D1C9);
+    border: none;
+  }
+
+  .s-m-diamond-picker-modal__card-btn.is-selected {
+    background: var(--Accent-Darkest, #4D3942);
+    color: #fff;
+    border: none;
+  }
+
+  .s-m-diamond-picker-modal__card-gallery-btn {
+    width: 30.38px;
+    height: 30.38px;
+    padding: 1.79px;
+    left: 10.72px;
+    top: auto;
+    bottom: 10px;
+    background: rgba(255, 255, 255, 0.50);
+    border-radius: 4.47px;
+  }
+
+  .s-m-diamond-picker-modal__card-gallery-btn svg {
+    width: 17.87px;
+    height: 17.87px;
+  }
 
    .s-m-diamond-picker-modal__pager {
      padding: 16px;
@@ -3708,26 +3931,148 @@ div.s-m-diamond-picker-modal__spinner {
 
    .s-m-diamond-picker-modal__footer {
      flex-direction: column;
-     gap: 16px;
-     padding: 16px;
+     gap: 0;
+     padding: 0;
      flex-shrink: 0;
+     position: relative;
    }
 
-   .s-m-diamond-picker-modal__footer-left,
-   .s-m-diamond-picker-modal__footer-center,
+   .s-m-diamond-picker-modal__footer {
+     padding: 16px 20px;
+   }
+
+   .s-m-diamond-picker-modal__footer-left {
+     padding: 0;
+     margin-bottom: 0;
+     position: relative;
+     min-height: 50px;
+     width: 100%;
+   }
+
+   .s-m-diamond-picker-modal__footer-product {
+     font-size: 12px;
+     font-family: Jost, sans-serif;
+     font-weight: 400;
+     color: white;
+     margin-bottom: 0;
+     line-height: 1.2;
+     width: 141px;
+   }
+
+   .s-m-diamond-picker-modal__footer-price {
+     position: absolute;
+     top: 0;
+     right: 0;
+     gap: 2px;
+   }
+
+   .s-m-diamond-picker-modal__footer-price-current {
+     font-size: 14px;
+     font-weight: 500;
+     text-transform: uppercase;
+     color: var(--Primary-Light, #F8F6F2);
+     display: flex;
+     align-items: center;
+     gap: 2px;
+     letter-spacing: 3.39px;
+   }
+
+   .s-m-diamond-picker-modal__footer-middle {
+     padding: 0;
+     margin-top: 12px;
+     gap: 0;
+     position: relative;
+     min-height: 31px;
+     width: 100%;
+   }
+
+   .s-m-diamond-picker-modal__footer-middle svg {
+     display: none;
+   }
+
+   .s-m-diamond-picker-modal__footer-diamond {
+     gap: 0;
+   }
+
+   .s-m-diamond-picker-modal__footer-diamond-details {
+     font-size: 12px;
+     font-family: Jost, sans-serif;
+     font-weight: 400;
+     color: white;
+     line-height: 1.2;
+     width: 141px;
+   }
+
+   .s-m-diamond-picker-modal__footer-diamond-price {
+     position: absolute;
+     top: 0;
+     right: 0;
+     font-size: 14px;
+     font-weight: 500;
+     text-transform: uppercase;
+     color: var(--Primary-Light, #F8F6F2);
+     display: flex;
+     align-items: center;
+     gap: 2px;
+   }
+
+   .s-m-diamond-picker-modal__footer-divider {
+     width: 100%;
+     height: 0;
+     border-top: 1px solid var(--Mid, #E4D1C9);
+     margin: 12px 0;
+     display: block !important;
+   }
+
    .s-m-diamond-picker-modal__footer-right {
      width: 100%;
+     padding: 0;
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 0;
+     position: relative;
+   }
+
+   .s-m-diamond-picker-modal__footer-total-wrapper {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     width: 100%;
+     gap: 12px;
+     flex-wrap: wrap;
+   }
+
+   .s-m-diamond-picker-modal__footer-total-label {
+     font-size: 14px;
+     font-family: Jost, sans-serif;
+     font-weight: 400;
+     color: white;
+     padding: 0;
+     margin: 0;
+   }
+
+   .s-m-diamond-picker-modal__footer-total {
+     font-size: 16px;
+     font-weight: 500;
+     text-transform: uppercase;
+     color: var(--Primary-Light, #F8F6F2);
+     padding: 0;
+     display: flex;
+     align-items: center;
+     gap: 5.09px;
+     letter-spacing: 3.39px;
    }
 
    .s-m-diamond-picker-modal__footer-add-btn {
      width: 100%;
-   }
- }
-
- @media (max-width: 380px) {
-   .s-m-diamond-picker-modal__card {
-     min-width: 0;
-     width: 100%;
+     padding: 16px 32px;
+     background: var(--Primary-Light, #F8F6F2);
+     color: var(--NotBlack, #151515);
+     font-size: 16px;
+     font-weight: 500;
+     line-height: 16px;
+     margin-top: 0;
+     border-radius: 4px;
    }
  }
 
@@ -3902,6 +4247,254 @@ div.s-m-diamond-picker-modal__spinner {
      right: 10px;
      width: 40px;
      height: 40px;
+   }
+ }
+
+ /* Filters Modal Styles (Mobile) */
+ .s-m-filters-modal {
+   display: none;
+ }
+
+ @media (max-width: 900px) {
+  .s-m-filters-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+   .s-m-filters-modal__overlay {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background: rgba(0, 0, 0, 0.5);
+     display: block !important;
+   }
+
+   .s-m-filters-modal__container {
+     position: relative;
+     width: calc(100% - 40px);
+     min-width: 330px;
+     height: 680px;
+     max-height: 90vh;
+     background: white;
+     border-radius: 16px;
+     display: flex;
+     flex-direction: column;
+     z-index: 1;
+     overflow: hidden;
+   }
+
+   .s-m-filters-modal__header {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 25px 20px;
+     flex-shrink: 0;
+   }
+
+   .s-m-filters-modal__title {
+     font-size: 20px;
+     font-family: Montserrat, sans-serif;
+     font-weight: 600;
+     line-height: 18px;
+     letter-spacing: 1.20px;
+     color: var(--NotBlack, #151515);
+     margin: 0;
+   }
+
+   .s-m-filters-modal__close {
+     width: 20px;
+     height: 20px;
+     padding: 0;
+     background: none;
+     border: none;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+
+   .s-m-filters-modal__divider {
+    width: calc(100% - 40px);
+    height: 1px;
+    margin: 0 auto;
+    background: var(--Mid, #E4D1C9);
+    border: none;
+    outline: none;
+    flex-shrink: 0;
+    display: block !important;
+    padding: 0 20px;
+  }
+
+   .s-m-filters-modal__content {
+     flex: 1;
+     overflow-y: auto;
+     overflow-x: hidden;
+     padding: 20px 20px;
+     -webkit-overflow-scrolling: touch;
+     padding-bottom: 60px;
+   }
+
+   .s-m-filters-modal__gradient {
+     position: absolute;
+     bottom: 109px;
+     left: 0;
+     right: 0;
+     height: 109px;
+     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, white 100%);
+     pointer-events: none;
+     border-bottom-right-radius: 16px;
+     border-bottom-left-radius: 16px;
+   }
+
+   .s-m-filters-modal__footer {
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     padding: 10px 20px 20px;
+     display: flex;
+     align-items: center;
+     gap: 20px;
+     background: white;
+     border-bottom-right-radius: 16px;
+     border-bottom-left-radius: 16px;
+   }
+
+   .s-m-filters-modal__clear-btn {
+     width: 88px;
+     padding: 12px 20px;
+     background: white;
+     border: none;
+     border-radius: 4px;
+     color: var(--Darker-Accent, #69575F);
+     font-size: 16px;
+     font-family: Montserrat, sans-serif;
+     font-weight: 500;
+     line-height: 20px;
+     cursor: pointer;
+   }
+
+   .s-m-filters-modal__apply-btn {
+     padding: 12px 20px;
+     background: var(--Primary-Accent, #78686F);
+     border: none;
+     border-radius: 4px;
+     color: white;
+     font-size: 16px;
+     font-family: Montserrat, sans-serif;
+     font-weight: 500;
+     line-height: 20px;
+     cursor: pointer;
+     text-align: center;
+   }
+
+   .s-m-filters-modal__content .s-m-diamond-picker-modal__filter-group {
+     margin-bottom: 32px;
+   }
+
+   .s-m-filters-modal__content .s-m-diamond-picker-modal__filter-group {
+     margin-bottom: 32px;
+   }
+
+   .s-m-filters-modal__content .s-m-diamond-picker-modal__filter-group h4 {
+     font-size: 20px;
+     font-family: Montserrat, sans-serif;
+     font-weight: 600;
+     line-height: 20px;
+     letter-spacing: 2px;
+     color: var(--Primary-Accent, #78686F);
+     margin-bottom: 18px;
+   }
+
+   .s-m-filters-modal__sort-section {
+     margin-bottom: 32px;
+   }
+
+   .s-m-filters-modal__sort-title {
+     font-size: 18px;
+     font-family: Montserrat, sans-serif;
+     font-weight: 600;
+     line-height: 20px;
+     letter-spacing: 2px;
+     color: var(--Primary-Accent, #78686F);
+     margin-bottom: 18px;
+     margin-top: 0;
+   }
+
+   .s-m-diamond-picker-modal__shape-btn span {
+     font-size: 14px;
+   }
+
+   .s-m-diamond-picker-modal__filter-label {
+     font-size: 12px; 
+   }
+
+   .s-m-diamond-picker-modal__filter-option {
+     min-width: 35px;
+   }
+
+   .s-m-diamond-picker-modal__filter-option {
+     min-width: 72px;
+   }
+
+   .s-m-diamond-picker-modal__color-grid, .s-m-diamond-picker-modal__clarity-grid, .s-m-diamond-picker-modal__cut-grid {
+     gap: 10px 0;
+     justify-content: flex-start;
+   }
+
+   /* Selected diamond display - mobile */
+   .s-m-center-diamond-selection__selected-image {
+     width: 67.09px;
+     height: 67.09px;
+     aspect-ratio: 1;
+   }
+
+   .s-m-center-diamond-selection__selected-price {
+     font-size: 20px;
+     letter-spacing: 2px;
+   }
+
+   .s-m-center-diamond-selection__selected-details {
+     font-size: 16px;
+   }
+
+   .s-m-center-diamond-selection__clear-button,
+   .s-m-center-diamond-selection__edit-button {
+     font-size: 16px;
+     padding: 12px 16px;
+   }
+
+   .s-m-filters-modal__sort-select-wrapper {
+     width: 264px;
+     height: 32px;
+   }
+
+   .s-m-filters-modal__sort-select {
+     width: 100%;
+     height: 32px;
+     padding: 4px 6px;
+     background: rgba(255, 255, 255, 0.50);
+     border: 0.25px solid rgba(96, 77, 62, 0.50);
+     border-radius: 4px;
+     font-family: Montserrat, sans-serif;
+     font-size: 14px;
+     font-weight: 600;
+     color: var(--Primary-Accent, #78686F);
+     cursor: pointer;
+     appearance: none;
+     background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%2378686F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+     background-repeat: no-repeat;
+     background-position: right 6px center;
+     padding-right: 32px;
    }
  }
 
@@ -5626,7 +6219,6 @@ div.s-m-diamond-picker-modal__spinner {
   const productComparePrice = {{ product.selected_or_first_available_variant.compare_at_price | default: 0 }};
   const productTitle = {{ product.title | json }};
   
-  // Constants from diamond-picker.liquid
   const API_BASE = '/apps/diamond-search/diamonds/search';
   const CUT_FULL = {
     'EX':'Excellent','EXCELLENT':'Excellent',
@@ -5659,7 +6251,6 @@ div.s-m-diamond-picker-modal__spinner {
   const cutCardLabel = v => CUT_CARD[uc(v)] || v;
   const shapeLabel = v => titleCase(v);
   
-  // Shape icons mapping
   const SHAPE_ICONS = {
     'CUSHION': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M19.2985 11.955L19.4285 22.3315M19.2985 11.955L33.892 18.6412M19.2985 11.955L33.6534 2.881L48.9408 13.2575M19.2985 11.955L16.9782 5.50769M19.2985 11.955L9.62726 10.5223L11.9041 20.4429M19.4285 22.3315L16.5445 32.6646M19.4285 22.3315L33.892 18.6412M19.4285 22.3315L11.9041 20.4429M33.892 18.6412L47.7482 22.744M33.892 18.6412L48.9408 13.2575M48.9408 13.2575L57.4194 10.2184L56.1183 22.0276M48.9408 13.2575L47.7482 22.744M48.9408 13.2575L51.955 6.00698M11.9041 20.4429L16.5445 32.6646M11.9041 20.4429L3.23039 32.6646L10.8199 44.1483M11.9041 20.4429L6.20114 17.4472M16.5445 32.6646L19.1901 43.714M16.5445 32.6646L10.8199 44.1483M19.1901 43.714L10.8199 44.1483M19.1901 43.714L17.8673 53.0703M19.1901 43.714L33.0463 47.7952M10.8199 44.1483L5.52893 47.0137M10.8199 44.1483L9.62726 55.9575L17.8673 53.0703M17.8673 53.0703L33.4149 63.6638L48.3554 54.2209M17.8673 53.0703L33.0463 47.7952M17.8673 53.0703L15.1785 60.2991M33.0463 47.7952L48.3554 54.2209M33.0463 47.7952L47.4013 43.866M48.3554 54.2209L51.0226 60.7115M48.3554 54.2209L47.4013 43.866M48.3554 54.2209L57.6796 55.9575M47.4013 43.866L55.2726 45.733M47.4013 43.866L50.2636 32.6646M57.9615 55.5885L55.2726 45.733M55.2726 45.733L61.4743 49.1845M55.2726 45.733L63.9464 32.6646L56.1183 22.0276M55.2726 45.733L50.2636 32.6646M56.1183 22.0276L50.2636 32.6646M56.1183 22.0276L47.7482 22.744M56.1183 22.0276L61.9298 19.0753M50.2636 32.6646L47.7482 22.744M33.6318 2.77246C30.2924 2.77246 15.9591 2.77246 9.60557 10.4137C3.25208 18.055 3.10029 32.5778 3.10029 32.5778C3.10029 32.5778 2.81839 47.7735 9.60557 55.8707C16.3928 63.9678 29.9454 63.5553 33.4149 63.5553C36.8844 63.5553 51.2177 63.5553 57.6796 55.8489C64.1415 48.1426 63.9897 42.0425 63.9897 32.6646C63.9897 23.2867 63.5777 17.4689 57.4845 10.2184C51.3912 2.96783 39.0311 2.77246 33.6318 2.77246Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
     'ROUND': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="67" viewBox="0 0 68 67" fill="none"><path d="M25.4944 14.0722L33.3703 3.01982L41.3767 13.9852M25.4944 14.0722L12.0705 11.9618L14.3114 25.364M25.4944 14.0722L22.8617 22.5138L18.4234 33.3922L14.3984 41.2464M25.4944 14.0722L33.3485 18.0972L44.2486 22.5573L52.6685 25.1681M25.4944 14.0722L21.861 5.43481M41.3767 13.9852L54.7789 11.7442L52.6685 25.1681M41.3767 13.9852L33.5661 18.0972L22.7095 22.6662L14.3114 25.364M41.3767 13.9852L44.0964 22.4051L48.6435 33.24L52.7556 41.0506M41.3767 13.9852L44.9449 5.26075M14.3114 25.364L18.4234 33.1746L22.9923 44.0312L25.7119 52.4293M14.3114 25.364L3.34598 33.3705L14.3984 41.2464M14.3114 25.364L5.6522 21.8394M14.3984 41.2464L22.84 43.879L33.7401 48.3173L41.5943 52.3641M14.3984 41.2464L12.3097 54.6921L25.7119 52.4293M14.3984 41.2464L5.76098 44.9016M52.6685 25.1681L63.7427 33.0659L52.7556 41.0506M52.6685 25.1681L48.6435 33.0224L44.2051 43.9225L41.5943 52.3641M52.7556 41.0506L55.0183 54.4527L41.5943 52.3641M52.7556 41.0506L44.3575 43.7702L33.5226 48.3173L25.7119 52.4293M41.5943 52.3641L33.6966 63.4165L25.7119 52.4293M41.5943 52.3641L45.2277 61.0233M25.7119 52.4293L22.122 61.1974M61.3494 21.5348L52.6902 25.1681M61.5018 44.6187L52.7556 41.0723M44.2486 43.8137L48.6 33.1311L44.1399 22.5138L33.4574 18.1407L22.84 22.6008L18.4669 33.2835L22.9489 43.9225L33.6314 48.2738L44.2486 43.8137ZM45.04 5.03481C60.6053 11.3837 68.0766 29.1487 61.7277 44.7138C55.3788 60.2791 37.6139 67.7504 22.0486 61.4015C6.48343 55.0526 -0.98791 37.2878 5.36098 21.7225C11.7098 6.15725 29.4748 -1.31408 45.04 5.03481Z" stroke="#78686F" stroke-width="0.986667"/></svg>',
@@ -5673,7 +6264,6 @@ div.s-m-diamond-picker-modal__spinner {
     'EMERALD': '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none"><path d="M57.1767 10.6653L47.8281 17.2542M50.879 2.5957L45.3829 14.2231M50.879 2.5957H15.8847M50.879 2.5957L57.1793 10.6653V56.4275L50.879 64.4971M45.3829 14.2231L47.8281 17.252V25.4296M45.3829 14.2231H21.3808M15.8847 2.5957L21.3808 14.2231M15.8847 2.5957L9.5625 10.6653V56.4275L15.8847 64.4971M50.879 64.4971L45.3829 52.87M50.879 64.4971H15.8847M21.3808 14.2231L18.9356 17.2542M54.0621 25.4318V12.9426L49.0396 6.57426H17.724L12.6796 12.9426V25.4318M9.5647 10.6653L18.9356 17.2542M18.9356 17.2542V25.4318M15.8847 64.4971L21.3808 52.87M15.8869 25.4318V15.1749L19.6692 10.6653H47.0945L50.879 15.1749V51.918L47.0945 56.4275H19.6692L15.8847 51.918V25.4318M57.1767 56.4275L47.8281 49.8185M47.8281 49.8185L45.3829 52.87M47.8281 49.8185V25.4341M45.3829 52.87H21.3808M21.3808 52.87L18.9356 49.8185M54.0621 25.4341V54.128L49.0396 60.4961H17.724L12.6796 54.128V25.4341M9.5647 56.4275L18.9356 49.8185M18.9356 49.8185V25.4341" stroke="#78686F" stroke-width="0.984743"/></svg>'
   };
   
-  // State
   const state = {
     page: 1,
     pageSize: 24,
@@ -5690,7 +6280,6 @@ div.s-m-diamond-picker-modal__spinner {
     selectedDiamond: null
   };
   
-  // Elements
   const modal = document.getElementById(`DiamondPickerModal-${sectionId}`);
   const trigger = document.querySelector(`[data-diamond-picker-trigger]`);
   const closeBtn = document.getElementById(`DiamondPickerClose-${sectionId}`);
@@ -5709,24 +6298,28 @@ div.s-m-diamond-picker-modal__spinner {
   const caratMaxInput = modal?.querySelector('input[data-name="caratMax"]');
   const selectedDiamondInfo = document.getElementById(`selectedDiamondInfo-${sectionId}`);
   const footerMiddle = document.getElementById(`footerMiddle-${sectionId}`);
+  const footerDivider = document.getElementById(`footerDivider-${sectionId}`);
   const totalPriceEl = document.getElementById(`totalPrice-${sectionId}`);
   const addDiamondBtn = document.getElementById(`addDiamondBtn-${sectionId}`);
   const errorEl = document.getElementById(`diamondError-${sectionId}`);
   const hideFiltersBtn = document.getElementById(`hideFiltersBtn-${sectionId}`);
   const filtersPanel = document.getElementById(`diamondFilters-${sectionId}`);
   const galleryModal = document.getElementById(`diamondGallery-${sectionId}`);
+  const sortFiltersBtn = document.getElementById(`sortFiltersBtn-${sectionId}`);
+  const filtersModal = document.getElementById(`filtersModal-${sectionId}`);
+  const filtersModalClose = document.getElementById(`filtersModalClose-${sectionId}`);
+  const filtersModalContent = document.getElementById(`filtersModalContent-${sectionId}`);
+  const filtersModalClear = document.getElementById(`filtersModalClear-${sectionId}`);
+  const filtersModalApply = document.getElementById(`filtersModalApply-${sectionId}`);
   
-  // Gallery state
   let galleryState = {
     media: [],
     currentIndex: 0
   };
   
-  // Helper functions
   function money(n) {
     let num;
     if (typeof n === 'string') {
-      // Remove any leading zeros (but preserve single leading zero before decimal)
       const cleaned = n.trim().replace(/^0+(?=\d)/, '').replace(/^0+\./, '0.');
       num = parseFloat(cleaned);
     } else if (n != null) {
@@ -5735,9 +6328,7 @@ div.s-m-diamond-picker-modal__spinner {
       num = 0;
     }
     if (!num || num <= 0 || isNaN(num)) return '$0.00';
-    // Ensure we have a valid number before formatting
     const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
-    // Double-check for any leading zeros in the formatted output (shouldn't happen, but just in case)
     return formatted.replace(/^\$0+/, '$').replace(/^\$0+\./, '$0.');
   }
   
@@ -5747,7 +6338,6 @@ div.s-m-diamond-picker-modal__spinner {
     </svg>
   `);
   
-  // Wire image fallbacks
   function wireImageFallbacks(scope=document) {
     scope.querySelectorAll('img[data-fallback="1"]').forEach(img => {
       if (img._fallbackWired) return;
@@ -5765,7 +6355,6 @@ div.s-m-diamond-picker-modal__spinner {
     });
   }
   
-  // Build query string
   function buildQuery() {
     const u = new URLSearchParams();
     u.set('page', state.page);
@@ -5794,32 +6383,23 @@ div.s-m-diamond-picker-modal__spinner {
     return u.toString();
   }
   
-  // Fetch diamonds
   async function fetchDiamonds() {
     if (errorEl) errorEl.hidden = true;
     try {
       const url = `${API_BASE}?${buildQuery()}`;
-      console.log('Fetching diamonds from:', url);
       const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-      console.log('Diamond API response:', data);
-      console.log('Items count:', data.items?.length || 0);
-      if (data.items && data.items.length > 0) {
-        console.log('First item:', data.items[0]);
-      }
       return data;
     } catch (err) {
       if (errorEl) {
         errorEl.hidden = false;
         errorEl.textContent = `Error loading diamonds: ${err.message}`;
       }
-      console.error('Diamond fetch error:', err);
       return { items: [], total: 0, facets: {} };
     }
   }
   
-  // Render diamond grid
   function renderGrid(items) {
     if (!grid) return;
     const noResultsEl = document.getElementById(`noResults-${sectionId}`);
@@ -5838,7 +6418,6 @@ div.s-m-diamond-picker-modal__spinner {
       const clarTxt = item.clarity || '—';
       const src = (item.images && item.images[0]) ? item.images[0] : PLACEHOLDER_IMG;
       const isSelected = state.selectedDiamond && state.selectedDiamond.stockNumber === item.stockNumber;
-      // Get source type from item if available, otherwise use filter state
       const itemType = item.type || state.type;
       const sourceType = itemType === 'lab' ? 'Lab Grown' : itemType === 'natural' ? 'Natural' : 'All';
       
@@ -5850,6 +6429,12 @@ div.s-m-diamond-picker-modal__spinner {
           </svg>
         </button>
       ` : '';
+      
+      const propsArray = [sourceType];
+      if (colorTxt !== '—') propsArray.push(colorTxt);
+      if (clarTxt !== '—') propsArray.push(clarTxt);
+      if (cutTxt !== '—') propsArray.push(cutTxt);
+      const mobileProps = propsArray.join(' ');
       
       return `
         <article class="s-m-diamond-picker-modal__card ${isSelected ? 'is-selected' : ''}" data-diamond-index="${index}">
@@ -5881,6 +6466,7 @@ div.s-m-diamond-picker-modal__spinner {
                 </div>
               </div>
             </div>
+            <div class="s-m-diamond-picker-modal__card-mobile-props">${mobileProps}</div>
             <div class="s-m-diamond-picker-modal__card-footer">
               <div class="s-m-diamond-picker-modal__card-price">${money(item.priceRetail)}</div>
               <button type="button" class="s-m-diamond-picker-modal__card-btn ${isSelected ? 'is-selected' : ''}" data-stock="${item.stockNumber}" data-diamond='${JSON.stringify(item)}'>
@@ -5892,10 +6478,8 @@ div.s-m-diamond-picker-modal__spinner {
       `;
     }).join('');
     
-    // Wire image fallbacks
     wireImageFallbacks(grid);
     
-    // Wire up select buttons
     grid.querySelectorAll('.s-m-diamond-picker-modal__card-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const diamondData = JSON.parse(btn.dataset.diamond);
@@ -6029,7 +6613,7 @@ div.s-m-diamond-picker-modal__spinner {
     if (!selectedDiamondInfo) return;
     
     if (!state.selectedDiamond) {
-      // Hide footer-middle when no diamond is selected
+      // Hide footer-middle when no diamond is selected (divider always shows)
       if (footerMiddle) footerMiddle.style.display = 'none';
       return;
     }
@@ -6104,8 +6688,6 @@ div.s-m-diamond-picker-modal__spinner {
   
   // Do search
   async function doSearch() {
-    console.log('doSearch called, state:', state);
-    
     // Show loading spinner and clear grid
     if (loadingEl) {
       loadingEl.style.setProperty('display', 'flex', 'important');
@@ -6114,7 +6696,6 @@ div.s-m-diamond-picker-modal__spinner {
     
     try {
       const data = await fetchDiamonds();
-      console.log('doSearch received data:', data);
       
       if (data.facets && !state.facetsLoaded) {
         buildShapeFilters(data.facets);
@@ -6140,14 +6721,23 @@ div.s-m-diamond-picker-modal__spinner {
   
   // Read filters
   function readFilters() {
-    const active = pillToggle?.querySelector('.is-active');
+    // Check if filters modal is open and read from there, otherwise read from main modal
+    const isFiltersModalOpen = filtersModal && filtersModal.style.display === 'flex';
+    const sourceContainer = isFiltersModalOpen ? filtersModalContent : modal;
+    
+    // Read source (pills)
+    const active = sourceContainer?.querySelector('.s-m-diamond-picker-modal__pill.is-active');
     if (active) state.type = active.dataset.value || 'lab';
     
-    if (caratMinInput) state.caratMin = parseFloat(caratMinInput.value) || 0.25;
-    if (caratMaxInput) state.caratMax = parseFloat(caratMaxInput.value) || 10;
+    // Read carat range
+    const caratMin = sourceContainer?.querySelector('input[data-name="caratMin"]');
+    const caratMax = sourceContainer?.querySelector('input[data-name="caratMax"]');
+    if (caratMin) state.caratMin = parseFloat(caratMin.value) || 0.25;
+    if (caratMax) state.caratMax = parseFloat(caratMax.value) || 10;
     
-    const priceMinInput = modal?.querySelector('input[data-name="priceMin"]');
-    const priceMaxInput = modal?.querySelector('input[data-name="priceMax"]');
+    // Read price range
+    const priceMinInput = sourceContainer?.querySelector('input[data-name="priceMin"]');
+    const priceMaxInput = sourceContainer?.querySelector('input[data-name="priceMax"]');
     if (priceMinInput) {
       const val = priceMinInput.value.replace(/[$,]/g, '');
       state.priceMin = parseFloat(val) || 0;
@@ -6157,19 +6747,29 @@ div.s-m-diamond-picker-modal__spinner {
       state.priceMax = parseFloat(val) || 14523;
     }
     
+    // Read shape selections
+    const shapeButtons = sourceContainer?.querySelectorAll('.s-m-diamond-picker-modal__shape-btn.is-selected');
+    state.shape = Array.from(shapeButtons || []).map(btn => btn.dataset.value).filter(Boolean);
+    
     // Read color selections (checkboxes)
-    const colorOptions = modal?.querySelectorAll('.s-m-diamond-picker-modal__color-option:checked');
+    const colorOptions = sourceContainer?.querySelectorAll('.s-m-diamond-picker-modal__color-option:checked');
     state.color = Array.from(colorOptions || []).map(cb => cb.dataset.value || cb.value);
     
     // Read clarity selections (checkboxes)
-    const clarityOptions = modal?.querySelectorAll('.s-m-diamond-picker-modal__clarity-option:checked');
+    const clarityOptions = sourceContainer?.querySelectorAll('.s-m-diamond-picker-modal__clarity-option:checked');
     state.clarity = Array.from(clarityOptions || []).map(cb => cb.dataset.value || cb.value);
     
     // Read cut selections (checkboxes)
-    const cutOptions = modal?.querySelectorAll('.s-m-diamond-picker-modal__cut-option:checked');
+    const cutOptions = sourceContainer?.querySelectorAll('.s-m-diamond-picker-modal__cut-option:checked');
     state.cut = Array.from(cutOptions || []).map(cb => cb.dataset.value || cb.value);
     
-    if (sortSelect) state.sort = sortSelect.value || 'priceAsc';
+    // Read sort - check modal sort select first, then main sort select
+    const modalSortSelect = filtersModalContent?.querySelector(`#filtersModalSort-${sectionId}`);
+    if (modalSortSelect && isFiltersModalOpen) {
+      state.sort = modalSortSelect.value || 'priceAsc';
+    } else if (sortSelect) {
+      state.sort = sortSelect.value || 'priceAsc';
+    }
   }
   
   // Clear filters
@@ -6186,6 +6786,7 @@ div.s-m-diamond-picker-modal__spinner {
     state.sort = 'priceAsc';
     state.page = 1;
     
+    // Clear main modal filters
     if (caratMinInput) caratMinInput.value = '0.25';
     if (caratMaxInput) caratMaxInput.value = '10';
     const priceMinInput = modal?.querySelector('input[data-name="priceMin"]');
@@ -6198,41 +6799,76 @@ div.s-m-diamond-picker-modal__spinner {
       const labBtn = pillToggle.querySelector('[data-value="lab"]');
       if (labBtn) labBtn.classList.add('is-active');
     }
-    // Clear color selections (checkboxes)
     modal?.querySelectorAll('.s-m-diamond-picker-modal__color-option').forEach(cb => cb.checked = false);
-    // Clear clarity selections (checkboxes)
     modal?.querySelectorAll('.s-m-diamond-picker-modal__clarity-option').forEach(cb => cb.checked = false);
-    // Clear cut selections (checkboxes)
     modal?.querySelectorAll('.s-m-diamond-picker-modal__cut-option').forEach(cb => cb.checked = false);
     if (shapeGrid) {
       shapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn').forEach(btn => {
         btn.classList.remove('is-selected');
       });
     }
+    
+    // Clear filters modal if open
+    if (filtersModalContent) {
+      const modalCaratMin = filtersModalContent.querySelector('input[data-name="caratMin"]');
+      const modalCaratMax = filtersModalContent.querySelector('input[data-name="caratMax"]');
+      if (modalCaratMin) modalCaratMin.value = '0.25';
+      if (modalCaratMax) modalCaratMax.value = '10';
+      const modalPriceMin = filtersModalContent.querySelector('input[data-name="priceMin"]');
+      const modalPriceMax = filtersModalContent.querySelector('input[data-name="priceMax"]');
+      if (modalPriceMin) modalPriceMin.value = '$0';
+      if (modalPriceMax) modalPriceMax.value = '$14,523';
+      const modalSortSelect = filtersModalContent.querySelector(`#filtersModalSort-${sectionId}`);
+      if (modalSortSelect) modalSortSelect.value = 'priceAsc';
+      const modalPillToggle = filtersModalContent.querySelector('.s-m-diamond-picker-modal__pill-toggle');
+      if (modalPillToggle) {
+        modalPillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+        const labBtn = modalPillToggle.querySelector('[data-value="lab"]');
+        if (labBtn) labBtn.classList.add('is-active');
+      }
+      filtersModalContent.querySelectorAll('.s-m-diamond-picker-modal__color-option').forEach(cb => cb.checked = false);
+      filtersModalContent.querySelectorAll('.s-m-diamond-picker-modal__clarity-option').forEach(cb => cb.checked = false);
+      filtersModalContent.querySelectorAll('.s-m-diamond-picker-modal__cut-option').forEach(cb => cb.checked = false);
+      const modalShapeGrid = filtersModalContent.querySelector(`#shapeFilters-${sectionId}`);
+      if (modalShapeGrid) {
+        modalShapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn').forEach(btn => {
+          btn.classList.remove('is-selected');
+        });
+      }
+    }
   }
   
   // Initialize
   function init() {
-    if (!modal || !trigger) return;
+    if (!modal) return;
     
-    // Open modal
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (modal && typeof modal.show === 'function') {
-        modal.show(trigger);
-        state.page = 1;
-        // Don't reset selectedDiamond - keep it if already selected
-        // state.selectedDiamond = null;
-        state.facetsLoaded = false;
-        clearFilters();
-        doSearch();
-        updateTotalPrice();
-        updateSelectedDiamondDisplay();
-        // Enable button if diamond is already selected
-        if (addDiamondBtn) {
-          addDiamondBtn.disabled = !state.selectedDiamond;
+    // Open modal - handle all trigger buttons
+    const triggerButtons = document.querySelectorAll(`[data-diamond-picker-trigger]`);
+    if (triggerButtons.length === 0) return;
+    
+    triggerButtons.forEach(triggerBtn => {
+      triggerBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (modal && typeof modal.show === 'function') {
+          modal.show(triggerBtn);
+          state.page = 1;
+          // Don't reset selectedDiamond - keep it if already selected
+          // state.selectedDiamond = null;
+          state.facetsLoaded = false;
+          clearFilters();
+          doSearch();
+          updateTotalPrice();
+          updateSelectedDiamondDisplay();
+          // Enable button if diamond is already selected
+          if (addDiamondBtn) {
+            addDiamondBtn.disabled = !state.selectedDiamond;
+          }
+          // Hide filters by default on mobile
+          if (filtersPanel && window.innerWidth <= 900) {
+            filtersPanel.classList.remove('show');
+          }
         }
-      }
+      });
     });
     
     // Close modal
@@ -6556,6 +7192,282 @@ div.s-m-diamond-picker-modal__spinner {
       });
     }
     
+    // Initialize filters in modal
+    function initFiltersModal() {
+      if (!filtersModalContent) return;
+      
+      // Initialize shape buttons
+      const modalShapeGrid = filtersModalContent.querySelector(`#shapeFilters-${sectionId}`);
+      if (modalShapeGrid) {
+        modalShapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn').forEach(btn => {
+          // Remove any existing listeners
+          const newBtn = btn.cloneNode(true);
+          btn.parentNode.replaceChild(newBtn, btn);
+          newBtn.addEventListener('click', () => {
+            const shape = newBtn.dataset.shape || newBtn.dataset.value;
+            if (!shape) return;
+            const normalizedShape = uc(shape);
+            const index = state.shape.findIndex(s => uc(s) === normalizedShape);
+            if (index > -1) {
+              state.shape.splice(index, 1);
+              newBtn.classList.remove('is-selected');
+            } else {
+              state.shape.push(shape);
+              newBtn.classList.add('is-selected');
+            }
+            // Also update in main modal
+            if (shapeGrid) {
+              const mainBtn = shapeGrid.querySelector(`[data-shape="${shape}"], [data-value="${shape}"]`);
+              if (mainBtn) {
+                if (index > -1) {
+                  mainBtn.classList.remove('is-selected');
+                } else {
+                  mainBtn.classList.add('is-selected');
+                }
+              }
+            }
+          });
+        });
+      }
+      
+      // Initialize source pills
+      const modalPillToggle = filtersModalContent.querySelector('.s-m-diamond-picker-modal__pill-toggle');
+      if (modalPillToggle) {
+        modalPillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(btn => {
+          btn.addEventListener('click', () => {
+            modalPillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            // Also update in main modal
+            if (pillToggle) {
+              const mainBtn = pillToggle.querySelector(`[data-value="${btn.dataset.value}"]`);
+              if (mainBtn) {
+                pillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+                mainBtn.classList.add('is-active');
+              }
+            }
+          });
+        });
+      }
+      
+      // Initialize carat range slider
+      const modalCaratSlider = filtersModalContent.querySelector('.s-m-diamond-picker-modal__range-slider[data-name="carats"]');
+      const modalCaratMinInput = filtersModalContent.querySelector('input[data-name="caratMin"]');
+      const modalCaratMaxInput = filtersModalContent.querySelector('input[data-name="caratMax"]');
+      if (modalCaratSlider && modalCaratMinInput && modalCaratMaxInput) {
+        initRangeSlider(modalCaratSlider, modalCaratMinInput, modalCaratMaxInput, 0, 10, false);
+      }
+      
+      // Initialize price range slider
+      const modalPriceSlider = filtersModalContent.querySelector('.s-m-diamond-picker-modal__range-slider[data-name="price"]');
+      const modalPriceMinInput = filtersModalContent.querySelector('input[data-name="priceMin"]');
+      const modalPriceMaxInput = filtersModalContent.querySelector('input[data-name="priceMax"]');
+      if (modalPriceSlider && modalPriceMinInput && modalPriceMaxInput) {
+        initRangeSlider(modalPriceSlider, modalPriceMinInput, modalPriceMaxInput, 0, 14523, true);
+      }
+      
+      // Initialize color/clarity/cut checkboxes (no auto-apply in modal, wait for Apply button)
+      filtersModalContent.querySelectorAll('.s-m-diamond-picker-modal__color-option, .s-m-diamond-picker-modal__clarity-option, .s-m-diamond-picker-modal__cut-option').forEach(cb => {
+        cb.addEventListener('change', () => {
+          // Just update state, don't search yet - wait for Apply button
+        });
+      });
+    }
+
+    // Sort & Filters button (mobile) - opens filters modal
+    if (sortFiltersBtn && filtersModal && filtersModalContent && filtersPanel) {
+      sortFiltersBtn.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          // Copy filters content to modal (excluding header with Clear/Apply buttons)
+          if (filtersPanel) {
+            const filterGroups = filtersPanel.querySelectorAll('.s-m-diamond-picker-modal__filter-group');
+            let filtersHTML = '';
+            filterGroups.forEach(group => {
+              filtersHTML += group.outerHTML;
+            });
+            // Get the sort section HTML
+            const sortSection = filtersModalContent.querySelector('.s-m-filters-modal__sort-section');
+            const sortSectionHTML = sortSection ? sortSection.outerHTML : '';
+            filtersModalContent.innerHTML = sortSectionHTML + filtersHTML;
+            
+            // Sync sort select value
+            const modalSortSelect = filtersModalContent.querySelector(`#filtersModalSort-${sectionId}`);
+            if (modalSortSelect && sortSelect) {
+              modalSortSelect.value = sortSelect.value;
+            }
+            
+            // Sync current filter states to modal
+            // Sync shape selections
+            const modalShapeGrid = filtersModalContent.querySelector(`#shapeFilters-${sectionId}`);
+            if (state.shape.length > 0 && modalShapeGrid) {
+              state.shape.forEach(shape => {
+                const normalizedShape = uc(shape);
+                const btn = Array.from(modalShapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn'))
+                  .find(b => uc(b.dataset.shape || b.dataset.value) === normalizedShape);
+                if (btn) btn.classList.add('is-selected');
+              });
+            }
+            
+            // Sync source selection
+            const modalPillToggle = filtersModalContent.querySelector('.s-m-diamond-picker-modal__pill-toggle');
+            if (modalPillToggle && state.type) {
+              modalPillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+              const activeBtn = modalPillToggle.querySelector(`[data-value="${state.type}"]`);
+              if (activeBtn) activeBtn.classList.add('is-active');
+            }
+            
+            // Initialize event listeners for modal filters
+            initFiltersModal();
+          }
+          filtersModal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        } else {
+          // Desktop behavior - toggle filters panel
+          const isShowing = filtersPanel.classList.contains('show');
+          if (isShowing) {
+            filtersPanel.classList.remove('show');
+          } else {
+            filtersPanel.classList.add('show');
+          }
+        }
+      });
+    }
+
+    // Close filters modal
+    if (filtersModalClose && filtersModal) {
+      filtersModalClose.addEventListener('click', () => {
+        filtersModal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+    }
+
+    // Filters modal overlay click to close
+    if (filtersModal) {
+      const overlay = filtersModal.querySelector('.s-m-filters-modal__overlay');
+      if (overlay) {
+        overlay.addEventListener('click', () => {
+          filtersModal.style.display = 'none';
+          document.body.style.overflow = '';
+        });
+      }
+    }
+
+    // Filters modal clear button
+    if (filtersModalClear) {
+      filtersModalClear.addEventListener('click', () => {
+        clearFilters();
+        // Update main modal filters
+        if (filtersPanel) {
+          // Clear shape selections
+          if (shapeGrid) {
+            shapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn').forEach(btn => {
+              btn.classList.remove('is-selected');
+            });
+          }
+          // Clear source
+          if (pillToggle) {
+            pillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+            const labBtn = pillToggle.querySelector('[data-value="lab"]');
+            if (labBtn) labBtn.classList.add('is-active');
+          }
+        }
+        // Update modal content
+        if (filtersModalContent) {
+          const filterGroups = filtersPanel?.querySelectorAll('.s-m-diamond-picker-modal__filter-group');
+          let filtersHTML = '';
+          filterGroups?.forEach(group => {
+            filtersHTML += group.outerHTML;
+          });
+          const sortSection = filtersModalContent.querySelector('.s-m-filters-modal__sort-section');
+          const sortSectionHTML = sortSection ? sortSection.outerHTML : '';
+          filtersModalContent.innerHTML = sortSectionHTML + filtersHTML;
+          initFiltersModal();
+        }
+      });
+    }
+
+    // Filters modal apply button
+    if (filtersModalApply) {
+      filtersModalApply.addEventListener('click', () => {
+        // Sync sort value from modal to main sort select
+        const modalSortSelect = filtersModalContent?.querySelector(`#filtersModalSort-${sectionId}`);
+        if (modalSortSelect && sortSelect) {
+          sortSelect.value = modalSortSelect.value;
+        }
+        // Sync filter states from modal to main modal
+        // Sync shape selections
+        const modalShapeGrid = filtersModalContent?.querySelector(`#shapeFilters-${sectionId}`);
+        if (modalShapeGrid && shapeGrid) {
+          const selectedShapes = Array.from(modalShapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn.is-selected'))
+            .map(btn => {
+              const shape = btn.dataset.shape || btn.dataset.value;
+              return shape ? uc(shape) : null;
+            }).filter(Boolean);
+          shapeGrid.querySelectorAll('.s-m-diamond-picker-modal__shape-btn').forEach(btn => {
+            const shape = btn.dataset.shape || btn.dataset.value;
+            if (shape && selectedShapes.includes(uc(shape))) {
+              btn.classList.add('is-selected');
+            } else {
+              btn.classList.remove('is-selected');
+            }
+          });
+        }
+        // Sync source selection
+        const modalPillToggle = filtersModalContent?.querySelector('.s-m-diamond-picker-modal__pill-toggle');
+        if (modalPillToggle && pillToggle) {
+          const activeModalPill = modalPillToggle.querySelector('.is-active');
+          if (activeModalPill) {
+            const value = activeModalPill.dataset.value;
+            pillToggle.querySelectorAll('.s-m-diamond-picker-modal__pill').forEach(p => p.classList.remove('is-active'));
+            const mainPill = pillToggle.querySelector(`[data-value="${value}"]`);
+            if (mainPill) mainPill.classList.add('is-active');
+          }
+        }
+        // Sync range inputs
+        const modalCaratMin = filtersModalContent?.querySelector('input[data-name="caratMin"]');
+        const modalCaratMax = filtersModalContent?.querySelector('input[data-name="caratMax"]');
+        if (modalCaratMin && caratMinInput) caratMinInput.value = modalCaratMin.value;
+        if (modalCaratMax && caratMaxInput) caratMaxInput.value = modalCaratMax.value;
+        const modalPriceMin = filtersModalContent?.querySelector('input[data-name="priceMin"]');
+        const modalPriceMax = filtersModalContent?.querySelector('input[data-name="priceMax"]');
+        if (modalPriceMin && modal) {
+          const mainPriceMin = modal.querySelector('input[data-name="priceMin"]');
+          if (mainPriceMin) mainPriceMin.value = modalPriceMin.value;
+        }
+        if (modalPriceMax && modal) {
+          const mainPriceMax = modal.querySelector('input[data-name="priceMax"]');
+          if (mainPriceMax) mainPriceMax.value = modalPriceMax.value;
+        }
+        // Sync checkboxes
+        ['color', 'clarity', 'cut'].forEach(type => {
+          const modalOptions = filtersModalContent?.querySelectorAll(`.s-m-diamond-picker-modal__${type}-option`);
+          const mainOptions = modal?.querySelectorAll(`.s-m-diamond-picker-modal__${type}-option`);
+          if (modalOptions && mainOptions) {
+            modalOptions.forEach(modalCb => {
+              const value = modalCb.dataset.value || modalCb.value;
+              const mainCb = Array.from(mainOptions).find(cb => (cb.dataset.value || cb.value) === value);
+              if (mainCb) {
+                mainCb.checked = modalCb.checked;
+              }
+            });
+          }
+        });
+        state.page = 1;
+        readFilters();
+        doSearch();
+        filtersModal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+    }
+
+    // Filters modal sort select change
+    if (filtersModalContent) {
+      filtersModalContent.addEventListener('change', (e) => {
+        if (e.target.id === `filtersModalSort-${sectionId}`) {
+          // Sort is handled on apply
+        }
+      });
+    }
+    
     // Update selected diamond display on product page
     function updateProductPageDiamondDisplay() {
       const selectedDisplay = document.getElementById(`selectedDiamondDisplay-${sectionId}`);
@@ -6610,13 +7522,13 @@ div.s-m-diamond-picker-modal__spinner {
         diamondPrice.textContent = `+ ${money(price)}`;
       }
       
-      // Update details
+      // Update details - format as per Figma: "1.8 ct Round<br/>F VS1 Ideal<br/>Lab Grown"
       const diamondDetails = document.getElementById(`selectedDiamondDetails-${sectionId}`);
       if (diamondDetails) {
         diamondDetails.innerHTML = `
-          <div>${diamond.carat?.toFixed?.(2) ?? diamond.carat} ct ${shapeTxt}</div>
-          <div>${diamond.color} ${diamond.clarity} ${cutTxt}</div>
-          <div>${sourceType}</div>
+          ${diamond.carat?.toFixed?.(2) ?? diamond.carat} ct ${shapeTxt}<br/>
+          ${diamond.color} ${diamond.clarity} ${cutTxt}<br/>
+          ${sourceType}
         `;
       }
       
@@ -6713,9 +7625,22 @@ div.s-m-diamond-picker-modal__spinner {
     
     // Edit button - open modal
     document.querySelectorAll('[data-diamond-picker-trigger-edit]').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         if (modal && typeof modal.show === 'function') {
-          modal.show(trigger);
+          modal.show(btn);
+          state.page = 1;
+          state.facetsLoaded = false;
+          clearFilters();
+          doSearch();
+          updateTotalPrice();
+          updateSelectedDiamondDisplay();
+          if (addDiamondBtn) {
+            addDiamondBtn.disabled = !state.selectedDiamond;
+          }
+          if (filtersPanel && window.innerWidth <= 900) {
+            filtersPanel.classList.remove('show');
+          }
         }
       });
     });
