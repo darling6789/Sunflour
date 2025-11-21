@@ -16,6 +16,10 @@
           "type": "title",
           "settings": {}
         },
+        "price_Eg7YNN": {
+          "type": "price",
+          "settings": {}
+        },
         "variant_picker_M8HWMf": {
           "type": "variant_picker",
           "settings": {
@@ -51,6 +55,7 @@
       },
       "block_order": [
         "title_inqHgb",
+        "price_Eg7YNN",
         "variant_picker_M8HWMf",
         "center_diamond_selection_e3whE8",
         "trust_badge_FTVxRy"
