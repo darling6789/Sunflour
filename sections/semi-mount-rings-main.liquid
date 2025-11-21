@@ -1328,6 +1328,9 @@
             
             <div class="s-m-diamond-picker-modal__results-wrapper">
               <div class="s-m-diamond-picker-modal__grid" id="diamondGrid-{{ section.id }}"></div>
+              <div class="s-m-diamond-picker-modal__no-results" id="noResults-{{ section.id }}" style="display: none;">
+                <p>No diamonds found matching your criteria.</p>
+              </div>
               <div class="s-m-diamond-picker-modal__loading" id="diamondLoading-{{ section.id }}" style="display: none;">
                 <div class="s-m-diamond-picker-modal__spinner"><!-- Spinner --></div>
               </div>
@@ -1343,14 +1346,37 @@
           </div>
         </div>
         
+        <!-- Gallery Modal -->
+        <div class="s-m-diamond-gallery-modal" id="diamondGallery-{{ section.id }}" style="display: none;">
+          <div class="s-m-diamond-gallery-modal__overlay"></div>
+          <div class="s-m-diamond-gallery-modal__container">
+            <button type="button" class="s-m-diamond-gallery-modal__close" aria-label="Close gallery">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="s-m-diamond-gallery-modal__nav s-m-diamond-gallery-modal__nav--prev" aria-label="Previous">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="s-m-diamond-gallery-modal__nav s-m-diamond-gallery-modal__nav--next" aria-label="Next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="s-m-diamond-gallery-modal__content">
+              <div class="s-m-diamond-gallery-modal__media"></div>
+              <div class="s-m-diamond-gallery-modal__counter"></div>
+            </div>
+          </div>
+        </div>
+        
         <div class="s-m-diamond-picker-modal__footer">
           <div class="s-m-diamond-picker-modal__footer-left">
             <div class="s-m-diamond-picker-modal__footer-product">{{ product.title }}</div>
             <div class="s-m-diamond-picker-modal__footer-price">
               <span class="s-m-diamond-picker-modal__footer-price-current">{{ product.selected_or_first_available_variant.price | money }}</span>
-              {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
-                <span class="s-m-diamond-picker-modal__footer-price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-              {% endif %}
             </div>
           </div>
           <div class="s-m-diamond-picker-modal__footer-middle" id="footerMiddle-{{ section.id }}" style="display: none;">
@@ -1369,6 +1395,32 @@
         </div>
       </div>
     </modal-dialog>
+    
+    <!-- Gallery Modal -->
+    <div class="s-m-diamond-gallery-modal" id="diamondGallery-{{ section.id }}" style="display: none;">
+      <div class="s-m-diamond-gallery-modal__overlay"></div>
+      <div class="s-m-diamond-gallery-modal__container">
+        <button type="button" class="s-m-diamond-gallery-modal__close" aria-label="Close gallery">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" class="s-m-diamond-gallery-modal__nav s-m-diamond-gallery-modal__nav--prev" aria-label="Previous">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" class="s-m-diamond-gallery-modal__nav s-m-diamond-gallery-modal__nav--next" aria-label="Next">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="s-m-diamond-gallery-modal__content">
+          <div class="s-m-diamond-gallery-modal__media"></div>
+          <div class="s-m-diamond-gallery-modal__counter"></div>
+        </div>
+      </div>
+    </div>
 
     {%- if product.media.size > 0 -%}
       <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
@@ -3233,12 +3285,42 @@ div.s-m-diamond-picker-modal__spinner {
    object-fit: contain;
  }
 
- .s-m-diamond-picker-modal__card-thumb img {
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
-   display: block;
- }
+.s-m-diamond-picker-modal__card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.s-m-diamond-picker-modal__card-gallery-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(77, 57, 66, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.s-m-diamond-picker-modal__card-gallery-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: var(--Accent-Darkest, #4D3942);
+  transform: scale(1.05);
+}
+
+.s-m-diamond-picker-modal__card-gallery-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
 
 .s-m-diamond-picker-modal__card-meta {
   padding: 14px 20px;
@@ -3311,7 +3393,7 @@ div.s-m-diamond-picker-modal__spinner {
 .s-m-diamond-picker-modal__card-price {
   color: #78686F;
   font-family: "EB Garamond";
-  font-size: 32.169px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: 21.446px;
@@ -3387,6 +3469,29 @@ div.s-m-diamond-picker-modal__spinner {
    color: #a40000;
    font-family: Montserrat, sans-serif;
    font-size: 13px;
+ }
+
+ .s-m-diamond-picker-modal__no-results {
+   display: none;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding: 48px 24px;
+   text-align: center;
+   min-height: 200px;
+ }
+
+ .s-m-diamond-picker-modal__no-results p {
+   margin: 8px 0;
+   font-family: Montserrat, sans-serif;
+   font-size: 16px;
+   color: #4D3942;
+   line-height: 1.5;
+ }
+
+ .s-m-diamond-picker-modal__no-results p:first-child {
+   font-weight: 600;
+   font-size: 18px;
  }
 
  .s-m-diamond-picker-modal__footer {
@@ -3623,6 +3728,180 @@ div.s-m-diamond-picker-modal__spinner {
    .s-m-diamond-picker-modal__card {
      min-width: 0;
      width: 100%;
+   }
+ }
+
+ /* Gallery Modal Styles */
+ .s-m-diamond-gallery-modal {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   z-index: 10000;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: #00000088;
+ }
+
+ .s-m-diamond-gallery-modal__overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: rgba(0, 0, 0, 0.85);
+   backdrop-filter: blur(4px);
+ }
+
+ .s-m-diamond-gallery-modal__container {
+   position: relative;
+   width: 90%;
+   max-width: 600px;
+   max-height: 80vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1;
+   border-radius: 12px;
+   padding: 60px 80px 40px;
+ }
+
+ .s-m-diamond-gallery-modal__close {
+   position: absolute;
+   top: 20px;
+   right: 20px;
+   width: 48px;
+   height: 48px;
+   background: #fff;
+   border: 1px solid rgba(0, 0, 0, 0.2);
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   z-index: 10;
+   color: #000;
+   transition: all 0.2s;
+   padding: 0;
+ }
+
+ .s-m-diamond-gallery-modal__close:hover {
+   background: rgba(0, 0, 0, 0.05);
+   border-color: rgba(0, 0, 0, 0.4);
+ }
+
+ .s-m-diamond-gallery-modal__nav {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 56px;
+   height: 56px;
+   background: #fff;
+   border: 1px solid rgba(0, 0, 0, 0.2);
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   z-index: 10;
+   color: #000;
+   transition: all 0.2s;
+   padding: 0;
+ }
+
+ .s-m-diamond-gallery-modal__nav:hover {
+   background: rgba(0, 0, 0, 0.05);
+   border-color: rgba(0, 0, 0, 0.4);
+ }
+
+ .s-m-diamond-gallery-modal__nav--prev {
+   left: 20px;
+ }
+
+ .s-m-diamond-gallery-modal__nav--next {
+   right: 20px;
+ }
+
+ .s-m-diamond-gallery-modal__nav:disabled {
+   opacity: 0.3;
+   cursor: not-allowed;
+ }
+
+ .s-m-diamond-gallery-modal__content {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .s-m-diamond-gallery-modal__media {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: relative;
+   height: 400px;
+ }
+
+ .s-m-diamond-gallery-modal__media img,
+ .s-m-diamond-gallery-modal__media video {
+   max-width: 100%;
+   width: auto;
+   height: 400px;
+   object-fit: contain;
+   border-radius: 8px;
+ }
+
+ .s-m-diamond-gallery-modal__media video {
+   width: auto;
+   max-width: 100%;
+ }
+
+ .s-m-diamond-gallery-modal__counter {
+   margin-top: 20px;
+   color: #000;
+   font-family: Montserrat, sans-serif;
+   font-size: 14px;
+   text-align: center;
+ }
+
+ @media (max-width: 768px) {
+   .s-m-diamond-gallery-modal__container {
+     width: 95%;
+     max-height: 85vh;
+     padding: 50px 60px 30px;
+   }
+
+   .s-m-diamond-gallery-modal__media {
+     height: 300px;
+   }
+
+   .s-m-diamond-gallery-modal__media img,
+   .s-m-diamond-gallery-modal__media video {
+     height: 300px;
+   }
+
+   .s-m-diamond-gallery-modal__nav {
+     width: 44px;
+     height: 44px;
+   }
+
+   .s-m-diamond-gallery-modal__nav--prev {
+     left: 10px;
+   }
+
+   .s-m-diamond-gallery-modal__nav--next {
+     right: 10px;
+   }
+
+   .s-m-diamond-gallery-modal__close {
+     top: 10px;
+     right: 10px;
+     width: 40px;
+     height: 40px;
    }
  }
 
@@ -5343,7 +5622,7 @@ div.s-m-diamond-picker-modal__spinner {
   
   const sectionId = '{{ section.id }}';
   const productId = '{{ product.id }}';
-  const productPrice = {{ product.selected_or_first_available_variant.price }};
+  const productPrice = {{ product.selected_or_first_available_variant.price | divided_by: 100 }};
   const productComparePrice = {{ product.selected_or_first_available_variant.compare_at_price | default: 0 }};
   const productTitle = {{ product.title | json }};
   
@@ -5435,11 +5714,31 @@ div.s-m-diamond-picker-modal__spinner {
   const errorEl = document.getElementById(`diamondError-${sectionId}`);
   const hideFiltersBtn = document.getElementById(`hideFiltersBtn-${sectionId}`);
   const filtersPanel = document.getElementById(`diamondFilters-${sectionId}`);
+  const galleryModal = document.getElementById(`diamondGallery-${sectionId}`);
+  
+  // Gallery state
+  let galleryState = {
+    media: [],
+    currentIndex: 0
+  };
   
   // Helper functions
   function money(n) {
-    if (!n || n <= 0) return '$0.00';
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+    let num;
+    if (typeof n === 'string') {
+      // Remove any leading zeros (but preserve single leading zero before decimal)
+      const cleaned = n.trim().replace(/^0+(?=\d)/, '').replace(/^0+\./, '0.');
+      num = parseFloat(cleaned);
+    } else if (n != null) {
+      num = typeof n === 'number' ? n : parseFloat(n);
+    } else {
+      num = 0;
+    }
+    if (!num || num <= 0 || isNaN(num)) return '$0.00';
+    // Ensure we have a valid number before formatting
+    const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+    // Double-check for any leading zeros in the formatted output (shouldn't happen, but just in case)
+    return formatted.replace(/^\$0+/, '$').replace(/^\$0+\./, '$0.');
   }
   
   const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
@@ -5523,6 +5822,15 @@ div.s-m-diamond-picker-modal__spinner {
   // Render diamond grid
   function renderGrid(items) {
     if (!grid) return;
+    const noResultsEl = document.getElementById(`noResults-${sectionId}`);
+    
+    if (items.length === 0) {
+      grid.innerHTML = '';
+      if (noResultsEl) noResultsEl.style.display = 'flex';
+      return;
+    }
+    
+    if (noResultsEl) noResultsEl.style.display = 'none';
     grid.innerHTML = items.map((item, index) => {
       const shapeTxt = shapeLabel(item.shape || '');
       const cutTxt = cutCardLabel(item.cut || '—');
@@ -5534,10 +5842,20 @@ div.s-m-diamond-picker-modal__spinner {
       const itemType = item.type || state.type;
       const sourceType = itemType === 'lab' ? 'Lab Grown' : itemType === 'natural' ? 'Natural' : 'All';
       
+      const hasGallery = (item.images && item.images.length > 1) || (item.videos && item.videos.length > 0);
+      const galleryIcon = hasGallery ? `
+        <button type="button" class="s-m-diamond-picker-modal__card-gallery-btn" data-diamond-media='${JSON.stringify({ images: item.images || [], videos: item.videos || [] })}' aria-label="View gallery">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M6.25516 10.7231H15.1911L12.1082 6.70196L10.0529 9.38274L8.66786 7.59555L6.25516 10.7231ZM5.36156 14.2975C4.87009 14.2975 4.44935 14.1225 4.09936 13.7725C3.74937 13.4225 3.57438 13.0018 3.57438 12.5103V1.78719C3.57438 1.29571 3.74937 0.874978 4.09936 0.524987C4.44935 0.174996 4.87009 0 5.36156 0H16.0847C16.5762 0 16.9969 0.174996 17.3469 0.524987C17.6969 0.874978 17.8719 1.29571 17.8719 1.78719V12.5103C17.8719 13.0018 17.6969 13.4225 17.3469 13.7725C16.9969 14.1225 16.5762 14.2975 16.0847 14.2975H5.36156ZM5.36156 12.5103H16.0847V1.78719H5.36156V12.5103ZM1.78719 17.8719C1.29571 17.8719 0.874978 17.6969 0.524987 17.3469C0.174996 16.9969 0 16.5762 0 16.0847V3.57438H1.78719V16.0847H14.2975V17.8719H1.78719Z" fill="#4D3942"/>
+          </svg>
+        </button>
+      ` : '';
+      
       return `
         <article class="s-m-diamond-picker-modal__card ${isSelected ? 'is-selected' : ''}" data-diamond-index="${index}">
           <div class="s-m-diamond-picker-modal__card-thumb">
             <img data-fallback="1" src="${src}" loading="lazy" alt="${shapeTxt} ${item.carat || ''}ct">
+            ${galleryIcon}
           </div>
           <div class="s-m-diamond-picker-modal__card-meta">
             <div class="s-m-diamond-picker-modal__card-title">${shapeTxt} • ${item.carat?.toFixed?.(2) ?? item.carat}ct</div>
@@ -5584,6 +5902,107 @@ div.s-m-diamond-picker-modal__spinner {
         selectDiamond(diamondData);
       });
     });
+    
+    // Wire up gallery buttons
+    grid.querySelectorAll('.s-m-diamond-picker-modal__card-gallery-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mediaData = JSON.parse(btn.dataset.diamondMedia);
+        openGallery(mediaData);
+      });
+    });
+  }
+  
+  // Gallery functions
+  function openGallery(mediaData) {
+    if (!galleryModal) return;
+    
+    // Combine images and videos into a single array
+    const media = [];
+    if (mediaData.images && mediaData.images.length > 0) {
+      mediaData.images.forEach(url => {
+        media.push({ type: 'image', url });
+      });
+    }
+    if (mediaData.videos && mediaData.videos.length > 0) {
+      mediaData.videos.forEach(url => {
+        media.push({ type: 'video', url });
+      });
+    }
+    
+    if (media.length === 0) return;
+    
+    galleryState.media = media;
+    galleryState.currentIndex = 0;
+    
+    updateGalleryDisplay();
+    galleryModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeGallery() {
+    if (!galleryModal) return;
+    galleryModal.style.display = 'none';
+    document.body.style.overflow = '';
+    galleryState.media = [];
+    galleryState.currentIndex = 0;
+  }
+  
+  function updateGalleryDisplay() {
+    if (!galleryModal || galleryState.media.length === 0) return;
+    
+    const mediaEl = galleryModal.querySelector('.s-m-diamond-gallery-modal__media');
+    const counterEl = galleryModal.querySelector('.s-m-diamond-gallery-modal__counter');
+    const prevBtn = galleryModal.querySelector('.s-m-diamond-gallery-modal__nav--prev');
+    const nextBtn = galleryModal.querySelector('.s-m-diamond-gallery-modal__nav--next');
+    
+    if (!mediaEl) return;
+    
+    const current = galleryState.media[galleryState.currentIndex];
+    
+    // Clear and add new media
+    mediaEl.innerHTML = '';
+    if (current.type === 'image') {
+      const img = document.createElement('img');
+      img.src = current.url;
+      img.alt = 'Diamond image';
+      mediaEl.appendChild(img);
+    } else if (current.type === 'video') {
+      const video = document.createElement('video');
+      video.src = current.url;
+      video.controls = true;
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      mediaEl.appendChild(video);
+    }
+    
+    // Update counter
+    if (counterEl) {
+      counterEl.textContent = `${galleryState.currentIndex + 1} / ${galleryState.media.length}`;
+    }
+    
+    // Update navigation buttons
+    if (prevBtn) {
+      prevBtn.disabled = galleryState.currentIndex === 0;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = galleryState.currentIndex === galleryState.media.length - 1;
+    }
+  }
+  
+  function galleryNext() {
+    if (galleryState.currentIndex < galleryState.media.length - 1) {
+      galleryState.currentIndex++;
+      updateGalleryDisplay();
+    }
+  }
+  
+  function galleryPrev() {
+    if (galleryState.currentIndex > 0) {
+      galleryState.currentIndex--;
+      updateGalleryDisplay();
+    }
   }
   
   // Select diamond
@@ -5626,14 +6045,20 @@ div.s-m-diamond-picker-modal__spinner {
       <div class="s-m-diamond-picker-modal__footer-diamond-details">
         ${d.carat?.toFixed?.(2) ?? d.carat}ct ${shapeTxt}, ${d.color} ${sourceType} ${d.clarity} ${cutTxt}
       </div>
-      <div class="s-m-diamond-picker-modal__footer-diamond-price">${money(d.priceRetail)} USD</div>
+      <div class="s-m-diamond-picker-modal__footer-diamond-price">${money(parseFloat(d.priceRetail) || 0)} USD</div>
     `;
   }
   
   // Update total price
   function updateTotalPrice() {
     if (!totalPriceEl) return;
-    const diamondPrice = state.selectedDiamond ? (state.selectedDiamond.priceRetail || 0) : 0;
+    let diamondPrice = 0;
+    if (state.selectedDiamond && state.selectedDiamond.priceRetail) {
+      const price = state.selectedDiamond.priceRetail;
+      diamondPrice = typeof price === 'string' 
+        ? parseFloat(price.replace(/^0+/, '').replace(/^0+\./, '0.')) || 0
+        : parseFloat(price) || 0;
+    }
     const total = productPrice + diamondPrice;
     totalPriceEl.textContent = `${money(total)} USD`;
   }
@@ -5669,6 +6094,10 @@ div.s-m-diamond-picker-modal__spinner {
           state.shape.push(shape);
         }
         btn.classList.toggle('is-selected');
+        // Auto-apply filters when shape is selected/deselected
+        state.page = 1;
+        readFilters();
+        doSearch();
       });
     });
   }
@@ -5694,12 +6123,13 @@ div.s-m-diamond-picker-modal__spinner {
       
       renderGrid(data.items || []);
       
+      const total = data.total || 0;
       const first = (state.page - 1) * state.pageSize + 1;
-      const last = Math.min(state.page * state.pageSize, data.total || 0);
-      if (pageInfo) pageInfo.textContent = `${first}-${last} of ${data.total || 0}`;
-      if (pagerInfo) pagerInfo.textContent = `${first}-${last} of ${data.total || 0}`;
+      const last = Math.min(state.page * state.pageSize, total);
+      if (pageInfo) pageInfo.textContent = `${first}-${last} of ${total}`;
+      if (pagerInfo) pagerInfo.textContent = `${first}-${last} of ${total}`;
       if (prevBtn) prevBtn.disabled = state.page <= 1;
-      if (nextBtn) nextBtn.disabled = state.page * state.pageSize >= (data.total || 0);
+      if (nextBtn) nextBtn.disabled = state.page * state.pageSize >= total;
     } finally {
       // Hide loading spinner
       if (loadingEl) {
@@ -5859,24 +6289,30 @@ div.s-m-diamond-picker-modal__spinner {
       });
     }
     
-    // Color filters (checkboxes - change event)
+    // Color filters (checkboxes - change event) - auto-apply
     modal?.querySelectorAll('.s-m-diamond-picker-modal__color-option').forEach(cb => {
       cb.addEventListener('change', () => {
-        // Checkbox state is handled automatically
+        state.page = 1;
+        readFilters();
+        doSearch();
       });
     });
     
-    // Clarity filters (checkboxes - change event)
+    // Clarity filters (checkboxes - change event) - auto-apply
     modal?.querySelectorAll('.s-m-diamond-picker-modal__clarity-option').forEach(cb => {
       cb.addEventListener('change', () => {
-        // Checkbox state is handled automatically
+        state.page = 1;
+        readFilters();
+        doSearch();
       });
     });
     
-    // Cut filters (checkboxes - change event)
+    // Cut filters (checkboxes - change event) - auto-apply
     modal?.querySelectorAll('.s-m-diamond-picker-modal__cut-option').forEach(cb => {
       cb.addEventListener('change', () => {
-        // Checkbox state is handled automatically
+        state.page = 1;
+        readFilters();
+        doSearch();
       });
     });
     
@@ -5977,6 +6413,12 @@ div.s-m-diamond-picker-modal__spinner {
       };
       
       const stopDrag = () => {
+        if (isDragging) {
+          // Auto-apply filters when drag ends
+          state.page = 1;
+          readFilters();
+          doSearch();
+        }
         isDragging = false;
         dragHandle = null;
       };
@@ -6008,6 +6450,10 @@ div.s-m-diamond-picker-modal__spinner {
             }
           }
           updateSlider();
+          // Auto-apply filters when clicking on slider
+          state.page = 1;
+          readFilters();
+          doSearch();
         }
       });
       
@@ -6032,6 +6478,17 @@ div.s-m-diamond-picker-modal__spinner {
       document.addEventListener('touchmove', onDrag);
       document.addEventListener('touchend', stopDrag);
       
+      // Debounce function for auto-apply
+      let inputTimeout;
+      const debouncedAutoApply = () => {
+        clearTimeout(inputTimeout);
+        inputTimeout = setTimeout(() => {
+          state.page = 1;
+          readFilters();
+          doSearch();
+        }, 500); // Wait 500ms after user stops typing
+      };
+      
       minInput.addEventListener('input', () => {
         updateSlider();
         if (isPrice) {
@@ -6039,6 +6496,7 @@ div.s-m-diamond-picker-modal__spinner {
         } else {
           state.caratMin = parseValue(minInput.value);
         }
+        debouncedAutoApply();
       });
       
       maxInput.addEventListener('input', () => {
@@ -6048,6 +6506,7 @@ div.s-m-diamond-picker-modal__spinner {
         } else {
           state.caratMax = parseValue(maxInput.value);
         }
+        debouncedAutoApply();
       });
       
       updateSlider();
@@ -6141,7 +6600,14 @@ div.s-m-diamond-picker-modal__spinner {
       // Update price
       const diamondPrice = document.getElementById(`selectedDiamondPrice-${sectionId}`);
       if (diamondPrice) {
-        diamondPrice.textContent = `+ ${money(diamond.priceRetail)}`;
+        let price = diamond.priceRetail;
+        // Ensure price is a number, handling string values with leading zeros
+        if (typeof price === 'string') {
+          price = parseFloat(price.replace(/^0+/, '').replace(/^0+\./, '0.')) || 0;
+        } else {
+          price = parseFloat(price) || 0;
+        }
+        diamondPrice.textContent = `+ ${money(price)}`;
       }
       
       // Update details
@@ -6253,6 +6719,71 @@ div.s-m-diamond-picker-modal__spinner {
         }
       });
     });
+    
+    // Initialize gallery
+    if (galleryModal) {
+      const closeBtn = galleryModal.querySelector('.s-m-diamond-gallery-modal__close');
+      const prevBtn = galleryModal.querySelector('.s-m-diamond-gallery-modal__nav--prev');
+      const nextBtn = galleryModal.querySelector('.s-m-diamond-gallery-modal__nav--next');
+      const overlay = galleryModal.querySelector('.s-m-diamond-gallery-modal__overlay');
+      
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeGallery);
+      }
+      if (overlay) {
+        overlay.addEventListener('click', closeGallery);
+      }
+      if (prevBtn) {
+        prevBtn.addEventListener('click', galleryPrev);
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', galleryNext);
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (galleryModal.style.display === 'none' || galleryModal.style.display === '') return;
+        
+        if (e.key === 'Escape') {
+          closeGallery();
+        } else if (e.key === 'ArrowLeft') {
+          galleryPrev();
+        } else if (e.key === 'ArrowRight') {
+          galleryNext();
+        }
+      });
+      
+      // Swipe support for touch devices
+      let touchStartX = 0;
+      let touchEndX = 0;
+      
+      const mediaEl = galleryModal.querySelector('.s-m-diamond-gallery-modal__media');
+      if (mediaEl) {
+        mediaEl.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        mediaEl.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        }, { passive: true });
+      }
+      
+      function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            // Swipe left - next
+            galleryNext();
+          } else {
+            // Swipe right - prev
+            galleryPrev();
+          }
+        }
+      }
+    }
     
     // Initialize display on page load if diamond is already selected
     if (state.selectedDiamond) {
