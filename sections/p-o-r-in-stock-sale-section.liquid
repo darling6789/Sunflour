@@ -3,161 +3,7 @@
     <div class="p-o-r-wrapper">
       <div class="p-o-r-content">
         <div class="p-o-r-content-left">
-          <h2 class="p-o-r-content-left-title">Featured Pre-Owned Rolex</h2>
-          <div class="p-o-r-content-left-featured-product">
-            <div class="p-o-r-content-left-featured-product-image" data-por-featured-carousel>
-              <div class="carousel-container">
-                <div class="carousel-track" data-por-featured-carousel-track>
-                  {% for image in section.settings.featured_product.images %}
-                    <div class="carousel-slide">
-                      <img
-                        src="{{ image | image_url: width: 400, height: 500 }}"
-                        alt="{{ section.settings.featured_product.title }}"
-                        width="361"
-                        height="478"
-                      >
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-              {% if section.settings.featured_product.images.size > 1 %}
-                <button class="carousel-button prev" data-por-featured-carousel-prev aria-label="Previous slide">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                <button class="carousel-button next" data-por-featured-carousel-next aria-label="Next slide">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-                <div class="carousel-indicators" data-por-featured-carousel-indicators>
-                  {% for image in section.settings.featured_product.images %}
-                    <button
-                      class="indicator {% if forloop.first %}active{% endif %}"
-                      data-slide="{{ forloop.index0 }}"
-                      aria-label="Slide {{ forloop.index }}"
-                    ></button>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-            <div class="p-o-r-content-left-product-content">
-              <div class="p-o-r-content-top">
-                <div class="p-o-r-product-title-wrapper">
-                  <div class="p-o-r-product-series">
-                    <h3>{{ section.settings.featured_product.metafields.custom.brand_collection | default: 'N/A' }}</h3>
-                  </div>
-                  <h2 class="p-o-r-product-title">
-                    {% assign title = section.settings.featured_product.metafields.custom.watch_nickname
-                      | default: 'N/A'
-                    %}
-                    {%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
-                    {% assign title = title | remove_first: 'Pre-Owned Rolex ' | remove_first: 'Pre Owned Rolex ' %}
-                    {%- comment -%} Remove everything from the first number to the end {%- endcomment -%}
-                    {% assign filtered_title = '' %}
-                    {% assign title_chars = title | split: '' %}
-                    {% for char in title_chars %}
-                      {% if char == '0'
-                        or char == '1'
-                        or char == '2'
-                        or char == '3'
-                        or char == '4'
-                        or char == '5'
-                        or char == '6'
-                        or char == '7'
-                        or char == '8'
-                        or char == '9'
-                      %}
-                        {% break %}
-                      {% endif %}
-                      {% assign filtered_title = filtered_title | append: char %}
-                    {% endfor %}
-                    {{ filtered_title | strip }}
-                  </h2>
-                </div>
-                {% assign band_type = section.settings.featured_product.metafields.custom.watch_band_type
-                  | default: 'N/A'
-                %}
-                {% assign case_size = section.settings.featured_product.metafields.custom.watch_case_size
-                  | default: 'N/A'
-                %}
-                {% if band_type != 'N/A' or case_size != 'N/A' %}
-                  <div class="p-o-r-featured-product-features">
-                    <h4>
-                      {{ band_type }} |
-                      {{ case_size }}
-                    </h4>
-                    <div class="features-list">
-                      {% assign reference = section.settings.featured_product.metafields.custom.watch_reference
-                        | default: ''
-                      %}
-                      {% if reference != '' %}
-                        <div class="features-list-content">
-                          <h5>MODEL</h5>
-                          <p>{{ reference }}</p>
-                        </div>
-                      {% endif %}
-                      {% assign year = section.settings.featured_product.metafields.custom.watch_year | default: '' %}
-                      {% if year != '' %}
-                        <div class="features-list-content">
-                          <h5>YEAR</h5>
-                          <p>{{ year }}</p>
-                        </div>
-                      {% endif %}
-                      {% assign condition = section.settings.featured_product.metafields.custom.watch_condition
-                        | default: ''
-                      %}
-                      {% if condition != '' %}
-                        <div class="features-list-content">
-                          <h5>CONDITION</h5>
-                          <p>
-                            {% assign raw_condition = condition | downcase | strip %}
-                            {% case raw_condition %}
-                              {% when 'unworn' -%}
-                                UNWORN
-                              {% when 'unworn (nos)' -%}
-                                UNWORN
-                              {% when 'as is' -%}
-                                RETAIL READY
-                              {% when 'slider' -%}
-                                EXCELLENT
-                              {% when 'mint' -%}
-                                VERY GOOD
-                              {% when 'very good' -%}
-                                VERY GOOD
-                              {% when 'pre-owned' -%}
-                                GOOD
-                              {% when 'good' -%}
-                                GOOD
-                              {% else -%}
-                                {{- condition | upcase }}
-                            {% endcase %}
-                          </p>
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endif %}
-              </div>
-              <div class="p-o-r-content-bottom">
-                {% if section.settings.call_phone_number %}
-                  <a href="tel:{{ section.settings.call_phone_number }}" class="call-for-price-link">
-                    <h4>Call for Price</h4>
-                  </a>
-                {% else %}
-                  <h4>Call for Price</h4>
-                {% endif %}
-                {% if section.settings.appointment_link %}
-                  <a href="{{ section.settings.appointment_link }}" class="make-appointment-link">
-                    <h5>{{ section.settings.appointment_text }}</h5>
-                  </a>
-                {% else %}
-                  <h5>{{ section.settings.appointment_text }}</h5>
-                {% endif %}
-              </div>
-            </div>
-          </div>
+          <div class="m-collection-2-image" onclick="document.location='{{ section.settings.collection.url }}';"></div>
         </div>
         {% if section.settings.collection %}
           <div class="p-o-r-content-right">
@@ -1156,6 +1002,17 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_left",
+      "label": "Image left",
+      "default": true
     },
     {
       "type": "text",
