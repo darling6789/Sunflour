@@ -22,9 +22,9 @@
       "name": "Special fine jewelry hero",
       "settings": {
         "back_image": "shopify://shop_images/special-jewelry-hero-min.jpg",
-        "heading": "White Gold Fine Jewelry",
-        "text_color": "#000000",
-        "overlay_color": "#b1b1b1"
+        "heading": "Black Friday Luxury Savings",
+        "text_color": "#361122",
+        "overlay_color": "#dfdfdf"
       }
     },
     "m_collection_list_2_Ex9aff": {
@@ -90,9 +90,13 @@
         "collection_FBPdRz",
         "collection_L7pCJ3"
       ],
+      "disabled": true,
       "name": "Custom collection list 2",
       "settings": {
-        "heading": "Shop White Gold by Product Type"
+        "heading": "Shop White Gold by Product Type",
+        "back_color": "#ffffff",
+        "heading_color": "#151515",
+        "item_title_color": "#151515"
       }
     },
     "m_jewelry_trust_CBGxUP": {
@@ -128,6 +132,7 @@
         "badge_gMtUDA",
         "badge_YCNehm"
       ],
+      "disabled": true,
       "name": "Jewelry landing trust",
       "settings": {
         "image": "shopify://shop_images/Quality_Trust-min.png",
@@ -142,9 +147,11 @@
         "image": "shopify://shop_images/earrings-background.png",
         "image_left": false,
         "heading": "Earrings",
+        "heading_color": "#333333",
         "back_color": "#f9f5f7",
         "collection_link_text": "Shop All White Gold Earrings",
-        "collection_link": "shopify://collections/white-gold-earrings"
+        "collection_link": "shopify://collections/white-gold-earrings",
+        "link_color": "#333333"
       }
     },
     "m_featured_product_47KrmH": {
@@ -158,8 +165,17 @@
         "description": "<p>One of Le Vian's delicious gold metal shades is their unique Vanilla Gold®. By creating a blend with yellow gold using more of a strong white gold alloy, they achieve a very brilliant white color that is sure to dazzle in any combination. <br/><br/>Especially stunning with Vanilla Gold are cool harmonious combinations such as their Costa Smeralda Emeralds™ or Blueberry Sapphires™. For a combination that instead hits the craving for contrast, look no further than their warm Chocolate Diamonds®.<br/></p>",
         "link_text": "",
         "link": "",
+        "heading_color": "#000000",
+        "description_color": "#000000",
+        "button_text_color": "#000000",
+        "button_bg_color": "rgba(0,0,0,0)",
+        "button_border_color": "#151515",
+        "link_color": "#000000",
+        "collection_heading_color": "#333333",
+        "collection_link_color": "#333333",
         "collection_heading": "More Vanilla Gold Designs",
         "collection": "le-vian-vanilla-gold",
+        "col_text": "Shop All Le Vian Vanilla Gold",
         "type_engagement_ring": false,
         "type_wedding_band": false,
         "type_womens_wedding_band": false,
@@ -173,8 +189,7 @@
         "type_bangle": false,
         "type_necklace": false,
         "type_pendant": false,
-        "type_watch": false,
-        "col_text": "Shop All Le Vian Vanilla Gold"
+        "type_watch": false
       }
     },
     "m_featured_collection_2_rc9NBr": {
@@ -184,10 +199,12 @@
         "collection": "white-gold-bracelets",
         "image": "shopify://shop_images/bracelet-wg.png",
         "image_left": true,
-        "heading": "Bracelets",
+        "heading": "",
+        "heading_color": "#333333",
         "back_color": "#efeee8",
         "collection_link_text": "Shop All White Gold Bracelets",
-        "collection_link": "shopify://collections/white-gold-bracelets"
+        "collection_link": "shopify://collections/white-gold-bracelets",
+        "link_color": "#333333"
       }
     },
     "m_featured_collection_1_Yi6Lic": {
@@ -196,9 +213,11 @@
       "settings": {
         "collection": "white-gold-necklaces-pendants",
         "heading": "Necklaces",
-        "back_color": "",
         "collection_link_text": "Shop All White Gold Necklaces",
-        "collection_link": "shopify://collections/white-gold-necklaces-pendants"
+        "collection_link": "shopify://collections/white-gold-necklaces-pendants",
+        "back_color": "",
+        "heading_color": "#333333",
+        "link_color": "#333333"
       }
     },
     "m_featured_collection_2_bhnbte": {
@@ -209,9 +228,11 @@
         "image": "shopify://shop_images/special-jewelry-hero-min.jpg",
         "image_left": false,
         "heading": "Rings",
+        "heading_color": "#333333",
         "back_color": "#f8f6f2",
         "collection_link_text": "Shop All White Gold Rings",
-        "collection_link": "shopify://collections/white-gold-rings"
+        "collection_link": "shopify://collections/white-gold-rings",
+        "link_color": "#333333"
       }
     },
     "m_featured_collection_1_Nir7Ca": {
@@ -220,9 +241,11 @@
       "settings": {
         "collection": "white-gold-jewelry",
         "heading": "All White Gold Jewelry",
-        "back_color": "",
         "collection_link_text": "Shop All White Gold Jewelry",
-        "collection_link": "shopify://collections/white-gold-jewelry"
+        "collection_link": "shopify://collections/white-gold-jewelry",
+        "back_color": "",
+        "heading_color": "#333333",
+        "link_color": "#333333"
       }
     },
     "175801863453b60daa": {
