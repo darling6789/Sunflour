@@ -192,6 +192,15 @@
         "type_watch": false
       }
     },
+    "p_o_r_in_stock_sale_section_im6XmN": {
+      "type": "p-o-r-in-stock-sale-section",
+      "name": "P.O.R. Sale Section",
+      "settings": {
+        "collection": "rolex-1",
+        "image": "shopify://shop_images/a-man-in-a-shirt-adjusts-the-watch-on-his-arm-clo-2025-01-09-07-02-39-utc.jpg",
+        "image_left": true
+      }
+    },
     "m_featured_collection_2_rc9NBr": {
       "type": "m-featured-collection-2",
       "name": "Custom collection 2",
@@ -298,6 +307,7 @@
     "m_jewelry_trust_CBGxUP",
     "m_featured_collection_2_mwnBJJ",
     "m_featured_product_47KrmH",
+    "p_o_r_in_stock_sale_section_im6XmN",
     "m_featured_collection_2_rc9NBr",
     "m_featured_collection_1_Yi6Lic",
     "m_featured_collection_2_bhnbte",
