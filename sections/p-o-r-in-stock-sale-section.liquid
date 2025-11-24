@@ -3,7 +3,7 @@
     <div class="p-o-r-wrapper">
       <div class="p-o-r-content">
         <div class="p-o-r-content-left">
-          <div class="m-collection-2-image" onclick="document.location='{{ section.settings.image.url }}';"></div>
+          <div class="p-o-r-sale-image" onclick="document.location='{{ section.settings.image.url }}';"></div>
         </div>
         {% if section.settings.collection %}
           <div class="p-o-r-content-right">
@@ -857,6 +857,20 @@
         display: none;
       }
     }
+
+    #shopify-section-{{ section.id }} .p-o-r-sale-image {
+    width: 43%;
+    display: block !important;
+    {% comment %} height: 660px; {% endcomment %}
+    background-image: url({{ section.settings.image | img_url: 'master' }});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    {% unless section.settings.image_left %}
+    order: 1;
+    {% endunless %}
+}
 </style>
 <script>
   class PORFeaturedProductCarousel {
