@@ -861,12 +861,16 @@
     #shopify-section-{{ section.id }} .p-o-r-sale-image {
     width: 43%;
     display: block !important;
-    {% comment %} height: 660px; {% endcomment %}
+    height: 100%;
     background-image: url({{ section.settings.image | img_url: 'master' }});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 990px) {
+    #shopify-section-{{ section.id }} .p-o-r-sale-image { width: 100%;}
 }
 </style>
 <script>
