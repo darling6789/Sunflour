@@ -1,5 +1,8 @@
 <div class="m-special-jewelry-hero">
-    <h1>{{ section.settings.heading }}</h1>
+    <div>
+        <h1>{{ section.settings.heading }}</h1>
+        <p>{{ section.settings.description }}</p>
+    </div>    
 </div>
 
 <style>
@@ -31,6 +34,10 @@
     font-style: normal;
     font-weight: 500;
     line-height: 96%; /* 46.08px */
+    margin-bottom: 0;
+}
+.m-special-jewelry-hero p {
+    margin: 0;
 }
 
 @media only screen and ( min-width: 1921px ) {
@@ -95,6 +102,11 @@
             "type": "text",
             "id": "heading",
             "label": "Heading"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
         },
         {
             "type": "color",

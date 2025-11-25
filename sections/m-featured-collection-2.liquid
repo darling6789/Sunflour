@@ -6,6 +6,9 @@
     <div class="m-collection-2-image" onclick="document.location='{{ section.settings.collection.url }}';"></div>
     <div class="m-collection-2-body">
         <h2><a href="{{ section.settings.collection.url }}">{{ section.settings.heading }}</a></h2>
+        {% if section.settings.description != blank %}
+        <p>{{ section.settings.description }}</p>
+        {% endif %}
 
         <div class="m-collection-2-slider-wrap">
             <div class="m-collection-2-slider-left">{% render 'icon-left-arrow' %}</div>
@@ -69,6 +72,9 @@
     line-height: normal;
     margin: 0;
     margin-bottom: 30px;
+}
+#shopify-section-{{ section.id }} .m-collection-2-body>p {
+    color: {{ section.settings.description_color }};
 }
 #shopify-section-{{ section.id }} .m-collection-2-body>h2 a {
     text-decoration: none;
@@ -270,6 +276,17 @@ $(document).ready(function(){
       "type": "color",
       "id": "heading_color",
       "label": "Heading color",
+      "default": "#333"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
       "default": "#333"
     },
     {
