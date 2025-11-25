@@ -23,7 +23,7 @@
       "settings": {
         "back_image": "shopify://shop_images/Snowy_Light_background.png",
         "heading": "Black Friday Special Savings",
-        "description": "<p><em>description</em></p>",
+        "description": "",
         "text_color": "#361122",
         "overlay_color": "#ffffff"
       }
