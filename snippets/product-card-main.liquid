@@ -18,7 +18,7 @@
     height: 100%;
     background-color: #fcfcfc;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: clip;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
@@ -40,7 +40,7 @@
     width: 100%;
     aspect-ratio: 1;
     background-color: #e8e8e8;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .card-main__image {
@@ -132,6 +132,34 @@
     color: #4d3942;
   }
 
+  /* ===== WISHLIST BUTTON (Handled by Swish app) ===== */
+  wishlist-button-collection {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+  }
+
+  wishlist-button-collection wk-floating {
+    position: absolute;
+  }
+
+  wishlist-button-collection wk-button {
+    background-color: #fcfcfc !important;
+  }
+  wk-button.wk-floating {
+    margin: 8px;
+    border-radius: 8px;
+    background-color: #fcfcfc8c !important
+}
+  wishlist-button-collection .wk-button, wishlist-button-collection .wk-button:hover{
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    min-height: 32px;
+  }
+  
+
   /* ===== CONTENT SECTION ===== */
   .card-main__content {
     display: flex;
@@ -194,14 +222,15 @@
 
   .card-main__price .price__sale {
     display: flex;
-    max-width:200px;
+    width:105px;
+    max-width:115px;
     align-items: center;
     gap: 0 !important;
   }
 
   .card-main__price .price-item--sale {
     color: #78686f;
-    font-size: 24px;
+    font-size: 28px;
     font-family: 'EB Garamond', serif;
     font-weight: 500;
   }
@@ -356,7 +385,7 @@
 <a href="{{ product.url }}" class="card-main-link">
   <div class="card-main{% if product.available == false %} is-unavailable{% endif %}">
     <!-- Image Section -->
-    <div class="card-main__image-section">
+    <div class="card-main__image-section" wk-id="card-{{ product.id }}">
       <img
         class="card-main__image"
         src="{{ product.featured_image | image_url: width: 500 }}"
@@ -375,6 +404,16 @@
           height="500"
         >
       {% endif %}
+
+      <!-- Wishlist Button -->
+      <wishlist-button-collection
+        data-product-handle="{{ product.handle }}"
+        show-icon=""
+        icon="wishlist"
+        align-self="center"
+        align-content="center"
+        floating="{&quot;reference&quot;:&quot;[wk-id=\&quot;card-{{ product.id }}\&quot;]&quot;,&quot;position&quot;:{&quot;placement&quot;:&quot;top-start&quot;,&quot;inset&quot;:true}}"
+      ></wishlist-button-collection>
 
       <!-- Availability Badge -->
       {% comment %} Check if product is in a discounted collection {% endcomment %}
@@ -426,7 +465,7 @@
 
       <div class="card-main__footer">
         {% if product.available %}
-          {% capture promo_output %}{% render 'auto-discount-price', product: product %}{% endcapture %}
+          {% capture promo_output %}{% render 'auto-discount-price', product: product, clean_format: true %}{% endcapture %}
           {% if promo_output contains 'promo-price-block' %}
             <div class="card-main__price">
               {{ promo_output }}
@@ -531,6 +570,17 @@
           alert(error.message || 'Failed to add product to cart. Please try again.');
         }
       });
+    });
+  })();
+
+  // Wishlist Button Handler - Prevent link navigation
+  (function () {
+    const wishlistButtons = document.querySelectorAll('wishlist-button-collection');
+
+    wishlistButtons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+      }, true); // Use capture phase to catch the event before it bubbles
     });
   })();
 </script>
