@@ -440,6 +440,212 @@
       font-size: 2.6rem;
     }
   }
+
+  /* Dream Watch Notify Me Modal - Fully Namespaced */
+  .dream-watch-notify-me-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .dream-watch-notify-me-overlay[style*="display: flex"] {
+    animation: dream-watch-fadeIn 0.3s ease;
+  }
+
+  @keyframes dream-watch-fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .dream-watch-notify-me-modal {
+    position: relative;
+    background-color: #f8f6f2;
+    border-radius: 16px;
+    padding: 45px 38px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: dream-watch-slideUp 0.3s ease;
+  }
+
+  @keyframes dream-watch-slideUp {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .dream-watch-notify-me-close {
+    all: unset;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    color: #4d3942;
+    transition: color 0.3s ease;
+  }
+
+  .dream-watch-notify-me-close:hover {
+    color: #78686f;
+  }
+
+  .dream-watch-notify-me-title {
+    margin: 0 0 16px 0;
+    font-family: 'EB Garamond';
+    font-weight: 400;
+    font-size: 32px;
+    color: #151515;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .dream-watch-notify-me-description {
+    margin: 0 0 28px 0;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16px;
+    color: #4d3942;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .dream-watch-notify-me-description strong {
+    font-weight: 600;
+    color: #151515;
+  }
+
+  .dream-watch-notify-me-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .dream-watch-notify-me-input {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 14px;
+    color: #4e4e4e;
+    box-sizing: border-box;
+    transition: outline 0.3s ease;
+  }
+
+  .dream-watch-notify-me-input:focus {
+    outline: 2px solid #78686f;
+    outline-offset: 2px;
+  }
+
+  .dream-watch-notify-me-input::placeholder {
+    color: #999;
+  }
+
+  .dream-watch-notify-me-submit {
+    all: unset;
+    padding: 16px 32px;
+    background-color: #78686f;
+    color: #ffffff;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+  }
+
+  .dream-watch-notify-me-submit:hover:not(:disabled) {
+    background-color: #4d3942;
+  }
+
+  .dream-watch-notify-me-submit:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .dream-watch-notify-me-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .dream-watch-notify-me-error {
+    display: block;
+    font-family: 'Montserrat';
+    font-size: 12px;
+    color: #d32f2f;
+    text-align: center;
+    line-height: 1.4;
+    min-height: 16px;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Responsive Modal */
+  @media (max-width: 640px) {
+    .dream-watch-notify-me-modal {
+      padding: 32px 24px;
+      border-radius: 12px;
+    }
+
+    .dream-watch-notify-me-title {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .dream-watch-notify-me-description {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .dream-watch-notify-me-form {
+      gap: 12px;
+    }
+
+    .dream-watch-notify-me-input {
+      padding: 14px 12px;
+      font-size: 16px;
+      height: 44px;
+    }
+
+    .dream-watch-notify-me-submit {
+      padding: 14px 24px;
+      height: 44px;
+      font-size: 14px;
+    }
+  }
 </style>
 
 <a href="{{product.url}}" class="product-card-link">
@@ -530,8 +736,16 @@
           <div class="price-container"><div class="product-price">${{product.price | money_without_currency | remove: '.00'}}</div></div>
           <button type="button" class="btn-primary btn-buy-now" data-stop-link-click><div class="btn-text">Buy Now</div></button>
         {% else %}
-          <button type="button" class="btn-notify-me" data-stop-link-click disabled>
-            <div class="btn-text">Out of Stock</div>
+          <button
+            type="button"
+            class="btn-notify-me"
+            data-stop-link-click
+            data-dream-watch-notify-trigger
+            data-watch-reference="{{ product.metafields.custom.watch_reference | escape }}"
+            data-product-id="{{ product.id }}"
+            data-product-title="{{ product.title | escape }}"
+          >
+            <div class="btn-text">Notify Me</div>
           </button>
         {% endif %}
       </div>
@@ -627,18 +841,6 @@
           }
         });
       }
-    });
-  })();
-
-  // Notify Me Button Handler
-  (function () {
-    const notifyMeButtons = document.querySelectorAll('[data-notify-me-trigger]');
-    notifyMeButtons.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        alert('Thank you for your interest! We will notify you when this item is back in stock.');
-      });
     });
   })();
 </script>
