@@ -10,99 +10,72 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
+      "type": "semi-mount-rings-main",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
-        "title": {
+        "title_inqHgb": {
           "type": "title",
           "settings": {}
         },
-        "price": {
+        "price_Eg7YNN": {
           "type": "price",
           "settings": {}
         },
-        "variant_picker": {
+        "variant_picker_M8HWMf": {
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "disabled": true,
-          "settings": {}
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
+        "center_diamond_selection_e3whE8": {
+          "type": "center_diamond_selection",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": false,
-            "button_layout": "stacked"
+            "status_text": "None Selected",
+            "add_button_text": "Add Center Diamond",
+            "disclaimer_text": "Center diamond is not included. Diamond shown is for illustrative purposes only.",
+            "show_consult_link": true,
+            "consult_link": "#",
+            "add_to_cart_text": "Add Setting Only to Cart"
           }
         },
-        "eb_easy_bundle_builder_app_block_bundle_upsell_jfBbrP": {
-          "type": "shopify://apps/eb-easy-bundle-builder/blocks/app-block-bundleUpsell/05b1325c-6303-4da5-8e2f-b13ab2a50e1a",
-          "settings": {}
-        },
-        "guarantee_xFq7iY": {
-          "type": "guarantee",
+        "trust_badge_FTVxRy": {
+          "type": "trust_badge",
           "settings": {
-            "certified_title": "CERTIFIED GEMS",
-            "certified_text": "Every diamond and gemstone is GIA or IGI-certified and sourced with full transparency.",
-            "warranty_title": "lifetime warranty",
-            "warranty_text": "All 10K, 14K, and 18K gold and silver jewelry comes with a lifetime warranty against manufacturing defects.",
-            "shipping_title": "Fast Insured Shipping",
-            "shipping_text": "Rest easy with insured shipping!"
-          }
-        },
-        "description": {
-          "type": "description",
-          "disabled": true,
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
-          "disabled": true,
-          "settings": {
-            "share_label": "Share"
+            "image1": "shopify://shop_images/Trust_badge.svg",
+            "title1": "Certified Gems",
+            "description1": "<p>Every diamond and gemstone is GIA or IGI-certified and sourced with full transparency.</p>",
+            "image2": "shopify://shop_images/Trust_badge_3.svg",
+            "title2": "Lifetime Warranty",
+            "description2": "<p>All 10K, 14K, and 18K gold and silver jewelry comes with a lifetime warranty against manufacturing defects.</p>",
+            "image3": "shopify://shop_images/Trust_badge_2.svg",
+            "title3": "Fast Insured Shipping",
+            "description3": "<p>Rest easy with insured shipping! Shipping costs are calculated at checkout.</p>"
           }
         }
       },
       "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "eb_easy_bundle_builder_app_block_bundle_upsell_jfBbrP",
-        "guarantee_xFq7iY",
-        "description",
-        "share"
+        "title_inqHgb",
+        "price_Eg7YNN",
+        "variant_picker_M8HWMf",
+        "center_diamond_selection_e3whE8",
+        "trust_badge_FTVxRy"
       ],
+      "name": "Semi-mount rings main",
       "settings": {
         "enable_sticky_info": true,
-        "color_scheme": "scheme-1",
-        "media_size": "small",
+        "color_scheme": "",
+        "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
-        "gallery_layout": "thumbnail_slider",
+        "gallery_layout": "stacked",
         "mobile_thumbnails": "hide",
         "media_position": "left",
         "image_zoom": "lightbox",
-        "hide_variants": true,
+        "hide_variants": false,
         "enable_video_looping": false,
         "show_breadcrumbs": true,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 36
       }
     },
     "m_multi_tabs_YV9PX8": {
