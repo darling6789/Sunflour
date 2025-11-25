@@ -196,15 +196,23 @@
       "type": "m-featured-collection-2",
       "name": "Custom collection 2",
       "settings": {
-        "collection": "white-gold-bracelets",
+        "collection": "lab-grown-diamond-initial-pendant-necklaces",
         "image": "shopify://shop_images/Harmonized_Pendant_Image.png",
         "image_left": true,
-        "heading": "",
+        "heading": "Diamond Initial Necklaces - 60% off",
         "heading_color": "#333333",
         "back_color": "#efeee8",
-        "collection_link_text": "Shop All White Gold Bracelets",
-        "collection_link": "shopify://collections/white-gold-bracelets",
+        "collection_link_text": "Shop All Diamond Initial Pendants",
+        "collection_link": "shopify://collections/lab-grown-diamond-initial-pendant-necklaces",
         "link_color": "#333333"
+      }
+    },
+    "p_o_r_in_stock_sale_section_TYYhRD": {
+      "type": "p-o-r-in-stock-sale-section",
+      "name": "P.O.R. Sale Section",
+      "settings": {
+        "collection": "rolex-1",
+        "image_left": true
       }
     },
     "m_featured_collection_1_Yi6Lic": {
@@ -299,6 +307,7 @@
     "m_featured_collection_2_mwnBJJ",
     "m_featured_product_47KrmH",
     "m_featured_collection_2_rc9NBr",
+    "p_o_r_in_stock_sale_section_TYYhRD",
     "m_featured_collection_1_Yi6Lic",
     "m_featured_collection_2_bhnbte",
     "m_featured_collection_1_Nir7Ca",
