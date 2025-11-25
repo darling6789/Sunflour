@@ -18,7 +18,7 @@
     height: 100%;
     background-color: #fcfcfc;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: clip;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
@@ -40,7 +40,7 @@
     width: 100%;
     aspect-ratio: 1;
     background-color: #e8e8e8;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .card-main__image {
@@ -91,6 +91,11 @@
     background-color: #9c5556;
   }
 
+  .card-main__badge--sale {
+    background-color: #1b8168;
+    padding: 4px 16px;
+  }
+
   /* ===== QUICK VIEW BUTTON ===== */
   .card-main__quick-view {
     position: absolute;
@@ -127,6 +132,34 @@
     color: #4d3942;
   }
 
+  /* ===== WISHLIST BUTTON (Handled by Swish app) ===== */
+  wishlist-button-collection {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+  }
+
+  wishlist-button-collection wk-floating {
+    position: absolute;
+  }
+
+  wishlist-button-collection wk-button {
+    background-color: #fcfcfc !important;
+  }
+  wk-button.wk-floating {
+    margin: 8px;
+    border-radius: 8px;
+    background-color: #fcfcfc8c !important;
+  }
+  wishlist-button-collection .wk-button,
+  wishlist-button-collection .wk-button:hover {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    min-height: 32px;
+  }
+
   /* ===== CONTENT SECTION ===== */
   .card-main__content {
     display: flex;
@@ -149,7 +182,6 @@
     margin: 0 0 6px 0;
   }
 
-  /* ===== FOOTER (PRICE + BUTTON) ===== */
   .card-main__footer {
     display: flex;
     align-items: flex-end;
@@ -163,7 +195,56 @@
     font-size: 28px;
     font-weight: 500;
     color: #78686f;
-    line-height: 1;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .card-main__price--original {
+    font-size: 20px;
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+  }
+
+  .card-main__price--sale {
+    color: #d4542a;
+    font-size: 28px;
+  }
+
+  .card-main__price .promo-price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .card-main__price .price__sale {
+    display: flex;
+    width: 105px;
+    max-width: 115px;
+    align-items: center;
+    gap: 0 !important;
+  }
+
+  .card-main__price .price-item--sale {
+    color: #78686f;
+    font-size: 28px;
+    font-family: 'EB Garamond', serif;
+    font-weight: 500;
+  }
+
+  .card-main__price .price-item--regular {
+    color: #b0b0b0;
+    font-size: 24px;
+    text-decoration: line-through;
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+  }
+
+  .card-main__price .promo-badge {
+    display: none;
   }
 
   /* ===== BUTTONS ===== */
@@ -259,12 +340,17 @@
       gap: 8px;
     }
     button.card-main__button--primary.btn-buy-now {
-    width: 100%;
-    max-width: 100%;
-}
+      width: 100%;
+      max-width: 100%;
+    }
   }
   @media (max-width: 768px) {
-    
+    .card-main__price .price-item--regular {
+      font-size: 20px;
+    }
+    .card-main__price .price-item--sale {
+      font-size: 24px;
+    }
   }
   @media (max-width: 640px) {
     .card-main__content {
@@ -304,7 +390,7 @@
 <a href="{{ product.url }}" class="card-main-link">
   <div class="card-main{% if product.available == false %} is-unavailable{% endif %}">
     <!-- Image Section -->
-    <div class="card-main__image-section">
+    <div class="card-main__image-section" wk-id="card-{{ product.id }}">
       <img
         class="card-main__image"
         src="{{ product.featured_image | image_url: width: 500 }}"
@@ -324,9 +410,66 @@
         >
       {% endif %}
 
+      <!-- Wishlist Button -->
+      <wishlist-button-collection
+        data-product-handle="{{ product.handle }}"
+        show-icon=""
+        icon="wishlist"
+        align-self="center"
+        align-content="center"
+        floating="{&quot;reference&quot;:&quot;[wk-id=\&quot;card-{{ product.id }}\&quot;]&quot;,&quot;position&quot;:{&quot;placement&quot;:&quot;top-start&quot;,&quot;inset&quot;:true}}"
+      ></wishlist-button-collection>
+
       <!-- Availability Badge -->
-      <div class="card-main__badge{% if product.available == false %} card-main__badge--sold-out{% endif %}">
-        {% if product.available %}Available{% else %}Sold Out{% endif %}
+      {% comment %} Check if product is in a discounted collection - matches auto-discount-price.liquid logic {% endcomment %}
+      {% assign fixed_offer_collection = '' %}
+      {% assign fixed_offer_amount_cents = 200000 %}
+      {% assign percent_offer_collections = 'fine-jewelry,engagement,bands' %}
+      {% assign percent_offer_collection = percent_offer_collections | split: ',' %}
+      {% assign percent_offer_value = 15 %}
+
+      {% assign in_fixed_offer = false %}
+      {% assign in_percent_offer = false %}
+
+      {% for c in product.collections %}
+        {% if c.handle == fixed_offer_collection %}{% assign in_fixed_offer = true %}{% endif %}
+        {% if percent_offer_collection contains c.handle %}{% assign in_percent_offer = true %}{% endif %}
+      {% endfor %}
+
+      {% assign variant = product.selected_or_first_available_variant %}
+      {% assign base_price = variant.price %}
+      {% assign best_price = base_price %}
+      {% assign best_label = '' %}
+
+      {% if in_fixed_offer %}
+        {% assign cand = base_price | minus: fixed_offer_amount_cents %}
+        {% if cand < 0 %}{% assign cand = 0 %}{% endif %}
+        {% assign best_price = cand %}
+        {% assign best_label = 'Special Offer' %}
+      {% endif %}
+
+      {% if in_percent_offer %}
+        {% assign percent_left = 100 | minus: percent_offer_value %}
+        {% assign cand = base_price | times: percent_left | divided_by: 100 %}
+        {% if best_price == base_price or cand < best_price %}
+          {% assign best_price = cand %}
+          {% assign best_label = '15% Off' %}
+        {% endif %}
+      {% endif %}
+
+      {% assign show_promo = false %}
+      {% if best_price < base_price %}{% assign show_promo = true %}{% endif %}
+
+      <div class="card-main__badge{% if product.available == false %} card-main__badge--sold-out{% elsif show_promo %} card-main__badge--sale{% endif %}">
+        {% if product.available %}
+          {% if show_promo %}
+            {{ best_label }}
+          {% else %}
+            Available
+          {% endif %}
+        {% else %}
+          Sold Out
+        {% endif %}
       </div>
 
       <!-- Quick View Button -->
@@ -353,10 +496,18 @@
         {{ product.title }}
       </h3>
 
-      <!-- Footer: Price & Button -->
       <div class="card-main__footer">
         {% if product.available %}
-          <div class="card-main__price">${{ product.price | money_without_currency | remove: '.00' }}</div>
+          {% capture promo_output %}{% render 'auto-discount-price', product: product, clean_format: true %}{% endcapture %}
+          {% if promo_output contains 'promo-price-block' %}
+            <div class="card-main__price">
+              {{ promo_output }}
+            </div>
+          {% else %}
+            <div class="card-main__price">
+              <span>${{ product.price | money_without_currency | remove: '.00' }}</span>
+            </div>
+          {% endif %}
           <button
             type="button"
             class="card-main__button card-main__button--primary btn-buy-now"
@@ -452,6 +603,21 @@
           alert(error.message || 'Failed to add product to cart. Please try again.');
         }
       });
+    });
+  })();
+
+  // Wishlist Button Handler - Prevent link navigation
+  (function () {
+    const wishlistButtons = document.querySelectorAll('wishlist-button-collection');
+
+    wishlistButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        (e) => {
+          e.preventDefault();
+        },
+        true
+      ); // Use capture phase to catch the event before it bubbles
     });
   })();
 </script>
