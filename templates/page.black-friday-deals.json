@@ -21,7 +21,7 @@
       "type": "m-special-jewelry-hero",
       "name": "Special fine jewelry hero",
       "settings": {
-        "back_image": "shopify://shop_images/special-jewelry-hero-min.jpg",
+        "back_image": "shopify://shop_images/Untitled_design_33.png",
         "heading": "Black Friday Luxury Savings",
         "text_color": "#361122",
         "overlay_color": "#dfdfdf"
@@ -149,8 +149,8 @@
         "heading": "Diamond Classics - 70% 0ff",
         "heading_color": "#333333",
         "back_color": "#f9f5f7",
-        "collection_link_text": "Shop All White Gold Earrings",
-        "collection_link": "shopify://collections/white-gold-earrings",
+        "collection_link_text": "Shop All Diamond Classics on Sale",
+        "collection_link": "shopify://collections/diamond-classics",
         "link_color": "#333333"
       }
     },
@@ -161,7 +161,7 @@
         "back_color": "#f8feff",
         "product": "",
         "image": "shopify://shop_images/blueberry-sapphire-vanillagold.jpg",
-        "title": "Le Vian Vanilla Gold",
+        "title": "Le Vian Gemstone Holiday Savings",
         "description": "<p>One of Le Vian's delicious gold metal shades is their unique Vanilla Gold®. By creating a blend with yellow gold using more of a strong white gold alloy, they achieve a very brilliant white color that is sure to dazzle in any combination. <br/><br/>Especially stunning with Vanilla Gold are cool harmonious combinations such as their Costa Smeralda Emeralds™ or Blueberry Sapphires™. For a combination that instead hits the craving for contrast, look no further than their warm Chocolate Diamonds®.<br/></p>",
         "link_text": "",
         "link": "",
@@ -173,9 +173,9 @@
         "link_color": "#000000",
         "collection_heading_color": "#333333",
         "collection_link_color": "#333333",
-        "collection_heading": "More Vanilla Gold Designs",
+        "collection_heading": "More Gemstone Deals",
         "collection": "le-vian-vanilla-gold",
-        "col_text": "Shop All Le Vian Vanilla Gold",
+        "col_text": "Shop All Le Vian Holiday Savings",
         "type_engagement_ring": false,
         "type_wedding_band": false,
         "type_womens_wedding_band": false,
@@ -226,34 +226,6 @@
         "back_color": "#333333",
         "heading_color": "#f8f6f2",
         "link_color": "#ffffff"
-      }
-    },
-    "m_featured_collection_2_bhnbte": {
-      "type": "m-featured-collection-2",
-      "name": "Custom collection 2",
-      "settings": {
-        "collection": "white-gold-rings",
-        "image": "shopify://shop_images/special-jewelry-hero-min.jpg",
-        "image_left": false,
-        "heading": "Rings",
-        "heading_color": "#333333",
-        "back_color": "#f8f6f2",
-        "collection_link_text": "Shop All White Gold Rings",
-        "collection_link": "shopify://collections/white-gold-rings",
-        "link_color": "#333333"
-      }
-    },
-    "m_featured_collection_1_Nir7Ca": {
-      "type": "m-featured-collection-1",
-      "name": "Custom collection 1",
-      "settings": {
-        "collection": "white-gold-jewelry",
-        "heading": "All White Gold Jewelry",
-        "collection_link_text": "Shop All White Gold Jewelry",
-        "collection_link": "shopify://collections/white-gold-jewelry",
-        "back_color": "",
-        "heading_color": "#333333",
-        "link_color": "#333333"
       }
     },
     "175801863453b60daa": {
@@ -309,8 +281,6 @@
     "m_featured_collection_2_rc9NBr",
     "p_o_r_in_stock_sale_section_TYYhRD",
     "m_featured_collection_1_Yi6Lic",
-    "m_featured_collection_2_bhnbte",
-    "m_featured_collection_1_Nir7Ca",
     "175801863453b60daa"
   ]
 }
