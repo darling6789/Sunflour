@@ -219,13 +219,13 @@
       "type": "m-featured-collection-1",
       "name": "Custom collection 1",
       "settings": {
-        "collection": "white-gold-necklaces-pendants",
-        "heading": "Necklaces",
-        "collection_link_text": "Shop All White Gold Necklaces",
-        "collection_link": "shopify://collections/white-gold-necklaces-pendants",
-        "back_color": "",
-        "heading_color": "#333333",
-        "link_color": "#333333"
+        "collection": "rolex-1",
+        "heading": "Pre-Owned Rolex - $2000 off",
+        "collection_link_text": "Shop All Pre-Owned Rolex Watches",
+        "collection_link": "shopify://pages/pre-owned-rolex-watches",
+        "back_color": "#333333",
+        "heading_color": "#f8f6f2",
+        "link_color": "#ffffff"
       }
     },
     "m_featured_collection_2_bhnbte": {
