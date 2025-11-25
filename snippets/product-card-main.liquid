@@ -91,6 +91,11 @@
     background-color: #9c5556;
   }
 
+  .card-main__badge--sale {
+    background-color: #1b8168;
+    padding: 4px 16px;
+  }
+
   /* ===== QUICK VIEW BUTTON ===== */
   .card-main__quick-view {
     position: absolute;
@@ -149,7 +154,6 @@
     margin: 0 0 6px 0;
   }
 
-  /* ===== FOOTER (PRICE + BUTTON) ===== */
   .card-main__footer {
     display: flex;
     align-items: flex-end;
@@ -163,7 +167,55 @@
     font-size: 28px;
     font-weight: 500;
     color: #78686f;
-    line-height: 1;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .card-main__price--original {
+    font-size: 20px;
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+  }
+
+  .card-main__price--sale {
+    color: #d4542a;
+    font-size: 28px;
+  }
+
+  .card-main__price .promo-price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .card-main__price .price__sale {
+    display: flex;
+    max-width:200px;
+    align-items: center;
+    gap: 0 !important;
+  }
+
+  .card-main__price .price-item--sale {
+    color: #78686f;
+    font-size: 24px;
+    font-family: 'EB Garamond', serif;
+    font-weight: 500;
+  }
+
+  .card-main__price .price-item--regular {
+    color: #b0b0b0;
+    font-size: 18px;
+    text-decoration: line-through;
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+  }
+
+  .card-main__price .promo-badge {
+    display: none;
   }
 
   /* ===== BUTTONS ===== */
@@ -325,8 +377,27 @@
       {% endif %}
 
       <!-- Availability Badge -->
-      <div class="card-main__badge{% if product.available == false %} card-main__badge--sold-out{% endif %}">
-        {% if product.available %}Available{% else %}Sold Out{% endif %}
+      {% comment %} Check if product is in a discounted collection {% endcomment %}
+      {% assign has_promo = false %}
+      {% assign percent_offer_collections = "fine-jewelry,engagement,bands" %}
+      {% assign percent_offer_collection = percent_offer_collections | split: "," %}
+      {% for c in product.collections %}
+        {% if percent_offer_collection contains c.handle %}
+          {% assign has_promo = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="card-main__badge{% if product.available == false %} card-main__badge--sold-out{% elsif has_promo %} card-main__badge--sale{% endif %}">
+        {% if product.available %}
+          {% if has_promo %}
+            Sale
+          {% else %}
+            Available
+          {% endif %}
+        {% else %}
+          Sold Out
+        {% endif %}
       </div>
 
       <!-- Quick View Button -->
@@ -353,10 +424,18 @@
         {{ product.title }}
       </h3>
 
-      <!-- Footer: Price & Button -->
       <div class="card-main__footer">
         {% if product.available %}
-          <div class="card-main__price">${{ product.price | money_without_currency | remove: '.00' }}</div>
+          {% capture promo_output %}{% render 'auto-discount-price', product: product %}{% endcapture %}
+          {% if promo_output contains 'promo-price-block' %}
+            <div class="card-main__price">
+              {{ promo_output }}
+            </div>
+          {% else %}
+            <div class="card-main__price">
+              <span>${{ product.price | money_without_currency | remove: '.00' }}</span>
+            </div>
+          {% endif %}
           <button
             type="button"
             class="card-main__button card-main__button--primary btn-buy-now"
