@@ -162,7 +162,7 @@
       "type": "m-featured-product",
       "name": "Custom featured product",
       "settings": {
-        "back_color": "#f8feff",
+        "back_color": "#ffffff",
         "product": "",
         "image": "shopify://shop_images/blueberry-sapphire-vanillagold.jpg",
         "title": "Le Vian Festive Holiday Savings",
@@ -228,8 +228,8 @@
       "name": "Custom collection 1",
       "settings": {
         "collection": "rolex-1",
-        "heading": "Pre-Owned Rolex - $2000 off in cart",
-        "description": "",
+        "heading": "Pre-Owned Rolex",
+        "description": "<p><em>Save $2000 on all Pre-Owned Rolex Watches</em></p>",
         "collection_link_text": "Shop All Pre-Owned Rolex Watches",
         "collection_link": "shopify://pages/pre-owned-rolex-watches",
         "show_rolex_product_card": true,
