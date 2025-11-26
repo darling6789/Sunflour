@@ -19,7 +19,10 @@
 } */
 @media (min-width: 1179px) {
   .rolex-product-card-wrapper .product-card {
-    width: 327px;
+    width: 262.27px;
+  }
+  .rolex-product-card-wrapper .product-card.por-discount{
+    width:327px;
   }
 }
 .slick-slider .rolex-product-card-wrapper .product-card {

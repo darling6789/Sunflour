@@ -1,6 +1,7 @@
+{%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
 <div class="rolex-product-card-wrapper">
   <a href="{{product.url}}" class="product-card-link">
-    <div class="product-card{% if product.available == false %} sold-out{% endif %}">
+    <div class="product-card{% if product.available == false %} sold-out {% endif %} {% if _promo contains 'promo-price-block' %}por-discount{% endif %}">
       <div class="product-images">
         <div class="product-image-container">
           <img
@@ -123,7 +124,7 @@
           </div>
         </div>
         <div class="divider-section-2"><div class="divider-line-2"></div></div>
-        {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
+        
         <div class="price-action-wrapper {% if _promo contains 'promo-price-block' %}m-product-card-price{% endif %}">
           {% if product.available %}
             {%- if _promo contains 'promo-price-block' -%}
