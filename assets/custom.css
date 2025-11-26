@@ -520,6 +520,17 @@ h1.collection-hero__title {
         padding: 8px 20px;
         height: 36px;
     }
+    .m-product-card .price__sale, .m-product-card .promo-price-block .price__sale {
+        display: flex;
+        justify-content: space-between;
+    }
+    .m-product-card .price--on-sale span.price__badge-sale, .m-product-card .m-product-card-badge-inline {
+        padding: 0px 6px;
+        font-size: 10px;
+        line-height: 1.5;
+        margin-left: 0;
+
+    }
 }
 
 /* Reviews section */
