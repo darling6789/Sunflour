@@ -7,21 +7,20 @@ CONFIG:
 - Update the collection handles and discount values below if needed.
 {%- endcomment -%}
 
-{%- assign fixed_offer_collection = '' -%}
-{%- assign fixed_offer_amount_cents = 200000 -%}   
+{%- comment -%} Black Friday Discounts (Priority) {%- endcomment -%}
+{%- assign bf_diamond_classics_collection = 'diamond-classics' -%}
+{%- assign bf_diamond_classics_percent = 70 -%}
 
+{%- assign bf_diamond_pendants_collection = 'lab-grown-diamond-initial-pendant-necklaces' -%}
+{%- assign bf_diamond_pendants_percent = 60 -%}
+
+{%- assign bf_rolex_collection = 'pre-owned-rolex' -%}
+{%- assign bf_rolex_fixed_amount_cents = 200000 -%}
+
+{%- comment -%} Regular 15% Launch Offer {%- endcomment -%}
 {% assign percent_offer_collections = "fine-jewelry,engagement,bands" %}
 {% assign percent_offer_collection = percent_offer_collections | split: "," %}
-
-{%- assign percent_offer_value = 15 -%}            
-
-{%- assign in_fixed_offer = false -%}
-{%- assign in_percent_offer = false -%}
-
-{%- for c in product.collections -%}
-  {%- if c.handle == fixed_offer_collection -%}{% assign in_fixed_offer = true %}{% endif -%}
-  {%- if percent_offer_collection contains c.handle -%}{% assign in_percent_offer = true %}{% endif -%}
-{%- endfor -%}
+{%- assign percent_offer_value = 15 -%}
 
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign base_price = variant.price -%}
@@ -29,22 +28,45 @@ CONFIG:
 {%- assign best_price = base_price -%}
 {%- assign best_label = '' -%}
 
-{%- comment -%} Fixed $2,000 off {%- endcomment -%}
-{%- if in_fixed_offer -%}
-  {%- assign cand = base_price | minus: fixed_offer_amount_cents -%}
+{%- comment -%} Check collections for Black Friday discounts {%- endcomment -%}
+{%- assign in_bf_diamond_classics = false -%}
+{%- assign in_bf_diamond_pendants = false -%}
+{%- assign in_bf_rolex = false -%}
+{%- assign in_percent_offer = false -%}
+
+{%- for c in product.collections -%}
+  {%- if c.handle == bf_diamond_classics_collection -%}{% assign in_bf_diamond_classics = true %}{% endif -%}
+  {%- if c.handle == bf_diamond_pendants_collection -%}{% assign in_bf_diamond_pendants = true %}{% endif -%}
+  {%- if c.handle == bf_rolex_collection -%}{% assign in_bf_rolex = true %}{% endif -%}
+  {%- if percent_offer_collection contains c.handle -%}{% assign in_percent_offer = true %}{% endif -%}
+{%- endfor -%}
+
+{%- comment -%} Black Friday Diamond Classics - 70% off (Priority 1) {%- endcomment -%}
+{%- if in_bf_diamond_classics -%}
+  {%- assign percent_left = 100 | minus: bf_diamond_classics_percent -%}
+  {%- assign cand = base_price | times: percent_left | divided_by: 100 -%}
+  {%- assign best_price = cand -%}
+  {%- assign best_label = 'Black Friday Diamond Classics' -%}
+{%- elsif in_bf_diamond_pendants -%}
+  {%- comment -%} Black Friday Diamond Pendants - 60% off (Priority 2) {%- endcomment -%}
+  {%- assign percent_left = 100 | minus: bf_diamond_pendants_percent -%}
+  {%- assign cand = base_price | times: percent_left | divided_by: 100 -%}
+  {%- assign best_price = cand -%}
+  {%- assign best_label = 'Black Friday Diamond Pendants' -%}
+{%- elsif in_bf_rolex -%}
+  {%- comment -%} Black Friday Pre-Owned Rolex - $2,000 off (Priority 3) {%- endcomment -%}
+  {%- assign cand = base_price | minus: bf_rolex_fixed_amount_cents -%}
   {%- if cand < 0 -%}{% assign cand = 0 %}{%- endif -%}
   {%- assign best_price = cand -%}
-  {%- assign best_label = 'Special Offer' -%}
+  {%- assign best_label = 'Black Friday Pre-Owned Rolex' -%}
 {%- endif -%}
 
-{%- comment -%} 15% off {%- endcomment -%}
-{%- if in_percent_offer -%}
-  {%- assign percent_left = 100 | minus: percent_offer_value -%} 
+{%- comment -%} 15% Off Launch Offer (Fallback) {%- endcomment -%}
+{%- if in_percent_offer and best_price == base_price -%}
+  {%- assign percent_left = 100 | minus: percent_offer_value -%}
   {%- assign cand = base_price | times: percent_left | divided_by: 100 -%}
-  {%- if best_price == base_price or cand < best_price -%}
-    {%- assign best_price = cand -%}
-    {%- assign best_label = '15% Off Launch Offer' -%}
-  {%- endif -%}
+  {%- assign best_price = cand -%}
+  {%- assign best_label = '15% Off Launch Offer' -%}
 {%- endif -%}
 
 {%- comment -%} Only render if a promo actually lowers the price {%- endcomment -%}

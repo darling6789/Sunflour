@@ -65,40 +65,66 @@
                   assign promo_price = price
                   assign promo_label = ''
                   
-                  assign fixed_offer_collection = ''
-                  assign fixed_offer_amount_cents = 200000
+                  assign bf_diamond_classics_collection = 'diamond-classics'
+                  assign bf_diamond_classics_percent = 70
+                  
+                  assign bf_diamond_pendants_collection = 'lab-grown-diamond-initial-pendant-necklaces'
+                  assign bf_diamond_pendants_percent = 60
+                  
+                  assign bf_rolex_collection = 'pre-owned-rolex'
+                  assign bf_rolex_fixed_amount_cents = 200000
+                  
                   assign percent_offer_collections = "fine-jewelry,engagement,bands" | split: ","
                   assign percent_offer_value = 15
-                  assign in_fixed_offer = false
+                  
+                  assign in_bf_diamond_classics = false
+                  assign in_bf_diamond_pendants = false
+                  assign in_bf_rolex = false
                   assign in_percent_offer = false
                   
                   for c in product.collections
-                    if c.handle == fixed_offer_collection
-                      assign in_fixed_offer = true
+                    if c.handle == bf_diamond_classics_collection
+                      assign in_bf_diamond_classics = true
+                    endif
+                    if c.handle == bf_diamond_pendants_collection
+                      assign in_bf_diamond_pendants = true
+                    endif
+                    if c.handle == bf_rolex_collection
+                      assign in_bf_rolex = true
                     endif
                     if percent_offer_collections contains c.handle
                       assign in_percent_offer = true
                     endif
                   endfor
                   
-                  if in_fixed_offer
-                    assign cand = price | minus: fixed_offer_amount_cents
+                  if in_bf_diamond_classics
+                    assign percent_left = 100 | minus: bf_diamond_classics_percent
+                    assign cand = price | times: percent_left | divided_by: 100
+                    assign promo_price = cand
+                    assign promo_label = 'Black Friday Diamond Classics'
+                    assign show_promo = true
+                  elsif in_bf_diamond_pendants
+                    assign percent_left = 100 | minus: bf_diamond_pendants_percent
+                    assign cand = price | times: percent_left | divided_by: 100
+                    assign promo_price = cand
+                    assign promo_label = 'Black Friday Diamond Pendants'
+                    assign show_promo = true
+                  elsif in_bf_rolex
+                    assign cand = price | minus: bf_rolex_fixed_amount_cents
                     if cand < 0
                       assign cand = 0
                     endif
                     assign promo_price = cand
-                    assign promo_label = 'Special Offer'
+                    assign promo_label = 'Black Friday Pre-Owned Rolex'
                     assign show_promo = true
                   endif
                   
-                  if in_percent_offer
+                  if in_percent_offer and show_promo == false
                     assign percent_left = 100 | minus: percent_offer_value
                     assign cand = price | times: percent_left | divided_by: 100
-                    if show_promo == false or cand < promo_price
-                      assign promo_price = cand
-                      assign promo_label = '15% Off Launch Offer'
-                      assign show_promo = true
-                    endif
+                    assign promo_price = cand
+                    assign promo_label = '15% Off Launch Offer'
+                    assign show_promo = true
                   endif
                   
                   if show_promo and promo_price < price
