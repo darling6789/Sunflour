@@ -3,16 +3,20 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <div class="m-collection-1">
-    <h2>{{ section.settings.heading }}</h2>
+    <h2 {% if section.settings.description %}style="margin-bottom: 0px;"{% endif %}>{{ section.settings.heading }}</h2>
     {% if section.settings.description %}
-      <p>{{ section.settings.description }}</p>
+      <p style="margin-top: 0px; margin-bottom: 20px;">{{ section.settings.description }}</p>
     {% endif %}
 
     <div class="m-collection-1-slider-wrap">
         <div class="m-collection-1-slider-left">{% render 'icon-left-arrow' %}</div>
         <div class="m-collection-1-slider">
             {% for product in section.settings.collection.products limit: 10 %}
-               {% render 'm-product-card', product: product %}
+               {% if section.settings.show_rolex_product_card %}
+                 {% render 'product-card', product: product %}
+               {% else %}
+                 {% render 'm-product-card', product: product %}
+               {% endif %}
             {% endfor %}
         </div>
         <div class="m-collection-1-slider-right">{% render 'icon-right-arrow' %}</div>
@@ -44,6 +48,7 @@
 }
 #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>p {
   color: {{ section.settings.description_color }};
+  font-style: italic;
 }
 #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-slider-wrap {
 	position: relative;
@@ -95,7 +100,7 @@
 }
 
 @media only screen and (max-width: 1440px) {
-  #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-section, .m-collection-1-section {
+  #shopify-section-{{ section.id }}.m-collection-1-section {
     padding: 30px 37.5px;
   }
   #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>h2, .m-collection-1>h2 {
@@ -125,7 +130,7 @@
 }
 
 @media only screen and (max-width: 990px) {
-    #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1-section {
+    #shopify-section-{{ section.id }}.m-collection-1-section {
         padding: 40px 25px;
     }
     #shopify-section-{{ section.id }}.m-collection-1-section .m-collection-1>h2 {
@@ -176,7 +181,7 @@ $(document).ready(function(){
       "label": "Heading"
     },
     {
-      "type": "richtext",
+      "type": "textarea",
       "id": "description",
       "label": "Description"
     },
@@ -189,6 +194,12 @@ $(document).ready(function(){
       "type": "url",
       "id": "collection_link",
       "label": "Collection link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rolex_product_card",
+      "label": "Show Rolex product card",
+      "default": false
     },
     {
       "type": "header",

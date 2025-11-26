@@ -1,102 +1,39 @@
 <div class="m-product-card">
-    <div class="quick-add no-js-hidden">
     {%- liquid
         assign qty_rules = false
         if product.selected_or_first_available_variant.quantity_rule.min > 1 or product.selected_or_first_available_variant.quantity_rule.max != null or product.selected_or_first_available_variant.quantity_rule.increment > 1
         assign qty_rules = true
         endif
+        
+        assign section_id = section_id | default: section.id | default: 'm-product-card'
+        assign product_form_id = 'quick-add-' | append: section_id | append: '-' | append: product.id
     -%}
-    {%- if product.variants_count > 1 or qty_rules -%}
-        <modal-opener data-modal="#QuickAdd-{{ product.id }}">
-        <button
-            id="{{ product_form_id }}-submit"
-            type="submit"
-            name="add"
-            class="quick-add__submit button button--full-width button--secondary{% if horizontal_quick_add %} card--horizontal__quick-add animate-arrow{% endif %}"
-            aria-haspopup="dialog"
-            aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product.id }}"
-            data-product-url="{{ product.url }}"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="#78686F">
-                <path d="M25.5851 18.9681C26.873 18.9681 28.0063 18.264 28.5901 17.1994L34.7376 6.05492C35.373 4.92159 34.5487 3.51351 33.2437 3.51351H7.82952L6.21537 0.0791626H0.60022V3.51351H4.03456L10.2164 16.5468L7.8982 20.7367C6.64467 23.0378 8.29315 25.8367 10.9033 25.8367H31.5093V22.4024H10.9033L12.7921 18.9681H25.5851ZM9.46083 6.94785H30.3245L25.5851 15.5337H13.5305L9.46083 6.94785ZM10.9033 27.5539C9.01436 27.5539 7.48608 29.0994 7.48608 30.9883C7.48608 32.8772 9.01436 34.4226 10.9033 34.4226C12.7921 34.4226 14.3376 32.8772 14.3376 30.9883C14.3376 29.0994 12.7921 27.5539 10.9033 27.5539ZM28.075 27.5539C26.1861 27.5539 24.6578 29.0994 24.6578 30.9883C24.6578 32.8772 26.1861 34.4226 28.075 34.4226C29.9639 34.4226 31.5093 32.8772 31.5093 30.9883C31.5093 29.0994 29.9639 27.5539 28.075 27.5539Z" fill="#78686F"/>
-            </svg>
-            {%- render 'loading-spinner' -%}
-        </button>
-        </modal-opener>
-        <quick-add-modal id="QuickAdd-{{ product.id }}" class="quick-add-modal">
-        <div
-            role="dialog"
-            aria-label="{{ 'products.product.choose_product_options' | t: product_name: product.title | escape }}"
-            aria-modal="true"
-            class="quick-add-modal__content global-settings-popup"
-            tabindex="-1"
-        >
-            <button
-            id="ModalClose-{{ product.id }}"
-            type="button"
-            class="quick-add-modal__toggle"
-            aria-label="{{ 'accessibility.close' | t }}"
-            >
-            {{- 'icon-close.svg' | inline_asset_content -}}
-            </button>
-            <div id="QuickAddInfo-{{ product.id }}" class="quick-add-modal__content-info"></div>
-        </div>
-        </quick-add-modal>
-    {%- else -%}
-        <product-form data-section-id="{{ section.id }}">
-        {%- form 'product',
-            product,
-            id: product_form_id,
-            class: 'form',
-            novalidate: 'novalidate',
-            data-type: 'add-to-cart-form'
-        -%}
-            <input
-            type="hidden"
-            name="id"
-            value="{{ product.selected_or_first_available_variant.id }}"
-            class="product-variant-id"
-            {% if product.selected_or_first_available_variant.available == false %}
-                disabled
-            {% endif %}
-            >
-            <button
-            id="{{ product_form_id }}-submit"
-            type="submit"
-            name="add"
-            class="quick-add__submit button button--full-width button--secondary{% if horizontal_quick_add %} card--horizontal__quick-add{% endif %}"
-            aria-haspopup="dialog"
-            aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product.id }}"
-            aria-live="polite"
-            data-sold-out-message="true"
-            {% if product.selected_or_first_available_variant.available == false %}
-                disabled
-            {% endif %}
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="#78686F">
-                <path d="M25.5851 18.9681C26.873 18.9681 28.0063 18.264 28.5901 17.1994L34.7376 6.05492C35.373 4.92159 34.5487 3.51351 33.2437 3.51351H7.82952L6.21537 0.0791626H0.60022V3.51351H4.03456L10.2164 16.5468L7.8982 20.7367C6.64467 23.0378 8.29315 25.8367 10.9033 25.8367H31.5093V22.4024H10.9033L12.7921 18.9681H25.5851ZM9.46083 6.94785H30.3245L25.5851 15.5337H13.5305L9.46083 6.94785ZM10.9033 27.5539C9.01436 27.5539 7.48608 29.0994 7.48608 30.9883C7.48608 32.8772 9.01436 34.4226 10.9033 34.4226C12.7921 34.4226 14.3376 32.8772 14.3376 30.9883C14.3376 29.0994 12.7921 27.5539 10.9033 27.5539ZM28.075 27.5539C26.1861 27.5539 24.6578 29.0994 24.6578 30.9883C24.6578 32.8772 26.1861 34.4226 28.075 34.4226C29.9639 34.4226 31.5093 32.8772 31.5093 30.9883C31.5093 29.0994 29.9639 27.5539 28.075 27.5539Z" fill="#78686F"/>
-            </svg>
-            {%- render 'loading-spinner' -%}
-            </button>
-        {%- endform -%}
-        </product-form>
-    {%- endif -%}
-    </div>
 
-    <div class="m-product-card-image" onclick="document.location = '{{ product.url }}';" style="background-image: url({{ product.featured_image | img_url: 'master' }})">
-        <div class="m-product-card-top"></div>
+    <div class="m-product-card-image" onclick="if (!event.target.closest('.filter-button')) { document.location = '{{ product.url }}'; }" style="background-image: url({{ product.featured_image | image_url: width: 500 }})">
+      {%- if product.available == false -%}
+        <div class="m-product-card-sold-out-badge">
+          {{ 'products.product.sold_out' | t }}
+        </div>
+      {%- else -%}
+        <button
+          type="button"
+          class="filter-button"
+          data-quick-view-trigger
+          data-product-id="{{ product.id }}"
+          data-product-handle="{{ product.handle }}"
+          data-product-title="{{ product.title | escape }}"
+          data-product-price="{{ product.price }}"
+          data-product-featured-image="{{ product.featured_image | image_url: width: 620 }}"
+          data-product-url="{{ product.url }}"
+          aria-label="Quick view for {{ product.title }}"
+        >
+          <div class="quick-view-icon" width="20" height="20">
+            {{ 'eye.svg' | inline_asset_content }}
+          </div>
+        </button>
+      {%- endif -%}
     </div>
     <div class="m-product-card-bottom">
-        <div class="card__badge">
-        {%- if product.available == false -%}
-            <span
-            id="NoMediaStandardBadge-{{ section_id }}-{{ product.id }}"
-            class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
-            >
-            {{- 'products.product.sold_out' | t -}}
-            </span>
-        {% endif %}    
-        </div>
         <div class="m-product-card-title">
             <h3>
                 <a href="{{ product.url }}" class="m-product-card-title-text">
@@ -106,18 +43,237 @@
         </div>
         <div class="m-product-card-price-wrap">
             <div class="m-product-card-price">
-                {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
-                {%- if _promo contains 'promo-price-block' -%}
-                  {{ _promo }}
+                {%- liquid
+                  assign variant = product.selected_or_first_available_variant
+                  assign compare_at_price = variant.compare_at_price
+                  assign price = variant.price
+                  
+                  if settings.currency_code_enabled
+                    assign money_price = price | money_with_currency
+                    assign money_compare_at_price = compare_at_price | money_with_currency
+                  else
+                    assign money_price = price | money
+                    assign money_compare_at_price = compare_at_price | money
+                  endif
+                  
+                  assign is_on_sale = false
+                  if compare_at_price > price
+                    assign is_on_sale = true
+                  endif
+                  
+                  assign show_promo = false
+                  assign promo_price = price
+                  assign promo_label = ''
+                  
+                  assign fixed_offer_collection = ''
+                  assign fixed_offer_amount_cents = 200000
+                  assign percent_offer_collections = "fine-jewelry,engagement,bands" | split: ","
+                  assign percent_offer_value = 15
+                  assign in_fixed_offer = false
+                  assign in_percent_offer = false
+                  
+                  for c in product.collections
+                    if c.handle == fixed_offer_collection
+                      assign in_fixed_offer = true
+                    endif
+                    if percent_offer_collections contains c.handle
+                      assign in_percent_offer = true
+                    endif
+                  endfor
+                  
+                  if in_fixed_offer
+                    assign cand = price | minus: fixed_offer_amount_cents
+                    if cand < 0
+                      assign cand = 0
+                    endif
+                    assign promo_price = cand
+                    assign promo_label = 'Special Offer'
+                    assign show_promo = true
+                  endif
+                  
+                  if in_percent_offer
+                    assign percent_left = 100 | minus: percent_offer_value
+                    assign cand = price | times: percent_left | divided_by: 100
+                    if show_promo == false or cand < promo_price
+                      assign promo_price = cand
+                      assign promo_label = '15% Off Launch Offer'
+                      assign show_promo = true
+                    endif
+                  endif
+                  
+                  if show_promo and promo_price < price
+                    assign is_on_sale = true
+                  endif
+                -%}
+                
+                {%- if show_promo and promo_price < price -%}
+                  {%- comment -%} Auto-discount price with original badge structure {%- endcomment -%}
+                  <div class="promo-price-block price price--on-sale">
+                    <div class="price__container">
+                      <div class="price__sale">
+                        <span class="price-item price-item--sale price-item--last">
+                          {% if settings.currency_code_enabled %}
+                            {{ promo_price | money_with_currency }}
+                          {% else %}
+                            {{ promo_price | money }}
+                          {% endif %}
+                        </span>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.regular_price' | t }}
+                        </span>
+                        <span>
+                          <s class="price-item price-item--regular">
+                            {% if settings.currency_code_enabled %}
+                              {{ price | money_with_currency }}
+                            {% else %}
+                              {{ price | money }}
+                            {% endif %}
+                          </s>
+                        </span>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.sale_price' | t }}
+                        </span>
+                      </div>
+                    </div>
+
+                    {%- if product.available -%}
+                    <div class="promo-badge">
+                        <ul class="discounts list-unstyled" role="list" aria-label="Discount">
+                            <li class="discounts__discount">
+                                <svg class="icon icon-discount" viewBox="0 0 12 12"><path fill="currentColor" fill-rule="evenodd" d="M7 0h3a2 2 0 0 1 2 2v3a1 1 0 0 1-.3.7l-6 6a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4l6-6A1 1 0 0 1 7 0m2 2a1 1 0 1 0 2 0 1 1 0 0 0-2 0" clip-rule="evenodd"></path></svg>
+                                {{ promo_label }}
+                            </li>
+                        </ul>
+                    </div>
+                    {%- endif -%}
+                  </div>
+                {%- elsif is_on_sale and product.available -%}
+                  {%- comment -%} Regular sale price with badge inline {%- endcomment -%}
+                  <div class="price price--on-sale">
+                    <div class="price__container">
+                      <div class="price__sale">
+                        <span class="price-item price-item--sale price-item--last">
+                          {{ money_price }}
+                        </span>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.regular_price' | t }}
+                        </span>
+                        <div class="m-product-card-compare-badge-wrapper">
+                          <span>
+                            <s class="price-item price-item--regular">
+                              {{ money_compare_at_price }}
+                            </s>
+                          </span>
+                          <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme | default: 'accent-1' }} m-product-card-badge-inline">
+                            {{ 'products.product.on_sale' | t }}
+                          </span>
+                        </div>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.sale_price' | t }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 {%- else -%}
-                  {%- render 'price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: true,
-                    price_class: 'price--large'
-                  -%}
+                  {%- comment -%} Regular price (no sale) {%- endcomment -%}
+                  <div class="price">
+                    <div class="price__container">
+                      <div class="price__regular">
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.regular_price' | t }}
+                        </span>
+                        <span class="price-item price-item--regular">
+                          {{ money_price }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 {%- endif -%}
             </div>
+        </div>
+        <div class="m-product-card-add-to-cart no-js-hidden">
+            {%- if product.available == false -%}
+                <button
+                    type="button"
+                    class="m-product-card-notify-me-btn"
+                    data-product-notify-trigger
+                    data-product-id="{{ product.id }}"
+                    data-product-title="{{ product.title | escape }}"
+                    data-product-handle="{{ product.handle }}"
+                    onclick="event.stopPropagation();"
+                >
+                    <span class="m-product-card-notify-me-text">Notify Me</span>
+                </button>
+            {%- elsif product.variants_count > 1 or qty_rules -%}
+                <modal-opener data-modal="#QuickAdd-{{ product.id }}">
+                    <button
+                        id="{{ product_form_id }}-submit"
+                        type="button"
+                        class="m-product-card-add-to-cart-btn button button--full-width button--secondary"
+                        aria-haspopup="dialog"
+                        aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product.id }}"
+                        data-product-url="{{ product.url }}"
+                        onclick="event.stopPropagation();"
+                    >
+                        <span class="m-product-card-add-to-cart-text">Add to Cart</span>
+                        {%- render 'loading-spinner' -%}
+                    </button>
+                </modal-opener>
+                <quick-add-modal id="QuickAdd-{{ product.id }}" class="quick-add-modal">
+                    <div
+                        role="dialog"
+                        aria-label="{{ 'products.product.choose_product_options' | t: product_name: product.title | escape }}"
+                        aria-modal="true"
+                        class="quick-add-modal__content global-settings-popup"
+                        tabindex="-1"
+                    >
+                        <button
+                            id="ModalClose-{{ product.id }}"
+                            type="button"
+                            class="quick-add-modal__toggle"
+                            aria-label="{{ 'accessibility.close' | t }}"
+                        >
+                            {{- 'icon-close.svg' | inline_asset_content -}}
+                        </button>
+                        <div id="QuickAddInfo-{{ product.id }}" class="quick-add-modal__content-info"></div>
+                    </div>
+                </quick-add-modal>
+            {%- else -%}
+                <product-form data-section-id="{{ section.id }}">
+                    {%- form 'product',
+                        product,
+                        id: product_form_id,
+                        class: 'form',
+                        novalidate: 'novalidate',
+                        data-type: 'add-to-cart-form'
+                    -%}
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="{{ product.selected_or_first_available_variant.id }}"
+                            class="product-variant-id"
+                            {% if product.selected_or_first_available_variant.available == false %}
+                                disabled
+                            {% endif %}
+                        >
+                        <button
+                            id="{{ product_form_id }}-submit"
+                            type="submit"
+                            name="add"
+                            class="m-product-card-add-to-cart-btn"
+                            aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product.id }}"
+                            aria-live="polite"
+                            data-sold-out-message="true"
+                            {% if product.selected_or_first_available_variant.available == false %}
+                                disabled
+                            {% endif %}
+                        >
+                            <span class="m-product-card-add-to-cart-text">Add to Cart</span>
+                            {%- render 'loading-spinner' -%}
+                        </button>
+                    {%- endform -%}
+                </product-form>
+            {%- endif -%}
         </div>
     </div>
 </div>

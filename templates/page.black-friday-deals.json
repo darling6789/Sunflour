@@ -154,6 +154,7 @@
         "back_color": "#f9f5f7",
         "collection_link_text": "Shop All Diamond Classics on Sale",
         "collection_link": "shopify://collections/diamond-classics",
+        "show_rolex_product_card": false,
         "link_color": "#333333"
       }
     },
@@ -192,7 +193,8 @@
         "type_bangle": false,
         "type_necklace": false,
         "type_pendant": false,
-        "type_watch": false
+        "type_watch": false,
+        "show_rolex_product_card": false
       }
     },
     "m_featured_collection_2_rc9NBr": {
@@ -209,6 +211,7 @@
         "back_color": "#efeee8",
         "collection_link_text": "Shop All Diamond Initial Pendants",
         "collection_link": "shopify://collections/lab-grown-diamond-initial-pendant-necklaces",
+        "show_rolex_product_card": false,
         "link_color": "#333333"
       }
     },
@@ -229,6 +232,7 @@
         "description": "<p><em>Save $2000 on all Pre-Owned Rolex Watches</em></p>",
         "collection_link_text": "Shop All Pre-Owned Rolex Watches",
         "collection_link": "shopify://pages/pre-owned-rolex-watches",
+        "show_rolex_product_card": true,
         "back_color": "#333333",
         "heading_color": "#f8f6f2",
         "description_color": "#333333",

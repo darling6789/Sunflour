@@ -1548,10 +1548,11 @@
             return;
           }
 
-          const response = await fetch(`/products/${productHandle}.js`);
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          // Fetch product JSON for variant ID and images
+          const jsonResponse = await fetch(`/products/${productHandle}.js`);
+          if (!jsonResponse.ok) throw new Error(`HTTP error! status: ${jsonResponse.status}`);
 
-          const fullProductData = await response.json();
+          const fullProductData = await jsonResponse.json();
           console.log('Fetched product data:', fullProductData);
 
           // Store first available variant ID for cart operations
@@ -1560,11 +1561,53 @@
             console.log('Stored variant ID:', this.currentVariantId);
           }
 
-          // Extract description
-          const description = fullProductData.body_html || '';
-          const plainText = description.replace(/<[^>]*>/g, '').substring(0, 300);
-          if (this.descriptionEl) {
-            this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
+          // Fetch product page HTML to get description from template
+          const productUrl = this.currentProductUrl || `/products/${productHandle}`;
+          const htmlResponse = await fetch(productUrl);
+          if (htmlResponse.ok) {
+            const htmlText = await htmlResponse.text();
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(htmlText, 'text/html');
+            
+            // Try to find description from product page template
+            // Look for common description selectors
+            const descriptionSelectors = [
+              '.product__description',
+              '[data-product-description]',
+              '.product-description',
+              '.rte',
+              'meta[property="og:description"]'
+            ];
+            
+            let description = '';
+            for (const selector of descriptionSelectors) {
+              const descEl = htmlDoc.querySelector(selector);
+              if (descEl) {
+                if (selector === 'meta[property="og:description"]') {
+                  description = descEl.getAttribute('content') || '';
+                } else {
+                  description = descEl.textContent || descEl.innerText || '';
+                }
+                if (description.trim()) break;
+              }
+            }
+            
+            // Fallback to body_html from JSON if template description not found
+            if (!description.trim()) {
+              description = fullProductData.body_html || '';
+            }
+            
+            const plainText = description.replace(/<[^>]*>/g, '').trim().substring(0, 300);
+            if (this.descriptionEl) {
+              this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
+            }
+          } else {
+            // Fallback to JSON API description if HTML fetch fails
+            const description = fullProductData.body_html || '';
+            const plainText = description.replace(/<[^>]*>/g, '').substring(0, 300);
+            if (this.descriptionEl) {
+              this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
+            }
           }
 
           // Extract images - handle different response formats

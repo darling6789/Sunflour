@@ -5,16 +5,20 @@
 <div class="m-collection-2">
     <div class="m-collection-2-image" onclick="document.location='{{ section.settings.collection.url }}';"></div>
     <div class="m-collection-2-body">
-        <h2><a href="{{ section.settings.collection.url }}">{{ section.settings.heading }}</a></h2>
+        <h2 {% if section.settings.description %}style="margin-bottom: 0;"{% endif %}><a href="{{ section.settings.collection.url }}">{{ section.settings.heading }}</a></h2>
         {% if section.settings.description != blank %}
-        <p>{{ section.settings.description }}</p>
+        <p style="margin-top: 0; margin-bottom: 20px;">{{ section.settings.description }}</p>
         {% endif %}
 
         <div class="m-collection-2-slider-wrap">
             <div class="m-collection-2-slider-left">{% render 'icon-left-arrow' %}</div>
             <div class="m-collection-2-slider">
                 {% for product in section.settings.collection.products limit: 10 %}
-                    {% render 'm-product-card', product: product %}
+                    {% if section.settings.show_rolex_product_card %}
+                      {% render 'product-card', product: product %}
+                    {% else %}
+                      {% render 'm-product-card', product: product %}
+                    {% endif %}
                 {% endfor %}
             </div>
             <div class="m-collection-2-slider-right">{% render 'icon-right-arrow' %}</div>
@@ -75,6 +79,7 @@
 }
 #shopify-section-{{ section.id }} .m-collection-2-body>p {
     color: {{ section.settings.description_color }};
+    font-style: italic;
 }
 #shopify-section-{{ section.id }} .m-collection-2-body>h2 a {
     text-decoration: none;
@@ -279,7 +284,7 @@ $(document).ready(function(){
       "default": "#333"
     },
     {
-      "type": "richtext",
+      "type": "textarea",
       "id": "description",
       "label": "Description"
     },
@@ -303,6 +308,12 @@ $(document).ready(function(){
       "type": "url",
       "id": "collection_link",
       "label": "Collection link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rolex_product_card",
+      "label": "Show Rolex product card",
+      "default": false
     },
     {
       "type": "color",
