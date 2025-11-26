@@ -43,15 +43,143 @@
         </div>
         <div class="m-product-card-price-wrap">
             <div class="m-product-card-price">
-                {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
-                {%- if _promo contains 'promo-price-block' -%}
-                  {{ _promo }}
+                {%- liquid
+                  assign variant = product.selected_or_first_available_variant
+                  assign compare_at_price = variant.compare_at_price
+                  assign price = variant.price
+                  
+                  if settings.currency_code_enabled
+                    assign money_price = price | money_with_currency
+                    assign money_compare_at_price = compare_at_price | money_with_currency
+                  else
+                    assign money_price = price | money
+                    assign money_compare_at_price = compare_at_price | money
+                  endif
+                  
+                  assign is_on_sale = false
+                  if compare_at_price > price
+                    assign is_on_sale = true
+                  endif
+                  
+                  assign show_promo = false
+                  assign promo_price = price
+                  assign promo_label = ''
+                  
+                  assign fixed_offer_collection = ''
+                  assign fixed_offer_amount_cents = 200000
+                  assign percent_offer_collections = "fine-jewelry,engagement,bands" | split: ","
+                  assign percent_offer_value = 15
+                  assign in_fixed_offer = false
+                  assign in_percent_offer = false
+                  
+                  for c in product.collections
+                    if c.handle == fixed_offer_collection
+                      assign in_fixed_offer = true
+                    endif
+                    if percent_offer_collections contains c.handle
+                      assign in_percent_offer = true
+                    endif
+                  endfor
+                  
+                  if in_fixed_offer
+                    assign cand = price | minus: fixed_offer_amount_cents
+                    if cand < 0
+                      assign cand = 0
+                    endif
+                    assign promo_price = cand
+                    assign promo_label = 'Special Offer'
+                    assign show_promo = true
+                  endif
+                  
+                  if in_percent_offer
+                    assign percent_left = 100 | minus: percent_offer_value
+                    assign cand = price | times: percent_left | divided_by: 100
+                    if show_promo == false or cand < promo_price
+                      assign promo_price = cand
+                      assign promo_label = '15% Off Launch Offer'
+                      assign show_promo = true
+                    endif
+                  endif
+                  
+                  if show_promo and promo_price < price
+                    assign is_on_sale = true
+                  endif
+                -%}
+                
+                {%- if show_promo and promo_price < price -%}
+                  {%- comment -%} Auto-discount price with badge inline {%- endcomment -%}
+                  <div class="promo-price-block price price--on-sale">
+                    <div class="price__container">
+                      <div class="price__sale">
+                        <span class="price-item price-item--sale price-item--last">
+                          {% if settings.currency_code_enabled %}
+                            {{ promo_price | money_with_currency }}
+                          {% else %}
+                            {{ promo_price | money }}
+                          {% endif %}
+                        </span>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.regular_price' | t }}
+                        </span>
+                        <span>
+                          <s class="price-item price-item--regular">
+                            {% if settings.currency_code_enabled %}
+                              {{ price | money_with_currency }}
+                            {% else %}
+                              {{ price | money }}
+                            {% endif %}
+                          </s>
+                        </span>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.sale_price' | t }}
+                        </span>
+                        {%- if product.available -%}
+                        <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme | default: 'accent-1' }} m-product-card-badge-inline">
+                          {{ promo_label }}
+                        </span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                {%- elsif is_on_sale and product.available -%}
+                  {%- comment -%} Regular sale price with badge inline {%- endcomment -%}
+                  <div class="price price--on-sale">
+                    <div class="price__container">
+                      <div class="price__sale">
+                        <span class="price-item price-item--sale price-item--last">
+                          {{ money_price }}
+                        </span>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.regular_price' | t }}
+                        </span>
+                        <span>
+                          <s class="price-item price-item--regular">
+                            {{ money_compare_at_price }}
+                          </s>
+                        </span>
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.sale_price' | t }}
+                        </span>
+                        <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme | default: 'accent-1' }} m-product-card-badge-inline">
+                          {{ 'products.product.on_sale' | t }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 {%- else -%}
-                  {%- render 'price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: product.available
-                  -%}
+                  {%- comment -%} Regular price (no sale) {%- endcomment -%}
+                  <div class="price">
+                    <div class="price__container">
+                      <div class="price__regular">
+                        <span class="visually-hidden visually-hidden--inline">
+                          {{ 'products.product.price.regular_price' | t }}
+                        </span>
+                        <span class="price-item price-item--regular">
+                          {{ money_price }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 {%- endif -%}
             </div>
         </div>

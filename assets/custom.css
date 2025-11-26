@@ -319,10 +319,12 @@ h1.collection-hero__title {
     letter-spacing: 0px;
     margin-right: 0;
 }
-.m-product-card .price--on-sale span.price__badge-sale {
+.m-product-card .price--on-sale span.price__badge-sale,
+.m-product-card .m-product-card-badge-inline {
     width: fit-content;
-    display: block;
+    display: inline-block;
     margin: 0;
+    margin-left: 8px;
     word-break: unset;
     border-radius: 10px;
     background: var(--Primary-Accent, #78686F);
@@ -334,6 +336,19 @@ h1.collection-hero__title {
     font-weight: 500;
     line-height: 21px;
     text-transform: uppercase;
+    vertical-align: middle;
+}
+.m-product-card .price__sale {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+.m-product-card .promo-price-block .price__sale {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
 }
 .m-product-card .promo-badge {
     color: #777679;
@@ -502,7 +517,8 @@ h1.collection-hero__title {
         padding: 10px 12px 14px;
     }
     .m-product-card-notify-me-btn {
-        padding: 12px 20px;
+        padding: 8px 20px;
+        height: 36px;
     }
 }
 
