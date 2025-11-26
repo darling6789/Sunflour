@@ -161,7 +161,7 @@
       "type": "m-featured-product",
       "name": "Custom featured product",
       "settings": {
-        "back_color": "#f8feff",
+        "back_color": "#ffffff",
         "product": "",
         "image": "shopify://shop_images/blueberry-sapphire-vanillagold.jpg",
         "title": "Le Vian Festive Holiday Savings",
