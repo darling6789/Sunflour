@@ -318,7 +318,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            {%- if block.settings.background_image -%}
+            background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
+            {%- else -%}
             background: linear-gradient(180deg, #FFF 0%, #F2E7D8 100%);
+            {%- endif -%}
             line-height: 0;
           }
           .hero-pendants-des {
@@ -451,6 +455,13 @@
               display: flex;
               align-items: center;
               justify-content: space-between;
+              {%- if block.settings.background_image_mobile -%}
+              background-image: url('{{ block.settings.background_image_mobile | image_url: width: 1000 }}');
+              {%- elsif block.settings.background_image -%}
+              background-image: url('{{ block.settings.background_image | image_url: width: 1000 }}');
+              {%- else -%}
+              background: linear-gradient(180deg, #FFF 0%, #F2E7D8 100%);
+              {%- endif -%}
             }
             .hero-pendants-des {
               width: 50%;
@@ -559,8 +570,13 @@
               width: 100%;
             }
             .hero-pendants-inner {
-              background-image: unset;
-              background: linear-gradient(180deg, #FFF 0%, #F2E7D8 100%) !important;
+              {%- if block.settings.background_image_mobile -%}
+              background-image: url('{{ block.settings.background_image_mobile | image_url: width: 1000 }}');
+              {%- elsif block.settings.background_image -%}
+              background-image: url('{{ block.settings.background_image | image_url: width: 1000 }}');
+              {%- else -%}
+              background: linear-gradient(180deg, #FFF 0%, #F2E7D8 100%);
+              {%- endif -%}
               width: 100%;
               display: flex;
               align-items: center;
@@ -1380,6 +1396,16 @@
           "type": "video",
           "id": "video",
           "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background image"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image_mobile",
+          "label": "Background image (Mobile)"
         },
         {
           "type": "text",
