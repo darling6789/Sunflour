@@ -158,16 +158,18 @@
                         <span class="visually-hidden visually-hidden--inline">
                           {{ 'products.product.price.regular_price' | t }}
                         </span>
-                        <span>
-                          <s class="price-item price-item--regular">
-                            {{ money_compare_at_price }}
-                          </s>
-                        </span>
+                        <div class="m-product-card-compare-badge-wrapper">
+                          <span>
+                            <s class="price-item price-item--regular">
+                              {{ money_compare_at_price }}
+                            </s>
+                          </span>
+                          <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme | default: 'accent-1' }} m-product-card-badge-inline">
+                            {{ 'products.product.on_sale' | t }}
+                          </span>
+                        </div>
                         <span class="visually-hidden visually-hidden--inline">
                           {{ 'products.product.price.sale_price' | t }}
-                        </span>
-                        <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme | default: 'accent-1' }} m-product-card-badge-inline">
-                          {{ 'products.product.on_sale' | t }}
                         </span>
                       </div>
                     </div>
