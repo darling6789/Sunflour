@@ -221,7 +221,7 @@
           aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
           tabindex="-1"
         >
-          <div class="hero-composed-inner" style="background-image: url({{ block.settings.image | img_url: 'master' }});">
+          <div class="hero-composed-inner hero-composed-image-{{ block.settings.image_position | default: 'right' }}" style="background-image: url({{ block.settings.image | img_url: 'master' }});">
             <div class="hero-composed-des">
               <h2>
                 <p class="hero-composed-text-1">{{ block.settings.text1 }}</p>
@@ -775,6 +775,20 @@
 	display: flex;
 	gap: 40px;
 }
+@media only screen and (min-width: 750px) {
+	.hero-composed-inner.hero-composed-image-left .hero-composed-des {
+		order: 2;
+	}
+	.hero-composed-inner.hero-composed-image-left .hero-composed-image {
+		order: 1;
+	}
+	.hero-composed-inner.hero-composed-image-right .hero-composed-des {
+		order: 1;
+	}
+	.hero-composed-inner.hero-composed-image-right .hero-composed-image {
+		order: 2;
+	}
+}
 .hero-composed-des {
 	width: calc(50% - 40px);
 	display: flex;
@@ -783,6 +797,7 @@
 	align-items: center;
 	margin: auto;
   z-index: 2;
+  padding: 40px;
 }
 .hero-composed-des h2 {
   margin: 0;
@@ -874,6 +889,9 @@
 }
 
 @media screen and (min-width: 750px) and (max-width: 1199px) {
+    .hero-composed-des {
+        padding: 20px;
+    }
     .hero-composed-des a {
         border-radius: 4px;
         background: #9C613A;
@@ -1304,6 +1322,22 @@
           "type": "image_picker",
           "id": "back_image",
           "label": "Background image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position (Desktop)",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "right"
         },
         {
           "type": "text",
