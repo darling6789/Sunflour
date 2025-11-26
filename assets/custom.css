@@ -135,13 +135,14 @@ h1.collection-hero__title {
   background: #6A6665;
   color: #FFF;
   text-align: center;
-  font-family: Jost;
+  font-family: monospace;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   z-index: 10;
   text-transform: capitalize;
+  letter-spacing: 0;
 }
 .m-product-card-image .filter-button {
   border: none;
@@ -493,6 +494,15 @@ h1.collection-hero__title {
     }
     .m-page {
         font-size: 14px;
+    }
+    .m-product-card .price .price__sale .price-item.price-item--sale, .m-product-card  .price .price__regular .price-item.price-item--regular {
+        font-size: 19px;
+    }
+    .m-product-card-bottom {
+        padding: 10px 12px 14px;
+    }
+    .m-product-card-notify-me-btn {
+        padding: 12px 20px;
     }
 }
 
