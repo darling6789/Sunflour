@@ -59,6 +59,7 @@
         },
         "initial_pendants_yPceXE": {
           "type": "initial_pendants",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/LeVian-Hero.png",
             "background_image": "shopify://shop_images/background_image.png",
