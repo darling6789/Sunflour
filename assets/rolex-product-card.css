@@ -14,6 +14,14 @@
   overflow: hidden;
   box-shadow: 1.787px 1.787px 8.936px 0 rgba(34, 34, 34, 0.1);
 }
+/* .rolex-product-card-wrapper .product-card .price--on-sale .price-item--regular{
+  margin: 0px;
+} */
+@media (min-width: 1179px) {
+  .rolex-product-card-wrapper .product-card {
+    width: 327px;
+  }
+}
 .slick-slider .rolex-product-card-wrapper .product-card {
   margin-right: 30px;
 }
@@ -354,11 +362,11 @@
   align-items: center;
   justify-content: center;
   gap: 8.94px;
-  padding: 7.15px 14.3px;
+  padding: 8px 22px;
   position: relative;
   flex: 0 0 auto;
   background-color: #78686f;
-  border-radius: 3.57px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -625,6 +633,36 @@
 }
 .rolex-product-card-wrapper span.price-item.price-item--sale.price-item--last {
     font-size: 22px;
+}
+
+/* Adjust card height to fit content when discount is present */
+.rolex-product-card-wrapper .product-card {
+  height: auto;
+  min-height: fit-content;
+}
+.rolex-product-card-wrapper .price--on-sale .price__sale {
+  display: flex;
+  gap: 0px;
+}
+.rolex-product-card-wrapper .price--on-sale .price__sale span {
+  font-size: 12px;
+}
+.rolex-product-card-wrapper .promo-price-block.price.price--on-sale {
+    position: relative;
+    font-size:unset;
+}
+.rolex-product-card-wrapper .promo-badge {
+    /* position: absolute;
+    bottom: 0;
+    right: 0; */
+    display: inline-block;
+}
+
+.rolex-product-card-wrapper .product-card .price-action-wrapper.m-product-card-price {
+  height: auto;
+    min-height: fit-content;
+    gap: 12px;
+    margin: 0;
 }
 
 /* Responsive Modal */

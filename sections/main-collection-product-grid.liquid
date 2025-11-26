@@ -181,7 +181,7 @@
                     style="--animation-order: {{ forloop.index }};"
                   {% endif %}
                 >
-                  {%- if template.suffix == 'pre-owned-rolex' or section.settings.show_rolex_product_card or collection.handle == 'rolex-1' -%}
+                  {%- if template.suffix == 'pre-owned-rolex' or section.settings.show_rolex_product_card -%}
                     {% render 'product-card',
                       product: product
                     %}

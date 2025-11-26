@@ -132,10 +132,11 @@
               <div class="price-container">
                 <div class="product-price">${{ product.price | money_without_currency | remove: '.00' }}</div>
               </div>
-              <button type="button" class="btn-primary btn-buy-now" data-stop-link-click>
-                <div class="btn-text">Buy Now</div>
-              </button>
             {% endif %}
+            <button type="button" class="btn-primary btn-buy-now" data-stop-link-click>
+              <div class="btn-text">Buy Now</div>
+            </button>
+
           {% else %}
             <button
               type="button"
