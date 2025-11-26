@@ -181,7 +181,7 @@
                     style="--animation-order: {{ forloop.index }};"
                   {% endif %}
                 >
-                  {%- if template.suffix == 'pre-owned-rolex' -%}
+                  {%- if template.suffix == 'pre-owned-rolex' or section.settings.show_rolex_product_card -%}
                     {% render 'product-card',
                       product: product
                     %}
@@ -732,6 +732,12 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rolex_product_card",
+      "label": "Show Rolex product card",
+      "default": false
     }
   ]
 }

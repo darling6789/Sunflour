@@ -272,9 +272,11 @@
                     {%- case item.object_type -%}
                       {%- when 'product' -%}
                         {%- capture product_settings -%}{%- if section.settings.product_show_vendor -%}vendor,{%- endif -%}title,price{%- endcapture -%}
-                        {% render 'm-product-card',
-                          product: item                          
-                        %}
+                        {% if section.settings.show_rolex_product_card %}
+                          {% render 'product-card', product: item %}
+                        {% else %}
+                          {% render 'm-product-card', product: item %}
+                        {% endif %}
                         {% comment %} {% render 'card-product',
                           card_product: item,
                           media_aspect_ratio: section.settings.image_ratio,
@@ -526,6 +528,12 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rolex_product_card",
+      "label": "Show Rolex product card",
+      "default": false
     }
   ]
 }

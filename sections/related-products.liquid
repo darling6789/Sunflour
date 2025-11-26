@@ -42,9 +42,11 @@
         {% assign skip_card_product_styles = false %}
         {% for recommendation in recommendations.products %}
           <li class="grid__item">
-            {% render 'm-product-card',
-              product: recommendation,
-            %}
+            {% if section.settings.show_rolex_product_card %}
+              {% render 'product-card', product: recommendation %}
+            {% else %}
+              {% render 'm-product-card', product: recommendation %}
+            {% endif %}
           </li>
           {%- assign skip_card_product_styles = true -%}
         {% endfor %}
@@ -247,6 +249,12 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rolex_product_card",
+      "label": "Show Rolex product card",
+      "default": false
     }
   ]
 }

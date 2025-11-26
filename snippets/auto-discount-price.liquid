@@ -52,37 +52,39 @@ CONFIG:
 {%- if best_price < base_price -%}{% assign show_promo = true %}{%- endif -%}
 
 {%- if show_promo -%}
-  <div class="promo-price-block">
-    <div class="price__sale">
-      <span class="visually-hidden visually-hidden--inline">
-        {{ 'products.product.price.sale_price' | t }}
-      </span>
-      <span class="price-item price-item--sale price-item--last">
-        {% if clean_format %}
-          ${{ best_price | money_without_currency | replace: '.00', '' | replace: '.10', '.1' | replace: '.20', '.2' | replace: '.30', '.3' | replace: '.40', '.4' | replace: '.50', '.5' | replace: '.60', '.6' | replace: '.70', '.7' | replace: '.80', '.8' | replace: '.90', '.9' }}
-        {% elsif settings.currency_code_enabled %}
-          {{ best_price | money_with_currency }}
-        {% else %}
-          {{ best_price | money }}
-        {% endif %}
-      </span>
-
-      <span class="visually-hidden visually-hidden--inline">
-        {{ 'products.product.price.regular_price' | t }}
-      </span>
-      <span>
-        <s class="price-item price-item--regular">
+  <div class="promo-price-block price price--on-sale">
+    <div class="price__container">
+      <div class="price__sale">
+        <span class="price-item price-item--sale price-item--last">
           {% if clean_format %}
-            ${{ base_price | money_without_currency | replace: '.00', '' | replace: '.10', '.1' | replace: '.20', '.2' | replace: '.30', '.3' | replace: '.40', '.4' | replace: '.50', '.5' | replace: '.60', '.6' | replace: '.70', '.7' | replace: '.80', '.8' | replace: '.90', '.9' }}
+            ${{ best_price | money_without_currency | replace: '.00', '' | replace: '.10', '.1' | replace: '.20', '.2' | replace: '.30', '.3' | replace: '.40', '.4' | replace: '.50', '.5' | replace: '.60', '.6' | replace: '.70', '.7' | replace: '.80', '.8' | replace: '.90', '.9' }}
           {% elsif settings.currency_code_enabled %}
-            {{ base_price | money_with_currency }}
+            {{ best_price | money_with_currency }}
           {% else %}
-            {{ base_price | money }}
+            {{ best_price | money }}
           {% endif %}
-        </s>
-      </span>
+        </span>
+        <span class="visually-hidden visually-hidden--inline">
+          {{ 'products.product.price.regular_price' | t }}
+        </span>
+        <span>
+          <s class="price-item price-item--regular">
+            {% if clean_format %}
+              ${{ base_price | money_without_currency | replace: '.00', '' | replace: '.10', '.1' | replace: '.20', '.2' | replace: '.30', '.3' | replace: '.40', '.4' | replace: '.50', '.5' | replace: '.60', '.6' | replace: '.70', '.7' | replace: '.80', '.8' | replace: '.90', '.9' }}
+            {% elsif settings.currency_code_enabled %}
+              {{ base_price | money_with_currency }}
+            {% else %}
+              {{ base_price | money }}
+            {% endif %}
+          </s>
+        </span>
+        <span class="visually-hidden visually-hidden--inline">
+          {{ 'products.product.price.sale_price' | t }}
+        </span>
+      </div>
     </div>
 
+    {%- if product.available -%}
     <div class="promo-badge">
         <ul class="discounts list-unstyled" role="list" aria-label="Discount">
             <li class="discounts__discount">
@@ -91,6 +93,7 @@ CONFIG:
             </li>
         </ul>
     </div>
+    {%- endif -%}
 
     {%- comment -%}
     Optional fine print:

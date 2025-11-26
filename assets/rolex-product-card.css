@@ -1,0 +1,657 @@
+.rolex-product-card-wrapper .quick-view-icon {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.rolex-product-card-wrapper .product-card {
+  display: flex;
+  flex-direction: column;
+  width: 262.27px;
+  align-items: flex-start;
+  position: relative;
+  background-color: #fcfcfc;
+  border-radius: 14.3px;
+  overflow: hidden;
+  box-shadow: 1.787px 1.787px 8.936px 0 rgba(34, 34, 34, 0.1);
+}
+.slick-slider .rolex-product-card-wrapper .product-card {
+  margin-right: 30px;
+}
+.rolex-product-card-wrapper .product-card .product-images {
+  display: flex;
+  flex-direction: column;
+  height: 262.27px;
+  align-items: flex-start;
+  gap: 69.7px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  background-color: #c5c5c5;
+  overflow: hidden;
+}
+.rolex-product-card-wrapper .product-card .product-image-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  margin-right: -1049.08px;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.rolex-product-card-wrapper .product-card .product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.rolex-product-card-wrapper .product-card .product-image-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.rolex-product-card-wrapper .product-card:has(.product-image-hover) .product-image {
+  transition: opacity 0.3s ease;
+}
+.rolex-product-card-wrapper .product-card:has(.product-image-hover):hover .product-image {
+  opacity: 0;
+}
+.rolex-product-card-wrapper .product-card:has(.product-image-hover):hover .product-image-hover {
+  opacity: 1;
+}
+.rolex-product-card-wrapper .product-card .image-bg-2 {
+  width: 262.27px;
+  background-image: url(./img/frame-183320.png);
+  background-size: cover;
+  background-position: 50% 50%;
+  position: relative;
+  align-self: stretch;
+}
+.rolex-product-card-wrapper .product-card .image-bg-3 {
+  width: 262.27px;
+  background-image: url(./img/frame-183321.png);
+  background-size: cover;
+  background-position: 50% 50%;
+  position: relative;
+  align-self: stretch;
+}
+.rolex-product-card-wrapper .product-card .image-bg-4 {
+  width: 262.27px;
+  position: relative;
+  align-self: stretch;
+}
+.rolex-product-card-wrapper .product-card .availability-tag {
+  position: absolute;
+  top: 15px;
+  right: 11.673px;
+  width: 65px;
+  height: 19px;
+  background-color: #1b8168;
+  border-radius: 3.57px;
+  overflow: hidden;
+  border: 0.71px solid;
+  border-color: transparent;
+}
+.rolex-product-card-wrapper .product-card .availability-badge-text {
+  position: absolute;
+  top: 3px;
+  left: 8px;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 10.7px;
+  letter-spacing: 0;
+  line-height: 14.3px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .product-card .availability-badge-text.sold-out {
+  background-color: #9c5556;
+}
+.rolex-product-card-wrapper .product-card .filter-button {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  gap: 8.94px;
+  padding: 1.79px;
+  position: absolute;
+  top: 223px;
+  left: 11px;
+  background-color: #ffffff80;
+  border-radius: 4.47px;
+}
+.rolex-product-card-wrapper .product-card .filter-button:hover {
+  transform: scale(1.05);
+  transition: scale 0.4s ease;
+}
+.rolex-product-card-wrapper .product-card .filter-icon {
+  position: relative;
+  width: 17.87px;
+  height: 17.87px;
+  aspect-ratio: 1;
+}
+.rolex-product-card-wrapper .product-card .product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14.3px 21.45px 21.45px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+.rolex-product-card-wrapper .product-card .product-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  flex: 0 0 auto;
+  position: relative;
+  align-self: stretch;
+}
+.rolex-product-card-wrapper .product-card .product-title {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 21.45px;
+}
+.rolex-product-card-wrapper .product-card .product-title-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 16.1px;
+  letter-spacing: 0;
+  line-height: 21.45px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .product-card .product-specs-header {
+  align-items: flex-end;
+  gap: 1.79px;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  display: flex;
+  position: relative;
+}
+.rolex-product-card-wrapper .product-card .spec-detail {
+  align-items: flex-end;
+  justify-content: center;
+  width: fit-content;
+  font-family: 'Montserrat';
+  font-weight: 400;
+  color: #1a1a1a;
+  font-size: 10.7px;
+  letter-spacing: 0.45px;
+  line-height: 12.5px;
+  white-space: nowrap;
+  display: flex;
+  position: relative;
+}
+.rolex-product-card-wrapper .product-card .divider {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: fit-content;
+  margin-top: -0.89px;
+  font-family: 'Montserrat';
+  font-weight: 200;
+  color: #78686f;
+  font-size: 15.2px;
+  letter-spacing: 0.45px;
+  line-height: 15.2px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .product-card .divider-section {
+  display: flex;
+  padding: 7.149px 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8.936px;
+  align-self: stretch;
+}
+.rolex-product-card-wrapper .product-card .divider-line {
+  display: flex;
+  height: 0.894px;
+  padding: 1px 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8.936px;
+  align-self: stretch;
+  border-top: 0.715px solid #c5c5c5;
+  border-color: #c5c5c5;
+}
+.rolex-product-card-wrapper .product-card .specs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5.36px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+.rolex-product-card-wrapper .product-card .spec-row {
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  display: flex;
+  position: relative;
+}
+.rolex-product-card-wrapper .product-card .spec-row:first-child {
+  padding: 0px -1.36e-5px 0px 0px;
+}
+.rolex-product-card-wrapper .product-card .spec-row:nth-child(2) {
+  padding: 0px -3.41e-6px 0px 0px;
+}
+.rolex-product-card-wrapper .product-card .spec-row:nth-child(3) {
+  padding: 0px -6.82e-6px 0px 0px;
+}
+.rolex-product-card-wrapper .product-card .spec-label {
+  position: relative;
+  width: fit-content;
+  margin-top: -0.89px;
+  font-family: 'Montserrat';
+  font-weight: 400;
+  color: #707070;
+  font-size: 12.5px;
+  letter-spacing: 0.71px;
+  line-height: 12.5px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .product-card .spec-value {
+  position: relative;
+  width: fit-content;
+  margin-top: -0.89px;
+  font-family: 'Montserrat';
+  font-weight: 400;
+  color: #1a1a1a;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  line-height: 12.5px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .product-card .divider-section-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8.94px;
+  padding: 3.57px 0px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+.rolex-product-card-wrapper .product-card .divider-line-2 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 1px;
+  margin-bottom: -0.11px;
+  border-top-width: 0.71px;
+  border-top-style: solid;
+  border-color: transparent;
+}
+.rolex-product-card-wrapper .product-card .price-action-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px -1.36e-5px 0px 0px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+.rolex-product-card-wrapper .product-card .price-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3.57px;
+  position: relative;
+  flex: 0 0 auto;
+}
+.rolex-product-card-wrapper .product-card .product-price {
+  position: relative;
+  width: fit-content;
+  margin-top: -0.89px;
+  font-family: 'EB Garamond';
+  font-weight: 500;
+  color: #78686f;
+  font-size: 32.2px;
+  letter-spacing: 0;
+  line-height: 21.4px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .product-card .btn-primary {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8.94px;
+  padding: 7.15px 14.3px;
+  position: relative;
+  flex: 0 0 auto;
+  background-color: #78686f;
+  border-radius: 3.57px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.rolex-product-card-wrapper .product-card .btn-primary:hover {
+  background-color: #4d3942;
+}
+.rolex-product-card-wrapper .product-card .btn-text {
+  position: relative;
+  width: fit-content;
+  margin-top: -0.89px;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  line-height: 17.9px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .product-card-wrapper {
+  display: contents;
+  cursor: pointer;
+}
+.rolex-product-card-wrapper .product-card-link {
+  display: contents;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.rolex-product-card-wrapper .btn-notify-me {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8.94px;
+  padding: 7.15px 19.66px;
+  position: relative;
+  flex: 1;
+  width: 100%;
+  background-color: transparent;
+  border: 1.5px solid #4D3942;
+  border-radius: 3.57px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  color: #4D3942;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  line-height: 17.9px;
+  white-space: nowrap;
+}
+.rolex-product-card-wrapper .btn-notify-me:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.rolex-product-card-wrapper .btn-notify-me .btn-text {
+  color: #4D3942;
+}
+.rolex-product-card-wrapper .product-card-wrapper.product-card-unavailable .product-details {
+  background: rgba(26, 26, 26, 0.08);
+}
+.rolex-product-card-wrapper .product-card-wrapper.product-card-unavailable .price-action-wrapper {
+  width: 100%;
+}
+.rolex-product-card-wrapper .product-card-wrapper.product-card-unavailable .availability-tag {
+  background-color: #9c5556 !important;
+}
+
+/* Responsive Design - Product Card Styles */
+@media (min-width: 1200px) {
+  .rolex-product-card-wrapper .product-card .product-price {
+    font-size: 3rem;
+  }
+  .slick-slider .rolex-product-card-wrapper .product-card {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .rolex-product-card-wrapper .product-card .price-action-wrapper {
+    flex-direction: column;
+    gap: 12px;
+    padding: 6px 0px;
+  }
+  .slick-slider .rolex-product-card-wrapper .product-card {
+    margin-right: 10px;
+  }
+  .rolex-product-card-wrapper .product-card .product-price {
+    font-size: 2.6rem;
+  }
+}
+
+/* Dream Watch Notify Me Modal - Fully Namespaced */
+.rolex-product-card-wrapper .dream-watch-notify-me-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-overlay[style*="display: flex"] {
+  animation: rolex-dream-watch-fadeIn 0.3s ease;
+}
+
+@keyframes rolex-dream-watch-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-modal {
+  position: relative;
+  background-color: #f8f6f2;
+  border-radius: 16px;
+  padding: 45px 38px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: rolex-dream-watch-slideUp 0.3s ease;
+}
+
+@keyframes rolex-dream-watch-slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-close {
+  all: unset;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  color: #4d3942;
+  transition: color 0.3s ease;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-close:hover {
+  color: #78686f;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-title {
+  margin: 0 0 16px 0;
+  font-family: 'EB Garamond';
+  font-weight: 400;
+  font-size: 32px;
+  color: #151515;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-description {
+  margin: 0 0 28px 0;
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-size: 16px;
+  color: #4d3942;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-description strong {
+  font-weight: 600;
+  color: #151515;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-input {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-size: 14px;
+  color: #4e4e4e;
+  box-sizing: border-box;
+  transition: outline 0.3s ease;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-input:focus {
+  outline: 2px solid #78686f;
+  outline-offset: 2px;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-input::placeholder {
+  color: #999;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-submit {
+  all: unset;
+  padding: 16px 32px;
+  background-color: #78686f;
+  color: #ffffff;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-submit:hover:not(:disabled) {
+  background-color: #4d3942;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.rolex-product-card-wrapper .dream-watch-notify-me-error {
+  display: block;
+  font-family: 'Montserrat';
+  font-size: 12px;
+  color: #d32f2f;
+  text-align: center;
+  line-height: 1.4;
+  min-height: 16px;
+}
+
+.rolex-product-card-wrapper .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Responsive Modal */
+@media (max-width: 640px) {
+  .rolex-product-card-wrapper .dream-watch-notify-me-modal {
+    padding: 32px 24px;
+    border-radius: 12px;
+  }
+
+  .rolex-product-card-wrapper .dream-watch-notify-me-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .rolex-product-card-wrapper .dream-watch-notify-me-description {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .rolex-product-card-wrapper .dream-watch-notify-me-form {
+    gap: 12px;
+  }
+
+  .rolex-product-card-wrapper .dream-watch-notify-me-input {
+    padding: 14px 12px;
+    font-size: 16px;
+    height: 44px;
+  }
+
+  .rolex-product-card-wrapper .dream-watch-notify-me-submit {
+    padding: 14px 24px;
+    height: 44px;
+    font-size: 14px;
+  }
+}
+

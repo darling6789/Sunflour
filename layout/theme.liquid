@@ -356,12 +356,14 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <link rel="stylesheet" href="{{ 'custom.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'rolex-product-card.css' | asset_url }}">
 
     <script>
       if (Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
 
     <script>
       setTimeout(() => {
@@ -475,5 +477,261 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    <script src="{{ 'rolex-product-card.js' | asset_url }}" defer="defer"></script>
+
+    <!-- Product Notify Me Modal (for non-watch products) -->
+    <div id="product-notify-overlay" class="product-notify-me-overlay" style="display: none;">
+      <div class="product-notify-me-modal">
+        <button type="button" id="product-notify-close" class="product-notify-me-close" aria-label="Close modal">&times;</button>
+        <h2 class="product-notify-me-title">Get Notified</h2>
+        <p class="product-notify-me-description">Be the first to know when <strong id="product-notify-product-name"></strong> is back in stock.</p>
+
+        <form id="product-notify-form" class="product-notify-me-form">
+          <label for="product-notify-email" class="visually-hidden">Email Address</label>
+          <input
+            type="email"
+            id="product-notify-email"
+            class="product-notify-me-input"
+            placeholder="Enter your email"
+            required
+            aria-required="true"
+          />
+          <button type="submit" id="product-notify-submit" class="product-notify-me-submit">
+            <span>Notify Me</span>
+          </button>
+          <span id="product-notify-error" class="product-notify-me-error" role="alert" aria-live="polite"></span>
+        </form>
+      </div>
+    </div>
+
+    <style>
+      /* Product Notify Me Modal Styles */
+      .product-notify-me-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .product-notify-me-overlay[style*="display: flex"] {
+        animation: product-notify-fadeIn 0.3s ease;
+      }
+
+      @keyframes product-notify-fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .product-notify-me-modal {
+        position: relative;
+        background-color: #f8f6f2;
+        border-radius: 16px;
+        padding: 45px 38px;
+        max-width: 600px;
+        width: 90%;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        animation: product-notify-slideUp 0.3s ease;
+      }
+
+      @keyframes product-notify-slideUp {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      .product-notify-me-close {
+        all: unset;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        cursor: pointer;
+        color: #4d3942;
+        transition: color 0.3s ease;
+      }
+
+      .product-notify-me-close:hover {
+        color: #78686f;
+      }
+
+      .product-notify-me-title {
+        margin: 0 0 16px 0;
+        font-family: 'EB Garamond';
+        font-weight: 400;
+        font-size: 32px;
+        color: #151515;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .product-notify-me-description {
+        margin: 0 0 28px 0;
+        font-family: 'Montserrat';
+        font-weight: 400;
+        font-size: 16px;
+        color: #4d3942;
+        text-align: center;
+        line-height: 1.5;
+      }
+
+      .product-notify-me-description strong {
+        font-weight: 600;
+        color: #151515;
+      }
+
+      .product-notify-me-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .product-notify-me-input {
+        width: 100%;
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: 'Montserrat';
+        font-size: 14px;
+        color: #1e1e1e;
+        background-color: white;
+        box-sizing: border-box;
+      }
+
+      .product-notify-me-input:focus {
+        outline: none;
+        border-color: #78686f;
+        box-shadow: 0 0 0 2px rgba(120, 104, 111, 0.1);
+      }
+
+      .product-notify-me-submit {
+        padding: 16px;
+        background-color: #78686f;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-family: 'Montserrat';
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .product-notify-me-submit:hover:not(:disabled) {
+        background-color: #4d3942;
+      }
+
+      .product-notify-me-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .product-notify-me-error {
+        color: #d32f2f;
+        font-family: 'Montserrat';
+        font-size: 14px;
+        text-align: center;
+        margin-top: 8px;
+      }
+
+      @media only screen and (max-width: 749px) {
+        .product-notify-me-modal {
+          padding: 30px 24px;
+          max-width: 90%;
+        }
+
+        .product-notify-me-title {
+          font-size: 28px;
+        }
+
+        .product-notify-me-description {
+          font-size: 14px;
+        }
+
+        .product-notify-me-submit {
+          padding: 14px;
+          font-size: 14px;
+        }
+      }
+    </style>
+
+    <script>
+      // Product Notify Me - For non-watch products
+      (function() {
+        const notifyButtons = document.querySelectorAll('[data-product-notify-trigger]');
+        const overlay = document.getElementById('product-notify-overlay');
+        const form = document.getElementById('product-notify-form');
+        const emailInput = document.getElementById('product-notify-email');
+        const submitBtn = document.getElementById('product-notify-submit');
+        const closeBtn = document.getElementById('product-notify-close');
+        const errorMsg = document.getElementById('product-notify-error');
+        const productName = document.getElementById('product-notify-product-name');
+
+        if (!overlay || !form) return;
+
+        notifyButtons.forEach(function(button) {
+          button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const productId = this.getAttribute('data-product-id');
+            const title = this.getAttribute('data-product-title');
+            const productHandle = this.getAttribute('data-product-handle');
+
+            if (!title) {
+              console.error('Product title is missing');
+              return;
+            }
+
+            productName.textContent = title;
+            emailInput.value = '';
+            errorMsg.textContent = '';
+            submitBtn.disabled = false;
+            submitBtn.querySelector('span').textContent = 'Notify Me';
+
+            overlay.style.display = 'flex';
+            emailInput.focus();
+          });
+        });
+
+        closeBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          overlay.style.display = 'none';
+        });
+
+        overlay.addEventListener('click', function(e) {
+          if (e.target === this) {
+            this.style.display = 'none';
+          }
+        });
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Currently do nothing when submit email (as requested)
+          // This is a placeholder for future implementation
+          const email = emailInput.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          if (!emailRegex.test(email)) {
+            errorMsg.textContent = 'Please enter a valid email address.';
+            return;
+          }
+
+          // Placeholder - do nothing for now
+          console.log('Notify me submitted for:', email);
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -71,7 +71,11 @@
 
         {%- if want_type == false -%}
           {%- for product in section.settings.collection.products limit: 10 -%}
-            {% render 'm-product-card', product: product %}
+            {% if section.settings.show_rolex_product_card %}
+              {% render 'product-card', product: product %}
+            {% else %}
+              {% render 'm-product-card', product: product %}
+            {% endif %}
           {%- endfor -%}
         {%- else -%}
           {%- comment -%} handle “necklace & pendant” in single mode as OR {%- endcomment -%}
@@ -157,7 +161,11 @@
               {%- if type_match == false -%}{%- assign ok = false -%}{%- endif -%}
 
               {%- if ok -%}
-                {% render 'm-product-card', product: product %}
+                {% if section.settings.show_rolex_product_card %}
+                  {% render 'product-card', product: product %}
+                {% else %}
+                  {% render 'm-product-card', product: product %}
+                {% endif %}
                 {%- assign shown = shown | plus: 1 -%}
                 {%- if shown >= 10 -%}{%- break -%}{%- endif -%}
               {%- endif -%}
@@ -274,7 +282,8 @@ $(document).ready(function(){
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "checkbox", "id": "image_left", "label": "Image left", "default": true },
     { "type": "text", "id": "heading", "label": "Heading" },
-    { "type": "color", "id": "back_color", "label": "Background color" }
+    { "type": "color", "id": "back_color", "label": "Background color" },
+    { "type": "checkbox", "id": "show_rolex_product_card", "label": "Show Rolex product card", "default": false }
   ],
   "presets": [
     { "name": "Filtered collection" }
