@@ -1,106 +1,157 @@
 <div class="rolex-product-card-wrapper">
-<a href="{{product.url}}" class="product-card-link">
-  <div class="product-card{% if product.available == false %} sold-out{% endif %}">
-    <div class="product-images">
-      <div class="product-image-container">
-        <img class="product-image" src="{{product.featured_image | image_url: width: 500}}" alt="{{product.title}}" width="500" height="500" />
-        {% if product.images.size > 1 %}
-          <img class="product-image-hover" src="{{product.images[1] | image_url: width: 500}}" alt="{{product.title}}" width="500" height="500" />
-        {% endif %}
+  <a href="{{product.url}}" class="product-card-link">
+    <div class="product-card{% if product.available == false %} sold-out{% endif %}">
+      <div class="product-images">
+        <div class="product-image-container">
+          <img
+            class="product-image"
+            src="{{product.featured_image | image_url: width: 500}}"
+            alt="{{product.title}}"
+            width="500"
+            height="500"
+          >
+          {% if product.images.size > 1 %}
+            <img
+              class="product-image-hover"
+              src="{{product.images[1] | image_url: width: 500}}"
+              alt="{{product.title}}"
+              width="500"
+              height="500"
+            >
+          {% endif %}
+        </div>
+        <div class="availability-tag">
+          {% if product.available %}
+            <div class="availability-badge-text">Available</div>
+          {% else %}
+            <div class="availability-badge-text sold-out">Sold Out</div>
+          {% endif %}
+        </div>
+        <button
+          type="button"
+          class="filter-button"
+          data-quick-view-trigger
+          data-product-id="{{ product.id }}"
+          data-product-handle="{{ product.handle }}"
+          data-product-title="{{ product.title | remove: 'Pre-Owned Rolex ' | escape }}"
+          data-product-price="{{ product.price }}"
+          data-product-featured-image="{{ product.featured_image | image_url: width: 620 }}"
+          data-product-dial-color="{{ product.metafields.custom.watch_dial_color | escape }}"
+          data-product-band-type="{{ product.metafields.custom.watch_band_type | escape }}"
+          data-product-case-size="{{ product.metafields.custom.watch_case_size | escape }}"
+          data-product-model="{{ product.metafields.custom.watch_reference | escape }}"
+          data-product-year="{{ product.metafields.custom.watch_year | escape }}"
+          data-product-condition="{{ product.metafields.custom.watch_condition | escape }}"
+          data-product-url="{{ product.url }}"
+          aria-label="Quick view for {{ product.title | remove: 'Pre-Owned Rolex ' }}"
+        >
+          <div class="quick-view-icon" width="20" height="20">
+            {{ 'eye.svg' | inline_asset_content }}
+          </div>
+        </button>
       </div>
-      <div class="availability-tag">{% if product.available %}<div class="availability-badge-text">Available</div>{% else %}<div class="availability-badge-text sold-out">Sold Out</div>{% endif %}</div>
-      <button
-        type="button"
-        class="filter-button"
-        data-quick-view-trigger
-        data-product-id="{{ product.id }}"
-        data-product-handle="{{ product.handle }}"
-        data-product-title="{{ product.title | remove: 'Pre-Owned Rolex ' | escape }}"
-        data-product-price="{{ product.price }}"
-        data-product-featured-image="{{ product.featured_image | image_url: width: 620 }}"
-        data-product-dial-color="{{ product.metafields.custom.watch_dial_color | escape }}"
-        data-product-band-type="{{ product.metafields.custom.watch_band_type | escape }}"
-        data-product-case-size="{{ product.metafields.custom.watch_case_size | escape }}"
-        data-product-model="{{ product.metafields.custom.watch_reference | escape }}"
-        data-product-year="{{ product.metafields.custom.watch_year | escape }}"
-        data-product-condition="{{ product.metafields.custom.watch_condition | escape }}"
-        data-product-url="{{ product.url }}"
-        aria-label="Quick view for {{ product.title | remove: 'Pre-Owned Rolex ' }}"
-      >
-        <div class="quick-view-icon" width="20" height="20" >
-          {{ 'eye.svg' | inline_asset_content }}
-        </div>
-      </button>
-    </div>
-    <div class="product-details">
-      <div class="product-header">
-        <div class="product-title"><div class="product-title-text">{% assign title = product.title %}
-{%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
-{% assign title = title | remove_first: "Pre-Owned Rolex " | remove_first: "Pre Owned Rolex " %}
-{%- comment -%} Remove everything from the first number to the end {%- endcomment -%}
-{% assign filtered_title = '' %}
-{% assign title_chars = title | split: '' %}
-{% for char in title_chars %}
-  {% if char == '0' or char == '1' or char == '2' or char == '3' or char == '4' or char == '5' or char == '6' or char == '7' or char == '8' or char == '9' %}
-    {% break %}
-  {% endif %}
-  {% assign filtered_title = filtered_title | append: char %}
-{% endfor %}
-{{ filtered_title | strip }}</div></div>
-        <div class="product-specs-header">
-          <div class="spec-detail">{{product.metafields.custom.watch_band_type}}</div>
-          <div class="divider">|</div>
-          <div class="spec-detail">{{product.metafields.custom.watch_case_size}}</div>
-        </div>
-      </div>
-      <div class="divider-section"><div class="divider-line"></div></div>
-      <div class="specs-container">
-        <div class="spec-row">
-          <div class="spec-label">MODEL</div>
-          <div class="spec-value">{{product.metafields.custom.watch_reference}}</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">YEAR</div>
-          <div class="spec-value">{{product.metafields.custom.watch_year}}</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">CONDITION</div>
-          <div class="spec-value">
-            {% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}
-            {% case raw_condition %}
-              {% when 'unworn' %}UNWORN
-              {% when 'unworn (nos)' %}UNWORN
-              {% when 'as is' %}RETAIL READY
-              {% when 'slider' %}EXCELLENT
-              {% when 'mint' %}VERY GOOD
-              {% when 'very good' %}VERY GOOD
-              {% when 'pre-owned' %}GOOD
-              {% when 'good' %}GOOD
-              {% else %}{{ product.metafields.custom.watch_condition | upcase }}
-            {% endcase %}
+      <div class="product-details">
+        <div class="product-header">
+          <div class="product-title">
+            <div class="product-title-text">
+              {% assign title = product.title %}
+              {%- comment -%} Remove "Pre-Owned Rolex" or "Pre Owned Rolex" from the front {%- endcomment -%}
+              {% assign title = title | remove_first: 'Pre-Owned Rolex ' | remove_first: 'Pre Owned Rolex ' %}
+              {%- comment -%} Remove everything from the first number to the end {%- endcomment -%}
+              {% assign filtered_title = '' %}
+              {% assign title_chars = title | split: '' %}
+              {% for char in title_chars %}
+                {% if char == '0'
+                  or char == '1'
+                  or char == '2'
+                  or char == '3'
+                  or char == '4'
+                  or char == '5'
+                  or char == '6'
+                  or char == '7'
+                  or char == '8'
+                  or char == '9'
+                %}
+                  {% break %}
+                {% endif %}
+                {% assign filtered_title = filtered_title | append: char %}
+              {% endfor %}
+              {{ filtered_title | strip }}
+            </div>
+          </div>
+          <div class="product-specs-header">
+            <div class="spec-detail">{{ product.metafields.custom.watch_band_type }}</div>
+            <div class="divider">|</div>
+            <div class="spec-detail">{{ product.metafields.custom.watch_case_size }}</div>
           </div>
         </div>
-      </div>
-      <div class="divider-section-2"><div class="divider-line-2"></div></div>
-      <div class="price-action-wrapper">
-        {% if product.available %}
-          <div class="price-container"><div class="product-price">${{product.price | money_without_currency | remove: '.00'}}</div></div>
-          <button type="button" class="btn-primary btn-buy-now" data-stop-link-click><div class="btn-text">Buy Now</div></button>
-        {% else %}
-          <button
-            type="button"
-            class="btn-notify-me"
-            data-stop-link-click
-            data-dream-watch-notify-trigger
-            data-watch-reference="{{ product.metafields.custom.watch_reference | escape }}"
-            data-product-id="{{ product.id }}"
-            data-product-title="{{ product.title | escape }}"
-          >
-            <div class="btn-text">Notify Me</div>
-          </button>
-        {% endif %}
+        <div class="divider-section"><div class="divider-line"></div></div>
+        <div class="specs-container">
+          <div class="spec-row">
+            <div class="spec-label">MODEL</div>
+            <div class="spec-value">{{ product.metafields.custom.watch_reference }}</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-label">YEAR</div>
+            <div class="spec-value">{{ product.metafields.custom.watch_year }}</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-label">CONDITION</div>
+            <div class="spec-value">
+              {% assign raw_condition = product.metafields.custom.watch_condition | downcase | strip %}
+              {% case raw_condition %}
+                {% when 'unworn' -%}
+                  UNWORN
+                {% when 'unworn (nos)' -%}
+                  UNWORN
+                {% when 'as is' -%}
+                  RETAIL READY
+                {% when 'slider' -%}
+                  EXCELLENT
+                {% when 'mint' -%}
+                  VERY GOOD
+                {% when 'very good' -%}
+                  VERY GOOD
+                {% when 'pre-owned' -%}
+                  GOOD
+                {% when 'good' -%}
+                  GOOD
+                {% else -%}
+                  {{- product.metafields.custom.watch_condition | upcase }}
+              {% endcase %}
+            </div>
+          </div>
+        </div>
+        <div class="divider-section-2"><div class="divider-line-2"></div></div>
+        {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
+        <div class="price-action-wrapper {% if _promo contains 'promo-price-block' %}m-product-card-price{% endif %}">
+          {% if product.available %}
+            {%- if _promo contains 'promo-price-block' -%}
+              {{ _promo }}
+            {%- else -%}
+              <div class="price-container">
+                <div class="product-price">${{ product.price | money_without_currency | remove: '.00' }}</div>
+              </div>
+            {% endif %}
+            <button type="button" class="btn-primary btn-buy-now" data-stop-link-click>
+              <div class="btn-text">Buy Now</div>
+            </button>
+
+          {% else %}
+            <button
+              type="button"
+              class="btn-notify-me"
+              data-stop-link-click
+              data-dream-watch-notify-trigger
+              data-watch-reference="{{ product.metafields.custom.watch_reference | escape }}"
+              data-product-id="{{ product.id }}"
+              data-product-title="{{ product.title | escape }}"
+            >
+              <div class="btn-text">Notify Me</div>
+            </button>
+          {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-</a>
+  </a>
 </div>

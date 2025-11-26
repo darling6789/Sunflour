@@ -1,19 +1,19 @@
 {%- comment -%}
-Shows original (strike-through) → discounted price + badge
-- Computes the best per-item promo among multiple automatic discounts.
-- Does not change the real product price; it’s display-only.
+  Shows original (strike-through) → discounted price + badge
+  - Computes the best per-item promo among multiple automatic discounts.
+  - Does not change the real product price; it’s display-only.
 
-CONFIG:
-- Update the collection handles and discount values below if needed.
+  CONFIG:
+  - Update the collection handles and discount values below if needed.
 {%- endcomment -%}
 
-{%- assign fixed_offer_collection = '' -%}
-{%- assign fixed_offer_amount_cents = 200000 -%}   
+{%- assign fixed_offer_collection = 'rolex-1' -%}
+{%- assign fixed_offer_amount_cents = 200000 -%}
 
-{% assign percent_offer_collections = "fine-jewelry,engagement,bands" %}
-{% assign percent_offer_collection = percent_offer_collections | split: "," %}
+{% assign percent_offer_collections = 'fine-jewelry,engagement,bands' %}
+{% assign percent_offer_collection = percent_offer_collections | split: ',' %}
 
-{%- assign percent_offer_value = 15 -%}            
+{%- assign percent_offer_value = 15 -%}
 
 {%- assign in_fixed_offer = false -%}
 {%- assign in_percent_offer = false -%}
@@ -34,12 +34,12 @@ CONFIG:
   {%- assign cand = base_price | minus: fixed_offer_amount_cents -%}
   {%- if cand < 0 -%}{% assign cand = 0 %}{%- endif -%}
   {%- assign best_price = cand -%}
-  {%- assign best_label = 'Special Offer' -%}
+  {%- assign best_label = 'Black Friday Pre-Owned Rolex' -%}
 {%- endif -%}
 
 {%- comment -%} 15% off {%- endcomment -%}
 {%- if in_percent_offer -%}
-  {%- assign percent_left = 100 | minus: percent_offer_value -%} 
+  {%- assign percent_left = 100 | minus: percent_offer_value -%}
   {%- assign cand = base_price | times: percent_left | divided_by: 100 -%}
   {%- if best_price == base_price or cand < best_price -%}
     {%- assign best_price = cand -%}
@@ -57,7 +57,21 @@ CONFIG:
       <div class="price__sale">
         <span class="price-item price-item--sale price-item--last">
           {% if clean_format %}
-            ${{ best_price | money_without_currency | replace: '.00', '' | replace: '.10', '.1' | replace: '.20', '.2' | replace: '.30', '.3' | replace: '.40', '.4' | replace: '.50', '.5' | replace: '.60', '.6' | replace: '.70', '.7' | replace: '.80', '.8' | replace: '.90', '.9' }}
+            $
+            {{-
+              best_price
+              | money_without_currency
+              | replace: '.00', ''
+              | replace: '.10', '.1'
+              | replace: '.20', '.2'
+              | replace: '.30', '.3'
+              | replace: '.40', '.4'
+              | replace: '.50', '.5'
+              | replace: '.60', '.6'
+              | replace: '.70', '.7'
+              | replace: '.80', '.8'
+              | replace: '.90', '.9'
+            }}
           {% elsif settings.currency_code_enabled %}
             {{ best_price | money_with_currency }}
           {% else %}
@@ -70,7 +84,21 @@ CONFIG:
         <span>
           <s class="price-item price-item--regular">
             {% if clean_format %}
-              ${{ base_price | money_without_currency | replace: '.00', '' | replace: '.10', '.1' | replace: '.20', '.2' | replace: '.30', '.3' | replace: '.40', '.4' | replace: '.50', '.5' | replace: '.60', '.6' | replace: '.70', '.7' | replace: '.80', '.8' | replace: '.90', '.9' }}
+              $
+              {{-
+                base_price
+                | money_without_currency
+                | replace: '.00', ''
+                | replace: '.10', '.1'
+                | replace: '.20', '.2'
+                | replace: '.30', '.3'
+                | replace: '.40', '.4'
+                | replace: '.50', '.5'
+                | replace: '.60', '.6'
+                | replace: '.70', '.7'
+                | replace: '.80', '.8'
+                | replace: '.90', '.9'
+              }}
             {% elsif settings.currency_code_enabled %}
               {{ base_price | money_with_currency }}
             {% else %}
@@ -81,23 +109,49 @@ CONFIG:
         <span class="visually-hidden visually-hidden--inline">
           {{ 'products.product.price.sale_price' | t }}
         </span>
+        {%- if product.available -%}
+          {%- if template.suffix == 'pre-owned-rolex'
+            or section.settings.show_rolex_product_card
+            or collection.handle == 'rolex-1'
+            or section.type == 'p-o-r-homepage-section'
+          -%}
+            <div class="promo-badge">
+              <ul class="discounts list-unstyled" role="list" aria-label="Discount">
+                <li class="discounts__discount">
+                  <svg class="icon icon-discount" viewBox="0 0 12 12">
+                    <path fill="currentColor" fill-rule="evenodd" d="M7 0h3a2 2 0 0 1 2 2v3a1 1 0 0 1-.3.7l-6 6a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4l6-6A1 1 0 0 1 7 0m2 2a1 1 0 1 0 2 0 1 1 0 0 0-2 0" clip-rule="evenodd"></path>
+                  </svg>
+                  {{ best_label }}
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+        {%- endif -%}
       </div>
     </div>
 
-    {%- if product.available -%}
-    <div class="promo-badge">
-        <ul class="discounts list-unstyled" role="list" aria-label="Discount">
+    {%- unless template.suffix == 'pre-owned-rolex'
+      or section.settings.show_rolex_product_card
+      or collection.handle == 'rolex-1'
+      or section.type == 'p-o-r-homepage-section'
+    -%}
+     
+      {%- if product.available -%}
+        <div class="promo-badge">
+          <ul class="discounts list-unstyled" role="list" aria-label="Discount">
             <li class="discounts__discount">
-                <svg class="icon icon-discount" viewBox="0 0 12 12"><path fill="currentColor" fill-rule="evenodd" d="M7 0h3a2 2 0 0 1 2 2v3a1 1 0 0 1-.3.7l-6 6a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4l6-6A1 1 0 0 1 7 0m2 2a1 1 0 1 0 2 0 1 1 0 0 0-2 0" clip-rule="evenodd"></path></svg>
-                {{ best_label }}
+              <svg class="icon icon-discount" viewBox="0 0 12 12">
+                <path fill="currentColor" fill-rule="evenodd" d="M7 0h3a2 2 0 0 1 2 2v3a1 1 0 0 1-.3.7l-6 6a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4l6-6A1 1 0 0 1 7 0m2 2a1 1 0 1 0 2 0 1 1 0 0 0-2 0" clip-rule="evenodd"></path>
+              </svg>
+              {{ best_label }}
             </li>
-        </ul>
-    </div>
-    {%- endif -%}
-
+          </ul>
+        </div>
+      {%- endif -%}
+    {% endunless %}
     {%- comment -%}
-    Optional fine print:
-    <div class="promo-note">Discount applied in cart. Some offers apply once per order.</div>
+      Optional fine print:
+      <div class="promo-note">Discount applied in cart. Some offers apply once per order.</div>
     {%- endcomment -%}
   </div>
 {%- endif -%}
