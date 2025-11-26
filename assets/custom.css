@@ -135,13 +135,14 @@ h1.collection-hero__title {
   background: #6A6665;
   color: #FFF;
   text-align: center;
-  font-family: Jost;
+  font-family: monospace;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   z-index: 10;
   text-transform: capitalize;
+  letter-spacing: 0;
 }
 .m-product-card-image .filter-button {
   border: none;
@@ -181,6 +182,9 @@ h1.collection-hero__title {
 	padding: 10px 15px 15px;
     width: 327px;
     max-width: 100%;
+}
+.grid__item .m-product-card-bottom {
+    width: 357px;
 }
 .m-product-card-title {
 	width: 100%;
@@ -315,9 +319,10 @@ h1.collection-hero__title {
     letter-spacing: 0px;
     margin-right: 0;
 }
-.m-product-card .price--on-sale span.price__badge-sale {
+.m-product-card .price--on-sale span.price__badge-sale,
+.m-product-card .m-product-card-badge-inline {
     width: fit-content;
-    display: block;
+    display: inline-block;
     margin: 0;
     word-break: unset;
     border-radius: 10px;
@@ -330,6 +335,30 @@ h1.collection-hero__title {
     font-weight: 500;
     line-height: 21px;
     text-transform: uppercase;
+    vertical-align: middle;
+}
+.m-product-card .m-product-card-price-badge-wrapper .m-product-card-badge-inline,
+.m-product-card .m-product-card-compare-badge-wrapper .m-product-card-badge-inline {
+    margin-left: 0;
+}
+.m-product-card .price__sale {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+.m-product-card .m-product-card-price-badge-wrapper,
+.m-product-card .m-product-card-compare-badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+.m-product-card .promo-price-block .price__sale {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
 }
 .m-product-card .promo-badge {
     color: #777679;
@@ -490,6 +519,27 @@ h1.collection-hero__title {
     }
     .m-page {
         font-size: 14px;
+    }
+    .m-product-card .price .price__sale .price-item.price-item--sale, .m-product-card  .price .price__regular .price-item.price-item--regular {
+        font-size: 19px;
+    }
+    .m-product-card-bottom {
+        padding: 10px 12px 14px;
+    }
+    .m-product-card-notify-me-btn {
+        padding: 8px 20px;
+        height: 36px;
+    }
+    .m-product-card .price__sale, .m-product-card .promo-price-block .price__sale {
+        display: flex;
+        justify-content: space-between;
+    }
+    .m-product-card .price--on-sale span.price__badge-sale, .m-product-card .m-product-card-badge-inline {
+        padding: 0px 6px;
+        font-size: 10px;
+        line-height: 1.5;
+        margin-left: 0;
+
     }
 }
 
