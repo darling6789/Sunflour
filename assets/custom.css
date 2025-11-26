@@ -182,6 +182,9 @@ h1.collection-hero__title {
     width: 327px;
     max-width: 100%;
 }
+.grid__item .m-product-card-bottom {
+    width: 357px;
+}
 .m-product-card-title {
 	width: 100%;
 	display: flex;
