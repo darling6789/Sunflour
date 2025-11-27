@@ -1603,10 +1603,10 @@
             }
           } else {
             // Fallback to JSON API description if HTML fetch fails
-            const description = fullProductData.body_html || '';
-            const plainText = description.replace(/<[^>]*>/g, '').substring(0, 300);
-            if (this.descriptionEl) {
-              this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
+          const description = fullProductData.body_html || '';
+          const plainText = description.replace(/<[^>]*>/g, '').substring(0, 300);
+          if (this.descriptionEl) {
+            this.descriptionEl.textContent = plainText || 'Experience the refined craftsmanship of premium timepieces.';
             }
           }
 
