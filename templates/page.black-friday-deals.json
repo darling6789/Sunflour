@@ -229,14 +229,14 @@
       "settings": {
         "collection": "rolex-1",
         "heading": "Pre-Owned Rolex",
-        "description": "<p><em>Save $2000 on all Pre-Owned Rolex Watches</em></p>",
+        "description": "Save $2000 on all Pre-Owned Rolex Watches, only while this sale event lasts.",
         "collection_link_text": "Shop All Pre-Owned Rolex Watches",
         "collection_link": "shopify://pages/pre-owned-rolex-watches",
         "show_rolex_product_card": true,
         "back_color": "#333333",
         "heading_color": "#f8f6f2",
-        "description_color": "#333333",
-        "link_color": "#ffffff"
+        "description_color": "#ffffff",
+        "link_color": "#f8f6f2"
       }
     },
     "175801863453b60daa": {
