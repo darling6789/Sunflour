@@ -347,25 +347,12 @@ h1.collection-hero__title {
     align-items: center;
     gap: 8px;
 }
-.m-product-card .price--on-sale .price__sale {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
 .m-product-card .m-product-card-price-badge-wrapper,
 .m-product-card .m-product-card-compare-badge-wrapper {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     flex-wrap: nowrap;
-}
-.m-product-card .m-product-card-compare-badge-wrapper {
-    flex: 1;
-    justify-content: space-between;
-    gap: 4px;
-}
-.m-product-card .m-product-card-compare-badge-wrapper>span:first-child {
-    width: max-content;
 }
 .m-product-card .promo-price-block .price__sale {
     display: flex;
