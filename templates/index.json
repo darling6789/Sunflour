@@ -106,6 +106,7 @@
           "type": "hero_composed",
           "settings": {
             "image": "shopify://shop_images/Untitled_design_35.png",
+            "back_image": "shopify://shop_images/Untitled_design_36.png",
             "image_position": "left",
             "text1": "Pre-Owned Rolex Watches",
             "text2": "Save $2000 off of any Pre-Owned Rolex in stock, only during this Black Friday event!",
@@ -125,10 +126,10 @@
             "text_color": "#f8f6f2",
             "btn_bg_color": "#454143",
             "btn_text_color": "#ffffff",
-            "bg_gradient_color_1": "#0c0705",
-            "bg_gradient_color_2": "#0c0705",
-            "bg_gradient_color_3": "#0c0705",
-            "bg_gradient_color_4": "#0c0705"
+            "bg_gradient_color_1": "rgba(0,0,0,0)",
+            "bg_gradient_color_2": "rgba(0,0,0,0)",
+            "bg_gradient_color_3": "rgba(0,0,0,0)",
+            "bg_gradient_color_4": "rgba(0,0,0,0)"
           }
         },
         "initial_pendants_yPceXE": {
