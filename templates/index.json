@@ -15,6 +15,36 @@
         "hero_composed_NktaeL": {
           "type": "hero_composed",
           "settings": {
+            "image": "shopify://shop_images/diamond-bracelet-asset-collection_e22cfb01-e032-446d-9023-996105392698.png",
+            "back_image": "shopify://shop_images/background_image.png",
+            "image_position": "left",
+            "text1": "70% Off Diamond Classics",
+            "text2": "Hoops, huggies, studs, necklaces & more",
+            "text3": "",
+            "text4": "",
+            "text5": "",
+            "btn_text_1": "Shop Diamond Classics",
+            "btn_link_1": "shopify://collections/diamond-classics",
+            "btn_text_2": "",
+            "btn_link_2": "",
+            "corner_text_1": "",
+            "corner_text_2": "",
+            "corner_price": "",
+            "corner_compared_price": "",
+            "corner_color": "#ffffff",
+            "corner_color_mob": "#151515",
+            "text_color": "#151515",
+            "btn_bg_color": "#a36069",
+            "btn_text_color": "#ffffff",
+            "bg_gradient_color_1": "rgba(0,0,0,0)",
+            "bg_gradient_color_2": "rgba(0,0,0,0)",
+            "bg_gradient_color_3": "rgba(0,0,0,0)",
+            "bg_gradient_color_4": "rgba(0,0,0,0)"
+          }
+        },
+        "hero_composed_ajGT3i": {
+          "type": "hero_composed",
+          "settings": {
             "image": "shopify://shop_images/LeVian-Hero.png",
             "back_image": "shopify://shop_images/background_image.png",
             "image_position": "right",
@@ -88,6 +118,7 @@
       },
       "block_order": [
         "hero_composed_NktaeL",
+        "hero_composed_ajGT3i",
         "slide_iVBpRp",
         "initial_pendants_yPceXE"
       ],
