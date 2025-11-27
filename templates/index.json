@@ -42,7 +42,7 @@
             "bg_gradient_color_4": "rgba(0,0,0,0)"
           }
         },
-        "hero_composed_ajGT3i": {
+        "hero_composed_GfQpFF": {
           "type": "hero_composed",
           "settings": {
             "image": "shopify://shop_images/LeVian-Hero.png",
@@ -72,6 +72,25 @@
             "bg_gradient_color_4": "rgba(0,0,0,0)"
           }
         },
+        "initial_pendants_yPceXE": {
+          "type": "initial_pendants",
+          "settings": {
+            "image": "shopify://shop_images/necklace_edit-no_background.png",
+            "background_image": "shopify://shop_images/Untitled_design_32.png",
+            "heading": "Diamond Initial Pendants",
+            "subheading": "Now 60% Off",
+            "btn_text": "Shop Now",
+            "btn_link": "shopify://collections/le-vian",
+            "start_price": "$999",
+            "reg_price": "$2,499",
+            "heading_color": "#78686f",
+            "subheading_color": "#4d3942",
+            "btn_text_color": "#f8f6f2",
+            "btn_bg_color": "#4d3942",
+            "start_price_color": "#4d3942",
+            "reg_price_color": "#4d3942"
+          }
+        },
         "slide_iVBpRp": {
           "type": "slide",
           "disabled": true,
@@ -94,33 +113,13 @@
             "btn_text_color": "#ffffff",
             "color_scheme": ""
           }
-        },
-        "initial_pendants_yPceXE": {
-          "type": "initial_pendants",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/LeVian-Hero.png",
-            "background_image": "shopify://shop_images/background_image.png",
-            "heading": "",
-            "subheading": "Le Vian Holiday Sparkle",
-            "btn_text": "Shop Now",
-            "btn_link": "shopify://collections/le-vian",
-            "start_price": "",
-            "reg_price": "",
-            "heading_color": "#78686f",
-            "subheading_color": "#4d3942",
-            "btn_text_color": "#f8f6f2",
-            "btn_bg_color": "#4d3942",
-            "start_price_color": "#4d3942",
-            "reg_price_color": "#4d3942"
-          }
         }
       },
       "block_order": [
         "hero_composed_NktaeL",
-        "hero_composed_ajGT3i",
-        "slide_iVBpRp",
-        "initial_pendants_yPceXE"
+        "hero_composed_GfQpFF",
+        "initial_pendants_yPceXE",
+        "slide_iVBpRp"
       ],
       "name": "Custom slideshow 2",
       "settings": {
