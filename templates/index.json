@@ -17,6 +17,7 @@
           "settings": {
             "image": "shopify://shop_images/LeVian-Hero.png",
             "back_image": "shopify://shop_images/background_image.png",
+            "image_position": "right",
             "text1": "Le Vian Holiday Savings",
             "text2": "Get your rich colorful Le Vian gemstones at the best prices available here at Marc Robinson online this Holiday Season.",
             "text3": "",
@@ -31,7 +32,14 @@
             "corner_price": "",
             "corner_compared_price": "",
             "corner_color": "#ffffff",
-            "corner_color_mob": "#151515"
+            "corner_color_mob": "#151515",
+            "text_color": "#151515",
+            "btn_bg_color": "#78686f",
+            "btn_text_color": "#ffffff",
+            "bg_gradient_color_1": "rgba(0,0,0,0)",
+            "bg_gradient_color_2": "rgba(0,0,0,0)",
+            "bg_gradient_color_3": "rgba(0,0,0,0)",
+            "bg_gradient_color_4": "rgba(0,0,0,0)"
           }
         },
         "slide_iVBpRp": {
