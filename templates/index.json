@@ -72,36 +72,6 @@
             "bg_gradient_color_4": "rgba(0,0,0,0)"
           }
         },
-        "hero_composed_NWA6nh": {
-          "type": "hero_composed",
-          "settings": {
-            "image": "shopify://shop_images/necklace_edit-no_background_a1ad3fe0-7653-41df-abf7-ce6de1abc365.png",
-            "back_image": "shopify://shop_images/background_image_ef4b3084-5d5d-498d-a806-4f2ae2ec4659.png",
-            "image_position": "left",
-            "text1": "Initial Pendants Now 60% Off",
-            "text2": "This season, give a unique and personal gift that will be sure to turn heads for many seasons to come with our brilliant laser-cut diamond initial pendants - this deal won't last long!",
-            "text3": "",
-            "text4": "",
-            "text5": "",
-            "btn_text_1": "Find Your Initial",
-            "btn_link_1": "shopify://collections/lab-grown-diamond-initial-pendant-necklaces",
-            "btn_text_2": "",
-            "btn_link_2": "",
-            "corner_text_1": "",
-            "corner_text_2": "",
-            "corner_price": "",
-            "corner_compared_price": "",
-            "corner_color": "#ffffff",
-            "corner_color_mob": "#151515",
-            "text_color": "#151515",
-            "btn_bg_color": "#0f6872",
-            "btn_text_color": "#ffffff",
-            "bg_gradient_color_1": "rgba(0,0,0,0)",
-            "bg_gradient_color_2": "rgba(0,0,0,0)",
-            "bg_gradient_color_3": "rgba(0,0,0,0)",
-            "bg_gradient_color_4": "rgba(0,0,0,0)"
-          }
-        },
         "hero_composed_fMhe6g": {
           "type": "hero_composed",
           "settings": {
@@ -125,6 +95,36 @@
             "corner_color_mob": "#151515",
             "text_color": "#f8f6f2",
             "btn_bg_color": "#454143",
+            "btn_text_color": "#ffffff",
+            "bg_gradient_color_1": "rgba(0,0,0,0)",
+            "bg_gradient_color_2": "rgba(0,0,0,0)",
+            "bg_gradient_color_3": "rgba(0,0,0,0)",
+            "bg_gradient_color_4": "rgba(0,0,0,0)"
+          }
+        },
+        "hero_composed_NWA6nh": {
+          "type": "hero_composed",
+          "settings": {
+            "image": "shopify://shop_images/necklace_edit-no_background_a1ad3fe0-7653-41df-abf7-ce6de1abc365.png",
+            "back_image": "shopify://shop_images/background_image_ef4b3084-5d5d-498d-a806-4f2ae2ec4659.png",
+            "image_position": "right",
+            "text1": "Initial Pendants Now 60% Off",
+            "text2": "This season, give a unique and personal gift that will be sure to turn heads for many seasons to come with our brilliant laser-cut diamond initial pendants - this deal won't last long!",
+            "text3": "",
+            "text4": "",
+            "text5": "",
+            "btn_text_1": "Find Your Initial",
+            "btn_link_1": "shopify://collections/lab-grown-diamond-initial-pendant-necklaces",
+            "btn_text_2": "",
+            "btn_link_2": "",
+            "corner_text_1": "",
+            "corner_text_2": "",
+            "corner_price": "",
+            "corner_compared_price": "",
+            "corner_color": "#ffffff",
+            "corner_color_mob": "#151515",
+            "text_color": "#151515",
+            "btn_bg_color": "#0f6872",
             "btn_text_color": "#ffffff",
             "bg_gradient_color_1": "rgba(0,0,0,0)",
             "bg_gradient_color_2": "rgba(0,0,0,0)",
@@ -179,8 +179,8 @@
       "block_order": [
         "hero_composed_NktaeL",
         "hero_composed_GfQpFF",
-        "hero_composed_NWA6nh",
         "hero_composed_fMhe6g",
+        "hero_composed_NWA6nh",
         "initial_pendants_yPceXE",
         "slide_iVBpRp"
       ],
