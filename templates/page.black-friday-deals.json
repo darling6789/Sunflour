@@ -239,6 +239,29 @@
         "link_color": "#f8f6f2"
       }
     },
+    "rich_text_ap6MkQ": {
+      "type": "rich-text",
+      "blocks": {
+        "text_Gm7LWN": {
+          "type": "text",
+          "settings": {
+            "text": "<h5>Marc Robinson Jewelers is not an authorized dealer, distributor, or affiliated in any way with Rolex S.A., Rolex USA, or any of its subsidiaries. Rolex is a registered trademark of Rolex S.A. Any trademarks, brand names, or logos mentioned are for identification purposes only and remain the property of their respective owners. All Rolex watches sold by Marc Robinson Jewelers are pre-owned, authentic Rolex timepieces. Rolex has no obligation to service watches sold by Marc Robinson Jewelers. For Rolex’s official terms and services, please visit an authorized Rolex dealer or contact Rolex directly.</h5>"
+          }
+        }
+      },
+      "block_order": [
+        "text_Gm7LWN"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "175801863453b60daa": {
       "type": "apps",
       "blocks": {
@@ -292,6 +315,7 @@
     "m_featured_collection_2_rc9NBr",
     "p_o_r_in_stock_sale_section_TYYhRD",
     "m_featured_collection_1_Yi6Lic",
+    "rich_text_ap6MkQ",
     "175801863453b60daa"
   ]
 }
