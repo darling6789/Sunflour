@@ -102,6 +102,35 @@
             "bg_gradient_color_4": "rgba(0,0,0,0)"
           }
         },
+        "hero_composed_fMhe6g": {
+          "type": "hero_composed",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_35.png",
+            "image_position": "left",
+            "text1": "Pre-Owned Rolex Watches",
+            "text2": "Save $2000 off of any Pre-Owned Rolex in stock, only during this Black Friday event!",
+            "text3": "",
+            "text4": "",
+            "text5": "",
+            "btn_text_1": "Find My Watch",
+            "btn_link_1": "shopify://collections/le-vian",
+            "btn_text_2": "",
+            "btn_link_2": "",
+            "corner_text_1": "",
+            "corner_text_2": "",
+            "corner_price": "",
+            "corner_compared_price": "",
+            "corner_color": "#ffffff",
+            "corner_color_mob": "#151515",
+            "text_color": "#f8f6f2",
+            "btn_bg_color": "#454143",
+            "btn_text_color": "#ffffff",
+            "bg_gradient_color_1": "#0c0705",
+            "bg_gradient_color_2": "#0c0705",
+            "bg_gradient_color_3": "#0c0705",
+            "bg_gradient_color_4": "#0c0705"
+          }
+        },
         "initial_pendants_yPceXE": {
           "type": "initial_pendants",
           "disabled": true,
@@ -150,6 +179,7 @@
         "hero_composed_NktaeL",
         "hero_composed_GfQpFF",
         "hero_composed_NWA6nh",
+        "hero_composed_fMhe6g",
         "initial_pendants_yPceXE",
         "slide_iVBpRp"
       ],
