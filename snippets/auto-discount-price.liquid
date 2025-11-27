@@ -17,6 +17,9 @@
 {%- assign bf_rolex_collection = 'pre-owned-rolex' -%}
 {%- assign bf_rolex_fixed_amount_cents = 200000 -%}
 
+{%- assign rolex_1_collection = 'rolex-1' -%}
+{%- assign rolex_1_fixed_amount_cents = 200000 -%}
+
 {%- comment -%} Regular 15% Launch Offer {%- endcomment -%}
 {% assign percent_offer_collections = 'fine-jewelry,engagement,bands' %}
 {% assign percent_offer_collection = percent_offer_collections | split: ',' %}
@@ -32,12 +35,14 @@
 {%- assign in_bf_diamond_classics = false -%}
 {%- assign in_bf_diamond_pendants = false -%}
 {%- assign in_bf_rolex = false -%}
+{%- assign in_rolex_1 = false -%}
 {%- assign in_percent_offer = false -%}
 
 {%- for c in product.collections -%}
   {%- if c.handle == bf_diamond_classics_collection -%}{% assign in_bf_diamond_classics = true %}{% endif -%}
   {%- if c.handle == bf_diamond_pendants_collection -%}{% assign in_bf_diamond_pendants = true %}{% endif -%}
   {%- if c.handle == bf_rolex_collection -%}{% assign in_bf_rolex = true %}{% endif -%}
+  {%- if c.handle == rolex_1_collection -%}{% assign in_rolex_1 = true %}{% endif -%}
   {%- if percent_offer_collection contains c.handle -%}{% assign in_percent_offer = true %}{% endif -%}
 {%- endfor -%}
 
@@ -56,6 +61,12 @@
 {%- elsif in_bf_rolex -%}
   {%- comment -%} Black Friday Pre-Owned Rolex - $2,000 off (Priority 3) {%- endcomment -%}
   {%- assign cand = base_price | minus: bf_rolex_fixed_amount_cents -%}
+  {%- if cand < 0 -%}{% assign cand = 0 %}{%- endif -%}
+  {%- assign best_price = cand -%}
+  {%- assign best_label = 'Black Friday Pre-Owned Rolex' -%}
+{%- elsif in_rolex_1 -%}
+  {%- comment -%} Rolex-1 Collection - $2,000 off (Priority 4) {%- endcomment -%}
+  {%- assign cand = base_price | minus: rolex_1_fixed_amount_cents -%}
   {%- if cand < 0 -%}{% assign cand = 0 %}{%- endif -%}
   {%- assign best_price = cand -%}
   {%- assign best_label = 'Black Friday Pre-Owned Rolex' -%}

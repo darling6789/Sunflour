@@ -181,7 +181,15 @@
                     style="--animation-order: {{ forloop.index }};"
                   {% endif %}
                 >
+                  {%- capture _check_promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
+                  {%- assign show_rolex_card = false -%}
                   {%- if template.suffix == 'pre-owned-rolex' or section.settings.show_rolex_product_card -%}
+                    {%- assign show_rolex_card = true -%}
+                  {%- elsif collection.handle == 'rolex-1' and _check_promo contains 'promo-price-block' -%}
+                    {%- assign show_rolex_card = true -%}
+                  {%- endif -%}
+
+                  {%- if show_rolex_card -%}
                     {% render 'product-card',
                       product: product
                     %}
