@@ -337,6 +337,10 @@ h1.collection-hero__title {
     text-transform: uppercase;
     vertical-align: middle;
 }
+.m-product-card .discounts__discount > svg.icon {
+    width: 1rem;
+    height: 1rem
+}
 .m-product-card .m-product-card-price-badge-wrapper .m-product-card-badge-inline,
 .m-product-card .m-product-card-compare-badge-wrapper .m-product-card-badge-inline {
     margin-left: 0;
@@ -373,7 +377,7 @@ h1.collection-hero__title {
     bottom: 0;
 }
 .m-product-card .promo-badge .discounts__discount > .icon svg path {
-    fill: rgba(28, 27, 31, 0.60);
+    fill: #333;
 }
 .m-product-card .price__container {
 }
