@@ -545,7 +545,9 @@ h1.collection-hero__title {
         font-size: 10px;
         line-height: 1.5;
         margin-left: 0;
-
+    }
+    .m-product-card .price-item--sale .m-product-card-currency-code {
+        font-size: 15px;
     }
 }
 
