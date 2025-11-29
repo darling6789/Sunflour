@@ -337,7 +337,7 @@ h1.collection-hero__title {
     text-transform: uppercase;
     vertical-align: middle;
 }
-.m-product-card .m-product-card-currency-code {
+.m-product-card .price-item--sale .m-product-card-currency-code {
     font-size: 16px;
 }
 .m-product-card .discounts__discount > svg.icon {
