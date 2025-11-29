@@ -472,8 +472,6 @@ h1.collection-hero__title {
     gap: 10px;
 }
 .promo-price-block .price-item--regular{
-    text-decoration:
-    line-through;opacity:.6
 }
 .promo-badge{
     display:inline-flex;
