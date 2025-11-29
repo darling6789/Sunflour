@@ -535,7 +535,7 @@ h1.collection-hero__title {
         justify-content: space-between;
     }
     .m-product-card .price--on-sale span.price__badge-sale, .m-product-card .m-product-card-badge-inline {
-        padding: 0px 6px;
+        padding: 2px 8px;
         font-size: 10px;
         line-height: 1.5;
         margin-left: 0;
