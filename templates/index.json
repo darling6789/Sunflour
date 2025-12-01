@@ -59,6 +59,7 @@
             "text5": "",
             "btn_text_1": "Shop the Savings",
             "btn_link_1": "shopify://collections/le-vian-holiday",
+            "btn_link_1": "shopify://collections/le-vian-holiday",
             "btn_text_2": "",
             "btn_link_2": "",
             "corner_text_1": "",
@@ -181,6 +182,26 @@
             "btn_color": "#78686f",
             "btn_text_color": "#ffffff",
             "color_scheme": ""
+          }
+        },
+        "initial_pendants_yPceXE": {
+          "type": "initial_pendants",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/LeVian-Hero.png",
+            "background_image": "shopify://shop_images/background_image.png",
+            "heading": "",
+            "subheading": "Le Vian Holiday Sparkle",
+            "btn_text": "Shop Now",
+            "btn_link": "shopify://collections/le-vian-holiday",
+            "start_price": "",
+            "reg_price": "",
+            "heading_color": "#78686f",
+            "subheading_color": "#4d3942",
+            "btn_text_color": "#f8f6f2",
+            "btn_bg_color": "#4d3942",
+            "start_price_color": "#4d3942",
+            "reg_price_color": "#4d3942"
           }
         }
       },
