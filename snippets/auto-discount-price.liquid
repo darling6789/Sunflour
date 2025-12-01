@@ -24,6 +24,7 @@
 {% assign percent_offer_collections = 'fine-jewelry,engagement,bands' %}
 {% assign percent_offer_collection = percent_offer_collections | split: ',' %}
 {%- assign percent_offer_value = 15 -%}
+{%- assign percent_offer_enabled = false -%}
 
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign base_price = variant.price -%}
@@ -73,7 +74,7 @@
 {%- endif -%}
 
 {%- comment -%} 15% Off Launch Offer (Fallback) {%- endcomment -%}
-{%- if in_percent_offer and best_price == base_price -%}
+{%- if in_percent_offer and best_price == base_price and percent_offer_enabled -%}
   {%- assign percent_left = 100 | minus: percent_offer_value -%}
   {%- assign cand = base_price | times: percent_left | divided_by: 100 -%}
   {%- assign best_price = cand -%}

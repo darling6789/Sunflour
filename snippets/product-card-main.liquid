@@ -427,6 +427,7 @@
       {% assign percent_offer_collections = 'fine-jewelry,engagement,bands' %}
       {% assign percent_offer_collection = percent_offer_collections | split: ',' %}
       {% assign percent_offer_value = 15 %}
+      {% assign percent_offer_enabled = false %}
 
       {% assign in_fixed_offer = false %}
       {% assign in_percent_offer = false %}
@@ -448,7 +449,7 @@
         {% assign best_label = 'Special Offer' %}
       {% endif %}
 
-      {% if in_percent_offer %}
+      {% if in_percent_offer and percent_offer_enabled %}
         {% assign percent_left = 100 | minus: percent_offer_value %}
         {% assign cand = base_price | times: percent_left | divided_by: 100 %}
         {% if best_price == base_price or cand < best_price %}
