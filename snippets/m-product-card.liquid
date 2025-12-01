@@ -77,6 +77,7 @@
                   
                   assign percent_offer_collections = "fine-jewelry,engagement,bands" | split: ","
                   assign percent_offer_value = 15
+                  assign percent_offer_enabled = false
                   
                   assign in_bf_diamond_classics = false
                   assign in_bf_diamond_pendants = false
@@ -120,7 +121,7 @@
                     assign show_promo = true
                   endif
                   
-                  if in_percent_offer and show_promo == false
+                  if in_percent_offer and show_promo == false and percent_offer_enabled
                     assign percent_left = 100 | minus: percent_offer_value
                     assign cand = price | times: percent_left | divided_by: 100
                     assign promo_price = cand
