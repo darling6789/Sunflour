@@ -185,6 +185,10 @@ h1.collection-hero__title {
 }
 .grid__item .m-product-card-bottom {
     width: 357px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .m-product-card-title {
 	width: 100%;
@@ -337,6 +341,14 @@ h1.collection-hero__title {
     text-transform: uppercase;
     vertical-align: middle;
 }
+.m-product-card .price-item--sale .m-product-card-currency-code {
+    font-size: 16px;
+    margin-left: 3px;
+}
+.m-product-card .discounts__discount > svg.icon {
+    width: 1rem;
+    height: 1rem
+}
 .m-product-card .m-product-card-price-badge-wrapper .m-product-card-badge-inline,
 .m-product-card .m-product-card-compare-badge-wrapper .m-product-card-badge-inline {
     margin-left: 0;
@@ -373,7 +385,7 @@ h1.collection-hero__title {
     bottom: 0;
 }
 .m-product-card .promo-badge .discounts__discount > .icon svg path {
-    fill: rgba(28, 27, 31, 0.60);
+    fill: #333;
 }
 .m-product-card .price__container {
 }
@@ -472,8 +484,6 @@ h1.collection-hero__title {
     gap: 10px;
 }
 .promo-price-block .price-item--regular{
-    text-decoration:
-    line-through;opacity:.6
 }
 .promo-badge{
     display:inline-flex;
@@ -535,11 +545,13 @@ h1.collection-hero__title {
         justify-content: space-between;
     }
     .m-product-card .price--on-sale span.price__badge-sale, .m-product-card .m-product-card-badge-inline {
-        padding: 0px 6px;
+        padding: 2px 8px;
         font-size: 10px;
         line-height: 1.5;
         margin-left: 0;
-
+    }
+    .m-product-card .price-item--sale .m-product-card-currency-code {
+        font-size: 15px;
     }
 }
 
@@ -585,6 +597,10 @@ h1.collection-hero__title {
     box-shadow: 2px 2px 6px 0 rgba(21, 21, 21, 0.11);
     height: 100%;
     margin-right: 0;
+}
+.grid__item .m-product-card {
+    display: flex;
+    flex-direction: column;
 }
 .related-products .grid--4-col-desktop .grid__item .m-product-card-title h3 {
     height: unset;

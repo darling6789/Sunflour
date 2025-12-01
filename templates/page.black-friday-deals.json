@@ -177,7 +177,7 @@
         "link_color": "#000000",
         "collection_heading_color": "#333333",
         "collection_link_color": "#333333",
-        "collection_heading": "More Gemstone Deals",
+        "collection_heading": "",
         "collection": "le-vian-holiday",
         "col_text": "Shop All Le Vian Holiday Savings",
         "type_engagement_ring": false,
@@ -229,14 +229,37 @@
       "settings": {
         "collection": "rolex-1",
         "heading": "Pre-Owned Rolex",
-        "description": "<p><em>Save $2000 on all Pre-Owned Rolex Watches</em></p>",
+        "description": "Save $2000 on all Pre-Owned Rolex Watches, only while this sale event lasts.",
         "collection_link_text": "Shop All Pre-Owned Rolex Watches",
         "collection_link": "shopify://pages/pre-owned-rolex-watches",
         "show_rolex_product_card": true,
         "back_color": "#333333",
         "heading_color": "#f8f6f2",
-        "description_color": "#333333",
-        "link_color": "#ffffff"
+        "description_color": "#ffffff",
+        "link_color": "#f8f6f2"
+      }
+    },
+    "rich_text_ap6MkQ": {
+      "type": "rich-text",
+      "blocks": {
+        "text_Gm7LWN": {
+          "type": "text",
+          "settings": {
+            "text": "<h5>Marc Robinson Jewelers is not an authorized dealer, distributor, or affiliated in any way with Rolex S.A., Rolex USA, or any of its subsidiaries. Rolex is a registered trademark of Rolex S.A. Any trademarks, brand names, or logos mentioned are for identification purposes only and remain the property of their respective owners. All Rolex watches sold by Marc Robinson Jewelers are pre-owned, authentic Rolex timepieces. Rolex has no obligation to service watches sold by Marc Robinson Jewelers. For Rolex’s official terms and services, please visit an authorized Rolex dealer or contact Rolex directly.</h5>"
+          }
+        }
+      },
+      "block_order": [
+        "text_Gm7LWN"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     },
     "175801863453b60daa": {
@@ -292,6 +315,7 @@
     "m_featured_collection_2_rc9NBr",
     "p_o_r_in_stock_sale_section_TYYhRD",
     "m_featured_collection_1_Yi6Lic",
+    "rich_text_ap6MkQ",
     "175801863453b60daa"
   ]
 }

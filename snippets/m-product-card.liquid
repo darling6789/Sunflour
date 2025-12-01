@@ -49,8 +49,9 @@
                   assign price = variant.price
                   
                   if settings.currency_code_enabled
-                    assign money_price = price | money_with_currency
-                    assign money_compare_at_price = compare_at_price | money_with_currency
+                    assign money_price_base = price | money
+                    assign money_compare_at_price_base = compare_at_price | money
+                    assign currency_code = cart.currency.iso_code
                   else
                     assign money_price = price | money
                     assign money_compare_at_price = compare_at_price | money
@@ -139,7 +140,7 @@
                       <div class="price__sale">
                         <span class="price-item price-item--sale price-item--last">
                           {% if settings.currency_code_enabled %}
-                            {{ promo_price | money_with_currency }}
+                            {{ promo_price | money }}<span class="m-product-card-currency-code">{{ currency_code }}</span>
                           {% else %}
                             {{ promo_price | money }}
                           {% endif %}
@@ -150,7 +151,7 @@
                         <span>
                           <s class="price-item price-item--regular">
                             {% if settings.currency_code_enabled %}
-                              {{ price | money_with_currency }}
+                              {{ price | money }}<span class="m-product-card-currency-code">{{ currency_code }}</span>
                             {% else %}
                               {{ price | money }}
                             {% endif %}
@@ -179,7 +180,11 @@
                     <div class="price__container">
                       <div class="price__sale">
                         <span class="price-item price-item--sale price-item--last">
-                          {{ money_price }}
+                          {% if settings.currency_code_enabled %}
+                            {{ money_price_base }}<span class="m-product-card-currency-code">{{ currency_code }}</span>
+                          {% else %}
+                            {{ money_price }}
+                          {% endif %}
                         </span>
                         <span class="visually-hidden visually-hidden--inline">
                           {{ 'products.product.price.regular_price' | t }}
@@ -187,7 +192,11 @@
                         <div class="m-product-card-compare-badge-wrapper">
                           <span>
                             <s class="price-item price-item--regular">
-                              {{ money_compare_at_price }}
+                              {% if settings.currency_code_enabled %}
+                                {{ money_compare_at_price_base }}<span class="m-product-card-currency-code">{{ currency_code }}</span>
+                              {% else %}
+                                {{ money_compare_at_price }}
+                              {% endif %}
                             </s>
                           </span>
                           <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme | default: 'accent-1' }} m-product-card-badge-inline">
@@ -209,7 +218,11 @@
                           {{ 'products.product.price.regular_price' | t }}
                         </span>
                         <span class="price-item price-item--regular">
-                          {{ money_price }}
+                          {% if settings.currency_code_enabled %}
+                            {{ money_price_base }}<span class="m-product-card-currency-code">{{ currency_code }}</span>
+                          {% else %}
+                            {{ money_price }}
+                          {% endif %}
                         </span>
                       </div>
                     </div>

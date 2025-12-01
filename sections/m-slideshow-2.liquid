@@ -221,15 +221,15 @@
           aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
           tabindex="-1"
         >
-          <div class="hero-composed-inner hero-composed-image-{{ block.settings.image_position | default: 'right' }}" style="background-image: url({{ block.settings.image | img_url: 'master' }});">
+          <div class="hero-composed-inner hero-composed-image-{{ block.settings.image_position | default: 'right' }}"{% if block.settings.back_image %} style="background-image: url({{ block.settings.back_image | image_url: width: 2000 }}); background-size: cover; background-position: center;"{% endif %}>
             <div class="hero-composed-des">
-              <h2>
-                <p class="hero-composed-text-1">{{ block.settings.text1 }}</p>
+              <div class="hero-composed-text-container">
+                <h2 class="hero-composed-text-1">{{ block.settings.text1 }}</h2>
                 <p class="hero-composed-text-2">{{ block.settings.text2 }}</p>
                 <p class="hero-composed-text-3">{{ block.settings.text3 }}</p>
                 <p class="hero-composed-text-4">{{ block.settings.text4 }}</p>
                 <p class="hero-composed-text-5">{{ block.settings.text5 }}</p>
-              </h2>
+              </div>
               <div class="hero-composed-btns">
                 {% if block.settings.btn_link_1 %}
                   <a href="{{ block.settings.btn_link_1 }}">{{ block.settings.btn_text_1 }}</a>
@@ -239,7 +239,10 @@
                 {% endif %}
               </div>              
             </div>
-            <div class="hero-composed-image" style="background-image: url({{ block.settings.image | img_url: 'master' }});">
+            <div class="hero-composed-image">
+              {% if block.settings.image %}
+                <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.image.alt | escape }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" style="{% if block.settings.image_cover %}object-fit: cover;{% endif %} {% if block.settings.image_align_center %}margin: auto;{% endif %}">
+              {% endif %}
             </div>
 
             <div class="hero-composed-corner">
@@ -256,18 +259,21 @@
         </div>
 
         <style>
-          .hero-composed--{{ block.id }} .hero-composed-des h2 {
+          .hero-composed--{{ block.id }} .hero-composed-des h2,
+          .hero-composed--{{ block.id }} .hero-composed-des p {
             color: {{ block.settings.text_color | default: '#151515' }};
           }
           .hero-composed--{{ block.id }} .hero-composed-des a {
             background: {{ block.settings.btn_bg_color | default: '#9C613A' }};
             color: {{ block.settings.btn_text_color | default: '#FFFFFF' }};
           }
+          {% unless block.settings.back_image %}
           @media only screen and (min-width: 750px) {
             .hero-composed--{{ block.id }} .hero-composed-inner {
               background: linear-gradient(180deg, {{ block.settings.bg_gradient_color_1 | default: '#eadbdb' }} 0%, {{ block.settings.bg_gradient_color_2 | default: '#f5eaea' }} 35%, {{ block.settings.bg_gradient_color_3 | default: '#ffffff' }} 60%, {{ block.settings.bg_gradient_color_4 | default: '#f1e6e6' }} 100%) !important;
             }
           }
+          {% endunless %}
           @media screen and (min-width: 750px) and (max-width: 1199px) {
             .hero-composed--{{ block.id }} .hero-composed-des a {
               background: {{ block.settings.btn_bg_color | default: '#9C613A' }};
@@ -787,13 +793,11 @@
 <style>
 .hero-composed {
 	width: 100%;
-	height: 100%;
 }
 .hero-composed-inner {
 	width: 100%;
 	height: 100%;
 	display: flex;
-	gap: 40px;
 }
 @media only screen and (min-width: 750px) {
 	.hero-composed-inner.hero-composed-image-left .hero-composed-des {
@@ -810,33 +814,40 @@
 	}
 }
 .hero-composed-des {
-	width: calc(50% - 40px);
+	width: 40%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: auto;
   z-index: 2;
   padding: 40px;
 }
-.hero-composed-des h2 {
+.hero-composed-text-container {
+  width: 100%;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.hero-composed-des h2,
+.hero-composed-des .hero-composed-text-1 {
   margin: 0;
   color: #151515;
   text-align: center;
-}
-.hero-composed-text-1 {
   font-style: italic;
   font-family: var(--font-family-Font-4, Legitima);
   font-size: 40px;
   font-weight: var(--font-weight-500, 500);
-  line-height: var(--line-height-31_86, 31.86px);
-  margin: 0;
+  line-height: 120%;
   margin-bottom: 20px;
 }
 .hero-composed-text-2 {
   font-size: 24px;
   margin: 0;
   margin-bottom: 10px;
+  font-family: 'legitima';
+  line-height: 140%;
 }
 .hero-composed-text-3 {
   font-family: var(--font-family-Font-4, Legitima);
@@ -857,7 +868,7 @@
 .hero-composed-des a {
 	display: block;
 	text-decoration: none;
-	width: 240px;
+	width: object-fit;
 	margin-top: 20px;
   text-align: center;
   border-radius: 4px;
@@ -869,22 +880,24 @@
   font-weight: 500;
   line-height: 100%;
   padding: 16px 32px;
-  min-width: unset;
+  min-width: 240px;
 }
 .hero-composed-image {
-    width: 50%;
-    height: 41.3vw;
-    line-height: 0;
-    display: block;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
+  width: 60%;
+  height: 100%;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
 }
 .hero-composed-image img {
 	display: block;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	max-width: 100%;
+	max-height: 100%;
+  width: 100%;
+	height: 70vh;
+	object-fit: contain;
 }
 .hero-composed-corner {
 	position: absolute;
@@ -908,6 +921,12 @@
   margin: 0;
 }
 
+@media only screen and (min-width: 1921px) {
+  .hero-composed-des a {
+    font-size: 16px;
+  }
+}
+
 @media screen and (min-width: 750px) and (max-width: 1199px) {
     .hero-composed-des {
         padding: 20px;
@@ -927,6 +946,7 @@
         width: 200px;
         margin-top: 10px;
     }
+    .hero-composed-des h2.hero-composed-text-1,
     .hero-composed-text-1 {
       font-size: 36px;
       margin: 0;
@@ -953,11 +973,6 @@
       margin-bottom: 20px;
     }
 }
-@media only screen and (min-width: 750px) {
-    .hero-composed-inner {
-      background: linear-gradient(180deg, #eadbdb 0%, #f5eaea 35%, #ffffff 60%, #f1e6e6 100%) !important;
-    }
-}
 
 @media only screen and (max-width: 749px) {
     .hero-composed {
@@ -966,40 +981,53 @@
       min-height: 28rem;
     }
     .hero-composed-inner {
-      flex-wrap: wrap;
+      flex-direction: column;
       flex: 1;
       min-height: 28rem;
       position: relative;
-      background-image: url(//www.marcrobinsonjewelers.com/cdn/shop/files/edited-pendant-worn-min.png?v=1757597504);
-      background-size: cover;
-      background-position: center;
     }
     .hero-composed-des {
       width: 100%;
-      position: absolute;
-      background: #ffffffaa;
-      left: 0;
-      bottom: 0;
-      padding: 40px 20px 45px;
+      position: relative;
+      padding: 20px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-composed-text-container {
+      max-width: 100%;
+      width: 100%;
     }
     .hero-composed-image {
-      display: none;
       order: -1;
-      height: 84vw;
       width: 100%;
+      height: auto;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-composed-image img {
+      max-width: 100%;
+      max-height: 50vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
     }
     .hero-composed-btns {
       display: flex;
       gap: 10px;
-      margin-top: 50px;
     }
     .hero-composed-des a {
         border-radius: 4px;
         font-size: 16px;
-        padding: 10px 10px;
+        padding: 10px 20px;
         width: fit-content;
+        margin: auto;
         margin-top: 10px;
     }
+    .hero-composed-des h2.hero-composed-text-1,
     .hero-composed-text-1 {
       font-size: 28px;
       margin: 0;
@@ -1079,6 +1107,53 @@
       font-size: 11px;
       line-height: 100%;
     }
+}
+
+@media only screen and (max-width: 600px) {
+  .hero-composed-des h2.hero-composed-text-1,
+  .hero-composed-text-1 {
+    font-size: 2rem;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  .hero-composed-text-2 {
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  .hero-composed-text-3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;  
+  }
+  .hero-composed-text-4 {
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  .hero-composed-text-5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .hero-composed-btns a {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    background: #9C613A;
+    color: #FFF;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    font-size: 16px;
+    padding: 10px;
+    min-height: unset;
+    min-width: 240px;
+    margin-top: 10px;
+    width: 100%;
+    border: none;
+    outline: none;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -1365,6 +1440,16 @@
             }
           ],
           "default": "right"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_cover",
+          "label": "Image cover"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_align_center",
+          "label": "Image align center"
         },
         {
           "type": "text",

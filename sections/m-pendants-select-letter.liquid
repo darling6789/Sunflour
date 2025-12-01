@@ -98,6 +98,13 @@
                     {% endunless %}
                 {% endfor %}
             </div>
+            
+            <!-- CTA Button -->
+            <div class="m-pendants-select-cta">
+                <button type="button" class="m-pendants-select-cta-btn" id="m-pendants-review-cta">
+                    Review & Add to Cart
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -118,6 +125,13 @@
                     <h4>{{ section.settings.luxe_title }}</h4>
                     <p>{{ section.settings.luxe_description }}</p>
                 </div>
+            </div>
+            
+            <!-- CTA Button -->
+            <div class="m-pendants-size-cta">
+                <button type="button" class="m-pendants-size-cta-btn" id="m-pendants-select-size-cta">
+                    Select Your Size
+                </button>
             </div>
         </div>
 
@@ -328,6 +342,36 @@
     border-color: #000000;
 }
 
+.m-pendants-select-cta {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 470px;
+}
+
+.m-pendants-select-cta-btn {
+    padding: 20px 40px;
+    border-radius: 8px;
+    background: #151515;
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.m-pendants-select-cta-btn:hover {
+    background: #333333;
+}
+
+.m-pendants-select-cta-btn:active {
+    transform: scale(0.98);
+}
+
 .m-pendants-selected-detail {
     width: 100%;
     background-color: #000000;
@@ -404,6 +448,37 @@
     font-weight: 400;
     line-height: 30px; /* 187.5% */
     margin: 0;
+}
+
+.m-pendants-size-cta {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.m-pendants-size-cta-btn {
+    padding: 20px 40px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #151515;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 26px;
+}
+
+.m-pendants-size-cta-btn:hover {
+    background: #F5F5F5;
+    transform: translateY(-2px);
+}
+
+.m-pendants-size-cta-btn:active {
+    transform: scale(0.98);
 }
 
 .m-pendants-comparison-carousel {
@@ -502,9 +577,18 @@
         grid-template-columns: repeat(6, 1fr);
         max-width: 100%;
     }
+    
+    .m-pendants-select-cta {
+        max-width: 100%;
+    }
 
     .m-pendants-selected-detail {
         padding: 60px 20px;
+    }
+    .m-pendants-select-cta-btn, .m-pendants-size-cta-btn {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 </style>
@@ -606,6 +690,28 @@ $(document).ready(function(){
         nextArrow: '.m-pendants-carousel-next',
         fade: true,
         cssEase: 'linear'
+    });
+    
+    // CTA Button - Scroll to product section
+    $('#m-pendants-review-cta').on('click', function(){
+        const productSection = document.querySelector('.m-pendants-product-section');
+        if (productSection) {
+            productSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+    
+    // Size CTA Button - Scroll to product section
+    $('#m-pendants-select-size-cta').on('click', function(){
+        const productSection = document.querySelector('.m-pendants-product-section');
+        if (productSection) {
+            productSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
 });
 </script>

@@ -232,7 +232,8 @@
                          data-product-id="{{ product.id }}"
                          data-product-handle="{{ product.handle }}"
                          data-product-title="{{ product.title }}"
-                         data-product-image="{{ product.featured_image | img_url: 'master' }}">
+                         data-product-image="{{ product.featured_image | img_url: 'master' }}"
+                         data-collections="{% for collection in product.collections %}{{ collection.handle }}{% unless forloop.last %},{% endunless %}{% endfor %}">
                         {% for variant in product.variants %}
                             <div class="variant-data"
                                  data-variant-id="{{ variant.id }}"
@@ -1053,6 +1054,27 @@ document.addEventListener('DOMContentLoaded', function() {
     let productData = {};
     let isSyncingFromOtherSection = false;
     
+    // Discount configuration (matching auto-discount-price.liquid)
+    const DISCOUNT_CONFIG = {
+        bf_diamond_pendants_collection: 'lab-grown-diamond-initial-pendant-necklaces',
+        bf_diamond_pendants_percent: 60
+    };
+    
+    // Calculate discounted price based on collection membership
+    function calculateDiscountedPrice(basePrice, collections) {
+        if (!collections) return basePrice;
+        
+        const collectionArray = collections.split(',');
+        const isInPendantsCollection = collectionArray.includes(DISCOUNT_CONFIG.bf_diamond_pendants_collection);
+        
+        if (isInPendantsCollection) {
+            const percentLeft = 100 - DISCOUNT_CONFIG.bf_diamond_pendants_percent;
+            return Math.round(basePrice * percentLeft / 100);
+        }
+        
+        return basePrice;
+    }
+    
     // Load product data from hidden elements
     function loadProductData() {
         const productDataElements = document.querySelectorAll('#m-pendants-product-data .product-data');
@@ -1063,14 +1085,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const productHandle = element.dataset.productHandle;
             const productTitle = element.dataset.productTitle;
             const productImage = element.dataset.productImage;
+            const collections = element.dataset.collections || '';
             
             const variants = [];
             const variantElements = element.querySelectorAll('.variant-data');
             variantElements.forEach(variantEl => {
+                const basePrice = parseInt(variantEl.dataset.variantPrice);
+                const discountedPrice = calculateDiscountedPrice(basePrice, collections);
+                
                 variants.push({
                     id: variantEl.dataset.variantId,
                     title: variantEl.dataset.variantTitle,
-                    price: parseInt(variantEl.dataset.variantPrice),
+                    price: basePrice,
+                    discountedPrice: discountedPrice,
                     comparePrice: variantEl.dataset.variantComparePrice ? parseInt(variantEl.dataset.variantComparePrice) : null,
                     available: variantEl.dataset.variantAvailable === 'true',
                     quantity_rule: {
@@ -1086,6 +1113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 handle: productHandle,
                 title: productTitle,
                 image: productImage,
+                collections: collections,
                 variants: variants
             };
         });
@@ -1218,27 +1246,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Format price with proper decimals
+    function formatPrice(cents) {
+        const dollars = cents / 100;
+        // Check if price has cents (not a whole number)
+        if (dollars % 1 !== 0) {
+            return dollars.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        } else {
+            return dollars.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+    }
+    
     // Update pricing display
     function updatePricing() {
         if (!currentVariant) return;
         
-        const price = (currentVariant.price / 100).toFixed(0);
-        currentPriceSpan.textContent = `$${parseInt(price).toLocaleString()}`;
+        // Use discounted price if available, otherwise use regular price
+        const displayPrice = currentVariant.discountedPrice !== undefined && currentVariant.discountedPrice < currentVariant.price 
+            ? currentVariant.discountedPrice 
+            : currentVariant.price;
         
-        if (currentVariant.comparePrice) {
-            const comparePrice = (currentVariant.comparePrice / 100).toFixed(0);
-            originalPriceSpan.textContent = `$${parseInt(comparePrice).toLocaleString()} USD`;
+        currentPriceSpan.textContent = `$${formatPrice(displayPrice)}`;
+        
+        // Show original price as compare price if there's a discount
+        if (currentVariant.discountedPrice !== undefined && currentVariant.discountedPrice < currentVariant.price) {
+            originalPriceSpan.textContent = `$${formatPrice(currentVariant.price)} USD`;
+            originalPriceSpan.style.display = 'inline';
+        } else if (currentVariant.comparePrice) {
+            originalPriceSpan.textContent = `$${formatPrice(currentVariant.comparePrice)} USD`;
             originalPriceSpan.style.display = 'inline';
         } else {
             originalPriceSpan.style.display = 'none';
         }
         
         // Show only the Affirm element for the current variant (match by title since all products have same variant titles)
+        // Use discounted price for Affirm calculation if available
         const affirmContainer = document.querySelector('.m-pendants-financing');
         if (affirmContainer && currentVariant) {
             const affirmElements = affirmContainer.querySelectorAll('.affirm-as-low-as');
             affirmElements.forEach(el => {
                 if (el.dataset.variantTitle && el.dataset.variantTitle.toLowerCase() === currentVariant.title.toLowerCase()) {
+                    // Update the amount to reflect discounted price
+                    const affirmAmount = currentVariant.discountedPrice !== undefined && currentVariant.discountedPrice < currentVariant.price 
+                        ? currentVariant.discountedPrice 
+                        : currentVariant.price;
+                    el.setAttribute('data-amount', affirmAmount);
                     el.style.display = 'block';
                 } else {
                     el.style.display = 'none';
