@@ -86,9 +86,18 @@
   font-weight: 600;
   line-height: normal;
   letter-spacing: -0.848px;
-  text-decoration-line: line-through;
   text-transform: uppercase;
 }
+
+.s-m-product .price--on-sale .price-item--regular {
+  text-decoration-line: line-through;
+}
+
+.s-m-product .s-m-price-currency-code {
+  font-size: 28.82px;
+  font-weight: 500;
+}
+
 .s-m-product .promo-badge {
   display: none;
 }
@@ -243,7 +252,7 @@ h3.s-m-variant-picker-title {
 
 .s-m-center-diamond-selection__selected-row1 {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
 }
 
@@ -282,17 +291,23 @@ h3.s-m-variant-picker-title {
 .s-m-center-diamond-selection__selected-price {
   color: #594242;
   font-family: Montserrat, sans-serif;
-  font-size: 48px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 400;
   line-height: normal;
   text-transform: uppercase;
-  letter-spacing: 3.39px;
+  letter-spacing: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .s-m-center-diamond-selection__selected-price {
+    font-size: clamp(20px, 2.5vw, 48px);
+  }
 }
 
 .s-m-center-diamond-selection__selected-details {
   color: #594242;
   font-family: Montserrat, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -557,6 +572,10 @@ h3.s-m-variant-picker-title {
      font-size: 26px;
    }
 
+   .s-m-product .s-m-price-currency-code {
+     font-size: 26px;
+   }
+
    .s-m-variant-picker {
      margin-top: 40px;
    }
@@ -659,6 +678,10 @@ h3.s-m-variant-picker-title {
    }
 
    .s-m-product .price-item--regular {
+     font-size: 24px;
+   }
+
+   .s-m-product .s-m-price-currency-code {
      font-size: 24px;
    }
 
@@ -807,6 +830,10 @@ h3.s-m-variant-picker-title {
    }
 
    .s-m-product .price-item--regular {
+     font-size: 20px;
+   }
+
+   .s-m-product .s-m-price-currency-code {
      font-size: 20px;
    }
 
@@ -1021,6 +1048,10 @@ h3.s-m-variant-picker-title {
      font-size: 18px;
    }
 
+   .s-m-product .s-m-price-currency-code {
+     font-size: 18px;
+   }
+
    .s-m-variant-picker {
      margin-top: 20px;
    }
@@ -1145,6 +1176,10 @@ h3.s-m-variant-picker-title {
    }
 
    .s-m-product .price-item--regular {
+     font-size: 12px;
+   }
+
+   .s-m-product .s-m-price-currency-code {
      font-size: 12px;
    }
 
