@@ -918,13 +918,7 @@
                     </span>
                     <span class="s-m-product-form__error-message"></span>
                   </div>
-                  {%- form 'product',
-                    product,
-                    id: product_form_id,
-                    class: 's-m-form',
-                    novalidate: 'novalidate',
-                    data-type: 'add-to-cart-form'
-                  -%}
+                  {%- form 'product', product, id: product_form_id, class: 's-m-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                     <input
                       type="hidden"
                       name="id"
@@ -1057,7 +1051,7 @@
         <div class="s-m-diamond-picker-modal__header">
           <h2 class="s-m-diamond-picker-modal__title">Select Center Diamond</h2>
           <button
-            id="DiamondPickerClose-{{ section.id }}"
+            id="ModalClose-DiamondPicker-{{ section.id }}"
             type="button"
             class="s-m-diamond-picker-modal__close"
             aria-label="{{ 'accessibility.close' | t }}"
@@ -1942,6 +1936,7 @@
   const productPrice = {{ product.selected_or_first_available_variant.price | divided_by: 100 }};
   const productComparePrice = {{ product.selected_or_first_available_variant.compare_at_price | default: 0 }};
   const productTitle = {{ product.title | json }};
+  const centerDiamondProductId = 8297684238521;
   
   const API_BASE = '/apps/diamond-search/diamonds/search';
   const CUT_FULL = {
@@ -2006,7 +2001,7 @@
   
   const modal = document.getElementById(`DiamondPickerModal-${sectionId}`);
   const trigger = document.querySelector(`[data-diamond-picker-trigger]`);
-  const closeBtn = document.getElementById(`DiamondPickerClose-${sectionId}`);
+  const closeBtn = document.getElementById(`ModalClose-DiamondPicker-${sectionId}`);
   const grid = document.getElementById(`diamondGrid-${sectionId}`);
   const loadingEl = document.getElementById(`diamondLoading-${sectionId}`);
   const pageInfo = document.getElementById(`pageInfo-${sectionId}`);
@@ -2055,6 +2050,34 @@
     const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
     // Only remove leading zeros after $ if the number is actually 0.x (e.g., $0.50 -> $0.50, not $0.50 -> $.50)
     return formatted.replace(/^\$0+(?=\d)/, '$').replace(/^\$0+\./, '$0.');
+  }
+  
+  // Calculate diamond retail price (cost × 5)
+  function calculateDiamondRetailPrice(diamond) {
+    try {
+      if (!diamond) return 0;
+      
+      let cost = 0;
+      if (diamond.cost !== undefined && diamond.cost !== null && diamond.cost !== '') {
+        cost = typeof diamond.cost === 'string' 
+          ? parseFloat(diamond.cost.replace(/^0+/, '').replace(/^0+\./, '0.')) || 0
+          : parseFloat(diamond.cost) || 0;
+        // Apply 5x markup to cost
+        return cost * 5;
+      } else if (diamond.priceRetail) {
+        // Fallback: if cost not available, assume priceRetail is already retail price
+        cost = typeof diamond.priceRetail === 'string' 
+          ? parseFloat(diamond.priceRetail.replace(/^0+/, '').replace(/^0+\./, '0.')) || 0
+          : parseFloat(diamond.priceRetail) || 0;
+        // If priceRetail exists but cost doesn't, we'll use priceRetail as-is (assume it's already retail)
+        return cost;
+      }
+      
+      return 0;
+    } catch (error) {
+      console.error('Error calculating diamond retail price:', error, diamond);
+      return 0;
+    }
   }
   
   const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
@@ -2193,7 +2216,7 @@
             </div>
             <div class="s-m-diamond-picker-modal__card-mobile-props">${mobileProps}</div>
             <div class="s-m-diamond-picker-modal__card-footer">
-              <div class="s-m-diamond-picker-modal__card-price">${money(item.priceRetail)}</div>
+              <div class="s-m-diamond-picker-modal__card-price">${money(calculateDiamondRetailPrice(item))}</div>
               <button type="button" class="s-m-diamond-picker-modal__card-btn ${isSelected ? 'is-selected' : ''}" data-stock="${item.stockNumber}" data-diamond='${JSON.stringify(item)}'>
                 ${isSelected ? 'Selected' : 'Select'}
               </button>
@@ -2354,20 +2377,14 @@
       <div class="s-m-diamond-picker-modal__footer-diamond-details">
         ${d.carat?.toFixed?.(2) ?? d.carat}ct ${shapeTxt}, ${d.color} ${sourceType} ${d.clarity} ${cutTxt}
       </div>
-      <div class="s-m-diamond-picker-modal__footer-diamond-price">${money(parseFloat(d.priceRetail) || 0)} USD</div>
+      <div class="s-m-diamond-picker-modal__footer-diamond-price">${money(calculateDiamondRetailPrice(d))} USD</div>
     `;
   }
   
   // Update total price
   function updateTotalPrice() {
     if (!totalPriceEl) return;
-    let diamondPrice = 0;
-    if (state.selectedDiamond && state.selectedDiamond.priceRetail) {
-      const price = state.selectedDiamond.priceRetail;
-      diamondPrice = typeof price === 'string' 
-        ? parseFloat(price.replace(/^0+/, '').replace(/^0+\./, '0.')) || 0
-        : parseFloat(price) || 0;
-    }
+    const diamondPrice = calculateDiamondRetailPrice(state.selectedDiamond);
     const total = productPrice + diamondPrice;
     totalPriceEl.textContent = `${money(total)} USD`;
     
@@ -2390,23 +2407,16 @@
     const priceItem = isOnSale ? salePriceItem : regularPriceItem;
     
     if (priceItem) {
-      // Format the price (money function returns format like "$1,964.60")
       let formattedPrice = money(totalPrice);
       
-      // Ensure formattedPrice has $ symbol (money() should always return it, but double-check)
       if (!formattedPrice.startsWith('$')) {
         formattedPrice = '$' + formattedPrice;
       }
       
-      // Check if currency code is enabled by looking at the original price format
       const originalText = priceItem.textContent.trim();
-      
-      // Extract currency code from existing price or use default USD
       const currencyMatch = originalText.match(/(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)/);
       const currencyCode = currencyMatch ? currencyMatch[1] : 'USD';
       
-      // Keep the $ symbol and add currency code with styling
-      // formattedPrice is like "$1,964.60", we want "$1,964.60 USD"
       priceItem.innerHTML = `${formattedPrice} <span class="s-m-price-currency-code">${currencyCode}</span>`;
     }
   }
@@ -2608,33 +2618,72 @@
   
   // Initialize
   function init() {
-    if (!modal) return;
+    // Initialize price display first (this should always work)
+    if (totalPriceEl) {
+      updateTotalPrice();
+    }
+    initializeCurrencyCodeStyling();
+    
+    if (!modal) {
+      console.warn('Diamond picker modal not found');
+      // Still try to set up form handler even if modal isn't found
+      try {
+        setupFormSubmissionHandler();
+      } catch (error) {
+        console.error('Error setting up form submission handler:', error);
+      }
+      return;
+    }
     
     // Open modal - handle all trigger buttons
     const triggerButtons = document.querySelectorAll(`[data-diamond-picker-trigger]`);
-    if (triggerButtons.length === 0) return;
+    if (triggerButtons.length === 0) {
+      console.warn('Diamond picker trigger buttons not found');
+      return;
+    }
     
     triggerButtons.forEach(triggerBtn => {
       triggerBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (modal && typeof modal.show === 'function') {
-          modal.show(triggerBtn);
-          state.page = 1;
-          // Don't reset selectedDiamond - keep it if already selected
-          // state.selectedDiamond = null;
-          state.facetsLoaded = false;
-          clearFilters();
-          doSearch();
-          updateTotalPrice();
-          updateSelectedDiamondDisplay();
-          // Enable button if diamond is already selected
-          if (addDiamondBtn) {
-            addDiamondBtn.disabled = !state.selectedDiamond;
+        e.stopPropagation();
+        console.log('Diamond picker button clicked', modal);
+        
+        if (!modal) {
+          console.error('Modal not found');
+          return;
+        }
+        
+        // Try to show the modal
+        try {
+          if (typeof modal.show === 'function') {
+            modal.show(triggerBtn);
+          } else {
+            // Fallback: try to set open attribute
+            modal.setAttribute('open', '');
+            modal.style.display = 'block';
           }
-          // Hide filters by default on mobile
-          if (filtersPanel && window.innerWidth <= 900) {
-            filtersPanel.classList.remove('show');
-          }
+        } catch (error) {
+          console.error('Error opening modal:', error);
+          // Fallback: manually show modal
+          modal.setAttribute('open', '');
+          modal.style.display = 'block';
+        }
+        
+        state.page = 1;
+        // Don't reset selectedDiamond - keep it if already selected
+        // state.selectedDiamond = null;
+        state.facetsLoaded = false;
+        clearFilters();
+        doSearch();
+        updateTotalPrice();
+        updateSelectedDiamondDisplay();
+        // Enable button if diamond is already selected
+        if (addDiamondBtn) {
+          addDiamondBtn.disabled = !state.selectedDiamond;
+        }
+        // Hide filters by default on mobile
+        if (filtersPanel && window.innerWidth <= 900) {
+          filtersPanel.classList.remove('show');
         }
       });
     });
@@ -3282,13 +3331,7 @@
       // Update price
       const diamondPrice = document.getElementById(`selectedDiamondPrice-${sectionId}`);
       if (diamondPrice) {
-        let price = diamond.priceRetail;
-        // Ensure price is a number, handling string values with leading zeros
-        if (typeof price === 'string') {
-          price = parseFloat(price.replace(/^0+/, '').replace(/^0+\./, '0.')) || 0;
-        } else {
-          price = parseFloat(price) || 0;
-        }
+        const price = calculateDiamondRetailPrice(diamond);
         diamondPrice.textContent = `+ ${money(price)}`;
       }
       
@@ -3488,8 +3531,185 @@
       updateProductPageDiamondDisplay();
     }
     
-    // Initialize currency code styling on page load
-    initializeCurrencyCodeStyling();
+    // Intercept form submission to add diamond to cart
+    try {
+      setupFormSubmissionHandler();
+    } catch (error) {
+      console.error('Error setting up form submission handler:', error);
+    }
+  }
+  
+  // Setup form submission handler to add ring and diamond to cart
+  function setupFormSubmissionHandler() {
+    const form = document.querySelector('.s-m-form');
+    if (!form) {
+      console.warn('Form .s-m-form not found');
+      return;
+    }
+    
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const addToCartBtn = document.getElementById(`addToCartButton-${sectionId}`);
+      if (addToCartBtn) {
+        addToCartBtn.disabled = true;
+        const btnText = addToCartBtn.querySelector('span');
+        if (btnText) btnText.textContent = 'Adding...';
+      }
+      
+      try {
+        // Get form data for ring
+        const formData = new FormData(form);
+        const ringVariantId = formData.get('id');
+        const quantity = formData.get('quantity') || 1;
+        
+        if (!ringVariantId) {
+          throw new Error('Ring variant ID not found');
+        }
+        
+        // Add ring to cart first
+        const config = fetchConfig('javascript');
+        config.headers['X-Requested-With'] = 'XMLHttpRequest';
+        delete config.headers['Content-Type'];
+        
+        const ringFormData = new FormData();
+        ringFormData.append('id', ringVariantId);
+        ringFormData.append('quantity', quantity);
+        
+        // Add ring properties if any
+        formData.forEach((value, key) => {
+          if (key.startsWith('properties[') && key !== 'properties[Diamond]') {
+            ringFormData.append(key, value);
+          }
+        });
+        
+        // Request cart sections for proper cart update
+        const cartNotificationEl = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        if (cartNotificationEl) {
+          const sectionIds = cartNotificationEl.getSectionsToRender ? cartNotificationEl.getSectionsToRender().map(s => s.id) : ['cart-drawer', 'cart-notification'];
+          ringFormData.append('sections', sectionIds.join(','));
+          ringFormData.append('sections_url', window.location.pathname);
+        }
+        
+        config.body = ringFormData;
+        
+        const ringResponse = await fetch(window.routes.cart_add_url, config);
+        if (!ringResponse.ok) {
+          const errorData = await ringResponse.text();
+          try {
+            const errorJson = JSON.parse(errorData);
+            throw new Error(errorJson.message || errorJson.description || 'Failed to add ring to cart');
+          } catch (parseError) {
+            throw new Error('Failed to add ring to cart');
+          }
+        }
+        
+        // If diamond is selected, add it to cart as separate line item
+        if (state.selectedDiamond) {
+          await addDiamondToCart(state.selectedDiamond);
+        }
+        
+        // Trigger cart update event
+        if (window.dispatchEvent) {
+          window.dispatchEvent(new CustomEvent('cart:updated'));
+        }
+        
+        // Redirect to cart or show cart drawer
+        const cartNotificationEl2 = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        if (cartNotificationEl2 && typeof cartNotificationEl2.open === 'function') {
+          cartNotificationEl2.open();
+        } else {
+          window.location.href = window.routes.cart_url;
+        }
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert(error.message || 'Failed to add items to cart. Please try again.');
+        if (addToCartBtn) {
+          addToCartBtn.disabled = false;
+          const btnText = addToCartBtn.querySelector('span');
+          if (btnText) {
+            btnText.textContent = state.selectedDiamond ? 'Add to Cart' : 'Add Setting Only to Cart';
+          }
+        }
+      }
+    });
+  }
+  
+  // Add diamond to cart as separate line item
+  async function addDiamondToCart(diamond) {
+    try {
+      // Fetch center-diamond product to get variant ID
+      const productResponse = await fetch(`/products/center-diamond.js`);
+      if (!productResponse.ok) {
+        throw new Error('Failed to fetch center-diamond product');
+      }
+      
+      const productData = await productResponse.json();
+      const diamondVariantId = productData.variants?.[0]?.id;
+      
+      if (!diamondVariantId) {
+        throw new Error('Center diamond variant not found');
+      }
+      
+      // Calculate diamond retail price
+      const diamondRetailPrice = calculateDiamondRetailPrice(diamond);
+      
+      // Prepare diamond properties
+      const shapeMap = {
+        'ROUND': 'Round', 'PRINCESS': 'Princess', 'CUSHION': 'Cushion',
+        'PEAR': 'Pear', 'MARQUISE': 'Marquise', 'OVAL': 'Oval',
+        'HEART': 'Heart', 'RADIANT': 'Radiant', 'ASSCHER': 'Asscher', 'EMERALD': 'Emerald'
+      };
+      const shapeTxt = shapeMap[diamond.shape] || diamond.shape || '—';
+      const cutTxt = diamond.cut || '—';
+      const sourceType = state.type === 'lab' ? 'Lab Grown' : (state.type === 'natural' ? 'Natural' : '—');
+      const carat = diamond.carat?.toFixed?.(2) ?? diamond.carat;
+      const diamondDisplay = `${carat} ct ${shapeTxt}, ${diamond.color} ${diamond.clarity}${cutTxt !== '—' ? ' ' + cutTxt : ''}, ${sourceType}`;
+      
+      // Add diamond to cart with properties
+      const config = fetchConfig('javascript');
+      config.headers['X-Requested-With'] = 'XMLHttpRequest';
+      delete config.headers['Content-Type'];
+      
+      const diamondFormData = new FormData();
+      diamondFormData.append('id', diamondVariantId);
+      diamondFormData.append('quantity', 1);
+      diamondFormData.append('properties[Diamond]', diamondDisplay);
+      diamondFormData.append('properties[Carat]', carat);
+      diamondFormData.append('properties[Shape]', shapeTxt);
+      diamondFormData.append('properties[Color]', diamond.color || '');
+      diamondFormData.append('properties[Clarity]', diamond.clarity || '');
+      diamondFormData.append('properties[Cut]', cutTxt);
+      diamondFormData.append('properties[Source]', sourceType);
+      diamondFormData.append('properties[Stock Number]', diamond.stockNumber || '');
+      diamondFormData.append('properties[Price]', `$${diamondRetailPrice.toFixed(2)}`);
+      diamondFormData.append('properties[Diamond Price]', diamondRetailPrice.toFixed(2));
+      
+      // Request cart sections for proper cart update
+      const cartNotificationEl3 = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+      if (cartNotificationEl3) {
+        const sectionIds = cartNotificationEl3.getSectionsToRender ? cartNotificationEl3.getSectionsToRender().map(s => s.id) : ['cart-drawer', 'cart-notification'];
+        diamondFormData.append('sections', sectionIds.join(','));
+        diamondFormData.append('sections_url', window.location.pathname);
+      }
+      
+      config.body = diamondFormData;
+      
+      const diamondResponse = await fetch(window.routes.cart_add_url, config);
+      if (!diamondResponse.ok) {
+        const errorData = await diamondResponse.text();
+        try {
+          const errorJson = JSON.parse(errorData);
+          throw new Error(errorJson.message || errorJson.description || 'Failed to add diamond to cart');
+        } catch (parseError) {
+          throw new Error('Failed to add diamond to cart');
+        }
+      }
+    } catch (error) {
+      console.error('Error adding diamond to cart:', error);
+      throw error;
+    }
   }
   
   // Initialize currency code styling by wrapping existing currency codes
@@ -3504,21 +3724,34 @@
     
     if (priceItem && !priceItem.querySelector('.s-m-price-currency-code')) {
       const text = priceItem.textContent.trim();
-      // Match price with optional $, commas and currency code (e.g., "$1,964.60 USD" or "1,964.60 USD")
       const currencyMatch = text.match(/(\$?\s*[\d,]+\.?\d*)\s+(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)$/);
       if (currencyMatch) {
-        const priceWithSymbol = currencyMatch[1].trim(); // Keep $ if present
+        const priceWithSymbol = currencyMatch[1].trim();
         const currencyCode = currencyMatch[2];
         priceItem.innerHTML = `${priceWithSymbol} <span class="s-m-price-currency-code">${currencyCode}</span>`;
       }
     }
   }
   
-  // Wait for DOM
+  // Wait for DOM - initialize immediately if ready, otherwise wait
+  function initializeWhenReady() {
+    try {
+      init();
+    } catch (error) {
+      console.error('Error initializing diamond picker:', error);
+      // Retry after a short delay
+      setTimeout(initializeWhenReady, 500);
+    }
+  }
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function() {
+      // Give custom elements a moment to initialize
+      setTimeout(initializeWhenReady, 100);
+    });
   } else {
-    init();
+    // DOM already loaded, but give custom elements a moment
+    setTimeout(initializeWhenReady, 100);
   }
 })();
 </script>
