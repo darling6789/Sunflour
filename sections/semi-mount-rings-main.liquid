@@ -2053,7 +2053,8 @@
     }
     if (!num || num <= 0 || isNaN(num)) return '$0.00';
     const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
-    return formatted.replace(/^\$0+/, '$').replace(/^\$0+\./, '$0.');
+    // Only remove leading zeros after $ if the number is actually 0.x (e.g., $0.50 -> $0.50, not $0.50 -> $.50)
+    return formatted.replace(/^\$0+(?=\d)/, '$').replace(/^\$0+\./, '$0.');
   }
   
   const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
@@ -2389,24 +2390,24 @@
     const priceItem = isOnSale ? salePriceItem : regularPriceItem;
     
     if (priceItem) {
-      // Format the price
-      const formattedPrice = money(totalPrice);
+      // Format the price (money function returns format like "$1,964.60")
+      let formattedPrice = money(totalPrice);
+      
+      // Ensure formattedPrice has $ symbol (money() should always return it, but double-check)
+      if (!formattedPrice.startsWith('$')) {
+        formattedPrice = '$' + formattedPrice;
+      }
       
       // Check if currency code is enabled by looking at the original price format
-      // Try to preserve the original format (with or without currency code)
       const originalText = priceItem.textContent.trim();
-      const hasCurrencyCode = /(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)\s*$/.test(originalText);
       
-      if (hasCurrencyCode) {
-        // Extract currency code from existing price or use default
-        const currencyMatch = originalText.match(/(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)/);
-        const currencyCode = currencyMatch ? currencyMatch[1] : 'USD';
-        
-        // Wrap currency code in a span for styling
-        priceItem.innerHTML = `${formattedPrice} <span class="s-m-price-currency-code">${currencyCode}</span>`;
-      } else {
-        priceItem.textContent = formattedPrice;
-      }
+      // Extract currency code from existing price or use default USD
+      const currencyMatch = originalText.match(/(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)/);
+      const currencyCode = currencyMatch ? currencyMatch[1] : 'USD';
+      
+      // Keep the $ symbol and add currency code with styling
+      // formattedPrice is like "$1,964.60", we want "$1,964.60 USD"
+      priceItem.innerHTML = `${formattedPrice} <span class="s-m-price-currency-code">${currencyCode}</span>`;
     }
   }
   
@@ -3503,11 +3504,12 @@
     
     if (priceItem && !priceItem.querySelector('.s-m-price-currency-code')) {
       const text = priceItem.textContent.trim();
-      const currencyMatch = text.match(/(\d+[.,]\d+)\s+(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)$/);
+      // Match price with optional $, commas and currency code (e.g., "$1,964.60 USD" or "1,964.60 USD")
+      const currencyMatch = text.match(/(\$?\s*[\d,]+\.?\d*)\s+(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)$/);
       if (currencyMatch) {
-        const priceNumber = currencyMatch[1];
+        const priceWithSymbol = currencyMatch[1].trim(); // Keep $ if present
         const currencyCode = currencyMatch[2];
-        priceItem.innerHTML = `${priceNumber} <span class="s-m-price-currency-code">${currencyCode}</span>`;
+        priceItem.innerHTML = `${priceWithSymbol} <span class="s-m-price-currency-code">${currencyCode}</span>`;
       }
     }
   }
