@@ -958,8 +958,8 @@
                             <img id="selectedDiamondImage-{{ section.id }}" src="" alt="Selected Diamond">
                           </div>
                           <div class="s-m-center-diamond-selection__selected-info-wrapper">
-                            <div class="s-m-center-diamond-selection__selected-price" id="selectedDiamondPrice-{{ section.id }}"></div>
                             <div class="s-m-center-diamond-selection__selected-details" id="selectedDiamondDetails-{{ section.id }}"></div>
+                            <div class="s-m-center-diamond-selection__selected-price" id="selectedDiamondPrice-{{ section.id }}"></div>
                           </div>
                         </div>
                         <div class="s-m-center-diamond-selection__selected-row2">
@@ -2369,6 +2369,45 @@
     }
     const total = productPrice + diamondPrice;
     totalPriceEl.textContent = `${money(total)} USD`;
+    
+    // Update main price display at the top of the page
+    updateMainPriceDisplay(total);
+  }
+  
+  // Update main price display (the large price at the top)
+  function updateMainPriceDisplay(totalPrice) {
+    const mainPriceContainer = document.getElementById(`price-${sectionId}`);
+    if (!mainPriceContainer) return;
+    
+    // Find the active price item (either sale or regular)
+    const salePriceItem = mainPriceContainer.querySelector('.price__sale .price-item--sale');
+    const regularPriceItem = mainPriceContainer.querySelector('.price__regular .price-item--regular');
+    
+    // Determine which price element to update based on what's visible
+    // When on sale, price__sale is displayed; otherwise price__regular is displayed
+    const isOnSale = mainPriceContainer.classList.contains('price--on-sale');
+    const priceItem = isOnSale ? salePriceItem : regularPriceItem;
+    
+    if (priceItem) {
+      // Format the price
+      const formattedPrice = money(totalPrice);
+      
+      // Check if currency code is enabled by looking at the original price format
+      // Try to preserve the original format (with or without currency code)
+      const originalText = priceItem.textContent.trim();
+      const hasCurrencyCode = /(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)\s*$/.test(originalText);
+      
+      if (hasCurrencyCode) {
+        // Extract currency code from existing price or use default
+        const currencyMatch = originalText.match(/(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)/);
+        const currencyCode = currencyMatch ? currencyMatch[1] : 'USD';
+        
+        // Wrap currency code in a span for styling
+        priceItem.innerHTML = `${formattedPrice} <span class="s-m-price-currency-code">${currencyCode}</span>`;
+      } else {
+        priceItem.textContent = formattedPrice;
+      }
+    }
   }
   
   // Build shape filters
@@ -3210,6 +3249,8 @@
           const span = addToCartBtn.querySelector('span');
           if (span) span.textContent = 'Add Setting Only to Cart';
         }
+        // Update main price to show setting price only
+        updateTotalPrice();
         return;
       }
       
@@ -3259,6 +3300,9 @@
           ${sourceType}
         `;
       }
+      
+      // Update main price to show total (setting + diamond)
+      updateTotalPrice();
       
       // Store diamond data in a hidden input for form submission
       const form = document.querySelector('.s-m-form');
@@ -3441,6 +3485,30 @@
     // Initialize display on page load if diamond is already selected
     if (state.selectedDiamond) {
       updateProductPageDiamondDisplay();
+    }
+    
+    // Initialize currency code styling on page load
+    initializeCurrencyCodeStyling();
+  }
+  
+  // Initialize currency code styling by wrapping existing currency codes
+  function initializeCurrencyCodeStyling() {
+    const mainPriceContainer = document.getElementById(`price-${sectionId}`);
+    if (!mainPriceContainer) return;
+    
+    const salePriceItem = mainPriceContainer.querySelector('.price__sale .price-item--sale');
+    const regularPriceItem = mainPriceContainer.querySelector('.price__regular .price-item--regular');
+    const isOnSale = mainPriceContainer.classList.contains('price--on-sale');
+    const priceItem = isOnSale ? salePriceItem : regularPriceItem;
+    
+    if (priceItem && !priceItem.querySelector('.s-m-price-currency-code')) {
+      const text = priceItem.textContent.trim();
+      const currencyMatch = text.match(/(\d+[.,]\d+)\s+(USD|CAD|EUR|GBP|AUD|JPY|CHF|CNY)$/);
+      if (currencyMatch) {
+        const priceNumber = currencyMatch[1];
+        const currencyCode = currencyMatch[2];
+        priceItem.innerHTML = `${priceNumber} <span class="s-m-price-currency-code">${currencyCode}</span>`;
+      }
     }
   }
   
