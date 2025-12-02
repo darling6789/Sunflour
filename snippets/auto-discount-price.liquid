@@ -21,10 +21,9 @@
 {%- assign rolex_1_fixed_amount_cents = 200000 -%}
 
 {%- comment -%} Regular 15% Launch Offer {%- endcomment -%}
-{% assign percent_offer_collections = 'fine-jewelry,engagement,bands' %}
+{% assign percent_offer_collections = '' %}
 {% assign percent_offer_collection = percent_offer_collections | split: ',' %}
 {%- assign percent_offer_value = 15 -%}
-{%- assign percent_offer_enabled = false -%}
 
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign base_price = variant.price -%}
@@ -74,12 +73,12 @@
 {%- endif -%}
 
 {%- comment -%} 15% Off Launch Offer (Fallback) {%- endcomment -%}
-{%- if in_percent_offer and best_price == base_price and percent_offer_enabled -%}
+{% comment %} {%- if in_percent_offer and best_price == base_price -%}
   {%- assign percent_left = 100 | minus: percent_offer_value -%}
   {%- assign cand = base_price | times: percent_left | divided_by: 100 -%}
   {%- assign best_price = cand -%}
   {%- assign best_label = '15% Off Launch Offer' -%}
-{%- endif -%}
+{%- endif -%} {% endcomment %}
 
 {%- comment -%} Only render if a promo actually lowers the price {%- endcomment -%}
 {%- assign show_promo = false -%}
