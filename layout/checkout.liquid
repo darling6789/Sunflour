@@ -132,8 +132,8 @@
         }
       });
 
-      // Hide all SVG icons in order summary
-      const svgIcons = document.querySelectorAll('.order-summary__section svg, [class*="order-summary"] svg');
+      // Hide all SVG icons in order summary (additional pass for any missed)
+      const svgIcons = orderSummary.querySelectorAll('svg');
       svgIcons.forEach(function(svg) {
         const parent = svg.closest('[class*="product__image"], [class*="product-thumbnail"], [class*="product"]');
         if (parent) {
