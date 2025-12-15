@@ -1,0 +1,125 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "140c3ff7-35aa-400f-97ca-2a4ee5798c6d": {
+      "type": "breadcrumbs",
+      "settings": {}
+    },
+    "4356f4f6-7b82-4fca-8a94-73d27f203d1d": {
+      "type": "mansonry",
+      "blocks": {
+        "d72ba927-f5fc-46a9-818f-b53e5162536e": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/cascading_florals.jpg",
+            "text": ""
+          }
+        },
+        "2e235ff4-1c72-44f6-9ea3-2aa39cee1f37": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/cake_with_dog_accent.jpg",
+            "text": ""
+          }
+        },
+        "1f6ff00e-7290-4baa-828d-9533fdecc836": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG-6073.jpg",
+            "text": ""
+          }
+        },
+        "798dc4eb-e881-4691-aae4-b0abc7320dad": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2_tier_with_mini_desserts.jpg",
+            "text": ""
+          }
+        },
+        "8882f0cc-cf1e-43be-a407-f042ff509849": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Wild_flower_wedding.jpg",
+            "text": ""
+          }
+        },
+        "2273a749-4d78-43bb-99f0-a2305085020a": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/gold_flake_cake-setup.jpg",
+            "text": ""
+          }
+        },
+        "b7169ec9-dbac-4992-b55c-b15c04941fe8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Design-of-the-cake.jpg",
+            "text": ""
+          }
+        },
+        "d849275c-f1bf-4c38-a08e-a06a6f4a6ab9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Size-of-the-cake.jpg",
+            "text": ""
+          }
+        },
+        "5bef2b7b-827b-4e48-9d86-f3c8fc7b8a72": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/KevynDixonPhotography_SeparkTastingJanuary2023-283-1.jpg",
+            "text": ""
+          }
+        },
+        "ff3ec8b2-20ce-4f20-af83-3bd4f581cbdd": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Multi_Cake_Display.jpg",
+            "text": ""
+          }
+        },
+        "d491e049-4502-4677-b4a5-5721d9bf53e7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/KevynDixonPhotography_SeparkTastingJanuary2023-291.jpg",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "d72ba927-f5fc-46a9-818f-b53e5162536e",
+        "2e235ff4-1c72-44f6-9ea3-2aa39cee1f37",
+        "1f6ff00e-7290-4baa-828d-9533fdecc836",
+        "798dc4eb-e881-4691-aae4-b0abc7320dad",
+        "8882f0cc-cf1e-43be-a407-f042ff509849",
+        "2273a749-4d78-43bb-99f0-a2305085020a",
+        "b7169ec9-dbac-4992-b55c-b15c04941fe8",
+        "d849275c-f1bf-4c38-a08e-a06a6f4a6ab9",
+        "5bef2b7b-827b-4e48-9d86-f3c8fc7b8a72",
+        "ff3ec8b2-20ce-4f20-af83-3bd4f581cbdd",
+        "d491e049-4502-4677-b4a5-5721d9bf53e7"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "140c3ff7-35aa-400f-97ca-2a4ee5798c6d",
+    "4356f4f6-7b82-4fca-8a94-73d27f203d1d"
+  ]
+}
