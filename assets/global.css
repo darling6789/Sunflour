@@ -656,10 +656,6 @@ img {
     line-height: normal;
 }
 
-#shopify-section-template--15756431196385__1649794377e2ecb3c0 {
-	display: none;
-}
-
 .btnRow {
     margin-left: auto;
     margin-right: auto;
@@ -1089,14 +1085,6 @@ a:hover {
     padding-right: 0;
   }
   
-  #shopify-section-template--15756431196385__16478655498a43ac52 {
-  	display: none;
-  }
-  
-  #shopify-section-template--15756431196385__1649794377e2ecb3c0 {
-      display: block;
-  }
-  
   .desktopVideo {
     display: none!important;
   }
@@ -1132,9 +1120,6 @@ a:hover {
       font-weight: 600;
   }
   
-  #shopify-section-template--15756431196385__164979657179eb2ebe p {
-    margin-bottom: 20px;
-  }
   
   .homepage-icons {
     grid-template-columns: 1fr;
