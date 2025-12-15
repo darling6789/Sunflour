@@ -256,83 +256,9 @@ a.menu-drawer__menu-item {
     width: 0px;
     height: 0px;
 }
-/* Suppress subscription details tooltip/flyout popup ONLY - keep link text visible */
-.product div[class*="sls-tooltip"],
-.product div[class*="sls-flyout"],
-.product div[id*="sls-tooltip"],
-.product div[id*="sls-flyout"],
-.product [role="tooltip"][class*="subscription"]:not(a):not(button):not(span),
-.product [role="tooltip"][class*="sls"]:not(a):not(button):not(span),
-.product [class*="sls-tooltip"]:not(a):not(button):not(span):not([class*="link"]):not([class*="text"]),
-.product [class*="sls-flyout"]:not(a):not(button):not(span):not([class*="link"]):not([class*="text"]),
-.product [id*="sls-tooltip"]:not(a):not(button):not(span),
-.product [id*="sls-flyout"]:not(a):not(button):not(span) {
+/* Hide subscription details popup tooltip */
+.sls-more-info-popup {
     display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    position: absolute !important;
-    left: -9999px !important;
-    top: -9999px !important;
-    z-index: -9999 !important;
-    height: 0 !important;
-    width: 0 !important;
-    overflow: hidden !important;
-    max-height: 0 !important;
-    max-width: 0 !important;
-}
-
-/* Keep subscription details link text and icon VISIBLE and clickable */
-.product a[href*="subscription"],
-.product a[class*="subscription-details"],
-.product a[class*="sls-details"],
-.product a[class*="sls-link"],
-.product a[class*="subscription"],
-.product a[class*="sls"] {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    display: inline !important;
-    display: inline-flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 1 !important;
-    color: inherit !important;
-}
-
-/* Ensure subscription details text and icon are visible */
-.product [class*="subscription-details"] a,
-.product [class*="sls-details"] a,
-.product [class*="subscription-details"] span:not([class*="tooltip"]):not([class*="flyout"]),
-.product [class*="sls-details"] span:not([class*="tooltip"]):not([class*="flyout"]),
-.product [class*="subscription-details"] svg,
-.product [class*="sls-details"] svg,
-.product [class*="subscription-details"] img,
-.product [class*="sls-details"] img {
-    display: inline !important;
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-}
-
-/* Prevent any hover-triggered tooltips from appearing - more aggressive */
-.product *:hover + [class*="sls-tooltip"],
-.product *:hover + [class*="sls-flyout"],
-.product *:hover ~ [class*="sls-tooltip"],
-.product *:hover ~ [class*="sls-flyout"],
-.product [class*="sls-tooltip"]:hover,
-.product [class*="sls-flyout"]:hover,
-.product [class*="sls-tooltip"],
-.product [class*="sls-flyout"],
-.product a:hover + [class*="sls-tooltip"],
-.product a:hover + [class*="sls-flyout"],
-.product a:hover ~ [class*="sls-tooltip"],
-.product a:hover ~ [class*="sls-flyout"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
 }
 
 .product .sealsubs-target-element .sls-option[type="radio"]:checked + .sls-custom-radio::after {
