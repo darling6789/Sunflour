@@ -262,36 +262,58 @@ a.menu-drawer__menu-item {
 .product [id*="sls-tooltip"]:not(a):not(button),
 .product [id*="sls-flyout"]:not(a):not(button),
 .product [role="tooltip"][class*="subscription"]:not(a):not(button),
-.product [role="tooltip"][class*="sls"]:not(a):not(button) {
+.product [role="tooltip"][class*="sls"]:not(a):not(button),
+.product div[class*="sls-tooltip"],
+.product div[class*="sls-flyout"],
+.product div[id*="sls-tooltip"],
+.product div[id*="sls-flyout"],
+.product [class*="subscription-details"]:not(a):not(button):not([class*="link"]),
+.product [id*="subscription-details"]:not(a):not(button) {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
     position: absolute !important;
     left: -9999px !important;
-    z-index: -1 !important;
+    top: -9999px !important;
+    z-index: -9999 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
 }
 
 /* Keep subscription details link visible and clickable */
 .product a[href*="subscription"],
 .product a[class*="subscription-details"],
 .product a[class*="sls-details"],
-.product a[class*="sls-link"] {
+.product a[class*="sls-link"],
+.product a[class*="subscription"] {
     pointer-events: auto !important;
     cursor: pointer !important;
     display: inline !important;
     visibility: visible !important;
     opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
 }
 
-/* Prevent any hover-triggered tooltips from appearing */
+/* Prevent any hover-triggered tooltips from appearing - more aggressive */
 .product *:hover + [class*="sls-tooltip"],
 .product *:hover + [class*="sls-flyout"],
+.product *:hover ~ [class*="sls-tooltip"],
+.product *:hover ~ [class*="sls-flyout"],
 .product [class*="sls-tooltip"]:hover,
-.product [class*="sls-flyout"]:hover {
+.product [class*="sls-flyout"]:hover,
+.product [class*="sls-tooltip"],
+.product [class*="sls-flyout"],
+.product a:hover + [class*="sls-tooltip"],
+.product a:hover + [class*="sls-flyout"],
+.product a:hover ~ [class*="sls-tooltip"],
+.product a:hover ~ [class*="sls-flyout"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 .product .sealsubs-target-element .sls-option[type="radio"]:checked + .sls-custom-radio::after {
