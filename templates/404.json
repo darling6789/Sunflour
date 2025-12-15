@@ -9,17 +9,12 @@
  */
 {
   "sections": {
-    "6e0afceb-71c5-40f0-9e51-29393d4a9e3e": {
-      "type": "breadcrumbs",
-      "settings": {}
-    },
     "main": {
       "type": "main-404",
       "settings": {}
     }
   },
   "order": [
-    "6e0afceb-71c5-40f0-9e51-29393d4a9e3e",
     "main"
   ]
 }
