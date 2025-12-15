@@ -262,7 +262,7 @@ class FacetFiltersForm extends HTMLElement {
   onSubmitHandler(event) {
     event.preventDefault();
     const sortFilterForms = document.querySelectorAll('facet-filters-form form');
-    if (event.srcElement.className == 'mobile-facets__checkbox') {
+    if (event.target.classList.contains('mobile-facets__checkbox')) {
       const searchParams = this.createSearchParams(event.target.closest('form'));
       this.onSubmitForm(searchParams, event);
     } else {
@@ -305,6 +305,11 @@ class PriceRange extends HTMLElement {
     this.querySelectorAll('input').forEach((element) => {
       element.addEventListener('change', this.onRangeChange.bind(this));
       element.addEventListener('keydown', this.onKeyDown.bind(this));
+      // Transfer initial HTML min/max attributes to data-min/data-max
+      const htmlMin = element.getAttribute('min');
+      const htmlMax = element.getAttribute('max');
+      if (htmlMin !== null) element.setAttribute('data-min', htmlMin);
+      if (htmlMax !== null) element.setAttribute('data-max', htmlMax);
     });
     this.setMinAndMaxValues();
   }
