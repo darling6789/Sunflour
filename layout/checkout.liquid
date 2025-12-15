@@ -21,19 +21,29 @@
 
 <style>
   /* Hide ALL generic box icons, placeholders, and quantity badges */
-  .order-summary__section .product__image,
-  .order-summary__section .product-thumbnail,
-  .order-summary__section .product__image-wrapper,
-  .order-summary__section [class*="product__image"],
-  .order-summary__section [class*="product-thumbnail"],
-  .order-summary__section img[src*="placeholder"],
-  .order-summary__section img[src=""],
-  .order-summary__section svg[class*="icon"],
-  .order-summary__section svg[class*="box"],
-  .order-summary__section .product__quantity-badge,
-  .order-summary__section .badge,
-  .order-summary__section [class*="badge"],
-  .order-summary__section [class*="quantity-badge"] {
+  /* Target order summary area with multiple selector strategies */
+  [class*="order-summary"] .product__image,
+  [class*="order-summary"] .product-thumbnail,
+  [class*="order-summary"] .product__image-wrapper,
+  [class*="order-summary"] [class*="product__image"],
+  [class*="order-summary"] [class*="product-thumbnail"],
+  [class*="order-summary"] img[src*="placeholder"],
+  [class*="order-summary"] img[src=""],
+  [class*="order-summary"] svg[class*="icon"],
+  [class*="order-summary"] svg[class*="box"],
+  [class*="order-summary"] .product__quantity-badge,
+  [class*="order-summary"] .badge,
+  [class*="order-summary"] [class*="badge"],
+  [class*="order-summary"] [class*="quantity-badge"],
+  /* Also target by data attributes and common patterns */
+  [data-order-summary] .product__image,
+  [data-order-summary] svg,
+  /* Target generic box/package icons specifically */
+  svg[viewBox*="0 0 24 24"][class*="icon"],
+  svg[viewBox*="0 0 20 20"][class*="icon"],
+  /* Hide quantity badges on any icon */
+  [class*="badge"]:has(+ svg),
+  svg + [class*="badge"] {
     display: none !important;
   }
 
@@ -94,23 +104,29 @@
       // ============================================
       // 1. HIDE ALL GENERIC BOX ICONS AND BADGES
       // ============================================
-      const allImages = document.querySelectorAll('img, svg');
+      // Find order summary section (try multiple selectors)
+      const orderSummary = document.querySelector('.order-summary__section, [class*="order-summary"], [data-order-summary], [id*="order-summary"]') || document.body;
+      
+      // Hide all images and SVGs in order summary that look like generic icons
+      const allImages = orderSummary.querySelectorAll('img, svg');
       allImages.forEach(function(img) {
         const src = img.src || img.getAttribute('src') || '';
         const parent = img.parentElement;
-        const grandparent = parent ? parent.parentElement : null;
+        const isSVG = img.tagName === 'svg' || img.tagName === 'SVG';
         
-        // Check if it's in order summary
-        if (img.closest('.order-summary__section, [class*="order-summary"], [class*="order-summary"]')) {
-          // Hide if it's a placeholder, empty, or generic icon
-          if (!src || 
-              src.includes('placeholder') || 
-              src === '' ||
-              (src.includes('data:image') && src.length < 100) ||
-              (!src.includes('cdn.shopify.com') && !src.includes('shopifycdn.com') && src !== '')) {
-            if (parent) {
-              parent.style.display = 'none';
-            }
+        // Check if it's a generic icon (SVG without real product image, or placeholder)
+        if (isSVG || 
+            !src || 
+            src.includes('placeholder') || 
+            src === '' ||
+            (src.includes('data:image') && src.length < 100) ||
+            (!src.includes('cdn.shopify.com') && !src.includes('shopifycdn.com') && !src.includes('http'))) {
+          // Hide the icon and its container if it looks like a generic box
+          if (parent && (parent.classList.contains('product__image') || 
+                         parent.classList.contains('product-thumbnail') ||
+                         parent.querySelector('[class*="badge"]'))) {
+            parent.style.display = 'none';
+          } else {
             img.style.display = 'none';
           }
         }
