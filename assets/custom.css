@@ -256,19 +256,21 @@ a.menu-drawer__menu-item {
     width: 0px;
     height: 0px;
 }
-/* Suppress subscription details tooltip/flyout while keeping link functional */
-.product [class*="sls-tooltip"]:not(a):not(button),
-.product [class*="sls-flyout"]:not(a):not(button),
-.product [id*="sls-tooltip"]:not(a):not(button),
-.product [id*="sls-flyout"]:not(a):not(button),
-.product [role="tooltip"][class*="subscription"]:not(a):not(button),
-.product [role="tooltip"][class*="sls"]:not(a):not(button),
+/* Suppress subscription details tooltip/flyout popup ONLY - keep link text visible */
 .product div[class*="sls-tooltip"],
 .product div[class*="sls-flyout"],
 .product div[id*="sls-tooltip"],
 .product div[id*="sls-flyout"],
-.product [class*="subscription-details"]:not(a):not(button):not([class*="link"]),
-.product [id*="subscription-details"]:not(a):not(button) {
+.product [role="tooltip"][class*="subscription"]:not(a):not(button),
+.product [role="tooltip"][class*="sls"]:not(a):not(button),
+.product [class*="sls-tooltip"]:not(a):not(button):not(span):not([class*="link"]):not([class*="text"]),
+.product [class*="sls-flyout"]:not(a):not(button):not(span):not([class*="link"]):not([class*="text"]),
+.product [id*="sls-tooltip"]:not(a):not(button):not(span),
+.product [id*="sls-flyout"]:not(a):not(button):not(span),
+/* Hide popup containers that contain "How subscriptions work" */
+.product div:has-text("How subscriptions work"):not(a):not(button),
+.product [class*="popup"]:not(a):not(button):not([class*="link"]),
+.product [class*="modal"]:not(a):not(button):not([class*="link"]) {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
@@ -280,21 +282,34 @@ a.menu-drawer__menu-item {
     height: 0 !important;
     width: 0 !important;
     overflow: hidden !important;
+    max-height: 0 !important;
+    max-width: 0 !important;
 }
 
-/* Keep subscription details link visible and clickable */
+/* Keep subscription details link text and icon VISIBLE and clickable */
 .product a[href*="subscription"],
 .product a[class*="subscription-details"],
 .product a[class*="sls-details"],
 .product a[class*="sls-link"],
-.product a[class*="subscription"] {
+.product a[class*="subscription"],
+.product span[class*="subscription-details"],
+.product span[class*="sls-details"],
+.product [class*="subscription-details"][class*="link"],
+.product [class*="subscription-details"] a,
+.product [class*="sls-details"] a,
+/* Ensure text content is visible */
+.product [class*="subscription-details"] span,
+.product [class*="subscription-details"] text,
+.product [class*="subscription-details"] {
     pointer-events: auto !important;
     cursor: pointer !important;
     display: inline !important;
+    display: inline-flex !important;
     visibility: visible !important;
     opacity: 1 !important;
     position: relative !important;
     z-index: 1 !important;
+    color: inherit !important;
 }
 
 /* Prevent any hover-triggered tooltips from appearing - more aggressive */

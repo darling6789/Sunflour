@@ -14,32 +14,48 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
   
   // Helper function to hide all tooltips - call this frequently
   function hideAllTooltips() {
-    const relatedTooltips = document.querySelectorAll(
-      '[class*="sls-tooltip"]:not(a):not(button), ' +
-      '[class*="sls-flyout"]:not(a):not(button), ' +
-      '[id*="sls-tooltip"]:not(a):not(button), ' +
-      '[id*="sls-flyout"]:not(a):not(button), ' +
-      '[role="tooltip"]:not(a):not(button), ' +
-      'div[class*="sls-tooltip"], ' +
-      'div[class*="sls-flyout"], ' +
-      '[class*="subscription-details"]:not(a):not(button):not([class*="link"]), ' +
-      'div[class*="subscription-details"]:not(a):not(button)'
-    );
-    relatedTooltips.forEach(function(tooltip) {
-      if (tooltip.tagName !== 'A' && tooltip.tagName !== 'BUTTON' && !tooltip.closest('a') && !tooltip.closest('button')) {
-        tooltip.style.display = 'none';
-        tooltip.style.visibility = 'hidden';
-        tooltip.style.opacity = '0';
-        tooltip.style.pointerEvents = 'none';
-        tooltip.style.position = 'absolute';
-        tooltip.style.left = '-9999px';
-        tooltip.style.top = '-9999px';
-        tooltip.style.zIndex = '-9999';
-        tooltip.style.height = '0';
-        tooltip.style.width = '0';
-        tooltip.style.overflow = 'hidden';
+    // Find all elements that might be tooltips
+    const allElements = document.querySelectorAll('*');
+    allElements.forEach(function(element) {
+      // Skip links, buttons, and text nodes
+      if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.closest('a') || element.closest('button')) {
+        return;
+      }
+      
+      // Check if it's a tooltip by content or class
+      const text = element.textContent || '';
+      const classList = element.classList.toString() || '';
+      const id = element.id || '';
+      
+      // Hide if it contains "How subscriptions work" or is clearly a tooltip
+      if ((text.includes('How subscriptions work') || 
+           text.includes('You can modify or cancel') ||
+           text.includes('Subscriptions are renewed') ||
+           classList.includes('sls-tooltip') ||
+           classList.includes('sls-flyout') ||
+           id.includes('sls-tooltip') ||
+           id.includes('sls-flyout') ||
+           element.getAttribute('role') === 'tooltip') &&
+          element.tagName !== 'A' && 
+          element.tagName !== 'BUTTON' &&
+          element.tagName !== 'SPAN' &&
+          !element.closest('a') &&
+          !element.closest('button')) {
+        element.style.display = 'none';
+        element.style.visibility = 'hidden';
+        element.style.opacity = '0';
+        element.style.pointerEvents = 'none';
+        element.style.position = 'absolute';
+        element.style.left = '-9999px';
+        element.style.top = '-9999px';
+        element.style.zIndex = '-9999';
+        element.style.height = '0';
+        element.style.width = '0';
+        element.style.overflow = 'hidden';
+        element.style.maxHeight = '0';
+        element.style.maxWidth = '0';
         // Remove any classes that might trigger display
-        tooltip.classList.remove('show', 'visible', 'active', 'open');
+        element.classList.remove('show', 'visible', 'active', 'open', 'display', 'block');
       }
     });
   }
@@ -59,15 +75,16 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
     );
     
     subscriptionLinks.forEach(function(link) {
-      // Aggressively prevent hover from showing tooltips - stop propagation
+      // Aggressively prevent hover from showing tooltips - stop propagation and prevent default
       link.addEventListener('mouseenter', function(e) {
         e.stopPropagation();
-        // Immediately hide any tooltips that might appear
+        e.stopImmediatePropagation();
         hideAllTooltips();
       }, { capture: true });
       
       link.addEventListener('mouseover', function(e) {
         e.stopPropagation();
+        e.stopImmediatePropagation();
         hideAllTooltips();
       }, { capture: true });
       
@@ -87,37 +104,10 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
       }, { passive: true });
     });
     
-    // Helper function to hide all tooltips
-    function hideAllTooltips() {
-      const relatedTooltips = document.querySelectorAll(
-        '[class*="sls-tooltip"]:not(a):not(button), ' +
-        '[class*="sls-flyout"]:not(a):not(button), ' +
-        '[id*="sls-tooltip"]:not(a):not(button), ' +
-        '[id*="sls-flyout"]:not(a):not(button), ' +
-        '[role="tooltip"]:not(a):not(button), ' +
-        'div[class*="sls-tooltip"], ' +
-        'div[class*="sls-flyout"], ' +
-        '[class*="subscription-details"]:not(a):not(button):not([class*="link"])'
-      );
-      relatedTooltips.forEach(function(tooltip) {
-        tooltip.style.display = 'none';
-        tooltip.style.visibility = 'hidden';
-        tooltip.style.opacity = '0';
-        tooltip.style.pointerEvents = 'none';
-        tooltip.style.position = 'absolute';
-        tooltip.style.left = '-9999px';
-        tooltip.style.top = '-9999px';
-        tooltip.style.zIndex = '-9999';
-        tooltip.style.height = '0';
-        tooltip.style.width = '0';
-        tooltip.style.overflow = 'hidden';
-      });
-    }
-    
-    // Continuously monitor and hide tooltips
+    // Continuously monitor and hide tooltips - run very frequently
     setInterval(function() {
       hideAllTooltips();
-    }, 100);
+    }, 50);
   }
   
   // Run on page load
