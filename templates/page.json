@@ -1,0 +1,95 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_imMW3n": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_LGWQ3U": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_VaDYBQ": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_LwGLf9": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_LGWQ3U",
+        "text_VaDYBQ",
+        "buttons_LwGLf9"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "custom_liquid_mMK7FJ": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [],
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<h1 style=\"text-align: center; margin-bottom: 0;\">Our Charlotte Bakeries</h1>",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "custom_css": [
+        ".location-item h3 {margin: 0; text-transform: capitalize !important;}"
+      ],
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 32
+      }
+    },
+    "shop_page_pKthXk": {
+      "type": "shop-page",
+      "disabled": true,
+      "name": "S shop page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "image_banner_imMW3n",
+    "custom_liquid_mMK7FJ",
+    "main",
+    "shop_page_pKthXk"
+  ]
+}

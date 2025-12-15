@@ -1,0 +1,606 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "165376391261e26f5a": {
+      "type": "video-background",
+      "disabled": true,
+      "settings": {
+        "video_link": "shopify://pages/shop"
+      }
+    },
+    "050f0836-c123-4104-8cad-3b6d78f58012": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "9a1fe205-f987-4eeb-917e-78725ef226c8": {
+      "type": "mothers-day-gift",
+      "disabled": true,
+      "settings": {
+        "product1": "mother-s-day-strawberry-milkshake-treat",
+        "product2": "mother-s-day-strawberry-milkshake-treat-1"
+      }
+    },
+    "16478655498a43ac52": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "custom_liquid": "<div class=\"desktopVideo\"><smartvideo src=\"https://files.possibleweb.com/file/h_360/clientprojects/sunf/charlotte-bakery-near-me-w.mp4\" autoplay=\"autoplay\" min-width=\"1280\" height=\"720\" loop=\"loop\" playsinline muted=\"\" class=\"swarm-fluid\"></smartvideo></div>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "1649794377e2ecb3c0": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "custom_liquid": "<div class=\"mobileVideo\"><smartvideo src=\"https://files.possibleweb.com/file/h_360/clientprojects/sunf/charlotte-bakery-near-me-w.mp4\" autoplay=\"autoplay\" width=\"500\" height=\"400\" loop=\"loop\" class=\"swarm-fluid\" playsinline muted=\"\"></smartvideo></div>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
+    "1657822749ef55f915": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_e3UVGx": {
+          "type": "heading",
+          "settings": {
+            "heading": "send fresh baked goods nationwide",
+            "heading_size": "large"
+          }
+        },
+        "buttons_8wLm68": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "shop online",
+            "button_link_1": "shopify://pages/shop",
+            "button_style_secondary_1": false,
+            "button_label_2": "pickup or delivery",
+            "button_link_2": "https://order.online/business/sunflour-baking-company-22777",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_e3UVGx",
+        "buttons_8wLm68"
+      ],
+      "custom_css": [
+        "h2 {color: #42160b; font-weight: 700;}",
+        "a {color: white; background: #b42a18;}"
+      ],
+      "settings": {
+        "banner_link_one": "",
+        "image_2": "shopify://shop_images/fresh-baked-goods-shipped.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-1",
+        "mobile_content_alignment": "left",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "98bc9065-ae10-4beb-a5c0-94953556b0a9": {
+      "type": "custom-rich-text",
+      "settings": {
+        "text": "from scratch. small batch. local.",
+        "color": "#ffffff",
+        "back_color": "#758451"
+      }
+    },
+    "16612805360236950b": {
+      "type": "custom-liquid",
+      "custom_css": [],
+      "settings": {
+        "custom_liquid": "<div class=\"row row-max alignCenter\"><h1>charlotte's favorite bakery</h1><p>Ship our mouth-watering, fresh-made, small-batch pastries and treats nationwide, or order locally!</p></div>",
+        "color_scheme": "background-1",
+        "padding_top": 8,
+        "padding_bottom": 12
+      }
+    },
+    "164979657179eb2ebe": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"row row-max alignCenter\">\n  <div class=\"row row-max alignCenter\">\n    <ul class=\"homepage-icons\">\n      <li>\n        <a onclick=\"window.open('https://order.online/business/sunflour-baking-company-22777', '_blank');\" class=\"chownow-order-online\">\n  <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/sunflower-baking-company-bakery-near-you.png?v=1622655218\" alt=\"Local Delivery From Sunflour Baking Company\" loading=\"lazy\" width=\"175\" height=\"160\">\n  <span>pickup and delivery</span>\n</a>\n\n      </li>\n      <li>\n        <a href=\"https://sunflourbakingcompany.com/pages/shop\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/sunflower-baking-company-nationwide-shipping.png?v=1622655218\" alt=\"Nationwide Shipping from Sunflour Baking Company\" loading=\"lazy\" width=\"175\" height=\"160\">\n          <span>nationwide shipping</span>\n        </a>\n      </li>\n      <li>\n        <a href=\"https://sunflourbakingcompany.com/pages/catering\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/sunflower-baking-company-catering.png?v=1622655218\" alt=\"Catering Services From Sunflour Baking Company\" loading=\"lazy\" width=\"175\" height=\"160\">\n          <span>catering</span>\n        </a>\n      </li>\n      <li>\n        <a href=\"https://sunflourbakingcompany.com/pages/corporate-gift\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/sunflower-baking-company-corporate-gifts.png?v=1622655218\" alt=\"Corporate Gifting by Sunflour Baking Company\" loading=\"lazy\" width=\"175\" height=\"160\">\n          <span>corporate gifts</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 28
+      }
+    },
+    "65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f": {
+      "type": "image-with-text",
+      "blocks": {
+        "template--15022307836015__65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f-1675179405390e24a3-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "valentine's day gift boxes are here!",
+            "heading_size": "h1"
+          }
+        },
+        "template--15022307836015__65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f-1675179405390e24a3-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Win Valentine's Day with help from Sunflour Baking Company.</strong> Handcrafted treats made <br/>fresh by our Pastry Chefs fill our \"naughty\" or \"nice\" gift boxes. These beautiful boxes are ready to <br/>gift and sell out fast! <a href=\"https://sunflourbakingcompany.com/pages/valentines-day-gift#v-day-box\">Get yours today!</a></p>",
+            "text_style": "body"
+          }
+        },
+        "template--15022307836015__65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f-1675179405390e24a3-2": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "order now",
+            "button_link": "shopify://pages/valentines-day-gift"
+          }
+        }
+      },
+      "block_order": [
+        "template--15022307836015__65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f-1675179405390e24a3-0",
+        "template--15022307836015__65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f-1675179405390e24a3-1",
+        "template--15022307836015__65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f-1675179405390e24a3-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/naughty-valentines-day-gift-box.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "16498008372ad22050": {
+      "type": "image-with-text",
+      "blocks": {
+        "1649800837b5dfa478-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "buy & ship fresh baked items nationwide",
+            "heading_size": "h0"
+          }
+        },
+        "1649800837b5dfa478-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Give the gift of Sunflour! Our delicious cupcakes are now available to order online. We deliver cupcakes nationwide – order up to 12 Cake Jars. The cupcakes arrive packaged in re-usable mason jars; we layer moist cake with a buttercream frosting that is sure to brighten anyone’s day. Each jar = two full cupcakes! Customize your gift by selecting from twelve different cupcake flavor combinations. Oh, and don’t forget to send a couple jars to yourself, too!<br/><br/>For custom and corporate gift programs please <a href=\"/pages/cake-jars\" title=\"/pages/cake-jars\">contact our sales representative.</a></p>",
+            "text_style": "body"
+          }
+        },
+        "1d661658-0216-48e8-a0f9-2c68e7baa47f": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Browse Our Shop",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "1649800837b5dfa478-0",
+        "1649800837b5dfa478-1",
+        "1d661658-0216-48e8-a0f9-2c68e7baa47f"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "small",
+        "desktop_image_width": "small",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_liquid_9b3GnW": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div id='ndrsl-66f2d589b318ab6d61cd3364' class='ndrsl-widget '></div>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "image_with_text_xxtUax": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_a6KkGh": {
+          "type": "heading",
+          "settings": {
+            "heading": "it's pie season",
+            "heading_size": "h1"
+          }
+        },
+        "text_FR44TP": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our 2024 Thanksgiving menu is live! Pre-order today and get your order in time for your big celebration. Pies, desserts, and savory treats are all available. We sell out fast! Call your local store today to place an order.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_RU9c6G": {
+          "type": "button",
+          "settings": {
+            "button_label": "see the menu",
+            "button_link": "shopify://pages/thanksgiving-menu-charlotte-nc"
+          }
+        }
+      },
+      "block_order": [
+        "heading_a6KkGh",
+        "text_FR44TP",
+        "button_RU9c6G"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/Sunflour-14.jpg",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text_j9xXTb": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_4eadbX": {
+          "type": "heading",
+          "settings": {
+            "heading": "english muffins",
+            "heading_size": "h1"
+          }
+        },
+        "text_Xbzz4D": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our signature <a href=\"https://sunflourbakingcompany.com/products/english-muffins\" title=\"https://sunflourbakingcompany.com/products/english-muffins\">Sourdough English Muffins</a> are Thick, Tangy and Irresistible! Cooked up fresh every day these monster muffins will make your kitchen the envy of the neighborhood. Be sure to split with a fork, toast well and slather with your favorite toppings. 6 per pack. </p>",
+            "text_style": "body"
+          }
+        },
+        "button_4hbALf": {
+          "type": "button",
+          "settings": {
+            "button_label": "order now",
+            "button_link": "https://sunflourbakingcompany.com/products/english-muffins"
+          }
+        }
+      },
+      "block_order": [
+        "heading_4eadbX",
+        "text_Xbzz4D",
+        "button_4hbALf"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/english-muffins.jpg",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text_iepjBc": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_y7p6ry": {
+          "type": "heading",
+          "settings": {
+            "heading": "cake jars",
+            "heading_size": "h1"
+          }
+        },
+        "text_HjgAVA": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Treat yourself or send the perfect gift. Cupcakes in the mail complete with spoons and napkins. We think opening a box of <a href=\"https://sunflourbakingcompany.com/pages/cake-jars\" title=\"Order Cake Jars Online\">cake jars</a> will put a smile on anyone's face (making you the gift giving boss).</p>",
+            "text_style": "body"
+          }
+        },
+        "button_yWntJB": {
+          "type": "button",
+          "settings": {
+            "button_label": "order now",
+            "button_link": "https://sunflourbakingcompany.com/pages/cake-jars"
+          }
+        }
+      },
+      "block_order": [
+        "heading_y7p6ry",
+        "text_HjgAVA",
+        "button_yWntJB"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/bundle_64bbd34c-ffb7-4fc3-80bb-c2fa98d4994a.png",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "dc64fc94-a689-4a60-ab80-ea0687dcc560": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "get our best bakery items on your doorstep in just two days!",
+        "collection": "featured-shop-items",
+        "products_to_show": 12,
+        "color_scheme": "background-1",
+        "show_view_all": true,
+        "swipe_on_mobile": true,
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "32c2fa07-f383-4ec4-8945-a8283d476e48": {
+      "type": "image-with-text",
+      "blocks": {
+        "481ec512-0006-4b5b-a005-176946cd21e9": {
+          "type": "heading",
+          "settings": {
+            "heading": "organic coffee & tea",
+            "heading_size": "h2"
+          }
+        },
+        "36bc7767-b25d-4b50-a09f-e2da39984e5f": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We are proud to source our coffee through Pure Intentions Coffee, a local specialty roaster right here in Charlotte. The Sunflour House Blend is an exclusive, specially selected mix of beans sourced from farms in Central and South America. <br/><br/>Our Sunflour Espresso and Cold Brew coffees are also exclusive blends, each created as a perfect complement to our pastries or as a treat by themselves. Rishi Tea is our partner for the highest quality loose leaf tea you will find.  From Matcha to Masala, Green to Black and many more Oolong the way, you will be delighted with our selection.</p>",
+            "text_style": "body"
+          }
+        },
+        "333d30fd-6562-412c-a8f8-0e735810f52a": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "",
+            "button_link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "481ec512-0006-4b5b-a005-176946cd21e9",
+        "36bc7767-b25d-4b50-a09f-e2da39984e5f",
+        "333d30fd-6562-412c-a8f8-0e735810f52a"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/coffee_swirl_same_all_over.jpg",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "164980040631574eb8": {
+      "type": "image-with-text",
+      "blocks": {
+        "1649800405405b46f6-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "amazing croissants",
+            "heading_size": "h2"
+          }
+        },
+        "1649800405405b46f6-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>There’s nothing quite like a fresh, flaky, made-from-scratch croissant. These delicate French pastries are the pride and joy of the Sunflour bakers. Prepared entirely by hand, the combination of European style butter and our fermented dough will rival any croissant you have ever eaten. Each croissant is fashioned in a three day fermentation and lamination process that forms 162 luscious layers of dough and butter— the only way it can get so magically flaky.Don’t believe it? Come in and try for yourself. They are spectacular on their own, as part of a breakfast sandwich or try a chocolate, almond, or fruit variety.</p>",
+            "text_style": "body"
+          }
+        },
+        "1649800405405b46f6-2": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Try one now!",
+            "button_link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "1649800405405b46f6-0",
+        "1649800405405b46f6-1",
+        "1649800405405b46f6-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/sunflour_scone-2.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "1649943740a4c5343a": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Featured collection",
+        "collection": "frontpage",
+        "products_to_show": 4,
+        "color_scheme": "background-1",
+        "show_view_all": true,
+        "swipe_on_mobile": false,
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "16498010093dfbb014": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"localDelivery\" class=\"row row-max alignCenter homeTestimonial\" style=\"padding-right:10px; padding-left: 10px;\">\n<h2 class=\"h3\">In Charlotte? There's a bakery near you!</h2>\n<p>You can enjoy the hospitality of Sunflour Baking Company at five convenient Charlotte area locations: <a href=\"https://sunflourbakingcompany.com/location/charlotte-bakery-elizabeth/\">Elizabeth</a>, <a href=\"https://sunflourbakingcompany.com/location/charlotte-bakery-dilworth/\">Dilworth</a>, <a href=\"https://sunflourbakingcompany.com/location/harrisburg-nc-bakery/\">Harrisburg</a>,  <a href=\"https://sunflourbakingcompany.com/location/ballantyne-bakery/\">Ballantyne</a> and now <a href=\"/pages/charlotte-bakery-noda\">Noda</a>. Click the map below to find the bakery near you.</p>\n</div>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 28
+      }
+    },
+    "1649801029d56fda87": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"row row-max footerLocation\">\n  <div class=\"col-sm-3\">\n    <!-- normal -->\n    <div class=\"location-des\">\n\t    <h3 class=\"location-title\">\n\t      <a href=\"/pages/charlotte-bakery-elizabeth\">elizabeth</a>\n\t    </h3>\n\t    <p class=\"address-info\">2001 E 7th Street <br> Charlotte, NC 28204 </p>\n\t</div>\n    <div class=\"ih-item circle effect1 home\">\n      <a href=\"/pages/charlotte-bakery-elizabeth\">\n        <div class=\"spinner\"></div>\n        <div class=\"img\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/elizabeth.jpg?1641\" alt=\"Bakery in Elizabeth Area Charlotte, NC\" loading=\"lazy\">\n        </div>\n        <div class=\"info\">\n          <div class=\"info-back\">\n            <h3>bakery details</h3>\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- end normal -->\n  </div>\n  <div class=\"col-sm-3\">\n  \t<div class=\"location-des\">\n\t    <h3 class=\"location-title mobile-margin ipad\">\n\t      <a href=\"/pages/charlotte-bakery-dilworth\">dilworth</a>\n\t    </h3>\n\t    <p class=\"address-info\">220 East Boulevard <br>Charlotte, NC 28203 </p>\n\t</div>\n    <!-- normal -->\n    <div class=\"ih-item circle effect1 home\">\n      <a href=\"/pages/charlotte-bakery-dilworth\">\n        <div class=\"spinner\"></div>\n        <div class=\"img\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/dilworth.jpg?1641\" alt=\"Bakery in Dilworth Area Charlotte, NC\" loading=\"lazy\">\n        </div>\n        <div class=\"info\">\n          <div class=\"info-back\">\n            <h3>bakery details</h3>\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- end normal -->\n  </div>\n  <div class=\"col-sm-3\">\n  \t<div class=\"location-des\">\n\t    <h3 class=\"location-title mobile-margin\">\n\t      <a href=\"/pages/harrisburg-nc-bakery\">harrisburg</a>\n\t    </h3>\n\t    <p class=\"address-info\">5040 NC-49 <br>Harrisburg, NC 28075 </p>\n\t</div>\n    <!-- normal -->\n    <div class=\"ih-item circle effect1 home\">\n      <a href=\"/pages/harrisburg-nc-bakery\">\n        <div class=\"spinner\"></div>\n        <div class=\"img\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/Harrisburg.jpg?1641\" alt=\"Bakery in Harrisburg, NC\" loading=\"lazy\">\n        </div>\n        <div class=\"info\">\n          <div class=\"info-back\">\n            <h3>bakery details</h3>\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- end normal -->\n  </div>\n  <div class=\"col-sm-3\">\n  \t<div class=\"location-des\">\n\t    <h3 class=\"location-title mobile-margin\">\n\t      <a href=\"/pages/ballantyne-bakery\">ballantyne</a>\n\t    </h3>\n\t    <p class=\"address-info\">14021 Conlan Circle,<br>Charlotte, NC 28277 </p>\n\t</div>\n    <!-- normal -->\n    <div class=\"ih-item circle effect1 home\">\n      <a href=\"/pages/ballantyne-bakery\">\n        <div class=\"spinner\"></div>\n        <div class=\"img\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/ballantyne-1.jpg?1641\" alt=\"Bakery in Ballantyne Area Charlotte, NC\" loading=\"lazy\">\n        </div>\n        <div class=\"info\">\n          <div class=\"info-back\">\n            <h3>bakery details</h3>\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- end normal -->\n  </div>\n  <div class=\"col-sm-3\">\n  \t<div class=\"location-des\">\n\t    <h3 class=\"location-title mobile-margin\">\n\t      <a href=\"/pages/charlotte-bakery-noda\">noda</a>\n\t    </h3>\n\t    <p class=\"address-info\">515 Jordan Pl Charlotte NC 28205 </p>\n\t</div>\n    <!-- normal -->\n    <div class=\"ih-item circle effect1 home\">\n      <a href=\"/pages/charlotte-bakery-noda\">\n        <div class=\"spinner\"></div>\n        <div class=\"img\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0079/6121/5087/files/Harrisburg.jpg?1641\" alt=\"Bakery in Harrisburg, NC\" loading=\"lazy\">\n        </div>\n        <div class=\"info\">\n          <div class=\"info-back\">\n            <h3>bakery details</h3>\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- end normal -->\n  </div>\n</div>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "1649801097825d673c": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<br>\n<div class=\"btnRow row-max row btnGroupHome home-intro-btns\"><p>For online orders please email: shipping@sunflourbakingcompany.com</p></div>",
+        "color_scheme": "background-1",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "1662501278e8205a4d": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "custom_liquid": "<script src=\"https://cf.chownowcdn.com/latest/static/integrations/ordering-modal.min.js\" data-chownow-company-id=\"21264\"></script>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "1649943967780c8f04": {
+      "type": "collection-list",
+      "blocks": {
+        "16499439673d0e0fbd-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "pastry-samplers"
+          }
+        },
+        "16499439673d0e0fbd-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "featured-shop-items"
+          }
+        },
+        "16499439673d0e0fbd-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cookie-gifts"
+          }
+        },
+        "2050e546-efd2-4ee1-bc06-65c6d9a8fec6": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "brownies-bars"
+          }
+        },
+        "aa207977-f013-4323-8720-53cf5e3547c2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "make-at-home-diy"
+          }
+        },
+        "685c5e4f-69f3-4fe0-b8a2-66fab35ccbdf": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "pastry-pouch"
+          }
+        }
+      },
+      "block_order": [
+        "16499439673d0e0fbd-0",
+        "16499439673d0e0fbd-1",
+        "16499439673d0e0fbd-2",
+        "2050e546-efd2-4ee1-bc06-65c6d9a8fec6",
+        "aa207977-f013-4323-8720-53cf5e3547c2",
+        "685c5e4f-69f3-4fe0-b8a2-66fab35ccbdf"
+      ],
+      "settings": {
+        "title": "",
+        "image_ratio": "adapt",
+        "color_scheme": "background-1",
+        "swipe_on_mobile": false,
+        "show_view_all": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "165376391261e26f5a",
+    "050f0836-c123-4104-8cad-3b6d78f58012",
+    "9a1fe205-f987-4eeb-917e-78725ef226c8",
+    "16478655498a43ac52",
+    "1649794377e2ecb3c0",
+    "1657822749ef55f915",
+    "98bc9065-ae10-4beb-a5c0-94953556b0a9",
+    "16612805360236950b",
+    "164979657179eb2ebe",
+    "65d0a49b-22fa-4499-9fbd-8c4af2ac3a2f",
+    "16498008372ad22050",
+    "custom_liquid_9b3GnW",
+    "image_with_text_xxtUax",
+    "image_with_text_j9xXTb",
+    "image_with_text_iepjBc",
+    "dc64fc94-a689-4a60-ab80-ea0687dcc560",
+    "32c2fa07-f383-4ec4-8945-a8283d476e48",
+    "164980040631574eb8",
+    "1649943740a4c5343a",
+    "16498010093dfbb014",
+    "1649801029d56fda87",
+    "1649801097825d673c",
+    "1662501278e8205a4d",
+    "1649943967780c8f04"
+  ]
+}

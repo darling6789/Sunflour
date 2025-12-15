@@ -1,0 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "3f1736ab-7528-4279-b11a-29ce3865fbc9": {
+      "type": "breadcrumbs",
+      "settings": {}
+    },
+    "5372ab7d-885c-4fed-86b1-41f9e8bc7e16": {
+      "type": "rich-text",
+      "blocks": {
+        "0a612ca2-5742-44a2-b842-8502f594dc76": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>No Delivery Available Until January 2024. Happy Holidays!</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "0a612ca2-5742-44a2-b842-8502f594dc76"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "main": {
+      "type": "shop-page",
+      "settings": {}
+    },
+    "165244578290dfe643": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "ship sunflour goods nationwide",
+        "collection": "featured-shop-items",
+        "products_to_show": 12,
+        "color_scheme": "background-1",
+        "show_view_all": true,
+        "swipe_on_mobile": false,
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "3f1736ab-7528-4279-b11a-29ce3865fbc9",
+    "5372ab7d-885c-4fed-86b1-41f9e8bc7e16",
+    "main",
+    "165244578290dfe643"
+  ]
+}

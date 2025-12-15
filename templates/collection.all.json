@@ -1,0 +1,119 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "95397b11-882a-4cf9-b02c-ac65bb3639eb": {
+      "type": "breadcrumbs",
+      "settings": {}
+    },
+    "b87ef271-75af-49e8-a0b1-c8218203c8fc": {
+      "type": "rich-text",
+      "blocks": {
+        "7eba0a8f-f1ea-4c8a-95f9-4c35d9bffbd0": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>No Delivery Available Until January 2024. Happy Holidays!</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "7eba0a8f-f1ea-4c8a-95f9-4c35d9bffbd0"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": true,
+        "color_scheme": "background-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "image_ratio": "adapt",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_filtering": false,
+        "enable_sorting": true,
+        "collapse_on_larger_devices": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "16551237645c69b811": {
+      "type": "newsletter",
+      "blocks": {
+        "1655123764df7e141b-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails"
+          }
+        },
+        "1655123764df7e141b-1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Be the first to know about new collections and exclusive offers.</p>"
+          }
+        },
+        "1655123764df7e141b-2": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "1655123764df7e141b-0",
+        "1655123764df7e141b-1",
+        "1655123764df7e141b-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "16551239322cadcc18": {
+      "type": "apps",
+      "blocks": {
+        "0552b692-6a72-4304-9d2e-4932b22fe4c4": {
+          "type": "shopify://apps/seoant-trust-badges/blocks/star_rating/f42f2346-5d14-4b41-a8b9-4b6ee352262e",
+          "settings": {
+            "badge_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "0552b692-6a72-4304-9d2e-4932b22fe4c4"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "95397b11-882a-4cf9-b02c-ac65bb3639eb",
+    "b87ef271-75af-49e8-a0b1-c8218203c8fc",
+    "banner",
+    "product-grid",
+    "16551237645c69b811",
+    "16551239322cadcc18"
+  ]
+}
