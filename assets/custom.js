@@ -12,21 +12,20 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
 (function() {
   'use strict';
   
-  function suppressSubscriptionTooltip() {
-    // Hide any subscription details tooltips/flyouts (but not the link itself)
-    const tooltips = document.querySelectorAll(
+  // Helper function to hide all tooltips - call this frequently
+  function hideAllTooltips() {
+    const relatedTooltips = document.querySelectorAll(
       '[class*="sls-tooltip"]:not(a):not(button), ' +
       '[class*="sls-flyout"]:not(a):not(button), ' +
       '[id*="sls-tooltip"]:not(a):not(button), ' +
       '[id*="sls-flyout"]:not(a):not(button), ' +
-      '[role="tooltip"][class*="subscription"]:not(a):not(button), ' +
-      '[role="tooltip"][class*="sls"]:not(a):not(button), ' +
+      '[role="tooltip"]:not(a):not(button), ' +
+      'div[class*="sls-tooltip"], ' +
+      'div[class*="sls-flyout"], ' +
       '[class*="subscription-details"]:not(a):not(button):not([class*="link"]), ' +
-      '[id*="subscription-details"]:not(a):not(button)'
+      'div[class*="subscription-details"]:not(a):not(button)'
     );
-    
-    tooltips.forEach(function(tooltip) {
-      // Hide tooltip elements but keep links/buttons visible
+    relatedTooltips.forEach(function(tooltip) {
       if (tooltip.tagName !== 'A' && tooltip.tagName !== 'BUTTON' && !tooltip.closest('a') && !tooltip.closest('button')) {
         tooltip.style.display = 'none';
         tooltip.style.visibility = 'hidden';
@@ -34,9 +33,20 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
         tooltip.style.pointerEvents = 'none';
         tooltip.style.position = 'absolute';
         tooltip.style.left = '-9999px';
-        tooltip.style.zIndex = '-1';
+        tooltip.style.top = '-9999px';
+        tooltip.style.zIndex = '-9999';
+        tooltip.style.height = '0';
+        tooltip.style.width = '0';
+        tooltip.style.overflow = 'hidden';
+        // Remove any classes that might trigger display
+        tooltip.classList.remove('show', 'visible', 'active', 'open');
       }
     });
+  }
+  
+  function suppressSubscriptionTooltip() {
+    // Hide any subscription details tooltips/flyouts (but not the link itself)
+    hideAllTooltips();
     
     // Find subscription details links and remove hover tooltip behavior
     const subscriptionLinks = document.querySelectorAll(
