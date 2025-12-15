@@ -288,15 +288,7 @@ a.menu-drawer__menu-item {
 .product a[class*="sls-details"],
 .product a[class*="sls-link"],
 .product a[class*="subscription"],
-.product span[class*="subscription-details"],
-.product span[class*="sls-details"],
-.product [class*="subscription-details"][class*="link"],
-.product [class*="subscription-details"] a,
-.product [class*="sls-details"] a,
-/* Ensure text content is visible */
-.product [class*="subscription-details"] span,
-.product [class*="subscription-details"] text,
-.product [class*="subscription-details"] {
+.product a[class*="sls"] {
     pointer-events: auto !important;
     cursor: pointer !important;
     display: inline !important;
@@ -306,6 +298,22 @@ a.menu-drawer__menu-item {
     position: relative !important;
     z-index: 1 !important;
     color: inherit !important;
+}
+
+/* Ensure subscription details text and icon are visible */
+.product [class*="subscription-details"] a,
+.product [class*="sls-details"] a,
+.product [class*="subscription-details"] span:not([class*="tooltip"]):not([class*="flyout"]),
+.product [class*="sls-details"] span:not([class*="tooltip"]):not([class*="flyout"]),
+.product [class*="subscription-details"] svg,
+.product [class*="sls-details"] svg,
+.product [class*="subscription-details"] img,
+.product [class*="sls-details"] img {
+    display: inline !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 /* Prevent any hover-triggered tooltips from appearing - more aggressive */
