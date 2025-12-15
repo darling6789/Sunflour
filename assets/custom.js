@@ -8,61 +8,90 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
   $(".price-item.price-compare").text(cmprice);
 });
 
-// Suppress subscription details flyout while keeping link functional
+// Suppress subscription details tooltip/flyout while keeping link functional
 (function() {
   'use strict';
   
-  function suppressSubscriptionFlyout() {
-    // Hide any subscription details flyouts/tooltips
-    const flyouts = document.querySelectorAll(
-      '[class*="subscription-details"]:not(a):not(button), ' +
-      '[class*="sls-details"]:not(a):not(button), ' +
-      '[class*="sls-tooltip"], ' +
-      '[class*="sls-flyout"], ' +
-      '[id*="subscription-details"]:not(a):not(button), ' +
-      '[id*="sls-details"]:not(a):not(button), ' +
-      '[id*="sls-tooltip"], ' +
-      '[id*="sls-flyout"], ' +
-      '[role="tooltip"][class*="subscription"], ' +
-      '[role="tooltip"][class*="sls"]'
+  function suppressSubscriptionTooltip() {
+    // Hide any subscription details tooltips/flyouts (but not the link itself)
+    const tooltips = document.querySelectorAll(
+      '[class*="sls-tooltip"]:not(a):not(button), ' +
+      '[class*="sls-flyout"]:not(a):not(button), ' +
+      '[id*="sls-tooltip"]:not(a):not(button), ' +
+      '[id*="sls-flyout"]:not(a):not(button), ' +
+      '[role="tooltip"][class*="subscription"]:not(a):not(button), ' +
+      '[role="tooltip"][class*="sls"]:not(a):not(button), ' +
+      '[class*="subscription-details"]:not(a):not(button):not([class*="link"]), ' +
+      '[id*="subscription-details"]:not(a):not(button)'
     );
     
-    flyouts.forEach(function(flyout) {
-      // Only hide if it's not the link/button itself
-      if (flyout.tagName !== 'A' && flyout.tagName !== 'BUTTON') {
-        flyout.style.display = 'none';
-        flyout.style.visibility = 'hidden';
-        flyout.style.opacity = '0';
-        flyout.style.pointerEvents = 'none';
-        flyout.style.position = 'absolute';
-        flyout.style.left = '-9999px';
-        flyout.style.zIndex = '-1';
+    tooltips.forEach(function(tooltip) {
+      // Hide tooltip elements but keep links/buttons visible
+      if (tooltip.tagName !== 'A' && tooltip.tagName !== 'BUTTON' && !tooltip.closest('a') && !tooltip.closest('button')) {
+        tooltip.style.display = 'none';
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+        tooltip.style.pointerEvents = 'none';
+        tooltip.style.position = 'absolute';
+        tooltip.style.left = '-9999px';
+        tooltip.style.zIndex = '-1';
       }
     });
     
-    // Prevent hover events from showing flyouts
+    // Find subscription details links and remove hover tooltip behavior
     const subscriptionLinks = document.querySelectorAll(
       'a[href*="subscription"], ' +
       'a[class*="subscription-details"], ' +
       'a[class*="sls-details"], ' +
+      'a[class*="sls-link"], ' +
       'button[class*="subscription-details"], ' +
       'button[class*="sls-details"]'
     );
     
     subscriptionLinks.forEach(function(link) {
-      // Remove hover event listeners that might trigger flyouts
-      link.addEventListener('mouseenter', function(e) {
-        // Find and hide any related flyouts
-        const relatedFlyouts = document.querySelectorAll(
-          '[class*="subscription-details"]:not(a):not(button), ' +
-          '[class*="sls-details"]:not(a):not(button), ' +
-          '[class*="sls-tooltip"], ' +
-          '[class*="sls-flyout"]'
+      // Remove any existing hover event listeners by cloning the element
+      const newLink = link.cloneNode(true);
+      link.parentNode.replaceChild(newLink, link);
+      
+      // Ensure click navigates to the link (don't prevent default)
+      newLink.addEventListener('click', function(e) {
+        // Allow normal link navigation - don't prevent default
+        // Only stop if it's trying to show a tooltip
+        const href = newLink.getAttribute('href');
+        if (href && href !== '#' && href !== 'javascript:void(0)') {
+          // Normal navigation - let it proceed
+          return true;
+        }
+      });
+      
+      // Prevent hover from showing tooltips
+      newLink.addEventListener('mouseenter', function(e) {
+        // Hide any tooltips that might appear
+        const relatedTooltips = document.querySelectorAll(
+          '[class*="sls-tooltip"]:not(a):not(button), ' +
+          '[class*="sls-flyout"]:not(a):not(button), ' +
+          '[id*="sls-tooltip"]:not(a):not(button), ' +
+          '[id*="sls-flyout"]:not(a):not(button), ' +
+          '[role="tooltip"]:not(a):not(button)'
         );
-        relatedFlyouts.forEach(function(flyout) {
-          flyout.style.display = 'none';
-          flyout.style.visibility = 'hidden';
-          flyout.style.opacity = '0';
+        relatedTooltips.forEach(function(tooltip) {
+          tooltip.style.display = 'none';
+          tooltip.style.visibility = 'hidden';
+          tooltip.style.opacity = '0';
+        });
+      }, { passive: true });
+      
+      // Also hide on mouseleave
+      newLink.addEventListener('mouseleave', function(e) {
+        const relatedTooltips = document.querySelectorAll(
+          '[class*="sls-tooltip"]:not(a):not(button), ' +
+          '[class*="sls-flyout"]:not(a):not(button), ' +
+          '[role="tooltip"]:not(a):not(button)'
+        );
+        relatedTooltips.forEach(function(tooltip) {
+          tooltip.style.display = 'none';
+          tooltip.style.visibility = 'hidden';
+          tooltip.style.opacity = '0';
         });
       }, { passive: true });
     });
@@ -70,18 +99,18 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
   
   // Run on page load
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', suppressSubscriptionFlyout);
+    document.addEventListener('DOMContentLoaded', suppressSubscriptionTooltip);
   } else {
-    suppressSubscriptionFlyout();
+    suppressSubscriptionTooltip();
   }
   
   // Run after delays to catch dynamically loaded content (like from SealSubs app)
-  setTimeout(suppressSubscriptionFlyout, 500);
-  setTimeout(suppressSubscriptionFlyout, 1000);
-  setTimeout(suppressSubscriptionFlyout, 2000);
-  setTimeout(suppressSubscriptionFlyout, 3000);
+  setTimeout(suppressSubscriptionTooltip, 500);
+  setTimeout(suppressSubscriptionTooltip, 1000);
+  setTimeout(suppressSubscriptionTooltip, 2000);
+  setTimeout(suppressSubscriptionTooltip, 3000);
   
-  // Use MutationObserver to catch dynamically added flyouts
+  // Use MutationObserver to catch dynamically added tooltips
   if (typeof MutationObserver !== 'undefined') {
     const observer = new MutationObserver(function(mutations) {
       let shouldSuppress = false;
@@ -90,12 +119,8 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
           if (node.nodeType === 1) {
             const classList = node.classList || [];
             const id = node.id || '';
-            if (classList.toString().includes('subscription-details') ||
-                classList.toString().includes('sls-details') ||
-                classList.toString().includes('sls-tooltip') ||
+            if (classList.toString().includes('sls-tooltip') ||
                 classList.toString().includes('sls-flyout') ||
-                id.includes('subscription-details') ||
-                id.includes('sls-details') ||
                 id.includes('sls-tooltip') ||
                 id.includes('sls-flyout')) {
               shouldSuppress = true;
@@ -104,7 +129,7 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
         });
       });
       if (shouldSuppress) {
-        suppressSubscriptionFlyout();
+        suppressSubscriptionTooltip();
       }
     });
     
