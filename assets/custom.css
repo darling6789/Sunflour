@@ -310,6 +310,56 @@ a.menu-drawer__menu-item {
     width: 10px;
     height: 10px;
 }
+
+/* Suppress subscription details flyout while keeping link functional */
+.product [class*="subscription-details"],
+.product [class*="sls-details"],
+.product [class*="sls-tooltip"],
+.product [class*="sls-flyout"],
+.product [id*="subscription-details"],
+.product [id*="sls-details"],
+.product [id*="sls-tooltip"],
+.product [id*="sls-flyout"],
+.product .sls-subscription-details,
+.product .sls-subscription-details-flyout,
+.product .sls-subscription-details-popup,
+.product [data-subscription-details],
+.product [data-slstooltip],
+.product [role="tooltip"][class*="subscription"],
+.product [role="tooltip"][class*="sls"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    z-index: -1 !important;
+}
+
+/* Keep subscription details link clickable but prevent hover flyout */
+.product a[href*="subscription"],
+.product a[class*="subscription-details"],
+.product a[class*="sls-details"],
+.product button[class*="subscription-details"],
+.product button[class*="sls-details"] {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Prevent any hover-triggered flyouts from appearing */
+.product *:hover + [class*="subscription-details"],
+.product *:hover + [class*="sls-details"],
+.product *:hover + [class*="sls-tooltip"],
+.product *:hover + [class*="sls-flyout"],
+.product [class*="subscription-details"]:hover,
+.product [class*="sls-details"]:hover,
+.product [class*="sls-tooltip"]:hover,
+.product [class*="sls-flyout"]:hover {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
 .product .product-form__submit, .related-bottom form button.add-to-cart-button {
     background-color: #f9d94c;
     color: #000;
