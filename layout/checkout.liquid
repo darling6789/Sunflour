@@ -143,18 +143,20 @@
         }
       });
 
-      // Hide all quantity badges
-      const badges = document.querySelectorAll('.order-summary__section [class*="badge"], [class*="order-summary"] [class*="badge"]');
+      // Hide all quantity badges (try multiple selectors)
+      const badges = orderSummary.querySelectorAll('[class*="badge"], [class*="quantity-badge"], [data-badge]');
       badges.forEach(function(badge) {
-        badge.style.display = 'none';
+        // Only hide if it's a quantity badge, not a discount badge
+        const badgeText = badge.textContent || badge.innerText || '';
+        if (badgeText.match(/^\d+$/) || badge.closest('[class*="product"]')) {
+          badge.style.display = 'none';
+        }
       });
 
       // ============================================
       // 2. REMOVE ELLIPSIS AND CLEAN TEXT
       // ============================================
-      const allTextElements = document.querySelectorAll(
-        '.order-summary__section *, [class*="order-summary"] *'
-      );
+      const allTextElements = orderSummary.querySelectorAll('*');
       
       allTextElements.forEach(function(element) {
         if (element.children.length === 0) { // Only process leaf nodes
@@ -183,12 +185,12 @@
       // ============================================
       // 3. CLEAN UP PRODUCT TITLES - REMOVE BACKEND LANGUAGE
       // ============================================
-      const productTitles = document.querySelectorAll(
-        '.order-summary__section .product__title, ' +
-        '.order-summary__section [class*="product__title"], ' +
-        '.order-summary__section .product-table__cell, ' +
-        '.order-summary__section td, ' +
-        '.order-summary__section [class*="product"]'
+      const productTitles = orderSummary.querySelectorAll(
+        '.product__title, ' +
+        '[class*="product__title"], ' +
+        '.product-table__cell, ' +
+        'td, ' +
+        '[class*="product"]'
       );
       
       productTitles.forEach(function(element) {
@@ -223,10 +225,10 @@
       // ============================================
       // 4. HIDE ADDRESS INFORMATION FROM PRODUCT DESCRIPTIONS
       // ============================================
-      const descriptions = document.querySelectorAll(
-        '.order-summary__section .product__description, ' +
-        '.order-summary__section [class*="product__description"], ' +
-        '.order-summary__section [class*="product"]'
+      const descriptions = orderSummary.querySelectorAll(
+        '.product__description, ' +
+        '[class*="product__description"], ' +
+        '[class*="product"]'
       );
       
       descriptions.forEach(function(desc) {
@@ -261,11 +263,13 @@
       // ============================================
       // 5. CONSOLIDATE TAX DISPLAY - SHOW ONLY "Tax"
       // ============================================
-      const allTotalLines = document.querySelectorAll(
-        '.order-summary__section .total-line, ' +
-        '.order-summary__section [class*="total-line"], ' +
-        '.order-summary__section tr, ' +
-        '.order-summary__section [class*="total"]'
+      const allTotalLines = orderSummary.querySelectorAll(
+        '.total-line, ' +
+        '[class*="total-line"], ' +
+        'tr, ' +
+        '[class*="total"], ' +
+        'li, ' +
+        '[role="row"]'
       );
       
       let foundSimpleTaxLine = false;
