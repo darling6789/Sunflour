@@ -13,11 +13,15 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
   'use strict';
   
   function updateNationwideShippingText() {
-    // Find all h1 elements that contain the text
-    const headings = document.querySelectorAll('h1, .main-page-title, .page-title');
-    headings.forEach(function(heading) {
-      if (heading.textContent && heading.textContent.includes('Buy Online & Ship Sunflour Nationwide')) {
-        heading.textContent = heading.textContent.replace('Buy Online & Ship Sunflour Nationwide', 'Ship Sunflour Nationwide');
+    // Find all headings and text elements that contain the text
+    const elements = document.querySelectorAll('h1, h2, .main-page-title, .page-title, .s-all-products-header h1');
+    elements.forEach(function(element) {
+      if (element.textContent && element.textContent.includes('Buy Online & Ship Sunflour Nationwide')) {
+        element.textContent = element.textContent.replace('Buy Online & Ship Sunflour Nationwide', 'Ship Sunflour Nationwide');
+      }
+      // Also check for variations
+      if (element.textContent && element.textContent.includes('Buy Online &amp; Ship Sunflour Nationwide')) {
+        element.textContent = element.textContent.replace('Buy Online &amp; Ship Sunflour Nationwide', 'Ship Sunflour Nationwide');
       }
     });
   }
@@ -32,6 +36,7 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
   // Also run after a short delay to catch dynamically loaded content
   setTimeout(updateNationwideShippingText, 100);
   setTimeout(updateNationwideShippingText, 500);
+  setTimeout(updateNationwideShippingText, 1000);
 })();
 
 
