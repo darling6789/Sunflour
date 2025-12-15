@@ -27,6 +27,11 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
+    // Only process changes from quantity input fields (name="updates[]")
+    // Ignore changes from other form fields like gift messages, notes, etc.
+    if (event.target.name !== 'updates[]' || !event.target.dataset.index) {
+      return;
+    }
     this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute('name'));
   }
 
