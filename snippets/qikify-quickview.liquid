@@ -1,0 +1,10 @@
+<script type="text/javascript" src="https://sdk.qikify.com/quickview/app-v1.js" defer="defer"></script>
+<script id="qikify-quickview-custom-script">/* #28027 - Sebastian - 18/06/2022*/
+QikifyQuickView = {
+  findSurroundingImageInParent: true,
+  selector: '.card-wrapper a[href*="/products/"]:not([href*=".jp"]):not([href*=".JP"]):not([href*=".png"]):not([href*=".PNG"]):not(.tmenu_item_link):not(.dmenu_link):not(.qview-button-container):not([data-qview]):not([href*="facebook.com/"]):not([href*="twitter.com/"]):not([href*="pinterest.com/"])',
+}</script>
+<style id="qikify-quickview-custom-style">/* #28027 - Sebastian - 18/06/2022*/
+.card__inner.qview-button-container {
+    z-index: 2;
+}</style>
