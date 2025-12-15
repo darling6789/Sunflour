@@ -1,0 +1,62 @@
+{% for ct in collections %}
+  {% if ct.title == 'allp' %}
+    {% for pt in ct.products %}
+      {% if pt.title == 'Personalized Product' %}
+        {% assign product = pt %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}  
+{% endfor %}
+  
+{% unless cart.item_count == 0 %}
+
+  
+  {% assign variant_id = product.variants.first.id %}
+  
+ 
+  <script>
+
+  (function($) {   
+
+    
+    var cartItems = {{ cart.items | json }},
+        qtyInTheCart = 0,
+        qtyper = 0,
+        cartUpdates = {};
+
+    for (var i=0; i<cartItems.length; i++) {
+      console.log(cartItems[i]);
+      if (cartItems[i].properties.Photo) {
+        if(cartItems[i].properties.Photo.length > 0) {
+          qtyInTheCart += cartItems[i].quantity;
+        }
+      }
+
+      if ( cartItems[i].id === {{ variant_id }} ) {
+        qtyper = cartItems[i].quantity;
+        break;
+      }
+    }
+
+    cartUpdates = { {{ variant_id }}: qtyInTheCart }
+    console.log(qtyInTheCart);
+
+    if(qtyInTheCart == 0 || qtyper > 0) {return;}
+    
+    var params = {
+      type: 'POST',
+      url: '/cart/update.js',
+      data: { updates: cartUpdates },
+      dataType: 'json',
+      success: function(stuff) { 
+        window.location.href = '/cart';
+      }
+    };
+
+    $.ajax(params);
+
+  })(jQuery);
+  </script>
+
+{% endunless %}

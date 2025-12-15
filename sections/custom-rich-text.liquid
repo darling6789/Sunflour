@@ -1,0 +1,52 @@
+<div class="custom-rich-text page-width page-width-desktop">
+  <h2>{{ section.settings.text }}</h2>
+</div>
+
+<style>
+  .custom-rich-text-section {
+    background: {{section.settings.back_color}};
+  }
+  .custom-rich-text {
+    padding: 10px 20px;
+  }
+  .custom-rich-text h2 {
+    color: {{section.settings.color}};
+    text-align: center;
+    margin: 0;
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Custom rich text",
+    "class": "custom-rich-text-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Text color"
+      },
+      {
+        "type": "color",
+        "id": "back_color",
+        "label": "Background color"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom rich text"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

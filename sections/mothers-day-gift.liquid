@@ -1,0 +1,75 @@
+<div class="row row-max" id="options" style="text-align: center;">
+<h1>mother’s day gifts</h1>
+
+<div class="valen-gift-row">
+  <a href="https://sunflourbakingcompany.com/products/mother-s-day-strawberry-milkshake-treat">
+  <div class="valen-gift-card">
+    <img src="{{ section.settings.product1.featured_image | img_url: 'master' }}" alt="mothers day gifts ship nationwide">
+    <h3>{{ section.settings.product1.title }}</h3>
+    <span>{{ section.settings.product1.price | money }}</span>
+    <div>{{ section.settings.product1.description }}</div>
+  </div>
+  </a>
+  <a href="https://sunflourbakingcompany.com/products/mother-s-day-strawberry-milkshake-treat-1" alt="mothers day gifts buy online">
+  <div class="valen-gift-card">
+    <img src="{{ section.settings.product2.featured_image | img_url: 'master' }}">
+    <h3>{{ section.settings.product2.title }}</h3>
+    <span>{{ section.settings.product2.price | money }}</span>
+    <div>{{ section.settings.product2.description }}</div>
+  </div>
+  </a>
+</div>
+
+<style>
+  .valen-gift-row {
+    display: flex;
+    column-gap: 40px;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    padding: 0 20px;
+  }
+
+  .valen-gift-card ul {
+    text-align: left;
+  }
+
+  .valen-gift-card {
+    width: 100%;
+
+  }
+
+  .valen-gift-card img {
+    border-radius: 25px;
+    max-width: 320px;
+  }
+
+  @media only screen and (max-width: 990px) {
+    .valen-gift-row {
+      flex-direction: column;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Mothers day gifts",
+  "class": "section",
+  "settings": [
+     {
+       "type": "product",
+       "id": "product1",
+       "label": "Product 1"
+     },
+     {
+       "type": "product",
+       "id": "product2",
+       "label": "Product 2"
+     }
+  ],
+  "presets": [
+    {
+      "name": "Mothers day gifts"
+    }
+  ]
+}
+{% endschema %}

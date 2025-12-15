@@ -1,0 +1,28 @@
+<div class="hc-scroll-top">
+  <span class="hc-scroll-top__text">to top</span>
+</div>
+
+<script>
+  	const scrollBtn = document.querySelector(".hc-scroll-top");
+  
+    const btnVisibility = () => {
+        if (window.scrollY > 400) {
+            scrollBtn.style.visibility = "visible";
+          	scrollBtn.style.opacity = 1;
+        } else {
+            scrollBtn.style.visibility = "hidden";
+          	scrollBtn.style.opacity = 0;
+        }
+    };
+  
+    document.addEventListener("scroll", () => {
+        btnVisibility();
+    });
+    
+	scrollBtn.addEventListener("click", () => {
+    	window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+    });
+</script>

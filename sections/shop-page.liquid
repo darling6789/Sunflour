@@ -1,0 +1,151 @@
+<div class="page-width shop-wrap">
+   <div class="grid">
+      <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth shop-page-full">
+         <div class="section-header text-center">
+         </div>
+         <div class="rte row">
+            {{ page.content }}
+         </div>
+         <div class="section-header text-center">
+            <h2 class="no-bottom-margin">browse our baked goods & products</h2>
+         </div>
+         <div id="otherProducts" class="row">
+            <div class="customProduct">
+               <a href="https://sunflourbakingcompany.com/apps/bundles/bundle/112462">
+                  <div class="cupCakeBox" style="text-align: center;">
+                     <div class="cupcake"><img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/sunflour-baking-company-cake-jars.jpg?v=1614606553" alt="Cake Jar - Cupcake in a Mason Jar" /></div>
+                     <h2>cake jars</h2>                    
+                  </div>
+               </a>
+            </div>
+            <div class="customProduct">
+               <a href="https://sunflourbakingcompany.com/products/english-muffins">
+                  <div class="cupCakeBox" style="text-align: center;">
+                     <div class="cupcake"><img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/English_Muffins.jpg?v=1639166019" alt="English muffin" /></div>
+                     <h2>english muffins</h2>
+                     <!-- <p class="product-title" style="text-align: center;"><span class="h4 grid-view-item__title product-card__title">Cake Jars</span><br/>$9.95</p>
+                     <span class="buyNow">ORDER NOW</span> -->
+                  </div>
+               </a>
+            </div>
+            <div class="customProduct">
+               <a href="https://sunflourbakingcompany.com/products/cinnamon-rolls">
+                  <div class="cupCakeBox" style="text-align: center;">
+                     <div class="cupcake"><img src="https://sunflourbakingcompany.com/cdn/shop/products/IMG_8976_01_823x.jpg?v=1661793758" alt="Cinnamon rolls" /></div>
+                     <h2>cinnamon rolls</h2>
+                     <!-- <p class="product-title" style="text-align: center;"><span class="h4 grid-view-item__title product-card__title">Cake Jars</span><br/>$9.95</p>
+                     <span class="buyNow">ORDER NOW</span> -->
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div>
+            <div class="row">
+               <div class="testimonial-content-home spaceTop homequote">
+                  <blockquote>I sent my sister your cupcake jars as a surprise birthday present and she was very pleased! <span>Lee - Charlotte, NC</span></blockquote>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<style>
+  .shop-wrap>.grid>.grid__item {
+  	margin: auto;
+  }
+  
+  .shop-wrap .section-header {
+  	display: none;
+  }
+
+  .shop-page-full {
+    max-width: unset;
+  }
+
+  .shop-page-full #otherProducts {
+    display: flex;
+    gap: 20px;
+  }
+
+  .shop-page-full #otherProducts .customProduct {
+    width: 33%;
+  }
+  
+  #shopify-section-template--15018142269551__165244578290dfe643 .grid__item div {
+    text-align: center;
+  }
+  
+  #shopify-section-template--15018142269551__165244578290dfe643 .title {
+  	display: none;
+  }
+  
+  a.featured-card {
+  	width: 200px;
+    background: #ea0909!important;
+    padding: 7px 18px;
+    border-radius: 25px;
+    color: #fff;
+    text-transform: lowercase;
+    display: inline-block;
+    font-family: Josefin Slab,serif;
+    font-size: 16px;
+    font-weight: 600;
+    font-weight: 600!important;
+    text-transform: lowercase;
+    border-radius: 25px;
+    min-height: auto!important;
+    padding: 10px 18px 7px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .shop-wrap .buyNow {
+    width: 200px;
+    background: #ea0909!important;
+    padding: 7px 18px;
+    border-radius: 25px;
+    color: #fff;
+    text-transform: lowercase;
+    display: inline-block;
+    font-family: Josefin Slab,serif;
+    font-size: 16px;
+    font-weight: 600;
+    font-weight: 600!important;
+    text-transform: lowercase;
+    border-radius: 25px;
+    min-height: auto!important;
+    padding: 10px 18px 7px;
+    margin-top: 10px;
+  }
+  
+  .shop-wrap img, .collection .grid__item img {
+      border-radius: 25px;
+  }
+  
+  @media only screen and ( max-width: 768px ) {
+    html, body {
+    	width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .shop-wrap>.grid>.grid__item {
+    	max-width: 100%;
+    }
+    
+    .collection .grid__item {
+    	max-width: 100%;
+        width: 100%;
+    }
+
+    .shop-page-full #otherProducts {
+        display: flex;
+        flex-wrap: wrap;      
+        gap: 0;
+    }
+  
+    .shop-page-full #otherProducts .customProduct {
+        width: 100%;
+    }
+  }
+</style>

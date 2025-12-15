@@ -1,0 +1,25 @@
+# System files and directories
+AppData/
+Desktop/
+Documents/
+Downloads/
+Favorites/
+IntelGraphicsProfiles/
+Links/
+Music/
+OneDrive/
+Pictures/
+Saved Games/
+Searches/
+Videos/
+3D Objects/
+Contacts/
+.cursor/
+.serverless/
+ntuser.dat*
+ntuser.ini
+
+# Shopify specific
+Templates/
+
+

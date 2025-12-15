@@ -1,0 +1,61 @@
+<div class="masonry-wrap page-width">
+  <div class="masonry">
+    {% for block in section.blocks %}
+      <div class="item">
+        <img src="{{ block.settings.image | img_url: 'master' }}">
+      </div>
+    {% endfor %}  
+  </div>
+</div>
+
+<style>
+.masonry { /* Masonry container */
+  column-count: 4;
+  column-gap: 1em;
+}
+
+.masonry .item { /* Masonry bricks or child elements */
+  background-color: #eee;
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
+}  
+</style>
+
+{% schema %}
+  {
+    "name": "Masonry",
+    "settings": [
+      
+    ],
+    "presets": [
+      {
+        "name": "Masonry"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Image",
+        "type": "image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

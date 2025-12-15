@@ -1,0 +1,375 @@
+<div class="videoBackground">
+    <div class="videoBox">
+      <a href="{{ section.settings.video_link }}">
+        <div class="fullscreen-video-wrap">
+            <video class="video-js" loop autoplay preload="none" muted playsinline poster="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/charlotte.jpg?v=1653764022">
+                <!-- <source src="https://cdn.shopify.com/videos/c/o/v/e2f52ef223b4492a897bb50485fac857.mp4" type="video/mp4"> -->
+              <source src="https://files.possibleweb.com/file/videobackgrounds/SunflourNodaPromotionalVideo-Updated.mp4" type="video/mp4">
+            </video>
+            
+        </div>
+      </a>
+    </div>
+</div>         
+
+{% schema %}
+{
+  "name": "Video Background",
+  "class": "section",
+  "settings": [
+    {
+      "type": "url",
+      "id": "video_link",
+      "label": "Video link"
+    }   
+  ],
+  "presets": [
+    {
+      "name": "Video Background"
+    }
+  ]
+}
+{% endschema %}
+ 
+
+<style>
+
+.main-content .videoBackground {
+
+	margin-top: -55px;
+
+}
+
+.videoBackground {
+
+	height: 100%;
+
+	position: relative;
+
+}
+
+.videoBackground .fullscreen-video-wrap {
+
+	position: absolute;
+
+	top: 0;
+
+	left: 0;
+
+	min-width: 100%;
+
+	width: 100%;
+
+	height: 100%;
+
+	overflow: hidden;
+
+}
+
+.videoBackground .fullscreen-video-wrap .video-js {
+
+	position: absolute;
+
+	top: 0;
+
+	left: 0;
+
+	min-height: 100%;
+
+	min-width: 100%;
+
+	width: 100%;
+
+	height: 100%;
+
+	object-fit: cover;
+
+}
+
+.videoBackground .fullscreen-video-wrap video {
+
+	min-height: 100%;
+
+	min-width: 100%;
+
+	object-fit: cover;
+
+}
+
+.videoBackground .videoBox {
+
+	display: flex;
+
+	align-items: center;
+
+	justify-content: end;
+
+	flex-direction: column;
+
+	padding: 100px 20px 80px;
+
+	background-size: cover;
+
+	background-position: center;
+
+	background-repeat: no-repeat;
+
+	min-height: 500px;
+
+	max-height: 800px;
+
+	height: calc(100vh - 165px);
+
+	position: relative;
+
+}
+
+.videoBackground .imageBox {
+
+	display: flex;
+
+	align-items: center;
+
+	justify-content: flex-end;
+
+	flex-direction: column;
+
+	padding: 100px 20px 80px;
+
+	background-size: cover;
+
+	background-position: center;
+
+	background-repeat: no-repeat;
+
+	position: relative;
+
+	min-height: calc(100vh - 165px);
+
+	height: auto;
+
+}
+
+.videoBackground .videoBoxInfo,
+.videoBackground .imageBoxInfo {
+
+	z-index: 2;
+
+	text-align: center;
+
+}
+
+.videoBackground .overlay {
+
+	content: "";
+
+	position: absolute;
+
+	top: 0;
+
+	right: 0;
+
+	bottom: 0;
+
+	left: 0;
+
+	background: #000;
+
+	z-index: 1;
+
+}
+
+.videoBackground .videoBoxInfoBtn,
+.videoBackground .imageBoxInfoBtn {
+
+	-moz-user-select: none;
+
+	-ms-user-select: none;
+
+	-webkit-user-select: none;
+
+	user-select: none;
+
+	-webkit-appearance: none;
+
+	-moz-appearance: none;
+
+	appearance: none;
+
+	display: inline-block;
+
+	width: auto;
+
+	text-decoration: none;
+
+	text-align: center;
+
+	vertical-align: middle;
+
+	cursor: pointer;
+
+	border: 1px solid transparent;
+
+	border-radius: 2px;
+
+	padding: 8px 15px;
+
+	font-style: normal;
+
+	font-weight: 800;
+
+	text-transform: uppercase;
+
+	letter-spacing: 0.06em;
+
+	white-space: normal;
+
+	font-size: 14px;
+
+	margin-top: 20px;
+
+	margin: 2.5rem 0 0;
+	font-size: 1.3rem;
+	letter-spacing: .83px;
+	line-height: 3.3rem;
+	color: #ffffff;
+	background: #b54544;
+	height: 4.1rem;
+	width: 20rem;
+
+}
+
+.videoBackground .videoBoxInfoTitle,
+.videoBackground .imageBoxInfoTitle {
+	font-family: PF Regal Display Pro, sans-serif;
+	color: #FFF;
+
+	font-size: 4.5rem;
+
+	line-height: 4.5rem;
+
+}
+
+.videoBackground .videoBoxInfoDescription,
+.videoBackground .imageBoxInfoDescription {
+
+	/* max-width: 500px; */
+
+	margin: 0 auto;
+	padding: 0.5rem 0 0;
+
+
+}
+
+.videoBackground .videoBoxInfoDescription p,
+.videoBackground .imageBoxInfoDescription p {
+
+	font-size: 1.3rem;
+
+	line-height: 28px;
+
+}
+
+.videoBackground .placeholderNoblocks {
+
+	text-align: center;
+
+	max-width: 500px;
+
+	margin: 0 auto;
+
+}
+
+@media screen and (max-width: 767px) {
+
+  /* For valentaine banner */
+    /* .videoBackground .fullscreen-video-wrap .video-js {
+      width: 100vw !important;
+      object-fit: contain !important;
+    }
+    .videoBackground .videoBox {
+      min-height: 57vw !important;
+    } */
+  /* End for valentaine banner */
+  
+	.main-content .videoBackground {
+
+		margin-top: -35px;
+
+	}
+
+	.videoBackground .fullscreen-video-wrap {
+
+		/* z-index: 3; */
+
+	}
+
+	.videoBackground .videoBox {
+
+		min-height: 400px;
+
+		height: 100%;
+
+		position: relative;
+
+		padding: 0;
+
+	}
+
+	.videoBackground .fullscreen-video-wrap {
+
+		/* position: relative;
+
+min-height: 300px;
+ */
+	}
+
+	.videoBackground .videoBoxInfo {
+
+		padding: 40px 20px;
+
+		background: transparent;
+
+		width: 100%;
+
+	}
+
+	.videoBackground .videoBoxInfoTitle,
+	.videoBackground .imageBoxInfoTitle {
+		font-size: 2.5rem;
+		line-height: 2.5rem;
+	}
+
+	.videoBackground .videoBoxInfoDescription,
+	.videoBackground .imageBoxInfoDescription {
+		padding: 0.5rem 0 0;
+	}
+
+	.videoBackground .imageBoxInfoDescription p {
+		font-size: 1.3rem;
+	}
+}
+
+@media only screen and (max-width: 640px) {
+
+	.videoBackground .videoBoxInfoBtn,
+	.videoBackground .imageBoxInfoBtn {
+		font-size: 1rem;
+		letter-spacing: .83px;
+		line-height: 2rem;
+		color: #ffffff;
+		background: #b54544;
+		height: 3rem;
+		width: 16rem;
+	}
+}
+  
+/* @media (max-width: 767px) {
+    .videoBackground {
+        display: none;
+    }
+
+} */
+  
+</style>
+

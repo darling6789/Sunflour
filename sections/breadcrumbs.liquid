@@ -1,0 +1,15 @@
+<div class="{% unless page.handle == 'terms' %}page-width w-100{% endunless %} {% if page.handle == 'terms' %}row row-max mt-20 terms-bread{% endif %}">
+  {% render 'breadcrumbs' %} 
+</div>
+
+{% schema %}
+  {
+    "name": "Breadcrumbs",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Breadcrumbs"
+      }
+    ]
+  }
+{% endschema %}
