@@ -1,1 +1,395 @@
-{"current":{"logo":"shopify:\/\/shop_images\/logo-min.png","logo_width":200,"favicon":"shopify:\/\/shop_images\/logo-min.png","type_header_font":"josefin_slab_n4","heading_scale":115,"type_body_font":"sans-serif","body_scale":110,"page_width":1200,"spacing_sections":0,"spacing_grid_horizontal":8,"spacing_grid_vertical":8,"animations_reveal_on_scroll":true,"animations_hover_elements":"none","buttons_border_thickness":1,"buttons_border_opacity":100,"buttons_radius":0,"buttons_shadow_opacity":0,"buttons_shadow_horizontal_offset":0,"buttons_shadow_vertical_offset":4,"buttons_shadow_blur":5,"variant_pills_border_thickness":1,"variant_pills_border_opacity":55,"variant_pills_radius":40,"variant_pills_shadow_opacity":0,"variant_pills_shadow_horizontal_offset":0,"variant_pills_shadow_vertical_offset":4,"variant_pills_shadow_blur":5,"inputs_border_thickness":1,"inputs_border_opacity":55,"inputs_radius":0,"inputs_shadow_opacity":0,"inputs_shadow_horizontal_offset":0,"inputs_shadow_vertical_offset":4,"inputs_shadow_blur":5,"card_style":"standard","card_image_padding":0,"card_text_alignment":"left","card_color_scheme":"scheme-2","card_border_thickness":0,"card_border_opacity":10,"card_corner_radius":0,"card_shadow_opacity":0,"card_shadow_horizontal_offset":0,"card_shadow_vertical_offset":4,"card_shadow_blur":5,"collection_card_style":"card","collection_card_image_padding":0,"collection_card_text_alignment":"left","collection_card_color_scheme":"scheme-2","collection_card_border_thickness":0,"collection_card_border_opacity":10,"collection_card_corner_radius":0,"collection_card_shadow_opacity":0,"collection_card_shadow_horizontal_offset":0,"collection_card_shadow_vertical_offset":4,"collection_card_shadow_blur":5,"blog_card_style":"standard","blog_card_image_padding":0,"blog_card_text_alignment":"left","blog_card_color_scheme":"scheme-2","blog_card_border_thickness":0,"blog_card_border_opacity":10,"blog_card_corner_radius":0,"blog_card_shadow_opacity":0,"blog_card_shadow_horizontal_offset":0,"blog_card_shadow_vertical_offset":4,"blog_card_shadow_blur":5,"text_boxes_border_thickness":0,"text_boxes_border_opacity":10,"text_boxes_radius":0,"text_boxes_shadow_opacity":0,"text_boxes_shadow_horizontal_offset":0,"text_boxes_shadow_vertical_offset":4,"text_boxes_shadow_blur":5,"media_border_thickness":1,"media_border_opacity":5,"media_radius":0,"media_shadow_opacity":0,"media_shadow_horizontal_offset":0,"media_shadow_vertical_offset":4,"media_shadow_blur":5,"popup_border_thickness":1,"popup_border_opacity":10,"popup_corner_radius":0,"popup_shadow_opacity":5,"popup_shadow_horizontal_offset":0,"popup_shadow_vertical_offset":4,"popup_shadow_blur":5,"drawer_border_thickness":1,"drawer_border_opacity":10,"drawer_shadow_opacity":0,"drawer_shadow_horizontal_offset":0,"drawer_shadow_vertical_offset":4,"drawer_shadow_blur":5,"badge_position":"bottom left","badge_corner_radius":40,"sale_badge_color_scheme":"scheme-4","sold_out_badge_color_scheme":"scheme-3","brand_headline":"","brand_description":"<p><\/p>","brand_image_width":100,"social_facebook_link":"https:\/\/facebook.com\/sunflourbaking","social_instagram_link":"","social_youtube_link":"","social_tiktok_link":"","social_twitter_link":"https:\/\/twitter.com\/sunflourbaking","social_snapchat_link":"","social_pinterest_link":"https:\/\/www.pinterest.com\/SunflourBaking\/","social_tumblr_link":"","social_vimeo_link":"","predictive_search_enabled":true,"predictive_search_show_vendor":false,"predictive_search_show_price":false,"currency_code_enabled":true,"cart_type":"drawer","show_vendor":false,"show_cart_note":false,"cart_drawer_collection":"","cart_color_scheme":"scheme-1","sections":{"main-password-header":{"type":"main-password-header","settings":{"color_scheme":"scheme-1"}},"main-password-footer":{"type":"main-password-footer","settings":{"color_scheme":"scheme-1"}}},"content_for_index":[],"color_schemes":{"scheme-1":{"settings":{"background":"#ffffff","background_gradient":"","text":"#121212","button":"#231f20","button_label":"#ffefda","secondary_button_label":"#121212","shadow":"#121212"}},"scheme-2":{"settings":{"background":"#f3f3f3","background_gradient":"","text":"#121212","button":"#121212","button_label":"#f3f3f3","secondary_button_label":"#121212","shadow":"#121212"}},"scheme-3":{"settings":{"background":"#242833","background_gradient":"","text":"#ffffff","button":"#ffffff","button_label":"#000000","secondary_button_label":"#ffffff","shadow":"#121212"}},"scheme-4":{"settings":{"background":"#121212","background_gradient":"","text":"#ffffff","button":"#ffffff","button_label":"#121212","secondary_button_label":"#ffffff","shadow":"#121212"}},"scheme-5":{"settings":{"background":"#334fb4","background_gradient":"","text":"#ffffff","button":"#ffffff","button_label":"#334fb4","secondary_button_label":"#ffffff","shadow":"#121212"}},"scheme-d2716e2e-f177-4e9b-85d8-43fdec839172":{"settings":{"background":"#ffffff","background_gradient":"","text":"#121212","button":"#f40707","button_label":"#ffefda","secondary_button_label":"#121212","shadow":"#121212"}}}},"presets":{"Default":{"logo_width":90,"color_schemes":{"scheme-1":{"settings":{"background":"#FFFFFF","background_gradient":"","text":"#121212","button":"#121212","button_label":"#FFFFFF","secondary_button_label":"#121212","shadow":"#121212"}},"scheme-2":{"settings":{"background":"#F3F3F3","background_gradient":"","text":"#121212","button":"#121212","button_label":"#F3F3F3","secondary_button_label":"#121212","shadow":"#121212"}},"scheme-3":{"settings":{"background":"#242833","background_gradient":"","text":"#FFFFFF","button":"#FFFFFF","button_label":"#000000","secondary_button_label":"#FFFFFF","shadow":"#121212"}},"scheme-4":{"settings":{"background":"#121212","background_gradient":"","text":"#FFFFFF","button":"#FFFFFF","button_label":"#121212","secondary_button_label":"#FFFFFF","shadow":"#121212"}},"scheme-5":{"settings":{"background":"#334FB4","background_gradient":"","text":"#FFFFFF","button":"#FFFFFF","button_label":"#334FB4","secondary_button_label":"#FFFFFF","shadow":"#121212"}}},"type_header_font":"assistant_n4","heading_scale":100,"type_body_font":"assistant_n4","body_scale":100,"page_width":1200,"spacing_sections":0,"spacing_grid_horizontal":8,"spacing_grid_vertical":8,"animations_reveal_on_scroll":true,"animations_hover_elements":"none","buttons_border_thickness":1,"buttons_border_opacity":100,"buttons_radius":0,"buttons_shadow_opacity":0,"buttons_shadow_horizontal_offset":0,"buttons_shadow_vertical_offset":4,"buttons_shadow_blur":5,"variant_pills_border_thickness":1,"variant_pills_border_opacity":55,"variant_pills_radius":40,"variant_pills_shadow_opacity":0,"variant_pills_shadow_horizontal_offset":0,"variant_pills_shadow_vertical_offset":4,"variant_pills_shadow_blur":5,"inputs_border_thickness":1,"inputs_border_opacity":55,"inputs_radius":0,"inputs_shadow_opacity":0,"inputs_shadow_horizontal_offset":0,"inputs_shadow_vertical_offset":4,"inputs_shadow_blur":5,"card_style":"standard","card_image_padding":0,"card_text_alignment":"left","card_color_scheme":"scheme-2","card_border_thickness":0,"card_border_opacity":10,"card_corner_radius":0,"card_shadow_opacity":0,"card_shadow_horizontal_offset":0,"card_shadow_vertical_offset":4,"card_shadow_blur":5,"collection_card_style":"standard","collection_card_image_padding":0,"collection_card_text_alignment":"left","collection_card_color_scheme":"scheme-2","collection_card_border_thickness":0,"collection_card_border_opacity":10,"collection_card_corner_radius":0,"collection_card_shadow_opacity":0,"collection_card_shadow_horizontal_offset":0,"collection_card_shadow_vertical_offset":4,"collection_card_shadow_blur":5,"blog_card_style":"standard","blog_card_image_padding":0,"blog_card_text_alignment":"left","blog_card_color_scheme":"scheme-2","blog_card_border_thickness":0,"blog_card_border_opacity":10,"blog_card_corner_radius":0,"blog_card_shadow_opacity":0,"blog_card_shadow_horizontal_offset":0,"blog_card_shadow_vertical_offset":4,"blog_card_shadow_blur":5,"text_boxes_border_thickness":0,"text_boxes_border_opacity":10,"text_boxes_radius":0,"text_boxes_shadow_opacity":0,"text_boxes_shadow_horizontal_offset":0,"text_boxes_shadow_vertical_offset":4,"text_boxes_shadow_blur":5,"media_border_thickness":1,"media_border_opacity":5,"media_radius":0,"media_shadow_opacity":0,"media_shadow_horizontal_offset":0,"media_shadow_vertical_offset":4,"media_shadow_blur":5,"popup_border_thickness":1,"popup_border_opacity":10,"popup_corner_radius":0,"popup_shadow_opacity":5,"popup_shadow_horizontal_offset":0,"popup_shadow_vertical_offset":4,"popup_shadow_blur":5,"drawer_border_thickness":1,"drawer_border_opacity":10,"drawer_shadow_opacity":0,"drawer_shadow_horizontal_offset":0,"drawer_shadow_vertical_offset":4,"drawer_shadow_blur":5,"badge_position":"bottom left","badge_corner_radius":40,"sale_badge_color_scheme":"scheme-4","sold_out_badge_color_scheme":"scheme-3","brand_headline":"","brand_description":"<p><\/p>","brand_image_width":100,"social_twitter_link":"","social_facebook_link":"","social_pinterest_link":"","social_instagram_link":"","social_tiktok_link":"","social_tumblr_link":"","social_snapchat_link":"","social_youtube_link":"","social_vimeo_link":"","predictive_search_enabled":true,"predictive_search_show_vendor":false,"predictive_search_show_price":false,"currency_code_enabled":true,"cart_type":"notification","show_vendor":false,"show_cart_note":false,"cart_drawer_collection":"","cart_color_scheme":"scheme-1","sections":{"main-password-header":{"type":"main-password-header","settings":{"color_scheme":"scheme-1"}},"main-password-footer":{"type":"main-password-footer","settings":{"color_scheme":"scheme-1"}}}}},"platform_customizations":{"custom_css":[".s-btn {background: red; color: white;}"]}}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "colors_accent_1": "#9c321c",
+    "type_header_font": "josefin_slab_n4",
+    "heading_scale": 115,
+    "type_body_font": "sans-serif",
+    "body_scale": 110,
+    "spacing_grid_horizontal": 12,
+    "spacing_grid_vertical": 12,
+    "buttons_radius": 40,
+    "buttons_shadow_opacity": 0,
+    "inputs_radius": 4,
+    "card_style": "standard",
+    "card_color_scheme": "accent-1",
+    "media_radius": 4,
+    "popup_corner_radius": 4,
+    "popup_shadow_blur": 5,
+    "accent_icons": "text",
+    "social_twitter_link": "https://twitter.com/sunflourbaking",
+    "social_facebook_link": "https://facebook.com/sunflourbaking",
+    "social_pinterest_link": "https://www.pinterest.com/SunflourBaking/",
+    "social_instagram_link": "https://instagram.com/sunflourbakingcompany",
+    "predictive_search_enabled": false,
+    "favicon": "shopify://shop_images/Logo_adad680c-a53f-43b9-8bf4-2bac4c576c13.png",
+    "currency_code_enabled": false,
+    "checkout_logo_image": "shopify://shop_images/Logo_79c5f3f6-decf-46db-b6e7-07dcb45a032f.png",
+    "checkout_logo_position": "center",
+    "checkout_accent_color": "#ea0909",
+    "checkout_button_color": "#ea0909",
+    "checkout_error_color": "#0c38d7",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "6de8cd8a-2e10-436f-afdf-be8bd5664af1": {
+            "type": "announcement",
+            "disabled": true,
+            "settings": {
+              "text": "BUNNY BAIT CAKE JARS <u>ARE BACK!</u>",
+              "color_scheme": "accent-1",
+              "link": "https://sunflourbakingcompany.com/products/bunny-bait-cake-jar"
+            }
+          },
+          "8a4a5933-066c-4a5e-83be-51976b89c699": {
+            "type": "announcement",
+            "disabled": true,
+            "settings": {
+              "text": "VALENTINE'S DAY <u>PRE-ORDER</u>",
+              "color_scheme": "accent-1",
+              "link": "shopify://pages/pre-order"
+            }
+          },
+          "announcement_Yi9ngn": {
+            "type": "announcement",
+            "disabled": true,
+            "settings": {
+              "text": "MARDI GRAS <u>PRE-ORDER</u>",
+              "color_scheme": "accent-1",
+              "link": "shopify://pages/pre-order"
+            }
+          },
+          "091d8ca1-f4d2-473a-90f6-2855a0d66288": {
+            "type": "announcement",
+            "disabled": true,
+            "settings": {
+              "text": "SEND LOVE TO MOM - <u>ORDER NOW</u>",
+              "color_scheme": "accent-1",
+              "link": "shopify://collections/mothers-day-gifts"
+            }
+          },
+          "announcement_ct6CVb": {
+            "type": "announcement",
+            "disabled": true,
+            "settings": {
+              "text": "2024 THANKSGIVING MENU LIVE - <u>PRE-ORDER TODAY!</u>",
+              "color_scheme": "accent-1",
+              "link": "shopify://pages/thanksgiving-menu-charlotte-nc"
+            }
+          },
+          "announcement-bar-0": {
+            "type": "announcement",
+            "settings": {
+              "text": "EMPLOYEE GIFTS <u>WE MAKE IT EASY!</u>",
+              "color_scheme": "inverse",
+              "link": "shopify://pages/corporate-gift"
+            }
+          },
+          "a417ed6d-7c4e-4c09-bc8d-ca3eb8234b09": {
+            "type": "announcement",
+            "settings": {
+              "text": "CATER YOUR NEXT EVENT <u>WITH SUNFLOUR!</u>",
+              "color_scheme": "accent-1",
+              "link": "shopify://pages/catering"
+            }
+          },
+          "4843a5d7-6f96-4a49-aed3-17c86d083a25": {
+            "type": "announcement",
+            "settings": {
+              "text": "CUSTOM WEDDING CAKES! <u>BOOK A TASTING TODAY</u>!",
+              "color_scheme": "accent-1",
+              "link": "shopify://pages/weddings"
+            }
+          },
+          "ed90b575-9e8f-49e5-9c6a-2450bafb3adb": {
+            "type": "announcement",
+            "settings": {
+              "text": "SEND CAKE JARS <u>NATIONWIDE</u>!",
+              "color_scheme": "accent-1",
+              "link": "shopify://pages/cake-jars"
+            }
+          },
+          "announcement_T3bfRg": {
+            "type": "announcement",
+            "settings": {
+              "text": "WELCOME <u>MOTHER'S DAY SPECIAL</u>!",
+              "color_scheme": "accent-1",
+              "link": "shopify://pages/mothers-day-special"
+            }
+          }
+        },
+        "block_order": [
+          "6de8cd8a-2e10-436f-afdf-be8bd5664af1",
+          "8a4a5933-066c-4a5e-83be-51976b89c699",
+          "announcement_Yi9ngn",
+          "091d8ca1-f4d2-473a-90f6-2855a0d66288",
+          "announcement_ct6CVb",
+          "announcement-bar-0",
+          "a417ed6d-7c4e-4c09-bc8d-ca3eb8234b09",
+          "4843a5d7-6f96-4a49-aed3-17c86d083a25",
+          "ed90b575-9e8f-49e5-9c6a-2450bafb3adb",
+          "announcement_T3bfRg"
+        ],
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "color_scheme": "background-1",
+          "logo": "shopify://shop_images/bakery-near-me-sunflour-baking-company.png",
+          "logo_width": 200,
+          "logo_position": "middle-left",
+          "menu": "mega-menu",
+          "show_line_separator": false,
+          "enable_sticky_header": true,
+          "mega1_1": "shopify://shop_images/nationwide-shipping-baked-goods-sunflour.jpg",
+          "megatxt1_1": "nationwide shipping",
+          "megalink1_1": "shopify://pages/shop",
+          "mega1_2": "shopify://shop_images/send-cookie-gifts-nationwide_27f498ec-dc12-4fcb-88e8-f33c453ff436.jpg",
+          "megatxt1_2": "send cookie gifts",
+          "megalink1_2": "shopify://collections/cookie-gifts",
+          "mega1_3": "shopify://shop_images/buy-cake-jars-online.jpg",
+          "megatxt1_3": "buy cake jars",
+          "megalink1_3": "shopify://pages/cake-jars",
+          "mega1_4": "shopify://shop_images/cinnamon-rolls.jpg",
+          "megatxt1_4": "",
+          "megalink1_4": "shopify://products/cinnamon-rolls",
+          "mega1_5": "shopify://shop_images/mixandbake.png",
+          "megatxt1_5": "",
+          "megalink1_5": "shopify://collections/make-at-home-diy",
+          "mega2_1": "shopify://shop_images/pickup.jpg",
+          "megatxt2_1": "pickup and delivery",
+          "megalink2_1": "https://order.online/business/sunflour-baking-company-22777",
+          "mega2_2": "shopify://shop_images/catering-charlotte-nc-sunflour-baking-company.jpg",
+          "megatxt2_2": "catering",
+          "megalink2_2": "shopify://pages/catering",
+          "mega2_3": "shopify://shop_images/sunflour-bakery-wedding.jpg",
+          "megatxt2_3": "weddings",
+          "megalink2_3": "shopify://pages/weddings",
+          "mega2_4": "shopify://shop_images/corporate.jpg",
+          "megatxt2_4": "corporate gifting",
+          "megalink2_4": "shopify://pages/corporate-gift",
+          "mega2_5": "shopify://shop_images/sunflour-menu-charlotte-nc-local.jpg",
+          "megatxt2_5": "local menu",
+          "megalink2_5": "shopify://pages/menu",
+          "mega3_1": "shopify://shop_images/about-sunflour-baking-company.jpg",
+          "megatxt3_1": "follow us",
+          "megalink3_1": "shopify://pages/about-us",
+          "mega3_2": "shopify://shop_images/bakery-reviews-charlotte-nc-sunflour-baking-company.jpg",
+          "megatxt3_2": "reviews",
+          "megalink3_2": "shopify://pages/reviews",
+          "mega3_3": "shopify://shop_images/sunflour-bakery-blog.jpg",
+          "megatxt3_3": "articles",
+          "megalink3_3": "shopify://blogs/news",
+          "mega3_4": "shopify://shop_images/follow.jpg",
+          "megatxt3_4": "follow and share",
+          "megalink3_4": "shopify://pages/about-us",
+          "mega3_5": "shopify://shop_images/contact.jpg",
+          "megatxt3_5": "contact us",
+          "megalink3_5": "shopify://pages/contact",
+          "mega4_1": "shopify://shop_images/elizabeth-bakery-charlotte-nc-sunflour.jpg",
+          "megatxt4_1": "elizabeth",
+          "megalink4_1": "shopify://pages/charlotte-bakery-elizabeth",
+          "mega4_2": "shopify://shop_images/dilworth-bakery-charlotte-nc-sunflour.jpg",
+          "megatxt4_2": "dilworth",
+          "megalink4_2": "shopify://pages/charlotte-bakery-dilworth",
+          "mega4_3": "shopify://shop_images/ballantyne-bakery-charlotte-nc-sunflour.jpg",
+          "megatxt4_3": "ballantyne",
+          "megalink4_3": "shopify://pages/ballantyne-bakery",
+          "mega4_4": "shopify://shop_images/harrisburg-bakery-charlotte-nc-sunflour.jpg",
+          "megatxt4_4": "harrisburg",
+          "megalink4_4": "shopify://pages/harrisburg-nc-bakery",
+          "mega4_5": "shopify://shop_images/noda-menu_09022a9a-149e-4b3e-aa0a-ad3d26b4d4c6.jpg",
+          "megatxt4_5": "",
+          "megalink4_5": "shopify://pages/charlotte-bakery-noda"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "aeb182fc-7a99-4d4c-9bce-208189e3038d": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/Logo_adad680c-a53f-43b9-8bf4-2bac4c576c13.png",
+              "image_width": 140,
+              "alignment": ""
+            }
+          },
+          "footer-0": {
+            "type": "link_list",
+            "settings": {
+              "heading": "meet sunflour",
+              "menu": "company"
+            }
+          },
+          "footer-1": {
+            "type": "link_list",
+            "settings": {
+              "heading": "locations",
+              "menu": "locations"
+            }
+          },
+          "b2f998d9-e378-480e-a0dd-e9637c1014eb": {
+            "type": "link_list",
+            "settings": {
+              "heading": "order sunflour",
+              "menu": "quick-links"
+            }
+          }
+        },
+        "block_order": [
+          "aeb182fc-7a99-4d4c-9bce-208189e3038d",
+          "footer-0",
+          "footer-1",
+          "b2f998d9-e378-480e-a0dd-e9637c1014eb"
+        ],
+        "settings": {
+          "color_scheme": "background-1",
+          "newsletter_enable": false,
+          "newsletter_heading": "get 10% off your first order",
+          "show_social": true,
+          "enable_country_selector": false,
+          "enable_language_selector": false,
+          "payment_enable": true,
+          "margin_top": 48,
+          "padding_top": 36,
+          "padding_bottom": 36
+        }
+      },
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {}
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "qikify-quickview-1687856379": {
+        "type": "shopify://apps/qikify-quick-view/blocks/app-embed/ce27a8e7-5292-4481-881e-08f2136a4e05",
+        "disabled": false,
+        "settings": {}
+      },
+      "15683396631634586217": {
+        "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": true,
+        "settings": {
+          "button_color": "#000000",
+          "button_icon": "chat_bubble",
+          "button_text": "chat_with_us",
+          "button_horizontal_position": "bottom_right",
+          "button_vertical_position": "lowest",
+          "greeting_message": "👋 Hi, message us with any questions. We're happy to help!"
+        }
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "pagefly-page-builder": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      },
+      "12601257459161342390": {
+        "type": "shopify://apps/giftship/blocks/giftship/26bd5756-d344-471d-baf8-ba6267b82da9",
+        "disabled": false,
+        "settings": {
+          "gs_drawer_cart": false
+        }
+      },
+      "3189187978193557383": {
+        "type": "shopify://apps/optim-auto-all-in-one-seo/blocks/app-embed-block/762c11f9-cb83-46c6-a80a-3b46bfd60107",
+        "disabled": false,
+        "settings": {}
+      },
+      "341186785192672687": {
+        "type": "shopify://apps/seal-subscriptions/blocks/subscription-script-append/13b25004-a140-4ab7-b5fe-29918f759699",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
+  "presets": {
+    "Default": {
+      "sections": {
+        "announcement-bar": {
+          "type": "announcement-bar",
+          "blocks": {
+            "announcement-bar-0": {
+              "type": "announcement",
+              "settings": {
+                "color_scheme": "background-1"
+              }
+            }
+          },
+          "block_order": [
+            "announcement-bar-0"
+          ],
+          "settings": {}
+        },
+        "header": {
+          "type": "header",
+          "settings": {
+            "logo_width": 90
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "footer-0": {
+              "type": "link_list",
+              "settings": {}
+            },
+            "footer-1": {
+              "type": "link_list",
+              "settings": {
+                "heading": "Info"
+              }
+            },
+            "footer-2": {
+              "type": "text",
+              "settings": {
+                "heading": "Our mission"
+              }
+            }
+          },
+          "block_order": [
+            "footer-0",
+            "footer-1",
+            "footer-2"
+          ],
+          "settings": {
+            "show_social": true,
+            "enable_country_selector": false,
+            "enable_language_selector": false,
+            "margin_top": 48
+          }
+        },
+        "main-password-header": {
+          "type": "main-password-header",
+          "settings": {}
+        },
+        "main-password-footer": {
+          "type": "main-password-footer",
+          "settings": {}
+        }
+      }
+    }
+  },
+  "platform_customizations": {
+    "custom_css": []
+  }
+}
