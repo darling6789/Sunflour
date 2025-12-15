@@ -35,8 +35,6 @@ class CartNotification extends HTMLElement {
   }
 
   renderContents(parsedState) {
-    // Use parsedState.key (cart item key) instead of parsedState.id (product ID)
-    // The selector uses cart item key to match the HTML id="cart-notification-product-{item.key}"
     this.cartItemKey = parsedState.key;
     this.getSectionsToRender().forEach((section) => {
       document.getElementById(section.id).innerHTML = this.getSectionInnerHTML(
