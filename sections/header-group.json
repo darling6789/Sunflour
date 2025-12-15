@@ -1,0 +1,80 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-bar-0": {
+          "type": "announcement",
+          "settings": {
+            "text": "WE MAKE CORPORATE GIFTING EASY!",
+            "link": "shopify://pages/corporate-gift"
+          }
+        },
+        "announcement_RdCcwg": {
+          "type": "announcement",
+          "settings": {
+            "text": "CATER YOUR NEXT EVENT WITH SUNFLOUR!",
+            "link": "shopify://pages/catering"
+          }
+        },
+        "announcement_j3fh7R": {
+          "type": "announcement",
+          "settings": {
+            "text": "CUSTOM WEDDING CAKES! BOOK A TASTING TODAY!",
+            "link": "shopify://pages/weddings"
+          }
+        },
+        "announcement_Drw9UH": {
+          "type": "announcement",
+          "settings": {
+            "text": "SEND CAKE JARS NATIONWIDE!",
+            "link": "shopify://pages/cake-jars"
+          }
+        },
+        "announcement_GxcWNf": {
+          "type": "announcement",
+          "settings": {
+            "text": "WE DO WHOLESALE",
+            "link": "shopify://pages/wholesale"
+          }
+        }
+      },
+      "block_order": [
+        "announcement-bar-0",
+        "announcement_RdCcwg",
+        "announcement_j3fh7R",
+        "announcement_Drw9UH",
+        "announcement_GxcWNf"
+      ],
+      "custom_css": [
+        ".s-announce-bar {background-color: #7e8b4c;}",
+        ".announcement-bar__message {color: white; font-weight: bold;}"
+      ],
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "logo_position": "top-center",
+        "menu": "new-flyout",
+        "show_line_separator": true
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}
