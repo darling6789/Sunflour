@@ -28,19 +28,25 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
       const id = element.id || '';
       
       // Hide if it contains "How subscriptions work" or is clearly a tooltip
-      if ((text.includes('How subscriptions work') || 
-           text.includes('You can modify or cancel') ||
-           text.includes('Subscriptions are renewed') ||
-           classList.includes('sls-tooltip') ||
-           classList.includes('sls-flyout') ||
-           id.includes('sls-tooltip') ||
-           id.includes('sls-flyout') ||
-           element.getAttribute('role') === 'tooltip') &&
+      // But NOT if it's part of the link text itself
+      const isTooltipContent = text.includes('How subscriptions work') || 
+                               text.includes('You can modify or cancel') ||
+                               text.includes('Subscriptions are renewed') ||
+                               text.includes('Learn more about subscriptions');
+      const isTooltipElement = classList.includes('sls-tooltip') ||
+                               classList.includes('sls-flyout') ||
+                               id.includes('sls-tooltip') ||
+                               id.includes('sls-flyout') ||
+                               element.getAttribute('role') === 'tooltip';
+      
+      // Only hide if it's a tooltip AND not part of a link
+      if ((isTooltipContent || isTooltipElement) &&
           element.tagName !== 'A' && 
           element.tagName !== 'BUTTON' &&
-          element.tagName !== 'SPAN' &&
           !element.closest('a') &&
-          !element.closest('button')) {
+          !element.closest('button') &&
+          // Don't hide if it's just the link text (check if it's a small text element)
+          !(element.tagName === 'SPAN' && !isTooltipContent && element.closest('[class*="subscription-details"]'))) {
         element.style.display = 'none';
         element.style.visibility = 'hidden';
         element.style.opacity = '0';
