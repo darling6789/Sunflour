@@ -280,16 +280,18 @@ a.menu-drawer__menu-item {
 }
 
 /* Ticket 14: Fix Butter Roll misalignment - ensure proper alignment in bread section */
-.bread-menu + .row.row-max .col-6 span strong {
-    display: inline-block;
+.bread-menu + .row.row-max .col-6 span {
+    display: block;
     width: 100%;
 }
+.bread-menu + .row.row-max .col-6 span strong {
+    display: inline;
+}
 
-/* Ticket 19: Hide asterisk on Catering page */
-[class*="catering"] label span[aria-hidden="true"]:contains("*"),
-[class*="catering"] label:contains("I would like") + span,
-[class*="catering"] .field__label span:contains("*"),
-.pagefly-container label span:contains("*") {
+/* Ticket 19: Hide asterisk on Catering page - target common asterisk patterns */
+[class*="pagefly"] label span[aria-hidden="true"],
+[class*="catering"] label span[aria-hidden="true"],
+.pagefly-container label span[aria-hidden="true"]:last-child {
     display: none !important;
 }
 
@@ -303,9 +305,11 @@ a.menu-drawer__menu-item {
 [data-coupon],
 [class*="pagefly"] [class*="coupon"],
 [class*="pagefly"] [class*="discount"],
-[class*="pagefly"] input[type="text"][placeholder*="coupon"],
-[class*="pagefly"] input[type="text"][placeholder*="discount"],
-[class*="pagefly"] input[type="text"][placeholder*="code"] {
+[class*="pagefly"] input[type="text"][placeholder*="coupon" i],
+[class*="pagefly"] input[type="text"][placeholder*="discount" i],
+[class*="pagefly"] input[type="text"][placeholder*="code" i],
+[class*="pagefly"] [id*="coupon"],
+[class*="pagefly"] [id*="discount"] {
     display: none !important;
 }
 
@@ -320,16 +324,18 @@ a.button,
 .sc__btn,
 .springbot-button,
 input[type="submit"],
-input[type="button"] {
+input[type="button"],
+[class*="pagefly"] button,
+[class*="pagefly"] .button {
     font-family: Josefin Slab, serif !important;
     font-weight: 400 !important;
 }
 
 /* Ticket 22: Fix section headers alignment on Catering a la carte page */
-.catering-order-form h3,
-.catering-order-form .section-header,
 [class*="catering"] h3,
-[class*="catering"] .section-header {
+[class*="catering"] .section-header,
+[class*="pagefly"] h3,
+.pagefly-container h3 {
     text-align: left !important;
     margin-left: 0 !important;
     padding-left: 0 !important;
