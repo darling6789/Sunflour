@@ -285,6 +285,14 @@ a.menu-drawer__menu-item {
     width: 100%;
 }
 
+/* Ticket 19: Hide asterisk on Catering page */
+[class*="catering"] label span[aria-hidden="true"]:contains("*"),
+[class*="catering"] label:contains("I would like") + span,
+[class*="catering"] .field__label span:contains("*"),
+.pagefly-container label span:contains("*") {
+    display: none !important;
+}
+
 /* Ticket 20: Hide coupon entry box on Custom Catering page */
 #discount-code,
 .discount-code,
@@ -292,7 +300,12 @@ a.menu-drawer__menu-item {
 [class*="coupon"],
 [class*="discount"],
 [data-discount],
-[data-coupon] {
+[data-coupon],
+[class*="pagefly"] [class*="coupon"],
+[class*="pagefly"] [class*="discount"],
+[class*="pagefly"] input[type="text"][placeholder*="coupon"],
+[class*="pagefly"] input[type="text"][placeholder*="discount"],
+[class*="pagefly"] input[type="text"][placeholder*="code"] {
     display: none !important;
 }
 
