@@ -1,0 +1,332 @@
+<div class="s-location-slider-wrap">
+  <div class="s-location-slider">
+    <div class="s-location-slider-block s-location-slider-3">
+      <div class="s-location-slider-3-details-wrap">
+        <div class="s-location-slider-3-details">
+          <h3>{{ section.settings.subheading }}</h3>
+          <h2>{{ section.settings.heading }}</h2>
+          {{ section.settings.description }}
+        </div>
+
+        <a class="s-location-slider-3-btn s-btn t-only" href="{{ section.settings.btn_link }}"> {{ section.settings.btn_text }} </a>
+      </div>
+    </div>    
+    
+    <div class="s-location-slider-left">
+      <div class="sl-slider">
+        {% for block in section.blocks %}
+          <div class="sl-slider-block">
+            <a class="" href="{{ block.settings.image_link }}">
+              <img src="{{ block.settings.image | img_url: 'master' }}">
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="sl-slider-prev">
+        <svg aria-labelledby="chevron-3" class="Icon-module_base__iPRbu Icon-module_dark__3KB8t" data-testid="data-testid-Icon" focusable="false" height="16" role="img" tabindex="-1" viewBox="0 0 50 50" width="16" style="height: 16px; width: 16px;"><title id="chevron-3">chevron</title><g><polygon points="25,31.3 4.2,10.5 0.1,14.6 25,39.5 50,14.6 45.9,10.5"></polygon></g></svg>
+      </div>
+      <div class="sl-slider-next">
+        <svg aria-labelledby="chevron-3" class="Icon-module_base__iPRbu Icon-module_dark__3KB8t" data-testid="data-testid-Icon" focusable="false" height="16" role="img" tabindex="-1" viewBox="0 0 50 50" width="16" style="height: 16px; width: 16px;"><title id="chevron-3">chevron</title><g><polygon points="25,31.3 4.2,10.5 0.1,14.6 25,39.5 50,14.6 45.9,10.5"></polygon></g></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="s-location-slider-3-btn s-btn d-only" href="{{ section.settings.btn_link }}"> {{ section.settings.btn_text }} </a>
+
+<script>
+$('#shopify-section-{{section.id}} .sl-slider').slick({
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  infinite: false,
+  speed: 500,
+  prevArrow: '.sl-slider-prev',
+  nextArrow: '.sl-slider-next',
+  dots: false,
+  responsive: [
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1.5,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1.2,
+        slidesToScroll: 1
+      }
+    }
+  ]
+});
+</script>
+
+<style>
+#shopify-section-{{section.id}}.s-location-slider-section {
+	width: 100%;
+    padding: 30px;
+}
+#shopify-section-{{section.id}} .s-location-slider-wrap {
+	width: 100%;
+	min-height: 550px;
+	height: calc(100vh - 309px);
+}
+.sl-slider {
+    width: 100%;
+    height: 100%;
+}
+.sl-slider div {
+  height: 100%;
+}
+.sl-slider-block {
+    height: 100%;
+    padding-right: 15px;
+}
+.sl-slider-block a {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+    border-radius: 1rem;
+}
+.sl-slider-block img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.sl-slider-prev {
+    position: absolute;
+    width: auto;
+    background: #b42a18cc;
+    left: 0;
+    top: 50%;
+    z-index: 8;
+    height: 80px !important;
+    width: 80px !important;
+    transform: translateY(-50%);
+    transition: all .5s cubic-bezier(.215,.61,.355,1);
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.sl-slider-prev svg {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: rotate(90deg) translate(-40%, 40%);
+    fill: #fff;
+}
+.sl-slider-next {
+    position: absolute;
+    width: auto;
+    background: #b42a18cc;
+    right: 15px;
+    top: 50%;
+    z-index: 8;
+    height: 80px !important;
+    width: 80px !important;
+    transform: translateY(-50%);
+    transition: all .5s cubic-bezier(.215,.61,.355,1);
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.sl-slider-next svg {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: rotate(-90deg) translate(40%, -40%);
+    fill: #fff;
+}  
+#shopify-section-{{section.id}} .s-location-slider {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: stretch;
+}
+#shopify-section-{{section.id}} .s-location-slider-left {
+	width: 66%;
+	height: 100%;
+	display: flex;
+	align-items: stretch;
+	gap: 15px;
+    position: relative;
+}
+#shopify-section-{{section.id}} .s-location-slider-3 {
+	width: 33%;
+	height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#shopify-section-{{section.id}} .s-location-slider-3-details-wrap {
+    display: block;
+    margin: auto;
+}
+#shopify-section-{{section.id}} .s-location-slider-3-details {
+	padding: 30px 40px;
+    padding-top: 0;
+	text-align: center;
+}
+#shopify-section-{{section.id}} .s-location-slider-3-btn {
+	margin: auto;
+}
+#shopify-section-{{section.id}} .s-location-slider-3-btn.d-only {
+    display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  #shopify-section-{{section.id}} .s-location-slider-section {
+	width: 100%;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-3-btn.d-only {
+    display: flex;
+    margin-top: 20px;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-3-btn.t-only {
+    display: none;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-wrap {
+  	width: 100%;
+  	padding: 20px;
+  	min-height: unset;
+  	height: unset;
+  }
+  #shopify-section-{{section.id}} .s-location-slider {
+  	height: 100%;
+  	width: 100%;
+  	display: flex;
+  	align-items: stretch;
+    flex-wrap: wrap;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-left {
+  	width: 100%;
+  	display: flex;
+  	align-items: stretch;
+  	gap: 10px;
+    min-height: 360px;
+  	height: 360px;
+    margin-top: 20px;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-3 {
+  	width: 100%;
+  	height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-3-details-wrap {
+      display: block;
+      margin: auto;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-3-details {
+  	/* height: 100%; */
+  	padding: 20px;
+    padding-top: 0;
+  	text-align: center;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-3-btn {
+  	margin: auto;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #shopify-section-{{section.id}} .s-location-slider-left {
+  	gap: 10px;
+    min-height: 300px;
+  	height: 300px;
+  }
+  #shopify-section-{{section.id}} .s-location-slider-3-details {
+  	padding: 0px;
+  }
+  #shopify-section-template--24804661395748__s_location_slider_FB3VNT.s-location-slider-section {
+    padding: 20px;
+  }
+  #shopify-section-template--24804661395748__s_location_slider_FB3VNT .s-location-slider-wrap {
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .sl-slider-next {
+    right: 0px;
+  }
+  .sl-slider-prev, .sl-slider-next {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}  
+</style>
+
+{% schema %}
+  {
+    "name": "S location slider",
+    "class": "s-location-slider-section p-width",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button text"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button link"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "location",
+        "name": "Location",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Location image"
+          },
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Image link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "S location slider"
+      }
+    ]
+  }
+{% endschema %}

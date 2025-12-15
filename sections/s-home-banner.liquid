@@ -1,0 +1,520 @@
+<div class="s-home-banner-wrap">
+  <div class="s-home-banner">
+    {% if section.settings.des_left %}
+    <div class="s-home-banner-block s-home-banner-3">
+      <div class="s-home-banner-3-details-wrap">
+        <div class="s-home-banner-3-details">
+          <h3>{{ section.settings.subheading }}</h3>
+          <h2>{{ section.settings.heading }}</h2>
+          {{ section.settings.description }}
+        </div>
+
+        <a class="s-home-banner-3-btn s-btn" href="{{ section.settings.btn_link }}"> {{ section.settings.btn_text }} </a>
+      </div>
+    </div>    
+    {% endif %}  
+    
+    <div class="s-home-banner-left">
+      <div class="s-home-banner-slider">
+        {% assign slides = section.blocks | size | divided_by: 4.0 | ceil %}
+        {% for i in (1..slides) %}
+          {% assign start_index = forloop.index0 | times: 4 %}
+          {% assign end_index = start_index | plus: 3 %}
+          
+          <div class="s-home-banner-slide">
+            {% for j in (start_index..end_index) %}
+              {% assign block = section.blocks[j] %}
+              {% if block %}
+                <a href="{{ block.settings.img_link }}" class="s-home-banner-img-link">
+                  <img src="{{ block.settings.image | img_url: 'large' }}">
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+      
+      <!-- Slider arrows -->
+      <div class="s-slider-arrows">
+        <button class="s-slider-prev" aria-label="Previous slide">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="s-slider-next" aria-label="Next slide">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Slider dots -->
+      <div class="s-slider-dots"></div>
+    </div>    
+
+    {% unless section.settings.des_left %}
+    <div class="s-home-banner-block s-home-banner-3">
+      <div class="s-home-banner-3-details-wrap">
+        <div class="s-home-banner-3-details">
+          <h3>{{ section.settings.subheading }}</h3>
+          <h2>{{ section.settings.heading }}</h2>
+          {{ section.settings.description }}
+        </div>
+
+        <a class="s-home-banner-3-btn s-btn" href="{{ section.settings.btn_link_1 }}"> {{ section.settings.btn_text_1 }} </a>
+
+        {% if section.settings.btn_link_2 %}
+        <a class="s-home-banner-3-btn s-home-banner-3-btn-2 s-btn" href="{{ section.settings.btn_link_2 }}"> {{ section.settings.btn_text_2 }} </a>
+        {% endif %}
+      </div>
+    </div>
+    {% endunless %}
+  </div>
+</div>
+
+<style>
+#shopify-section-{{section.id}}.s-home-banner-section {
+	width: 100%;
+    padding: 30px;
+}
+#shopify-section-{{section.id}} .s-home-banner-wrap {
+	width: 100%;
+	min-height: 550px;
+	height: calc(100vh - 309px);
+}
+#shopify-section-{{section.id}} .s-home-banner {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: stretch;
+}
+#shopify-section-{{section.id}} .s-home-banner-left {
+	width: 66%;
+	height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Slider Styles */
+#shopify-section-{{section.id}} .s-home-banner-slider {
+    height: 100%;
+    width: 100%;
+}
+#shopify-section-{{section.id}} .s-home-banner-slide {
+	height: 100%;
+	width: 100%;
+	display: flex !important;
+    flex-wrap: wrap;
+	align-items: baseline;
+	gap: 16px;
+    position: relative;
+}
+#shopify-section-{{section.id}} .s-home-banner-slide .s-home-banner-img-link {
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+    width: calc(50% - 8px);
+    height: calc(50% - 8px);
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+}
+#shopify-section-{{section.id}} .s-home-banner-slide .s-home-banner-img-link img {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Slider Navigation */
+#shopify-section-{{section.id}} .s-slider-arrows {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+    z-index: 7;
+}
+#shopify-section-{{section.id}} .slick-list {
+    height: 100%;
+}
+#shopify-section-{{section.id}} .slick-track {
+    height: 100%;
+}
+#shopify-section-{{section.id}} .s-slider-arrows button {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+#shopify-section-{{section.id}} .s-slider-arrows button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+#shopify-section-{{section.id}} .s-slider-arrows button svg {
+    color: #333;
+}
+
+/* Slider Dots */
+#shopify-section-{{section.id}} .s-slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+#shopify-section-{{section.id}} .s-slider-dots .slick-dots {
+    position: static;
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+#shopify-section-{{section.id}} .s-slider-dots .slick-dots li {
+    width: 12px;
+    height: 12px;
+}
+#shopify-section-{{section.id}} .s-slider-dots .slick-dots li button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0;
+}
+#shopify-section-{{section.id}} .s-slider-dots .slick-dots li.slick-active button {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.2);
+}
+
+#shopify-section-{{section.id}} .s-home-banner-badge {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+}
+#shopify-section-{{section.id}} .s-home-banner-badge:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://cdn.shopify.com/s/files/1/0079/6121/5087/files/97560_PNG_by_ClipartOfcom.png?v=1753321906);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#shopify-section-{{section.id}} .s-home-banner-badge .s-home-banner-badge-text {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    transform: rotate(-3deg);
+    line-height: 1;
+    font-size: 16px;
+    font-style: italic;
+    color: #fff;
+}
+#shopify-section-{{section.id}} .s-home-banner-1 {
+	height: 100%;
+	width: calc(50% - 7.5px);
+}
+#shopify-section-{{section.id}} .s-home-banner-2 {
+	height: 100%;
+	width: calc(50% - 7.5px);
+}  
+#shopify-section-{{section.id}} .s-home-banner-block>a.s-home-banner-img-link {
+	display: block;
+	height: 100%;
+	text-decoration: none;
+	overflow: hidden;
+	position: relative;
+    border-radius: 1rem;
+}
+#shopify-section-{{section.id}} .s-home-banner-block>a.s-home-banner-img-link>img {
+	position: absolute;
+	top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+#shopify-section-{{section.id}} .s-home-banner-3 {
+	width: 33%;
+	height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#shopify-section-{{section.id}} .s-home-banner-3-details-wrap {
+    display: block;
+    margin: auto;
+}
+#shopify-section-{{section.id}} .s-home-banner-3-details {
+	padding: 30px 40px;
+    padding-top: 0;
+	text-align: center;
+}
+#shopify-section-{{section.id}} .s-home-banner-3-btn {
+	margin: auto;
+}
+#shopify-section-template--24804661395748__s_home_banner_bcV84H .s-home-banner-3-btn.s-home-banner-3-btn-2 {
+    margin-top: 20px;
+} 
+  
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+  
+@media only screen and (max-width: 1200px) {
+  #shopify-section-{{section.id}} .s-home-banner-section {
+	width: 100%;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-wrap {
+  	width: 100%;
+  	padding: 20px;
+  	min-height: unset;
+  	height: unset;
+  }
+  #shopify-section-{{section.id}} .s-home-banner {
+  	height: 100%;
+  	width: 100%;
+  	display: flex;
+  	align-items: stretch;
+    flex-wrap: wrap;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-left {
+  	width: 100%;
+  	display: block;
+    min-height: 360px;
+  	height: 360px;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-slide {
+    display: flex !important;
+    align-items: stretch;
+    gap: 10px;
+    height: 100%;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-slide .s-home-banner-img-link {
+    width: calc(50% - 5px);
+    height: calc(50% - 5px);
+  }
+  #shopify-section-{{section.id}} .s-home-banner-1 {
+  	height: 100%;
+  	width: calc(50% - 5px);
+  }
+  #shopify-section-{{section.id}} .s-home-banner-2 {
+  	height: 100%;
+  	width: calc(50% - 5px);
+  }  
+  #shopify-section-{{section.id}} .s-home-banner-block>a.s-home-banner-img-link {
+  	display: block;
+  	height: 100%;
+  	text-decoration: none;
+  	overflow: hidden;
+  	position: relative;
+    border-radius: 1rem;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-block>a.s-home-banner-img-link>img {
+  	position: absolute;
+  	top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-3 {
+  	width: 100%;
+  	height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    {% if section.settings.des_left %}
+    order: 1;
+    {% endif %}  
+  }
+  #shopify-section-{{section.id}} .s-home-banner-3-details-wrap {
+      display: block;
+      margin: auto;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-3-details {
+  	padding: 20px;
+    padding-top: 0;
+  	text-align: center;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-3-btn {
+  	margin: auto;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #shopify-section-template--24804661395748__s_home_banner_bcV84H.s-home-banner-section {
+    padding: 20px;
+  }
+  #shopify-section-template--24804661395748__s_home_banner_bcV84H .s-home-banner-wrap {
+    padding: 0;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-left {
+  	gap: 10px;
+    min-height: 300px;
+  	height: 300px;
+  }
+  #shopify-section-{{section.id}} .s-home-banner-3-details {
+  	padding: 0px;
+  }
+  #shopify-section-template--24804661395748__s_home_banner_bcV84H .s-home-banner-3-btn.s-home-banner-3-btn-2 {
+    margin-top: 10px;
+  }
+  #shopify-section-{{section.id}} .s-slider-arrows {
+    padding: 0 10px;
+  }
+  #shopify-section-{{section.id}} .s-slider-arrows button {
+    width: 35px;
+    height: 35px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sectionId = '{{section.id}}';
+  const slider = document.querySelector('#shopify-section-' + sectionId + ' .s-home-banner-slider');
+  
+  if (slider && typeof $ !== 'undefined' && $.fn.slick) {
+    $(slider).slick({
+      dots: true,
+      arrows: true,
+      infinite: true,
+      speed: 500,
+      fade: false,
+      cssEase: 'ease-in-out',
+      autoplay: true,
+      autoplaySpeed: 5000,
+      pauseOnHover: false,
+      adaptiveHeight: false,
+      prevArrow: '#shopify-section-' + sectionId + ' .s-slider-prev',
+      nextArrow: '#shopify-section-' + sectionId + ' .s-slider-next',
+      appendDots: '#shopify-section-' + sectionId + ' .s-slider-dots',
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            autoplaySpeed: 4000
+          }
+        }
+      ]
+    });
+  }
+});
+</script>
+
+{% schema %}
+  {
+    "name": "S Home banner",
+    "class": "s-home-banner-section p-width",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "des_left",
+        "label": "Description left"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "text",
+        "id": "btn_text_1",
+        "label": "Button text"
+      },
+      {
+        "type": "url",
+        "id": "btn_link_1",
+        "label": "Button link"
+      },
+      {
+        "type": "text",
+        "id": "btn_text_2",
+        "label": "Button text 2"
+      },
+      {
+        "type": "url",
+        "id": "btn_link_2",
+        "label": "Button link 2"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "img_link",
+            "label": "Image link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "S Home banner"
+      }
+    ]
+  }
+{% endschema %}
