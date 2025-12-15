@@ -60,6 +60,11 @@ class CartItems extends HTMLElement {
     const index = event.target.dataset.index;
     let message = '';
 
+    // Safety check: only validate quantity inputs with step attribute
+    if (!event.target.hasAttribute('step')) {
+      return;
+    }
+
     if (inputValue < event.target.dataset.min) {
       message = window.quickOrderListStrings.min_error.replace('[min]', event.target.dataset.min);
     } else if (inputValue > parseInt(event.target.max)) {
@@ -84,7 +89,10 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.validateQuantity(event);
+    // Only validate quantity inputs, not text fields like order notes or gift messages
+    if (event.target.hasAttribute('step') || event.target.dataset.index) {
+      this.validateQuantity(event);
+    }
   }
 
   onCartUpdate() {
