@@ -262,6 +262,11 @@ a.menu-drawer__menu-item {
     display: none !important;
 }
 
+/* Reduce gap between menu items in twoCol list */
+.twoCol li {
+    padding: 2px 0 !important;
+}
+
 .product .sealsubs-target-element .sls-option[type="radio"]:checked + .sls-custom-radio::after {
     box-shadow: inset 1em 1em #0275ff;
     width: 10px;
