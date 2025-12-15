@@ -1,0 +1,261 @@
+{{ content_for_header }}
+
+{% comment %}
+  Checkout customization for Sunflour
+  This file customizes the checkout order summary to:
+  1. Hide/improve generic box icons
+  2. Remove ellipsis ("...")
+  3. Clean up "Product Title:" backend language
+  4. Consolidate tax display
+{% endcomment %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }}</title>
+</head>
+<body>
+
+<style>
+  /* Hide generic box icons and improve product display */
+  .order-summary__section .product__image,
+  .order-summary__section .product-thumbnail,
+  .order-summary__section img[src*="placeholder"],
+  .order-summary__section .product__image-wrapper img:not([src*="cdn.shopify.com"]),
+  .order-summary__section .product__image img[src=""],
+  .order-summary__section svg[class*="icon"] {
+    display: none !important;
+  }
+
+  /* Hide ellipsis and improve text truncation */
+  .order-summary__section .product__description::after,
+  .order-summary__section .product__title::after {
+    display: none !important;
+  }
+
+  /* Clean up product title display */
+  .order-summary__section .product__title,
+  .order-summary__section .product__description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  /* Tax lines will be hidden via JavaScript for detailed breakdowns */
+  .order-summary__section .total-line--taxes {
+    font-size: 14px;
+  }
+
+  /* Improve product list appearance */
+  .order-summary__section .product-table {
+    border-collapse: collapse;
+  }
+
+  .order-summary__section .product-table__cell {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  /* Hide quantity badges on generic icons */
+  .order-summary__section .product__quantity-badge,
+  .order-summary__section .badge {
+    display: none !important;
+  }
+
+  /* Improve spacing and typography */
+  .order-summary__section {
+    font-family: inherit;
+  }
+
+  .order-summary__section .product__title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Address details will be hidden via JavaScript if they appear in product descriptions */
+</style>
+
+<script>
+  (function() {
+    'use strict';
+    
+    // Wait for checkout to load
+    function initCheckoutCustomization() {
+      // Clean up product titles - remove "Product Title:" prefix and backend language
+      const productTitles = document.querySelectorAll(
+        '.order-summary__section .product__title, ' +
+        '.order-summary__section .product__description, ' +
+        '.order-summary__section [class*="product__title"], ' +
+        '.order-summary__section [class*="product__description"], ' +
+        '.order-summary__section .product-table__cell, ' +
+        '.order-summary__section td'
+      );
+      
+      productTitles.forEach(function(element) {
+        if (element) {
+          let text = element.textContent || element.innerText;
+          const originalText = text;
+          
+          // Remove "Product Title:" prefix
+          text = text.replace(/^Product\s+Title:\s*/i, '');
+          text = text.replace(/^Title:\s*/i, '');
+          text = text.replace(/Product\s+Title:\s*/gi, '');
+          
+          // Remove ellipsis
+          text = text.replace(/\.\.\./g, '');
+          text = text.replace(/…/g, '');
+          text = text.replace(/\s*\.\.\.\s*/g, '');
+          
+          // Remove address information if it leaked into product description
+          text = text.replace(/\d+\s+[A-Z][a-z]+\s+\d+[a-z]*\s+Street[^,]*/gi, '');
+          text = text.replace(/[A-Z][a-z]+,\s*[A-Z][a-z]+\s+[A-Z][a-z]+/g, '');
+          text = text.replace(/\d{5}/g, '');
+          
+          // Clean up extra whitespace
+          text = text.replace(/\s+/g, ' ').trim();
+          
+          // Only update if text changed and it's not empty
+          if (text !== originalText && text.length > 0) {
+            element.textContent = text;
+          }
+        }
+      });
+
+      // Consolidate tax display - hide detailed breakdowns and show only "Tax"
+      const allTotalLines = document.querySelectorAll('.order-summary__section .total-line, .order-summary__section [class*="total-line"]');
+      let foundSimpleTaxLine = false;
+      const taxLines = [];
+      
+      // First pass: collect all tax lines
+      allTotalLines.forEach(function(line) {
+        const nameElement = line.querySelector('.total-line__name, [class*="total-line__name"]');
+        if (nameElement) {
+          const taxText = nameElement.textContent || nameElement.innerText || '';
+          if (taxText.toLowerCase().includes('tax')) {
+            taxLines.push({ line: line, nameElement: nameElement, text: taxText });
+          }
+        }
+      });
+      
+      // Second pass: hide detailed tax lines, keep one simple "Tax" line
+      taxLines.forEach(function(taxLine, index) {
+        const taxText = taxLine.text;
+        
+        // Hide detailed tax breakdowns
+        if (taxText.includes('North Carolina') || 
+            taxText.includes('Mecklenburg') || 
+            taxText.includes('State Tax') ||
+            taxText.includes('County Tax') ||
+            taxText.includes('Transportation Tax') ||
+            taxText.includes('Public Transportation') ||
+            taxText.includes('Co Public')) {
+          taxLine.line.style.display = 'none';
+        } else if (!foundSimpleTaxLine) {
+          // Keep the first simple tax line and ensure it just says "Tax"
+          foundSimpleTaxLine = true;
+          if (taxText.trim() !== 'Tax') {
+            taxLine.nameElement.textContent = 'Tax';
+          }
+        } else {
+          // Hide additional tax lines if we already have one
+          taxLine.line.style.display = 'none';
+        }
+      });
+
+      // Hide generic icons and improve product images
+      const productImages = document.querySelectorAll(
+        '.order-summary__section .product__image img, ' +
+        '.order-summary__section .product-thumbnail img, ' +
+        '.order-summary__section img[class*="product"], ' +
+        '.order-summary__section svg[class*="icon"], ' +
+        '.order-summary__section svg[class*="box"]'
+      );
+      
+      productImages.forEach(function(img) {
+        if (img) {
+          const src = img.src || img.getAttribute('src') || '';
+          const parent = img.closest('.product__image, .product-thumbnail, .product__image-wrapper, [class*="product__image"]');
+          
+          // Hide placeholder images, generic box icons, or empty images
+          if (!src || 
+              src.includes('placeholder') || 
+              (src.includes('data:image') && src.length < 100) ||
+              (!src.includes('cdn.shopify.com') && !src.includes('shopifycdn.com'))) {
+            if (parent) {
+              parent.style.display = 'none';
+            } else {
+              img.style.display = 'none';
+            }
+          }
+        }
+      });
+      
+      // Also hide generic SVG icons
+      const svgIcons = document.querySelectorAll('.order-summary__section svg[class*="icon"], .order-summary__section svg[class*="box"]');
+      svgIcons.forEach(function(svg) {
+        const parent = svg.closest('[class*="product__image"], [class*="product-thumbnail"]');
+        if (parent) {
+          parent.style.display = 'none';
+        }
+      });
+
+      // Remove ellipsis from product descriptions
+      const descriptions = document.querySelectorAll('.order-summary__section .product__description');
+      descriptions.forEach(function(desc) {
+        if (desc) {
+          let text = desc.textContent || desc.innerText;
+          text = text.replace(/\.\.\./g, '');
+          text = text.replace(/…/g, '');
+          if (text !== (desc.textContent || desc.innerText)) {
+            desc.textContent = text;
+          }
+        }
+      });
+
+      // Hide address information if it's showing in product descriptions
+      descriptions.forEach(function(desc) {
+        if (desc) {
+          const text = desc.textContent || desc.innerText;
+          if (text.includes('2001 East') || 
+              text.includes('Charlotte') || 
+              text.includes('North Carolina') ||
+              text.includes('28204')) {
+            desc.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    // Run on page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCheckoutCustomization);
+    } else {
+      initCheckoutCustomization();
+    }
+
+    // Also run after a short delay to catch dynamically loaded content
+    setTimeout(initCheckoutCustomization, 1000);
+    setTimeout(initCheckoutCustomization, 2000);
+
+    // Use MutationObserver to catch dynamically added content
+    if (typeof MutationObserver !== 'undefined') {
+      const observer = new MutationObserver(function(mutations) {
+        initCheckoutCustomization();
+      });
+      
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }
+  })();
+</script>
+
+  {{ content_for_layout }}
+</body>
+</html>
+
