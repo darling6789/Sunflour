@@ -67,18 +67,42 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
   }
   
   function suppressSubscriptionTooltip() {
-    // Hide any subscription details tooltips/flyouts (but not the link itself)
-    hideAllTooltips();
-    
-    // Find subscription details links and remove hover tooltip behavior
+    // First, ensure subscription details links are visible
     const subscriptionLinks = document.querySelectorAll(
       'a[href*="subscription"], ' +
       'a[class*="subscription-details"], ' +
       'a[class*="sls-details"], ' +
       'a[class*="sls-link"], ' +
-      'button[class*="subscription-details"], ' +
-      'button[class*="sls-details"]'
+      '[class*="subscription-details"] a, ' +
+      '[class*="sls-details"] a'
     );
+    
+    subscriptionLinks.forEach(function(link) {
+      // Ensure link and its text content are visible
+      link.style.display = '';
+      link.style.visibility = 'visible';
+      link.style.opacity = '1';
+      link.style.pointerEvents = 'auto';
+      
+      // Make sure text content inside is visible
+      const textNodes = link.querySelectorAll('span, text, *');
+      textNodes.forEach(function(node) {
+        const nodeText = node.textContent || '';
+        // Only show if it's not tooltip content
+        if (!nodeText.includes('How subscriptions work') && 
+            !nodeText.includes('You can modify or cancel') &&
+            !nodeText.includes('Subscriptions are renewed')) {
+          node.style.display = '';
+          node.style.visibility = 'visible';
+          node.style.opacity = '1';
+        }
+      });
+    });
+    
+    // Then hide any subscription details tooltips/flyouts (but not the link itself)
+    hideAllTooltips();
+    
+    // Find subscription details links and remove hover tooltip behavior
     
     subscriptionLinks.forEach(function(link) {
       // Aggressively prevent hover from showing tooltips - stop propagation and prevent default
