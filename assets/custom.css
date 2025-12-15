@@ -261,16 +261,12 @@ a.menu-drawer__menu-item {
 .product div[class*="sls-flyout"],
 .product div[id*="sls-tooltip"],
 .product div[id*="sls-flyout"],
-.product [role="tooltip"][class*="subscription"]:not(a):not(button),
-.product [role="tooltip"][class*="sls"]:not(a):not(button),
+.product [role="tooltip"][class*="subscription"]:not(a):not(button):not(span),
+.product [role="tooltip"][class*="sls"]:not(a):not(button):not(span),
 .product [class*="sls-tooltip"]:not(a):not(button):not(span):not([class*="link"]):not([class*="text"]),
 .product [class*="sls-flyout"]:not(a):not(button):not(span):not([class*="link"]):not([class*="text"]),
 .product [id*="sls-tooltip"]:not(a):not(button):not(span),
-.product [id*="sls-flyout"]:not(a):not(button):not(span),
-/* Hide popup containers that contain "How subscriptions work" */
-.product div:has-text("How subscriptions work"):not(a):not(button),
-.product [class*="popup"]:not(a):not(button):not([class*="link"]),
-.product [class*="modal"]:not(a):not(button):not([class*="link"]) {
+.product [id*="sls-flyout"]:not(a):not(button):not(span) {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
