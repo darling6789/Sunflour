@@ -314,6 +314,9 @@ ul.twoCol li.brkFastSandwiches ul li {
     font-size: 15px;
 }
 
+.__unstyled paragraph.alignment--center.paperform__page.paperform__page--1 {
+	display: none !important;
+}
 
 h1, .h1, .h1, h2, .h2, .h2, h3, .h3, .h3, h4, .h4, .h4, h5, .h5, .h5, h6, .h6, .h6 {
     /* font-weight: 600; */
