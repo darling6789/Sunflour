@@ -285,13 +285,13 @@
         "disabled": false,
         "settings": {}
       },
-      "1909789295049107559": {
-        "type": "shopify://apps/mbc-bundles/blocks/mbc-bundles-core-snippet/57c94b78-e464-47f4-9403-7ffcfcddb33f",
+      "12439146293631897289": {
+        "type": "shopify://apps/blockify-fraud-filter/blocks/app_embed/2e3e0ba5-0e70-447a-9ec5-3bf76b5ef12e",
         "disabled": false,
         "settings": {}
       },
-      "11348531219507317188": {
-        "type": "shopify://apps/eb-easy-bundle-builder/blocks/app-embed/05b1325c-6303-4da5-8e2f-b13ab2a50e1a",
+      "4824701725375534060": {
+        "type": "shopify://apps/blockify-checkout/blocks/block-checkout/a02f68fe-3bdb-4615-b9c5-7d181a329397",
         "disabled": false,
         "settings": {}
       }

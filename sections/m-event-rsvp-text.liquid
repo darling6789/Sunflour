@@ -1,0 +1,240 @@
+<style>
+      .event-rsvp-wrapper {
+        background-color: white;
+        display: flex;
+        padding: 4rem 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        align-self: stretch;
+      }
+      .erw-heading-text {
+        display: flex;
+        padding-bottom: 2rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+      }
+      .erw-heading-text h2 {
+        color: #4d3942;
+        font-family: Legitima;
+        font-size: 2.8rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 90%;
+        margin: 0;
+      }
+      .erw-body-section {
+        display: flex;
+        width: 80rem;
+        max-width: 100rem;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 4rem;
+      }
+      .erw-body-section .event-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .event-details div {
+        display: flex;
+        gap:1rem;
+      }
+        .event-details p {
+            color: #000;
+              font-family: Montserrat;
+              font-size: 1.8rem;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 140%;
+            margin: 0;
+        }
+        .event-details p a {
+          color: #000;
+          text-decoration: none;
+          text-decoration: underline;
+        }
+        .event-details p a:hover {
+          
+        }
+        .event-details p:first-child {
+          color: #4D3942;
+          font-family: Montserrat;
+          font-size: 1.8rem;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 140%;
+          width: 8.7125rem;
+        }
+      .erw-body-section .event-description {
+        width: 45.1rem;
+        flex-shrink: 0;
+        color: #000;
+        font-family: Montserrat;
+        font-size: 1.8rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%;
+        margin: 0;
+      }
+      .location svg {
+        flex-shrink:0;
+      }
+      .location p {
+    display: flex;
+}
+      @media (max-width: 1024px) {
+        .erw-body-section {
+          width: 90%;
+          max-width: 90%;
+          gap: 3rem;
+        }
+
+        .erw-body-section .event-description {
+          width: auto;
+          flex: 1;
+        }
+      }
+
+      @media (max-width: 968px) {
+        .event-rsvp-wrapper {
+          padding: 3rem 2rem;
+        }
+
+        .erw-heading-text {
+          padding-bottom: 1.5rem;
+        }
+
+        .erw-heading-text h2 {
+          font-size: 2.2rem;
+          text-align: center;
+        }
+
+        .erw-body-section {
+          flex-direction: column;
+          width: 100%;
+          gap: 2rem;
+        }
+
+        .event-details p {
+          font-size: 1.4rem;
+        }
+
+        .event-details p:first-child {
+          font-size: 1.4rem;
+          width: 7rem;
+        }
+
+        .erw-body-section .event-description {
+          font-size: 1.4rem;
+          line-height: 140%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .event-rsvp-wrapper {
+          padding: 2rem 1.5rem;
+        }
+
+        .erw-heading-text {
+          gap: 0.5rem;
+          padding-bottom: 1rem;
+        }
+
+        .erw-heading-text h2 {
+          font-size: 1.8rem;
+        }
+
+        .erw-body-section {
+          gap: 1.5rem;
+        }
+
+        .event-details {
+          gap: 0.8rem;
+        }
+
+        .event-details div {
+          gap: 0.8rem;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .event-details p {
+          font-size: 1.2rem;
+        }
+
+        .event-details p:first-child {
+          font-size: 1.2rem;
+          font-weight: 700;
+          width: auto;
+        }
+
+        .erw-body-section .event-description {
+          font-size: 1.2rem;
+        }
+      }
+</style>
+<div class="event-rsvp-wrapper">
+  <div class="erw-heading-text">
+    <h2>{{ section.settings.heading_text }}</h2>
+  </div>
+  <div class="erw-body-section">
+    <div class="event-details">
+      <div class="date">
+        <p>Date:</p>
+        <p>{{ section.settings.date }}</p>
+      </div>
+      <div class="location">
+        <p>Location:</p>
+        <p><a href="{{ section.settings.location_link }}" target="_blank">{{ section.settings.location }}</a>{{ 'distance-1.svg' | inline_asset_content}}</p>
+        
+      </div>
+    </div>
+    <p class="event-description">{{ section.settings.event_description }}</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Event RSVP Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "The Biggest Holiday SWISS Timepieces Event"
+    },
+    {
+      "type": "textarea",
+      "id": "event_description",
+      "label": "Event Description",
+      "default": "Experience a three-day showcase of Swiss watchmaking excellence at M Robinson Fine Jewelers, November 21–23 in Bee Cave, TX. Explore a curated collection of 200+ new and pre-owned Swiss luxury timepieces, including iconic designs, limited editions, and highly sought-after sport models from prestigious Swiss manufacturers. Enjoy holiday hospitality, expert guidance, and immediate in-store availability.  RSVP below."
+    },
+    {
+      "type": "text",
+      "id": "date",
+      "label": "Event Date",
+      "default": "November 21-23, 2025"
+    },
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Event Location",
+      "default": "3464 Ranch Road Bee Cave, TX 78738"
+    },
+    {
+      "type": "url",
+      "id": "location_link",
+      "label": "Location Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Event RSVP Text"
+    }
+  ]
+}
+{% endschema %}

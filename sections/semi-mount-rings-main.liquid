@@ -1936,9 +1936,105 @@
   const productPrice = {{ product.selected_or_first_available_variant.price | divided_by: 100 }};
   const productComparePrice = {{ product.selected_or_first_available_variant.compare_at_price | default: 0 }};
   const productTitle = {{ product.title | json }};
-  const centerDiamondProductId = 8297684238521;
+  const productImageUrl = {{ product.featured_image | image_url: width: 300 | json }};
+  const semiMountRingProductId = 8298572611769;
+  
+  // Get semi-mount-ring variant ID via Liquid
+  let semiMountRingVariantId = null;
+  
+  {%- assign semi_mount_ring_product = all_products['semi-mount-ring'] -%}
+  {%- if semi_mount_ring_product != blank and semi_mount_ring_product.variants.size > 0 -%}
+    {%- assign semi_mount_ring_variant = semi_mount_ring_product.variants.first -%}
+    semiMountRingVariantId = {{ semi_mount_ring_variant.id | json }};
+    console.log('Semi-mount-ring variant ID loaded via Liquid:', semiMountRingVariantId);
+  {%- else -%}
+    console.warn('Semi-mount-ring product or variant not found via Liquid. Product handle: semi-mount-ring, Product ID: 8298572611769');
+    {%- if semi_mount_ring_product != blank -%}
+      console.warn('Product found but has no variants. Variant count:', {{ semi_mount_ring_product.variants.size | json }});
+    {%- else -%}
+      console.warn('Product not found in all_products. This may happen if the product is not published to any sales channels.');
+    {%- endif -%}
+  {%- endif -%}
   
   const API_BASE = '/apps/diamond-search/diamonds/search';
+  
+  // URL of the Lambda Function URL for creating semi-mount-ring variants
+  const CREATE_VARIANT_URL = 'https://p7jq6xipzx6w5qov6dokfwfk7y0rxxlu.lambda-url.eu-north-1.on.aws/';
+  
+  // Helper function to create a new semi-mount-ring variant via Lambda
+  // Returns: { success: boolean, variantId?: number, price?: string, error?: string }
+  async function createSemiMountVariant(totalPrice) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    
+    try {
+      const res = await fetch(CREATE_VARIANT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          totalPrice
+        }),
+        signal: controller.signal,
+      });
+      
+      clearTimeout(timeoutId);
+      
+      // Handle non-OK responses
+      if (!res.ok) {
+        let errorText = '';
+        try {
+          errorText = await res.text();
+          console.error('Lambda error response:', res.status, errorText);
+        } catch (e) {
+          errorText = `HTTP ${res.status} ${res.statusText}`;
+        }
+        
+        if (res.status === 502 || res.status === 503) {
+          throw new Error(`Lambda function error (${res.status}). Please check AWS Lambda logs. Response: ${errorText}`);
+        } else if (res.status === 500) {
+          throw new Error(`Lambda function internal error. Please check AWS Lambda logs. Response: ${errorText}`);
+        } else {
+          throw new Error(`Failed to create variant (${res.status}): ${errorText}`);
+        }
+      }
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        const text = await res.text();
+        console.error('Failed to parse Lambda response:', text);
+        throw new Error('Failed to create variant (invalid server response). Lambda may not be configured correctly.');
+      }
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to create semi-mount variant.');
+      }
+      
+      if (!data.variantId) {
+        throw new Error('Lambda did not return variantId');
+      }
+      
+      console.log('Variant created successfully:', data);
+      return {
+        success: true,
+        variantId: data.variantId,
+        price: data.price
+      };
+    } catch (error) {
+      clearTimeout(timeoutId);
+      
+      if (error.name === 'AbortError') {
+        throw new Error('Lambda request timed out. Please check AWS Lambda function and network connectivity.');
+      }
+      
+      console.error('Error in createSemiMountVariant:', error);
+      throw error;
+    }
+  }
+  
   const CUT_FULL = {
     'EX':'Excellent','EXCELLENT':'Excellent',
     'VG':'Very Good','VERY GOOD':'Very Good',
@@ -3547,9 +3643,26 @@
       return;
     }
     
+    // Use capture phase to ensure our handler runs FIRST before product-form handler
+    // This ensures we can prevent the product-form's submit handler from running
+    // The { capture: true } option makes our handler run in capture phase (before bubble phase)
     form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      // Check diamond state at the moment of submission
+      const hasDiamond = state.selectedDiamond;
+      
+      // If diamond is selected, prevent default IMMEDIATELY to stop all form submissions
+      if (hasDiamond) {
+        e.preventDefault();
+        e.stopPropagation(); // This stops the event from reaching bubble phase (product-form handler)
+        e.stopImmediatePropagation(); // This stops other handlers in capture phase
+        
+        console.log('Diamond selected - preventing default form submission and stopping product-form handler');
+      } else {
+        // If no diamond is selected, let the form submit normally (original Shopify flow)
+        // Don't prevent default - let product-form handler run in bubble phase
+        console.log('No diamond selected - allowing normal form submission');
+        return;
+      }
       
       const addToCartBtn = document.getElementById(`addToCartButton-${sectionId}`);
       if (addToCartBtn) {
@@ -3558,6 +3671,7 @@
         if (btnText) btnText.textContent = 'Adding...';
       }
       
+      // Add semi-mount-ring with diamond
       try {
         // Get form data for ring
         const formData = new FormData(form);
@@ -3568,19 +3682,89 @@
           throw new Error('Ring variant ID not found');
         }
         
-        // Add ring to cart first
+        // Calculate total price: ring price + diamond price (if selected)
+        let totalPrice = productPrice;
+        let diamondRetailPrice = 0;
+        let diamondDetails = null;
+        
+        if (state.selectedDiamond) {
+          diamondRetailPrice = calculateDiamondRetailPrice(state.selectedDiamond);
+          totalPrice += diamondRetailPrice;
+          
+          // Prepare diamond details
+          const shapeMap = {
+            'ROUND': 'Round', 'PRINCESS': 'Princess', 'CUSHION': 'Cushion',
+            'PEAR': 'Pear', 'MARQUISE': 'Marquise', 'OVAL': 'Oval',
+            'HEART': 'Heart', 'RADIANT': 'Radiant', 'ASSCHER': 'Asscher', 'EMERALD': 'Emerald'
+          };
+          const shapeTxt = shapeMap[state.selectedDiamond.shape] || state.selectedDiamond.shape || '—';
+          const cutTxt = state.selectedDiamond.cut || '—';
+          const sourceType = state.type === 'lab' ? 'Lab Grown' : (state.type === 'natural' ? 'Natural' : '—');
+          const carat = state.selectedDiamond.carat?.toFixed?.(2) ?? state.selectedDiamond.carat;
+          const diamondDisplay = `${carat} ct ${shapeTxt}, ${state.selectedDiamond.color} ${state.selectedDiamond.clarity}${cutTxt !== '—' ? ' ' + cutTxt : ''}, ${sourceType}`;
+          
+          diamondDetails = {
+            display: diamondDisplay,
+            carat: carat,
+            shape: shapeTxt,
+            color: state.selectedDiamond.color || '',
+            clarity: state.selectedDiamond.clarity || '',
+            cut: cutTxt,
+            source: sourceType,
+            stockNumber: state.selectedDiamond.stockNumber || '',
+            price: diamondRetailPrice.toFixed(2)
+          };
+        }
+        
+        // Create a new variant for this checkout (prevents concurrency issues)
+        const variantResult = await createSemiMountVariant(totalPrice);
+        const newVariantId = variantResult.variantId;
+        
+        if (!newVariantId) {
+          throw new Error('Failed to create variant: No variant ID returned from Lambda');
+        }
+        
+        // Add semi-mount-ring placeholder product to cart with all properties
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';
         delete config.headers['Content-Type'];
         
-        const ringFormData = new FormData();
-        ringFormData.append('id', ringVariantId);
-        ringFormData.append('quantity', quantity);
+        const semiMountRingFormData = new FormData();
+        semiMountRingFormData.append('id', newVariantId);
+        semiMountRingFormData.append('quantity', quantity);
         
-        // Add ring properties if any
+        // Store ring information
+        semiMountRingFormData.append('properties[Ring Product ID]', productId);
+        semiMountRingFormData.append('properties[Ring Variant ID]', ringVariantId);
+        semiMountRingFormData.append('properties[Ring Title]', productTitle);
+        semiMountRingFormData.append('properties[Ring Price]', productPrice.toFixed(2));
+        semiMountRingFormData.append('properties[Ring Image URL]', productImageUrl);
+        
+        // Store diamond information if selected
+        if (diamondDetails) {
+          semiMountRingFormData.append('properties[Diamond]', diamondDetails.display);
+          semiMountRingFormData.append('properties[Carat]', diamondDetails.carat);
+          semiMountRingFormData.append('properties[Shape]', diamondDetails.shape);
+          semiMountRingFormData.append('properties[Color]', diamondDetails.color);
+          semiMountRingFormData.append('properties[Clarity]', diamondDetails.clarity);
+          semiMountRingFormData.append('properties[Cut]', diamondDetails.cut);
+          semiMountRingFormData.append('properties[Source]', diamondDetails.source);
+          semiMountRingFormData.append('properties[Stock Number]', diamondDetails.stockNumber);
+          semiMountRingFormData.append('properties[Diamond Price]', diamondDetails.price);
+          
+          // Store diamond image URL (first image if available)
+          if (state.selectedDiamond && state.selectedDiamond.images && state.selectedDiamond.images.length > 0) {
+            semiMountRingFormData.append('properties[Diamond Image URL]', state.selectedDiamond.images[0]);
+          }
+        }
+        
+        // Store total price (this is what we'll display in cart)
+        semiMountRingFormData.append('properties[Total Price]', totalPrice.toFixed(2));
+        
+        // Add any other ring properties from form
         formData.forEach((value, key) => {
-          if (key.startsWith('properties[') && key !== 'properties[Diamond]') {
-            ringFormData.append(key, value);
+          if (key.startsWith('properties[') && !key.includes('[Diamond]')) {
+            semiMountRingFormData.append(key, value);
           }
         });
         
@@ -3588,39 +3772,73 @@
         const cartNotificationEl = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         if (cartNotificationEl) {
           const sectionIds = cartNotificationEl.getSectionsToRender ? cartNotificationEl.getSectionsToRender().map(s => s.id) : ['cart-drawer', 'cart-notification'];
-          ringFormData.append('sections', sectionIds.join(','));
-          ringFormData.append('sections_url', window.location.pathname);
+          semiMountRingFormData.append('sections', sectionIds.join(','));
+          semiMountRingFormData.append('sections_url', window.location.pathname);
         }
         
-        config.body = ringFormData;
+        config.body = semiMountRingFormData;
         
-        const ringResponse = await fetch(window.routes.cart_add_url, config);
-        if (!ringResponse.ok) {
-          const errorData = await ringResponse.text();
+        const response = await fetch(window.routes.cart_add_url, config);
+        if (!response.ok) {
+          const errorData = await response.text();
           try {
             const errorJson = JSON.parse(errorData);
-            throw new Error(errorJson.message || errorJson.description || 'Failed to add ring to cart');
+            let errorMessage = errorJson.message || errorJson.description || 'Failed to add to cart';
+            
+            // Provide helpful message for sold out products
+            if (errorMessage.includes('sold out') || errorMessage.includes('Semi-mount Ring')) {
+              errorMessage = 'The semi-mount-ring placeholder product is currently unavailable. Please ensure the product (ID: 8298572611769) is set to available in Shopify admin, or disable inventory tracking for this product.';
+            }
+            
+            throw new Error(errorMessage);
           } catch (parseError) {
-            throw new Error('Failed to add ring to cart');
+            throw new Error('Failed to add to cart. Please check that the semi-mount-ring product (ID: 8298572611769) is available in Shopify admin.');
           }
         }
         
-        // If diamond is selected, add it to cart as separate line item
-        if (state.selectedDiamond) {
-          await addDiamondToCart(state.selectedDiamond);
-        }
+        // Parse response - it already includes sections if we requested them
+        const responseData = await response.json();
         
-        // Trigger cart update event
-        if (window.dispatchEvent) {
-          window.dispatchEvent(new CustomEvent('cart:updated'));
-        }
-        
-        // Redirect to cart or show cart drawer
-        const cartNotificationEl2 = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
-        if (cartNotificationEl2 && typeof cartNotificationEl2.open === 'function') {
-          cartNotificationEl2.open();
+        // Update cart drawer with the response
+        const cartDrawer = document.querySelector('cart-drawer');
+        if (cartDrawer) {
+          try {
+            // Check if response has status (error)
+            if (responseData.status) {
+              throw new Error(responseData.message || responseData.description || 'Failed to add to cart');
+            }
+            
+            // Remove is-empty class if cart was previously empty
+            if (cartDrawer.classList.contains('is-empty')) {
+              cartDrawer.classList.remove('is-empty');
+            }
+            
+            // Render cart drawer with the response data (includes sections)
+            if (typeof cartDrawer.renderContents === 'function') {
+              cartDrawer.renderContents(responseData);
+            } else {
+              // Fallback: just open the drawer
+              cartDrawer.open();
+            }
+          } catch (renderError) {
+            console.error('Error rendering cart drawer:', renderError);
+            // Still try to open the drawer
+            if (cartDrawer && typeof cartDrawer.open === 'function') {
+              cartDrawer.open();
+            }
+          }
         } else {
+          // Fallback: redirect to cart page if no cart drawer
           window.location.href = window.routes.cart_url;
+        }
+        
+        // Reset button state after successful add to cart
+        if (addToCartBtn) {
+          addToCartBtn.disabled = false;
+          const btnText = addToCartBtn.querySelector('span');
+          if (btnText) {
+            btnText.textContent = state.selectedDiamond ? 'Add to Cart' : 'Add Setting Only to Cart';
+          }
         }
       } catch (error) {
         console.error('Error adding to cart:', error);
@@ -3633,83 +3851,7 @@
           }
         }
       }
-    });
-  }
-  
-  // Add diamond to cart as separate line item
-  async function addDiamondToCart(diamond) {
-    try {
-      // Fetch center-diamond product to get variant ID
-      const productResponse = await fetch(`/products/center-diamond.js`);
-      if (!productResponse.ok) {
-        throw new Error('Failed to fetch center-diamond product');
-      }
-      
-      const productData = await productResponse.json();
-      const diamondVariantId = productData.variants?.[0]?.id;
-      
-      if (!diamondVariantId) {
-        throw new Error('Center diamond variant not found');
-      }
-      
-      // Calculate diamond retail price
-      const diamondRetailPrice = calculateDiamondRetailPrice(diamond);
-      
-      // Prepare diamond properties
-      const shapeMap = {
-        'ROUND': 'Round', 'PRINCESS': 'Princess', 'CUSHION': 'Cushion',
-        'PEAR': 'Pear', 'MARQUISE': 'Marquise', 'OVAL': 'Oval',
-        'HEART': 'Heart', 'RADIANT': 'Radiant', 'ASSCHER': 'Asscher', 'EMERALD': 'Emerald'
-      };
-      const shapeTxt = shapeMap[diamond.shape] || diamond.shape || '—';
-      const cutTxt = diamond.cut || '—';
-      const sourceType = state.type === 'lab' ? 'Lab Grown' : (state.type === 'natural' ? 'Natural' : '—');
-      const carat = diamond.carat?.toFixed?.(2) ?? diamond.carat;
-      const diamondDisplay = `${carat} ct ${shapeTxt}, ${diamond.color} ${diamond.clarity}${cutTxt !== '—' ? ' ' + cutTxt : ''}, ${sourceType}`;
-      
-      // Add diamond to cart with properties
-      const config = fetchConfig('javascript');
-      config.headers['X-Requested-With'] = 'XMLHttpRequest';
-      delete config.headers['Content-Type'];
-      
-      const diamondFormData = new FormData();
-      diamondFormData.append('id', diamondVariantId);
-      diamondFormData.append('quantity', 1);
-      diamondFormData.append('properties[Diamond]', diamondDisplay);
-      diamondFormData.append('properties[Carat]', carat);
-      diamondFormData.append('properties[Shape]', shapeTxt);
-      diamondFormData.append('properties[Color]', diamond.color || '');
-      diamondFormData.append('properties[Clarity]', diamond.clarity || '');
-      diamondFormData.append('properties[Cut]', cutTxt);
-      diamondFormData.append('properties[Source]', sourceType);
-      diamondFormData.append('properties[Stock Number]', diamond.stockNumber || '');
-      diamondFormData.append('properties[Price]', `$${diamondRetailPrice.toFixed(2)}`);
-      diamondFormData.append('properties[Diamond Price]', diamondRetailPrice.toFixed(2));
-      
-      // Request cart sections for proper cart update
-      const cartNotificationEl3 = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
-      if (cartNotificationEl3) {
-        const sectionIds = cartNotificationEl3.getSectionsToRender ? cartNotificationEl3.getSectionsToRender().map(s => s.id) : ['cart-drawer', 'cart-notification'];
-        diamondFormData.append('sections', sectionIds.join(','));
-        diamondFormData.append('sections_url', window.location.pathname);
-      }
-      
-      config.body = diamondFormData;
-      
-      const diamondResponse = await fetch(window.routes.cart_add_url, config);
-      if (!diamondResponse.ok) {
-        const errorData = await diamondResponse.text();
-        try {
-          const errorJson = JSON.parse(errorData);
-          throw new Error(errorJson.message || errorJson.description || 'Failed to add diamond to cart');
-        } catch (parseError) {
-          throw new Error('Failed to add diamond to cart');
-        }
-      }
-    } catch (error) {
-      console.error('Error adding diamond to cart:', error);
-      throw error;
-    }
+    }, { capture: true }); // Use capture phase to run before product-form handler
   }
   
   // Initialize currency code styling by wrapping existing currency codes

@@ -19,7 +19,15 @@
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:description" content="{{ og_description | escape }}">
 
-{%- if page_image -%}
+{%- comment -%} Check for custom page thumbnail metafield first, then fall back to page_image {%- endcomment -%}
+{%- if page.metafields.custom.thumbnail -%}
+  {%- assign social_image = page.metafields.custom.thumbnail -%}
+  <meta property="og:image" content="https:{{ social_image | image_url: width: 1200, height: 630 }}">
+  <meta property="og:image:secure_url" content="https:{{ social_image | image_url: width: 1200, height: 630 }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ page_title | escape }}">
+{%- elsif page_image -%}
   <meta property="og:image" content="http:{{ page_image | image_url }}">
   <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
   <meta property="og:image:width" content="{{ page_image.width }}">
@@ -37,3 +45,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
 <meta name="twitter:description" content="{{ og_description | escape }}">
+{%- if page.metafields.custom.custom_thumbnail -%}
+  <meta name="twitter:image" content="https:{{ page.metafields.custom.custom_thumbnail | image_url: width: 1200, height: 630 }}">
+{%- endif -%}

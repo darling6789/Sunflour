@@ -10,10 +10,18 @@
     -%}
 
     <div class="m-product-card-image" onclick="if (!event.target.closest('.filter-button')) { document.location = '{{ product.url }}'; }" style="background-image: url({{ product.featured_image | image_url: width: 500 }})">
+      {%- liquid
+        assign has_multiple_variants = false
+        if product.has_only_default_variant == false and product.variants_count > 1
+          assign has_multiple_variants = true
+        endif
+      -%}
       {%- if product.available == false -%}
         <div class="m-product-card-sold-out-badge">
           {{ 'products.product.sold_out' | t }}
         </div>
+      {%- elsif has_multiple_variants -%}
+        {%- comment -%} Hide quickview eye icon for products with multiple variants {%- endcomment -%}
       {%- else -%}
         <button
           type="button"
@@ -60,73 +68,6 @@
                   assign is_on_sale = false
                   if compare_at_price > price
                     assign is_on_sale = true
-                  endif
-                  
-                  assign show_promo = false
-                  assign promo_price = price
-                  assign promo_label = ''
-                  
-                  assign bf_diamond_classics_collection = 'diamond-classics'
-                  assign bf_diamond_classics_percent = 70
-                  
-                  assign bf_diamond_pendants_collection = 'lab-grown-diamond-initial-pendant-necklaces'
-                  assign bf_diamond_pendants_percent = 60
-                  
-                  assign bf_rolex_collection = 'pre-owned-rolex'
-                  assign bf_rolex_fixed_amount_cents = 200000
-                  
-                  assign percent_offer_collections = "" | split: ","
-                  assign percent_offer_value = 15
-                  assign percent_offer_enabled = false
-                  
-                  assign in_bf_diamond_classics = false
-                  assign in_bf_diamond_pendants = false
-                  assign in_bf_rolex = false
-                  assign in_percent_offer = false
-                  
-                  for c in product.collections
-                    if c.handle == bf_diamond_classics_collection
-                      assign in_bf_diamond_classics = true
-                    endif
-                    if c.handle == bf_diamond_pendants_collection
-                      assign in_bf_diamond_pendants = true
-                    endif
-                    if c.handle == bf_rolex_collection
-                      assign in_bf_rolex = true
-                    endif
-                    if percent_offer_collections contains c.handle
-                      assign in_percent_offer = true
-                    endif
-                  endfor
-                  
-                  if in_bf_diamond_classics
-                    assign percent_left = 100 | minus: bf_diamond_classics_percent
-                    assign cand = price | times: percent_left | divided_by: 100
-                    assign promo_price = cand
-                    assign promo_label = 'Black Friday Diamond Classics'
-                    assign show_promo = true
-                  elsif in_bf_diamond_pendants
-                    assign percent_left = 100 | minus: bf_diamond_pendants_percent
-                    assign cand = price | times: percent_left | divided_by: 100
-                    assign promo_price = cand
-                    assign promo_label = 'Black Friday Diamond Pendants'
-                    assign show_promo = true
-                  elsif in_bf_rolex
-                    assign cand = price | minus: bf_rolex_fixed_amount_cents
-                    if cand < 0
-                      assign cand = 0
-                    endif
-                    assign promo_price = cand
-                    assign promo_label = 'Black Friday Pre-Owned Rolex'
-                    assign show_promo = true
-                  endif
-                  
-                  if in_percent_offer and show_promo == false and percent_offer_enabled
-                    assign percent_left = 100 | minus: percent_offer_value
-                    assign cand = price | times: percent_left | divided_by: 100
-                    assign promo_price = cand
-                    assign promo_label = '15% Off Launch Offer'
-                    assign show_promo = true
                   endif
                   
                   if show_promo and promo_price < price
@@ -232,6 +173,12 @@
             </div>
         </div>
         <div class="m-product-card-add-to-cart no-js-hidden">
+            {%- liquid
+              assign has_multiple_variants = false
+              if product.has_only_default_variant == false and product.variants_count > 1
+                assign has_multiple_variants = true
+              endif
+            -%}
             {%- if product.available == false -%}
                 <button
                     type="button"
@@ -244,41 +191,17 @@
                 >
                     <span class="m-product-card-notify-me-text">Notify Me</span>
                 </button>
-            {%- elsif product.variants_count > 1 or qty_rules -%}
-                <modal-opener data-modal="#QuickAdd-{{ product.id }}">
-                    <button
-                        id="{{ product_form_id }}-submit"
-                        type="button"
-                        class="m-product-card-add-to-cart-btn button button--full-width button--secondary"
-                        aria-haspopup="dialog"
-                        aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product.id }}"
-                        data-product-url="{{ product.url }}"
-                        onclick="event.stopPropagation();"
-                    >
-                        <span class="m-product-card-add-to-cart-text">Add to Cart</span>
-                        {%- render 'loading-spinner' -%}
-                    </button>
-                </modal-opener>
-                <quick-add-modal id="QuickAdd-{{ product.id }}" class="quick-add-modal">
-                    <div
-                        role="dialog"
-                        aria-label="{{ 'products.product.choose_product_options' | t: product_name: product.title | escape }}"
-                        aria-modal="true"
-                        class="quick-add-modal__content global-settings-popup"
-                        tabindex="-1"
-                    >
-                        <button
-                            id="ModalClose-{{ product.id }}"
-                            type="button"
-                            class="quick-add-modal__toggle"
-                            aria-label="{{ 'accessibility.close' | t }}"
-                        >
-                            {{- 'icon-close.svg' | inline_asset_content -}}
-                        </button>
-                        <div id="QuickAddInfo-{{ product.id }}" class="quick-add-modal__content-info"></div>
-                    </div>
-                </quick-add-modal>
+            {%- elsif has_multiple_variants or qty_rules -%}
+                {%- comment -%} Show "Select Options" button that links to product page for products with multiple variants {%- endcomment -%}
+                <a
+                    href="{{ product.url }}"
+                    class="m-product-card-add-to-cart-btn button button--full-width button--secondary"
+                    onclick="event.stopPropagation();"
+                >
+                    <span class="m-product-card-add-to-cart-text">Select Options</span>
+                </a>
             {%- else -%}
+                {%- comment -%} Show "Add to Cart" for products with only default variant or exactly 1 variant {%- endcomment -%}
                 <product-form data-section-id="{{ section.id }}">
                     {%- form 'product',
                         product,
@@ -317,3 +240,74 @@
         </div>
     </div>
 </div>
+
+{% comment %}
+
+                  assign show_promo = false
+                  assign promo_price = price
+                  assign promo_label = ''
+                  
+                  assign bf_diamond_classics_collection = 'diamond-classics'
+                  assign bf_diamond_classics_percent = 70
+                  
+                  assign bf_diamond_pendants_collection = 'lab-grown-diamond-initial-pendant-necklaces'
+                  assign bf_diamond_pendants_percent = 60
+                  
+                  assign bf_rolex_collection = 'pre-owned-rolex'
+                  assign bf_rolex_fixed_amount_cents = 200000
+                  
+                  assign percent_offer_collections = "" | split: ","
+                  assign percent_offer_value = 15
+                  assign percent_offer_enabled = false
+                  
+                  assign in_bf_diamond_classics = false
+                  assign in_bf_diamond_pendants = false
+                  assign in_bf_rolex = false
+                  assign in_percent_offer = false
+                  
+                  for c in product.collections
+                    if c.handle == bf_diamond_classics_collection
+                      assign in_bf_diamond_classics = true
+                    endif
+                    if c.handle == bf_diamond_pendants_collection
+                      assign in_bf_diamond_pendants = true
+                    endif
+                    if c.handle == bf_rolex_collection
+                      assign in_bf_rolex = true
+                    endif
+                    if percent_offer_collections contains c.handle
+                      assign in_percent_offer = true
+                    endif
+                  endfor
+                  
+                  if in_bf_diamond_classics
+                    assign percent_left = 100 | minus: bf_diamond_classics_percent
+                    assign cand = price | times: percent_left | divided_by: 100
+                    assign promo_price = cand
+                    assign promo_label = 'Black Friday Diamond Classics'
+                    assign show_promo = true
+                  elsif in_bf_diamond_pendants
+                    assign percent_left = 100 | minus: bf_diamond_pendants_percent
+                    assign cand = price | times: percent_left | divided_by: 100
+                    assign promo_price = cand
+                    assign promo_label = 'Black Friday Diamond Pendants'
+                    assign show_promo = true
+                  elsif in_bf_rolex
+                    assign cand = price | minus: bf_rolex_fixed_amount_cents
+                    if cand < 0
+                      assign cand = 0
+                    endif
+                    assign promo_price = cand
+                    assign promo_label = 'Black Friday Pre-Owned Rolex'
+                    assign show_promo = true
+                  endif
+                  
+                  if in_percent_offer and show_promo == false and percent_offer_enabled
+                    assign percent_left = 100 | minus: percent_offer_value
+                    assign cand = price | times: percent_left | divided_by: 100
+                    assign promo_price = cand
+                    assign promo_label = '15% Off Launch Offer'
+                    assign show_promo = true
+                  endif
+
+{% endcomment %}

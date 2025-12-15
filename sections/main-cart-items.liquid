@@ -87,85 +87,182 @@
                     {% endif %}
                   >
                     <td class="cart-item__media">
-                      {% if item.image %}
-                        {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
-                        <a href="{{ item.url }}" class="cart-item__link" aria-hidden="true" tabindex="-1"> </a>
+                      {%- liquid
+                        assign semi_mount_ring_product_id = 8298572611769
+                        assign ring_image_url = null
+                        assign is_semi_mount_ring_media = false
+                        if item.product.id == semi_mount_ring_product_id
+                          assign is_semi_mount_ring_media = true
+                          for property in item.properties
+                            if property.first == 'Ring Image URL'
+                              assign ring_image_url = property.last
+                              break
+                            endif
+                          endfor
+                        endif
+                      -%}
+                      {% if ring_image_url %}
+                        {%- comment -%} Non-clickable image for semi-mount-ring {%- endcomment -%}
                         <div class="cart-item__image-container gradient {% if item.parent_relationship.parent == null %}global-media-settings{% endif %}">
                           <img
-                            src="{{ item.image | image_url: width: 300 }}"
+                            src="{{ ring_image_url }}"
                             class="cart-item__image {% if item.parent_relationship.parent != null %}global-media-settings{% endif %}"
-                            alt="{{ item.image.alt | escape }}"
+                            alt="{{ item.product.title | escape }}"
                             loading="lazy"
                             width="150"
-                            height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
+                            height="150"
                           >
                         </div>
+                      {% elsif item.image %}
+                        {% if is_semi_mount_ring_media %}
+                          {%- comment -%} Non-clickable image for semi-mount-ring {%- endcomment -%}
+                          <div class="cart-item__image-container gradient {% if item.parent_relationship.parent == null %}global-media-settings{% endif %}">
+                            <img
+                              src="{{ item.image | image_url: width: 300 }}"
+                              class="cart-item__image {% if item.parent_relationship.parent != null %}global-media-settings{% endif %}"
+                              alt="{{ item.product.title | escape }}"
+                              loading="lazy"
+                              width="150"
+                              height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
+                            >
+                          </div>
+                        {% else %}
+                          {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
+                          <a href="{{ item.url }}" class="cart-item__link" aria-hidden="true" tabindex="-1"> </a>
+                          <div class="cart-item__image-container gradient {% if item.parent_relationship.parent == null %}global-media-settings{% endif %}">
+                            <img
+                              src="{{ item.image | image_url: width: 300 }}"
+                              class="cart-item__image {% if item.parent_relationship.parent != null %}global-media-settings{% endif %}"
+                              alt="{{ item.image.alt | escape }}"
+                              loading="lazy"
+                              width="150"
+                              height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
+                            >
+                          </div>
+                        {% endif %}
                       {% endif %}
                     </td>
 
                     <td class="cart-item__details">
-                      {%- if settings.show_vendor -%}
-                        <p class="caption-with-letter-spacing">{{ item.product.vendor }}</p>
-                      {%- endif -%}
-
-                      <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
-
-                      {%- if item.original_price != item.final_price -%}
-                        <div class="cart-item__discounted-prices">
-                          <span class="visually-hidden">
-                            {{ 'products.product.price.regular_price' | t }}
-                          </span>
-                          <s class="cart-item__old-price product-option">
-                            {{- item.original_price | money -}}
-                          </s>
-                          <span class="visually-hidden">
-                            {{ 'products.product.price.sale_price' | t }}
-                          </span>
-                          <strong class="cart-item__final-price product-option">
-                            {{ item.final_price | money }}
-                          </strong>
-                        </div>
-                      {%- else -%}
-                        <div class="product-option">
-                          {{ item.original_price | money }}
-                        </div>
-                      {%- endif -%}
-
-                      {%- if item.product.has_only_default_variant == false
-                        or item.properties.size != 0
-                        or item.selling_plan_allocation != null
+                      {%- liquid
+                        assign semi_mount_ring_product_id = 8298572611769
+                        assign is_semi_mount_ring = false
+                        assign ring_title = null
+                        assign ring_price = null
+                        assign diamond_display = null
+                        assign diamond_price = null
+                        assign diamond_image_url = null
+                        if item.product.id == semi_mount_ring_product_id
+                          assign is_semi_mount_ring = true
+                          for property in item.properties
+                            if property.first == 'Ring Title'
+                              assign ring_title = property.last
+                            elsif property.first == 'Ring Price'
+                              assign ring_price = property.last | times: 100
+                            elsif property.first == 'Diamond'
+                              assign diamond_display = property.last
+                            elsif property.first == 'Diamond Price'
+                              assign diamond_price = property.last | times: 100
+                            elsif property.first == 'Diamond Image URL'
+                              assign diamond_image_url = property.last
+                            endif
+                          endfor
+                        endif
                       -%}
-                        <dl>
-                          {%- if item.product.has_only_default_variant == false -%}
-                            {%- for option in item.options_with_values -%}
-                              <div class="product-option">
-                                <dt>{{ option.name }}:</dt>
-                                <dd>{{ option.value }}</dd>
-                              </div>
-                            {%- endfor -%}
-                          {%- endif -%}
-
-                          {%- for property in item.properties -%}
-                            {%- assign property_first_char = property.first | slice: 0 -%}
-                            {%- if property.last != blank and property_first_char != '_' -%}
-                              <div class="product-option">
-                                <dt{% if property.first == 'Diamond' %} style="font-weight: bold;"{% endif %}>{{ property.first }}:</dt>
-                                <dd>
-                                  {%- if property.last contains '/uploads/' -%}
-                                    <a href="{{ property.last }}" class="link" target="_blank">
-                                      {{ property.last | split: '/' | last }}
-                                    </a>
-                                  {%- else -%}
-                                    {{ property.last }}
-                                  {%- endif -%}
-                                </dd>
-                              </div>
+                      
+                      {%- if is_semi_mount_ring -%}
+                        {%- comment -%} Simplified display for semi-mount-ring {%- endcomment -%}
+                        <div class="cart-item__name h4 break" style="cursor: default; pointer-events: none;">
+                          {{- ring_title | default: item.product.title | escape -}}
+                        </div>
+                        <div class="product-option">
+                          {{ ring_price | default: item.original_price | money }}
+                        </div>
+                        {%- if diamond_display -%}
+                          <div class="product-option" style="margin-top: 8px; display: flex; flex-direction: column; gap: 12px;">
+                            {%- if diamond_image_url -%}
+                              <img
+                                src="{{ diamond_image_url }}"
+                                alt="Diamond"
+                                style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;"
+                                loading="lazy"
+                              >
                             {%- endif -%}
-                          {%- endfor -%}
-                        </dl>
+                            <div>
+                              <strong>Diamond:</strong> {{ diamond_display }}
+                              {%- if diamond_price -%}
+                                <span style="margin-left: 8px;">{{ diamond_price | money }}</span>
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        {%- endif -%}
+                      {%- else -%}
+                        {%- comment -%} Normal display for other products {%- endcomment -%}
+                        {%- if settings.show_vendor -%}
+                          <p class="caption-with-letter-spacing">{{ item.product.vendor }}</p>
+                        {%- endif -%}
 
-                        <p class="product-option">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                        <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
+
+                        {%- if item.original_price != item.final_price -%}
+                          <div class="cart-item__discounted-prices">
+                            <span class="visually-hidden">
+                              {{ 'products.product.price.regular_price' | t }}
+                            </span>
+                            <s class="cart-item__old-price product-option">
+                              {{- item.original_price | money -}}
+                            </s>
+                            <span class="visually-hidden">
+                              {{ 'products.product.price.sale_price' | t }}
+                            </span>
+                            <strong class="cart-item__final-price product-option">
+                              {{ item.final_price | money }}
+                            </strong>
+                          </div>
+                        {%- else -%}
+                          <div class="product-option">
+                            {{ item.original_price | money }}
+                          </div>
+                        {%- endif -%}
                       {%- endif -%}
+
+                      {%- unless is_semi_mount_ring -%}
+                        {%- if item.product.has_only_default_variant == false
+                          or item.properties.size != 0
+                          or item.selling_plan_allocation != null
+                        -%}
+                          <dl>
+                            {%- if item.product.has_only_default_variant == false -%}
+                              {%- for option in item.options_with_values -%}
+                                <div class="product-option">
+                                  <dt>{{ option.name }}:</dt>
+                                  <dd>{{ option.value }}</dd>
+                                </div>
+                              {%- endfor -%}
+                            {%- endif -%}
+
+                            {%- for property in item.properties -%}
+                              {%- assign property_first_char = property.first | slice: 0 -%}
+                              {%- if property.last != blank and property_first_char != '_' -%}
+                                <div class="product-option">
+                                  <dt{% if property.first == 'Diamond' %} style="font-weight: bold;"{% endif %}>{{ property.first }}:</dt>
+                                  <dd>
+                                    {%- if property.last contains '/uploads/' -%}
+                                      <a href="{{ property.last }}" class="link" target="_blank">
+                                        {{ property.last | split: '/' | last }}
+                                      </a>
+                                    {%- else -%}
+                                      {{ property.last }}
+                                    {%- endif -%}
+                                  </dd>
+                                </div>
+                              {%- endif -%}
+                            {%- endfor -%}
+                          </dl>
+
+                          <p class="product-option">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                        {%- endif -%}
+                      {%- endunless -%}
 
                       <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
                         {%- for discount in item.line_level_discount_allocations -%}

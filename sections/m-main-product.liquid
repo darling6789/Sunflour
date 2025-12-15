@@ -114,6 +114,24 @@
                     price_class: 'price--large'
                   -%}
                 </div>
+                {%- if product.selected_or_first_available_variant.compare_at_price
+        and product.selected_or_first_available_variant.compare_at_price
+            > product.selected_or_first_available_variant.price -%}
+    {%- assign savings = product.selected_or_first_available_variant.compare_at_price
+      | minus: product.selected_or_first_available_variant.price -%}
+    {%- assign savings_percent = savings
+      | times: 100.0
+      | divided_by: product.selected_or_first_available_variant.compare_at_price
+      | round
+    -%}
+    <div class="mrj-price-savings">
+      <span class="mrj-price-savings__label">You save</span>
+      <span class="mrj-price-savings__value">
+        {{ savings | money }}
+        <span class="mrj-price-savings__percent">({{ savings_percent }}% off)</span>
+      </span>
+    </div>
+  {%- endif -%}
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -745,6 +763,29 @@
 </product-info>
 
 <style>
+  .mrj-price-savings {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a7f37;
+}
+
+.mrj-price-savings__label {
+  margin-right: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.mrj-price-savings__value {
+  font-size: 14px;
+}
+
+.mrj-price-savings__percent {
+  margin-left: 4px;
+}
+
 .m-main-product-section #MediaGallery-{{section.id}} {
   display: inline-flex;
   width: 100%;

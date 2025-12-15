@@ -422,7 +422,7 @@
 
       <!-- Availability Badge -->
       {% comment %} Check if product is in a discounted collection - matches auto-discount-price.liquid logic {% endcomment %}
-      {% assign fixed_offer_collection = '' %}
+      {% comment %} {% assign fixed_offer_collection = '' %}
       {% assign fixed_offer_amount_cents = 200000 %}
       {% assign percent_offer_collections = 'fine-jewelry,engagement,bands' %}
       {% assign percent_offer_collection = percent_offer_collections | split: ',' %}
@@ -435,28 +435,28 @@
       {% for c in product.collections %}
         {% if c.handle == fixed_offer_collection %}{% assign in_fixed_offer = true %}{% endif %}
         {% if percent_offer_collection contains c.handle %}{% assign in_percent_offer = true %}{% endif %}
-      {% endfor %}
+      {% endfor %} {% endcomment %}
 
       {% assign variant = product.selected_or_first_available_variant %}
       {% assign base_price = variant.price %}
       {% assign best_price = base_price %}
       {% assign best_label = '' %}
 
-      {% if in_fixed_offer %}
+      {% comment %} {% if in_fixed_offer %}
         {% assign cand = base_price | minus: fixed_offer_amount_cents %}
         {% if cand < 0 %}{% assign cand = 0 %}{% endif %}
         {% assign best_price = cand %}
         {% assign best_label = 'Special Offer' %}
-      {% endif %}
+      {% endif %} {% endcomment %}
 
-      {% if in_percent_offer and percent_offer_enabled %}
+      {% comment %} {% if in_percent_offer and percent_offer_enabled %}
         {% assign percent_left = 100 | minus: percent_offer_value %}
         {% assign cand = base_price | times: percent_left | divided_by: 100 %}
         {% if best_price == base_price or cand < best_price %}
           {% assign best_price = cand %}
           {% assign best_label = '15% Off' %}
         {% endif %}
-      {% endif %}
+      {% endif %} {% endcomment %}
 
       {% assign show_promo = false %}
       {% if best_price < base_price %}{% assign show_promo = true %}{% endif %}
@@ -499,16 +499,16 @@
 
       <div class="card-main__footer">
         {% if product.available %}
-          {% capture promo_output %}{% render 'auto-discount-price', product: product, clean_format: true %}{% endcapture %}
-          {% if promo_output contains 'promo-price-block' %}
+          {% comment %} {% capture promo_output %}{% render 'auto-discount-price', product: product, clean_format: true %}{% endcapture %}
+          {% if promo_output contains 'promo-price-block' %} {% endcomment %}
             <div class="card-main__price">
               {{ promo_output }}
             </div>
-          {% else %}
+          {% comment %} {% else %} {% endcomment %}
             <div class="card-main__price">
               <span>${{ product.price | money_without_currency | remove: '.00' }}</span>
             </div>
-          {% endif %}
+          {% comment %} {% endif %} {% endcomment %}
           <button
             type="button"
             class="card-main__button card-main__button--primary btn-buy-now"

@@ -1,4 +1,4 @@
-{%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%}
+{% comment %} {%- capture _promo -%}{% render 'auto-discount-price', product: product %}{%- endcapture -%} {% endcomment %}
 <div class="rolex-product-card-wrapper">
   <a href="{{product.url}}" class="product-card-link">
     <div class="product-card{% if product.available == false %} sold-out {% endif %} {% if _promo contains 'promo-price-block' %}por-discount{% endif %}">
@@ -126,15 +126,38 @@
         </div>
         <div class="divider-section-2"><div class="divider-line-2"></div></div>
         </div>
-        <div class="price-action-wrapper {% if _promo contains 'promo-price-block' %}m-product-card-price{% endif %}">
+        {% comment %} <div class="price-action-wrapper {% if _promo contains 'promo-price-block' %}m-product-card-price{% endif %}">
           {% if product.available %}
-            {%- if _promo contains 'promo-price-block' -%}
+            {% comment %} {%- if _promo contains 'promo-price-block' -%}
               {{ _promo }}
-            {%- else -%}
+            {%- else -%} {% endcomment %}
               <div class="price-container">
                 <div class="product-price">${{ product.price | money_without_currency | remove: '.00' }}</div>
               </div>
-            {% endif %}
+            {% comment %} {% endif %} {% endcomment %}
+            <button type="button" class="btn-primary btn-buy-now" data-stop-link-click>
+              <div class="btn-text">Buy Now</div>
+            </button>
+
+          {% else %}
+            <button
+              type="button"
+              class="btn-notify-me"
+              data-stop-link-click
+              data-dream-watch-notify-trigger
+              data-watch-reference="{{ product.metafields.custom.watch_reference | escape }}"
+              data-product-id="{{ product.id }}"
+              data-product-title="{{ product.title | escape }}"
+            >
+              <div class="btn-text">Notify Me</div>
+            </button>
+          {% endif %}
+        </div> {% endcomment %}
+        <div class="price-action-wrapper">
+          {% if product.available %}
+              <div class="price-container">
+                <div class="product-price">${{ product.price | money_without_currency | remove: '.00' }}</div>
+              </div>
             <button type="button" class="btn-primary btn-buy-now" data-stop-link-click>
               <div class="btn-text">Buy Now</div>
             </button>

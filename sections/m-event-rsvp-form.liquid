@@ -1,0 +1,1129 @@
+<style>
+  .event-rsvp-form-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 0 5rem;
+    background-color: #f8f6f2;
+  }
+
+  .attendee-form {
+    display: flex;
+    flex-direction: column;
+    width: 40.8rem;
+    max-width: 90%;
+    align-items: flex-start;
+    gap: 2.4rem;
+    padding: 2.4rem;
+    background-color: #ffffff;
+    border-radius: 0.8rem;
+    border: 1px solid #d9d9d9;
+  }
+
+  .form-legend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .form-heading {
+    font-family: Legitima, serif;
+    font-weight: 400;
+    font-size: 2.4rem;
+    line-height: 110%;
+    color: #4d3942;
+    margin: 0;
+  }
+
+  .form-description {
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 160%;
+    color: #757575;
+    margin: 0;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .form-label {
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 110%;
+    color: #4d3942;
+    margin: 0;
+  }
+
+  .form-input-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem 1.6rem;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 0.4rem;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 100%;
+    color: #303030;
+    background: transparent;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: #b3b3b3;
+  }
+
+  .form-select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 1.6rem;
+  }
+
+  .select-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.6rem;
+    height: 1.6rem;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%234d3942' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+  }
+
+  .form-textarea {
+    min-height: 10rem;
+    resize: vertical;
+  }
+
+  .consent-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .consent-legend {
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 110%;
+    color: #4d3942;
+    margin: 0;
+    letter-spacing: 0px;
+  }
+
+  .consent-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .checkbox-field {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .checkbox-input {
+    position: relative;
+    width: 1.6rem;
+    height: 1.6rem;
+    min-width: 1.6rem;
+    appearance: none;
+    background-color: #ffffff;
+    border: 2px solid #69575f;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .checkbox-input:checked {
+    background-color: #69575f;
+  }
+
+  .checkbox-input:checked::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.8rem;
+    height: 0.8rem;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 3L4.5 8.5L2 6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .checkbox-label {
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 140%;
+    color: #4d3942;
+    cursor: pointer;
+  }
+
+  .checkbox-label a {
+    color: #4d3942;
+    text-decoration: underline;
+  }
+
+  .checkbox-label a:hover {
+    opacity: 0.8;
+  }
+
+  .submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1.2rem;
+    background-color: #69575f;
+    border: 1px solid #78686f;
+    border-radius: 0.6rem;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 100%;
+    color: #f5f5f5;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .submit-button:hover {
+    opacity: 0.9;
+  }
+
+  .submit-button:active {
+    transform: scale(0.98);
+  }
+
+  .submit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .form-success-message {
+    display: none;
+    padding: 1.6rem;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 0.4rem;
+    color: #155724;
+    font-family: Montserrat, sans-serif;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .form-success-message.show {
+    display: block;
+  }
+
+  .form-error-message {
+    display: none;
+    padding: 1.6rem;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.4rem;
+    color: #721c24;
+    font-family: Montserrat, sans-serif;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .form-error-message.show {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .event-rsvp-form-section {
+      padding: 2rem 0 3.5rem;
+    }
+
+    .attendee-form {
+      gap: 1.6rem;
+      padding: 1.6rem;
+    }
+
+    .form-heading {
+      font-size: 2rem;
+    }
+
+    .form-description {
+      font-size: 1.2rem;
+    }
+
+    .form-label,
+    .consent-legend {
+      font-size: 1rem;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea,
+    .submit-button {
+      font-size: 1.4rem;
+    }
+
+    .checkbox-label {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<div class="event-rsvp-form-section">
+  <form
+    class="attendee-form"
+    id="event-rsvp-form"
+    data-klaviyo-list-id="{{ section.settings.klaviyo_list_id }}"
+    data-klaviyo-public-api-key="{{ section.settings.klaviyo_public_api_key }}"
+    novalidate
+  >
+
+    <header class="form-legend">
+      <h2 class="form-heading">{{ section.settings.form_heading }}</h2>
+      {% if section.settings.form_description != blank %}
+        <p class="form-description">{{ section.settings.form_description }}</p>
+      {% endif %}
+    </header>
+
+    <div class="form-success-message" id="success-message">
+      {{ section.settings.success_message }}
+    </div>
+
+    <div class="form-error-message" id="error-message">
+      {{ section.settings.error_message }}
+    </div>
+
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'text_input' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <label for="{{ block.id }}" class="form-label">
+              {{ block.settings.label }}
+              {% if block.settings.required -%}
+                <span style="color: #dc3545;">*</span>
+              {%- endif %}
+            </label>
+            <div class="form-input-wrapper">
+              <input
+                type="text"
+                id="{{ block.id }}"
+                name="{{ block.settings.field_name }}"
+                class="form-input"
+                placeholder="{{ block.settings.placeholder }}"
+                {% if block.settings.required %}
+                  required
+                {% endif %}
+              >
+            </div>
+          </div>
+
+        {% when 'first_name_input' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <label for="first-name" class="form-label">
+              {{ block.settings.label }}
+              {% if block.settings.required -%}
+                <span style="color: #dc3545;">*</span>
+              {%- endif %}
+            </label>
+            <div class="form-input-wrapper">
+              <input
+                type="text"
+                id="first-name"
+                name="first_name"
+                class="form-input"
+                placeholder="{{ block.settings.placeholder }}"
+                {% if block.settings.required %}
+                  required
+                {% endif %}
+              >
+            </div>
+          </div>
+
+        {% when 'last_name_input' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <label for="last-name" class="form-label">
+              {{ block.settings.label }}
+              {% if block.settings.required -%}
+                <span style="color: #dc3545;">*</span>
+              {%- endif %}
+            </label>
+            <div class="form-input-wrapper">
+              <input
+                type="text"
+                id="last-name"
+                name="last_name"
+                class="form-input"
+                placeholder="{{ block.settings.placeholder }}"
+                {% if block.settings.required %}
+                  required
+                {% endif %}
+              >
+            </div>
+          </div>
+
+        {% when 'email_input' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <label for="{{ block.id }}" class="form-label">
+              {{ block.settings.label }}
+              {% if block.settings.required -%}
+                <span style="color: #dc3545;">*</span>
+              {%- endif %}
+            </label>
+            <div class="form-input-wrapper">
+              <input
+                type="email"
+                id="contact-email"
+                name="contact[email]"
+                class="form-input"
+                placeholder="{{ block.settings.placeholder }}"
+                {% if block.settings.required %}
+                  required
+                {% endif %}
+              >
+            </div>
+          </div>
+
+        {% when 'phone_input' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <label for="{{ block.id }}" class="form-label">
+              {{ block.settings.label }}
+              {% if block.settings.required -%}
+                <span style="color: #dc3545;">*</span>
+              {%- endif %}
+            </label>
+            <div class="form-input-wrapper">
+              <input
+                type="tel"
+                id="{{ block.id }}"
+                name="contact[phone]"
+                class="form-input"
+                placeholder="{{ block.settings.placeholder }}"
+                {% if block.settings.required %}
+                  required
+                {% endif %}
+              >
+            </div>
+          </div>
+
+        {% when 'select' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <label for="{{ block.id }}" class="form-label">
+              {{ block.settings.label }}
+              {% if block.settings.required -%}
+                <span style="color: #dc3545;">*</span>
+              {%- endif %}
+            </label>
+            <div class="form-input-wrapper">
+              <div class="select-wrapper">
+                <select
+                  id="{{ block.id }}"
+                  name="contact[{{ block.settings.field_name }}]"
+                  class="form-select"
+                  {% if block.settings.required %}
+                    required
+                  {% endif %}
+                >
+                  <option value="">{{ block.settings.placeholder }}</option>
+                  {% assign options = block.settings.options | split: ',' %}
+                  {% for option in options %}
+                    <option value="{{ option | strip }}">{{ option | strip }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+
+        {% when 'textarea' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <label for="{{ block.id }}" class="form-label">
+              {{ block.settings.label }}
+              {% if block.settings.required -%}
+                <span style="color: #dc3545;">*</span>
+              {%- endif %}
+            </label>
+            <div class="form-input-wrapper">
+              <textarea
+                id="{{ block.id }}"
+                name="contact[{{ block.settings.field_name }}]"
+                class="form-textarea"
+                placeholder="{{ block.settings.placeholder }}"
+                {% if block.settings.required %}
+                  required
+                {% endif %}
+              ></textarea>
+            </div>
+          </div>
+
+        {% when 'consent_heading' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <p class="consent-legend">{{ block.settings.heading }}</p>
+          </div>
+
+        {% when 'checkbox_consent' %}
+          <div class="form-field" {{ block.shopify_attributes }}>
+            <div class="checkbox-field">
+              <input
+                type="checkbox"
+                id="{{ block.id }}"
+                name="{{ block.settings.field_name }}"
+                class="checkbox-input"
+                {% if block.settings.required %}
+                  required
+                {% endif %}
+              >
+              <label for="{{ block.id }}" class="checkbox-label">
+                {{ block.settings.label }}
+              </label>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+
+    <button type="submit" class="submit-button">
+      {{ section.settings.button_text }}
+    </button>
+  </form>
+</div>
+
+<script>
+  (function () {
+    const form = document.getElementById('event-rsvp-form');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+
+    // Simple US phone formatter to E.164 format
+    function formatPhone(rawPhone) {
+      if (!rawPhone || typeof rawPhone !== 'string') return null;
+      
+      const digits = rawPhone.replace(/\D/g, ''); 
+      
+      if (digits.length !== 10) {
+        console.warn('Invalid phone length:', rawPhone, '->', digits);
+        return null;
+      }
+      
+      return '+1' + digits;
+    }
+
+    // Optional: Add phone validation on blur for better UX
+    const phoneInput = form.querySelector('input[name="contact[phone]"]');
+    if (phoneInput) {
+      phoneInput.addEventListener('blur', function() {
+        const formatted = formatPhone(this.value);
+        if (formatted) {
+          this.setCustomValidity(''); 
+        } else if (this.value && this.hasAttribute('required')) {
+          this.setCustomValidity('Please enter a valid 10-digit US phone number (e.g., 5551234567)');
+        }
+      });
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      successMessage.classList.remove('show');
+      errorMessage.classList.remove('show');
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      // Get Klaviyo settings
+      const klaviyoListId = form.dataset.klaviyoListId;
+      const klaviyoPublicApiKey = form.dataset.klaviyoPublicApiKey;
+
+      if (!klaviyoListId || !klaviyoPublicApiKey) {
+        console.error('Klaviyo settings are missing');
+        errorMessage.classList.add('show');
+        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // Collect form data
+      const formData = new FormData(form);
+
+      // Extract standard Klaviyo profile fields
+      const email = formData.get('contact[email]');
+      let phone = formData.get('contact[phone]');
+      const firstName = formData.get('first_name');
+      const lastName = formData.get('last_name');
+
+      phone = formatPhone(phone);
+      console.log('Formatted phone for Klaviyo:', phone); 
+
+      // Extract consent checkboxes (do this BEFORE building standardAttributes)
+      const consentEmail = formData.get('consent_email') === 'on';
+      const consentSms = formData.get('consent_sms') === 'on';
+
+      // Build standard profile attributes - only include phone if SMS consent + valid phone
+      const standardAttributes = {
+        email: email,
+        ...(consentSms && phone && { phone_number: phone }) // Only include if SMS consent AND valid phone
+      };
+
+      // Add first_name and last_name if provided
+      if (firstName) standardAttributes.first_name = firstName;
+      if (lastName) standardAttributes.last_name = lastName;
+
+      // Build subscriptions object for proper consent tracking
+      const subscriptions = {};
+
+      if (consentEmail) {
+        subscriptions.email = {
+          marketing: {
+            consent: 'SUBSCRIBED'
+          }
+        };
+      }
+
+      if (consentSms && phone) { // Only SMS consent if valid phone
+        subscriptions.sms = {
+          marketing: {
+            consent: 'SUBSCRIBED'
+          }
+        };
+      } else if (consentSms && !phone) {
+        console.warn('SMS consent checked but no valid phone—skipping SMS subscription');
+      }
+
+      // Add subscriptions to profile attributes if any consent given
+      if (Object.keys(subscriptions).length > 0) {
+        standardAttributes.subscriptions = subscriptions;
+      }
+
+      // Build custom properties object
+      const customProperties = {};
+
+      // Extract all other form fields as custom properties
+      for (let [key, value] of formData.entries()) {
+        // Skip standard Klaviyo fields (consent is now tracked above)
+        if (key === 'contact[email]' || key === 'contact[phone]' || key === 'first_name' || key === 'last_name' || key === 'consent_email' || key === 'consent_sms') {
+          continue;
+        }
+
+        // Clean up field names
+        let propertyName = key;
+
+        // Remove 'contact[' prefix and ']' suffix if present
+        if (propertyName.startsWith('contact[') && propertyName.endsWith(']')) {
+          propertyName = propertyName.substring(8, propertyName.length - 1);
+        }
+
+        // Convert checkbox values
+        if (value === 'on') {
+          value = true;
+        }
+
+        // Add to custom properties
+        if (value && value !== '') {
+          customProperties[propertyName] = value;
+        }
+      }
+
+      try {
+        const submitButton = form.querySelector('.submit-button');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        // Call 1: Always create/update profile first (RSVP data saved regardless of consent)
+        const profileUrl = `https://a.klaviyo.com/client/profiles/?company_id=${klaviyoPublicApiKey}`;
+
+        // Build profile attributes without subscriptions (handled in subscription call if applicable)
+        const profileAttributes = {
+          email: email,
+          ...(phone && { phone_number: phone }) // Only include if valid
+        };
+        if (firstName) profileAttributes.first_name = firstName;
+        if (lastName) profileAttributes.last_name = lastName;
+        if (Object.keys(customProperties).length > 0) {
+          profileAttributes.properties = customProperties;
+        }
+
+        const profileBody = {
+          data: {
+            type: 'profile',
+            attributes: profileAttributes
+          }
+        };
+
+        console.log('Profile payload:', profileBody); // Debug log
+
+        const profileResponse = await fetch(profileUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/vnd.api+json',
+            'revision': '2025-10-15'
+          },
+          body: JSON.stringify(profileBody)
+        });
+
+        if (!profileResponse.ok) {
+          const errorData = await profileResponse.json();
+          console.error('Klaviyo profile update error:', errorData);
+          throw new Error('Profile creation failed');
+        }
+        console.log('Klaviyo profile created/updated successfully');
+
+        // Call 2: Only subscribe to list if user gave consent
+        if (consentEmail || (consentSms && phone)) {
+          const subscriptionUrl = `https://a.klaviyo.com/client/subscriptions/?company_id=${klaviyoPublicApiKey}`;
+
+          const subscriptionBody = {
+            data: {
+              type: 'subscription',
+              attributes: {
+                profile: {
+                  data: {
+                    type: 'profile',
+                    attributes: standardAttributes
+                  }
+                }
+              },
+              relationships: {
+                list: {
+                  data: {
+                    type: 'list',
+                    id: klaviyoListId
+                  }
+                }
+              }
+            }
+          };
+
+          const subscriptionResponse = await fetch(subscriptionUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/vnd.api+json',
+              'revision': '2025-10-15'
+            },
+            body: JSON.stringify(subscriptionBody)
+          });
+
+          if (!subscriptionResponse.ok) {
+            const errorData = await subscriptionResponse.json();
+            console.error('Klaviyo subscription error:', errorData);
+            console.error('Request body was:', JSON.stringify(subscriptionBody, null, 2));
+            throw new Error('Subscription failed');
+          }
+          console.log('Klaviyo subscription successful');
+        } else {
+          console.log('No consent given - skipping list subscription');
+        }
+
+        // Show success message
+        successMessage.classList.add('show');
+        form.reset();
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      } catch (error) {
+        console.error('Form submission error:', error);
+        errorMessage.classList.add('show');
+        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } finally {
+        const submitButton = form.querySelector('.submit-button');
+        submitButton.disabled = false;
+        submitButton.textContent = '{{ section.settings.button_text }}';
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Event RSVP Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form Heading",
+      "default": "Attendee Information"
+    },
+    {
+      "type": "textarea",
+      "id": "form_description",
+      "label": "Form Description",
+      "default": "RSVP to this exclusive event by submitting your information below. The number of attendees is limited and based on the RSVP order."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Submit Button Text",
+      "default": "RSVP for Event"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "Klaviyo List ID",
+      "info": "The Klaviyo list ID where form submissions will be added",
+      "default": "UVivxb"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_public_api_key",
+      "label": "Klaviyo Public API Key",
+      "info": "Your Klaviyo public API key (company ID) for client-side subscriptions",
+      "default": "R6UT2Q"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you for your RSVP! We look forward to seeing you at the event."
+    },
+    {
+      "type": "textarea",
+      "id": "error_message",
+      "label": "Error Message",
+      "default": "There was an error submitting your RSVP. Please try again or contact us directly."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_input",
+      "name": "Text Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "Full Name"
+        },
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field Name",
+          "default": "full_name",
+          "info": "Used for form submission. Use lowercase with underscores."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "First Last"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "first_name_input",
+      "name": "First Name Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "First Name"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "John"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "last_name_input",
+      "name": "Last Name Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "Last Name"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "Doe"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "email_input",
+      "name": "Email Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "Email Address"
+        },
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field Name",
+          "default": "email",
+          "info": "Used for form submission. Use lowercase with underscores."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "email@domain.com"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "phone_input",
+      "name": "Phone Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "Phone Number"
+        },
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field Name",
+          "default": "phone",
+          "info": "Used for form submission. Use lowercase with underscores."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "10-digit US phone (e.g., 5551234567)"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "name": "Dropdown Select",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "Which day will you attend?"
+        },
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field Name",
+          "default": "attendance_day",
+          "info": "Used for form submission. Use lowercase with underscores."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "Select a day"
+        },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "Options",
+          "default": "November 21, November 22, November 23, All three days",
+          "info": "Enter options separated by commas"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "textarea",
+      "name": "Text Area",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "Additional Comments"
+        },
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field Name",
+          "default": "comments",
+          "info": "Used for form submission. Use lowercase with underscores."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "Any special requests or questions?"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "consent_heading",
+      "name": "Consent Section Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading Text",
+          "default": "Would you like to receive updates about future timepiece events and new collections from Marc Robinson?"
+        }
+      ]
+    },
+    {
+      "type": "checkbox_consent",
+      "name": "Checkbox Consent",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field Name",
+          "default": "consent_marketing",
+          "info": "Used for form submission. Use lowercase with underscores."
+        },
+        {
+          "type": "html",
+          "id": "label",
+          "label": "Checkbox Label",
+          "default": "By checking this box, you consent to receive email updates about future timepiece events, new collections, and special sales deals. You may unsubscribe at any time. <a href=\"/pages/privacy-policy\">Privacy Policy</a> & <a href=\"/pages/terms\">Terms</a>."
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Event RSVP Form",
+      "blocks": [
+        {
+          "type": "text_input",
+          "settings": {
+            "label": "Full Name",
+            "field_name": "full_name",
+            "placeholder": "First Last",
+            "required": true
+          }
+        },
+        {
+          "type": "phone_input",
+          "settings": {
+            "label": "Phone Number",
+            "field_name": "phone",
+            "placeholder": "10-digit US phone (e.g., 5551234567)",
+            "required": true
+          }
+        },
+        {
+          "type": "email_input",
+          "settings": {
+            "label": "Email Address",
+            "field_name": "email",
+            "placeholder": "email@domain.com",
+            "required": true
+          }
+        },
+        {
+          "type": "select",
+          "settings": {
+            "label": "Which day will you attend?",
+            "field_name": "attendance_day",
+            "placeholder": "Select a day",
+            "options": "November 21, November 22, November 23, All three days",
+            "required": true
+          }
+        },
+        {
+          "type": "consent_heading",
+          "settings": {
+            "heading": "Would you like to receive updates about future timepiece events and new collections from Marc Robinson?"
+          }
+        },
+        {
+          "type": "checkbox_consent",
+          "settings": {
+            "field_name": "consent_sms",
+            "label": "By checking this box, you consent to receive informational (e.g., event updates) and/or marketing texts from Marc Robinson Jeweler. Msg & data rates may apply. Unsubscribe at any time by replying STOP. <a href=\"/pages/privacy-policy\">Privacy Policy</a> & <a href=\"/pages/terms\">Terms</a>.",
+            "required": false
+          }
+        },
+        {
+          "type": "checkbox_consent",
+          "settings": {
+            "field_name": "consent_email",
+            "label": "By checking this box, you consent to receive email updates about future timepiece events and new collections. You may unsubscribe at any time. <a href=\"/pages/privacy-policy\">Privacy Policy</a> & <a href=\"/pages/terms\">Terms</a>.",
+            "required": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
