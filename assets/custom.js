@@ -49,24 +49,9 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
     );
     
     subscriptionLinks.forEach(function(link) {
-      // Remove any existing hover event listeners by cloning the element
-      const newLink = link.cloneNode(true);
-      link.parentNode.replaceChild(newLink, link);
-      
-      // Ensure click navigates to the link (don't prevent default)
-      newLink.addEventListener('click', function(e) {
-        // Allow normal link navigation - don't prevent default
-        // Only stop if it's trying to show a tooltip
-        const href = newLink.getAttribute('href');
-        if (href && href !== '#' && href !== 'javascript:void(0)') {
-          // Normal navigation - let it proceed
-          return true;
-        }
-      });
-      
-      // Prevent hover from showing tooltips
-      newLink.addEventListener('mouseenter', function(e) {
-        // Hide any tooltips that might appear
+      // Prevent hover from showing tooltips - add event listener that runs first
+      link.addEventListener('mouseenter', function(e) {
+        // Immediately hide any tooltips that might appear
         const relatedTooltips = document.querySelectorAll(
           '[class*="sls-tooltip"]:not(a):not(button), ' +
           '[class*="sls-flyout"]:not(a):not(button), ' +
@@ -78,11 +63,12 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
           tooltip.style.display = 'none';
           tooltip.style.visibility = 'hidden';
           tooltip.style.opacity = '0';
+          tooltip.style.pointerEvents = 'none';
         });
-      }, { passive: true });
+      }, { capture: true, passive: true });
       
       // Also hide on mouseleave
-      newLink.addEventListener('mouseleave', function(e) {
+      link.addEventListener('mouseleave', function(e) {
         const relatedTooltips = document.querySelectorAll(
           '[class*="sls-tooltip"]:not(a):not(button), ' +
           '[class*="sls-flyout"]:not(a):not(button), ' +
@@ -92,7 +78,28 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
           tooltip.style.display = 'none';
           tooltip.style.visibility = 'hidden';
           tooltip.style.opacity = '0';
+          tooltip.style.pointerEvents = 'none';
         });
+      }, { capture: true, passive: true });
+      
+      // Ensure click navigates normally - don't interfere with link clicks
+      link.addEventListener('click', function(e) {
+        const href = link.getAttribute('href');
+        // If it's a real link, allow normal navigation
+        if (href && href !== '#' && href !== 'javascript:void(0)' && !href.startsWith('#')) {
+          // Let the link navigate normally - don't prevent default
+          // Just hide any tooltips that might be showing
+          const relatedTooltips = document.querySelectorAll(
+            '[class*="sls-tooltip"]:not(a):not(button), ' +
+            '[class*="sls-flyout"]:not(a):not(button), ' +
+            '[role="tooltip"]:not(a):not(button)'
+          );
+          relatedTooltips.forEach(function(tooltip) {
+            tooltip.style.display = 'none';
+            tooltip.style.visibility = 'hidden';
+            tooltip.style.opacity = '0';
+          });
+        }
       }, { passive: true });
     });
   }
