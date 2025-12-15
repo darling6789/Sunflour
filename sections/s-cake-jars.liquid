@@ -1,0 +1,225 @@
+{% comment %}
+Save this as: sections/cake-jars.liquid
+{% endcomment %}
+
+<div class="cake-jars-section">
+  <div class="row-max">
+    <div class="grid product-single">
+      <div class="grid product-single cakejars">
+        <div class="grid__item product-single__photos medium-up--one-half">
+          <img class="cake-jar-img" src="{{ section.settings.hero_image | img_url: '800x600' | default: 'https://cdn.shopify.com/s/files/1/0079/6121/5087/files/main-cake-jars.jpg?v=1615823657' }}">
+        </div>
+        <div class="grid__item medium-up--one-half no-left-padding">
+          <div class="product-single__meta">
+            <h1 class="product-single__title">{{ section.settings.title | default: 'Order Cake Jars' }}</h1>
+            <h2 class="product-sub">{{ section.settings.subtitle | default: 'Delicious cake layered with homemade buttercream frosting.' }} 12 Flavors to Mix &amp; Match.</h2>
+            <p>{{ section.settings.description | default: 'Treat yourself or send the perfect gift. Cupcakes in the mail complete with spoons and napkins.' }}</p>
+          </div>
+          <a href="https://sunflourbakingcompany.com/collections/cake-jars" class="s-btn">{{ 'start my cake jar order' }}</a>
+          <a href="#cake-jar-flavors-container" class="btn white">view flavors</a>
+        </div>
+        <p style="text-align: center; margin-top: 20px;">
+          Questions? For Cake Jar orders please email us at 
+          <a href="mailto:{{ section.settings.email | default: 'customerservice@sunflourbakingcompany.com' }}">{{ section.settings.email | default: 'customerservice@sunflourbakingcompany.com' }}</a>.
+        </p>
+      </div>
+    </div>
+    
+    <div id="cake-jar-flavors-container">
+      <h2 class="cake-jar-flavors-title">{{ section.settings.flavors_title | default: 'cake jar flavors' }}</h2>
+      <div class="grid-container">
+        {% assign collection_handle = section.settings.collection | default: 'cake-jars' %}
+        {% for product in collections[collection_handle].products limit: section.settings.products_limit %}
+          <div class="item{{ forloop.index }}">
+            <a href="{{ product.url }}" class="product-link">
+              {% if product.featured_image %}
+                <img class="cake-jar" src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.featured_image.alt | default: product.title }}">
+              {% else %}
+                <img class="cake-jar" src="{{ 'no-image.png' | asset_url }}" alt="{{ product.title }}">
+              {% endif %}
+              <h2 class="cake-jar-title" style="text-align: center;">{{ product.title }}</h2>
+            </a>
+            <p class="desc">{{ product.description | strip_html | truncatewords: 30 }}</p>
+            {% if product.available %}
+              <div class="product-price">
+                {% if product.compare_at_price > product.price %}
+                  <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                  <span class="price-sale">{{ product.price | money }}</span>
+                {% else %}
+                  <span class="price-regular">{{ product.price | money }}</span>
+                {% endif %}
+              </div>
+            {% else %}
+              <p class="sold-out">Sold Out</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        {% if collections[collection_handle].products.size == 0 %}
+          <div class="no-products">
+            <p>No cake jar flavors are currently available. Please check back soon!</p>
+          </div>
+        {% endif %}
+
+        {% comment %} <a href="{{ collections[collection_handle].url }}" class="btn">{{ section.settings.cta_text | default: 'start cake jar order now' }}</a> {% endcomment %}
+      </div>
+      
+      {% if section.settings.show_testimonials %}
+        <h2 class="no-bottom-margin text-center">What People Are Saying</h2>
+        <div class="row reviews-page">
+          {% for block in section.blocks %}
+            {% if block.type == 'testimonial' %}
+              <div class="testimonial-content-cakejars">
+                <blockquote>{{ block.settings.quote }}<span>{{ block.settings.author }}</span></blockquote>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="btnRow">
+          <a href="https://sunflourbakingcompany.com/collections/cake-jars" class="s-btn">start my cake jar order</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.cake-jars-section {
+    padding: 40px 20px;
+}    
+.cake-jars-section .product-price {
+    font-size: 20px;
+}
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.product-link:hover .cake-jar-title {
+  color: #your-brand-color;
+  transition: color 0.3s ease;
+}
+
+.product-link:hover .cake-jar {
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Cake Jars Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Order Cake Jars"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Delicious cake layered with homemade buttercream frosting."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Treat yourself or send the perfect gift. Cupcakes in the mail complete with spoons and napkins."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select the collection to display products from"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Number of products to show",
+      "default": 12
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Call to Action Text",
+      "default": "start cake jar order now"
+    },
+    {
+      "type": "text",
+      "id": "flavors_title",
+      "label": "Flavors Section Title",
+      "default": "cake jar flavors"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Contact Email",
+      "default": "customerservice@sunflourbakingcompany.com"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_testimonials",
+      "label": "Show testimonials section",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cake Jars Collection",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The cupcake jar was a hit with the recipient I bought it for. I tasted one too and it was a very delicious and moist cake.",
+            "author": "Peggy"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The cake jars were AMAZING and such a big hit! The lids were absolutely adorable and the cakes were delicious. I will definitely be ordering from you again for future events.",
+            "author": "Emily in Charlotte, NC"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Your cupcakes in jars really cheered up my brother when he was in the hospital last month. I wish we could go to your bakery in person!",
+            "author": "Abigail in Albemarle, VA"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,166 @@
+<div class="s-faqs page-width">
+  <div class="s-faqs-left">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+  <div class="faqpage s-faqs-right">
+    {% for block in section.blocks %}
+    <div class="accordion" id="section{{ forloop.index }}"><h3>{{ block.settings.question }}</h3><span></span></div>
+    <div class="container">
+      <div class="content">
+        <p>{{ block.settings.answer }}</p>        
+      </div>
+    </div>
+    {% endfor %}  
+  </div>
+</div>
+
+<style>
+.s-faqs-section {
+  width: 100%;
+  padding: 80px 0;
+}
+.s-faqs-left h2 {
+  margin-top: 0;
+  text-align: center;
+}
+.accordion {
+  margin: 0;
+  padding: 12px 0;
+  padding-right: 30px;
+  border-top: #f4e5ca 1px solid;
+  text-decoration:none;
+  font-size: 18px;
+  position:relative;
+  cursor: pointer;
+  line-height: 1.5;
+}
+.accordion h3 {
+  margin: 0;
+}
+.accordion-open {
+}
+.accordion-open span {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  padding: 10px;
+  transform: translateY(-50%);
+  color: #873c17;
+}
+.accordion-open span:before {
+  content: '-'
+}
+.accordion-close span {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  padding: 10px;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #873c17;
+}
+.accordion-close span:before {
+  content: '+'
+}
+.faqpage div.container {
+  padding:0;
+  margin:0;
+}
+.faqpage div.container {
+  max-width:100%;
+  padding: 0;
+}
+.faqpage div.content {
+  margin: 0;
+  padding:10px;
+  background: #faf9f6;
+}
+.faqpage div.content ul {
+  padding:0;
+  margin:0;
+}
+.faqpage div.content p {
+  padding:0;
+  margin:3px 0 10px;
+  font-size: 16px;
+}
+.faqpage div.content a {
+  color: #873c17;
+  font-weight: 500;
+}
+.faqpage div.content ul li {
+  list-style-position:inside;
+}  
+
+@media only screen and (max-width: 990px) {
+  .s-faqs-section {
+    width: 100%;
+    padding-top: 40px;
+  }
+  .s-faqs {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+  }
+  .s-faqs-left {
+    width: 100%;
+  }
+  .s-faqs-left h2 {
+    margin-top: 0;
+  }
+  .s-faqs-right {
+    width: 100%;
+  }
+  .accordion {
+  }
+}
+</style>
+
+<script type="text/javascript" src="{{ 'jquery_accordion.js' | asset_url }}"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.accordion').accordion({
+      cookieName: 'accordion_nav'
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "S faqs",
+  "tag": "section",
+  "class": "s-faqs-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "S faqs",
+    }
+  ]
+}
+{% endschema %}

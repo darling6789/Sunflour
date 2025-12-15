@@ -1,0 +1,160 @@
+<div class="s-location">
+  <div class="s-location-des">
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.description }}</p>
+    {% if section.settings.btn_text != blank %}
+      <a class="s-btn" href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>  
+    {% endif %}
+  </div>
+
+  <div class="s-locations">
+    {% for block in section.blocks %}
+    <a class="s-location-image" href="{{ block.settings.link }}">
+      <img src="{{ block.settings.image | img_url: 'master' }}">
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.s-locations-section {
+    width: 100%;
+    padding: 30px 30px 60px;
+}
+.s-location {
+
+}
+.s-location-des {
+    text-align: center;
+    max-width: 880px;
+    display: block;
+    margin: auto;
+    margin-bottom: 30px;
+}
+.s-location-des h2 {
+
+}
+.s-location-des p {
+
+}
+.s-location-des a.s-btn {
+    margin: auto;
+}
+.s-locations {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.s-locations .s-location-image {
+    text-decoration: none;
+    line-height: 0;
+    display: block;
+    border-radius: 1rem;
+    overflow: hidden; /* Hides parts of the image that extend beyond the container during transform */
+    display: inline-block; /* Adjust as needed for layout */
+}
+.s-locations .s-location-image img {
+    display: block;
+    width: 100%;
+    border-radius: 1rem;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for transform properties */
+    display: block; /* Removes extra space below the image */
+    max-width: 100%; /* Ensures image scales within its container */
+    height: auto;
+}
+
+.s-locations .s-location-image img:hover {
+  transform: scale(1.05) rotate(3deg); /* Grows the image by 5% and rotates it 3 degrees */
+  border-radius: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .s-locations-section {
+    width: 100%;
+    padding: 20px;
+  }
+  .s-location {
+  
+  }
+  .s-location-des {
+      max-width: 100%;
+      margin-bottom: 20px;
+  }
+  .s-location-des h2 {
+  
+  }
+  .s-location-des p {
+  
+  }
+  .s-location-des a.s-btn {
+      margin: auto;
+  }
+  .s-locations {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+  }
+  .s-locations .s-location-image {
+      width: calc(50% - 5px);    
+  }
+  .s-locations .s-location-image img {
+  }
+}
+
+</style>
+
+{% schema %}
+  {
+    "name": "S locations",
+    "class": "s-locations-section p-width",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button text"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button link"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "location",
+        "name": "Location",
+        "settings": [
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Image link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "S locations"
+      }
+    ]
+  }
+{% endschema %}

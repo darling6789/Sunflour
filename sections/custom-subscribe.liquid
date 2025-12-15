@@ -1,0 +1,258 @@
+<div class="custom-subscribe">
+  <h2>{{ section.settings.heading }}</h2>
+  <p class="custom-sub-des">{{ section.settings.description }}</p>
+
+  <div class="custom-sub-form">
+    {% form 'customer', class: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div
+        class="newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+          style="--animation-order: {{ forloop.index }};"
+        {% endif %}
+      >
+        <div class="field">
+          <input
+            id="NewsletterForm--{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="field__input"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}
+              autofocus
+              aria-invalid="true"
+              aria-describedby="Newsletter-error--{{ section.id }}"
+            {% elsif form.posted_successfully? %}
+              aria-describedby="Newsletter-success--{{ section.id }}"
+            {% endif %}
+            placeholder="{{ 'newsletter.label' | t }}"
+            required
+          >
+          <label class="field__label" for="NewsletterForm--{{ section.id }}">
+            Enter your email
+          </label>
+          <button
+            type="submit"
+            class="newsletter-form__button field__button"
+            name="commit"
+            id="Subscribe"
+            aria-label="{{ 'newsletter.button_label' | t }}"
+          >
+            <span class="svg-wrapper">
+              Subscribe
+            </span>
+          </button>
+        </div>
+        {%- if form.errors -%}
+          <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">
+            <span class="svg-wrapper">
+              {{- 'icon-error.svg' | inline_asset_content -}}
+            </span>
+            {{- form.errors.translated_fields.email | capitalize }}
+            {{ form.errors.messages.email -}}
+          </small>
+        {%- endif -%}
+      </div>
+      {%- if form.posted_successfully? -%}
+        <h3
+          class="newsletter-form__message newsletter-form__message--success form__message"
+          id="Newsletter-success--{{ section.id }}"
+          tabindex="-1"
+          autofocus
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-success.svg' | inline_asset_content -}}
+          </span>
+          {{- 'newsletter.success' | t }}
+        </h3>
+      {%- endif -%}
+    {% endform %}
+  </div>
+
+  <p class="custom-sub-bottom-des">
+    {{ section.settings.bottom_des }}
+  </p>
+</div>
+
+<style>
+.custom-subscribe-section {
+    width: 100%;
+    background-color: #7e8b4c;
+    padding: 60px 40px 40px;
+}
+.custom-subscribe {
+    display: block;
+    max-width: 880px;
+    margin: auto;
+}
+.custom-subscribe>h2 {
+    color: #fff;
+    text-align: center;
+    margin: 0;
+}
+.custom-subscribe>.custom-sub-des {
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 32px;
+}
+.custom-subscribe>.custom-sub-bottom-des {
+    font-size: 18px;
+    text-align: center;
+    color: #fff;
+}
+.custom-sub-form {
+    max-width: 600px;
+    display: block;
+    margin: auto;
+}
+.custom-sub-form .newsletter-form__field-wrapper {
+
+}
+.custom-sub-form .field {
+    gap: 20px;
+}
+.custom-sub-form input.field__input {
+    width: 400px;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #121212;
+    box-shadow: unset !important;
+}
+.custom-sub-form .field:before, .custom-sub-form .field:after {
+    display: none;
+}
+.custom-sub-form label.field__label {
+    color: #aaa;
+    letter-spacing: 0.5px;
+}
+.custom-sub-form button.newsletter-form__button {
+    background-color: #f9d94c;
+    color: #121212;
+    border-radius: 6px;
+    height: auto;
+    width: 160px;
+    position: unset;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+.custom-sub-form button.newsletter-form__button:hover {
+    background-color: #efb914;
+}
+.custom-subscribe .newsletter-form__message--success {
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Also ensure error messages are visible */
+.custom-subscribe .newsletter-form__message {
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Make sure the SVG icons are visible too */
+.custom-subscribe .newsletter-form__message .svg-wrapper {
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.custom-subscribe .newsletter-form__message .svg-wrapper svg {
+    fill: #fff;
+    width: 16px;
+    height: 16px;
+}
+
+@media only screen and (max-width: 768px) {
+  .custom-subscribe-section {
+      width: 100%;
+      padding: 40px 20px 20px;
+  }
+  .custom-subscribe {
+      display: block;
+      max-width: 100%;
+      margin: auto;
+  }
+  .custom-subscribe>h2 {
+  }
+  .custom-subscribe>.custom-sub-des {
+      font-size: 18px;
+      margin-bottom: 20px;
+  }
+  .custom-subscribe>.custom-sub-bottom-des {
+      font-size: 16px;
+  }
+  .custom-sub-form {
+      max-width: 600px;
+      display: block;
+      margin: auto;
+  }
+  .custom-sub-form .newsletter-form__field-wrapper {
+  
+  }
+  .custom-sub-form .field {
+      gap: 10px;
+      flex-direction: column;
+      align-items: center;
+  }
+  .custom-sub-form input.field__input {
+      width: 400px;
+      max-width: 100%;
+      border-radius: 6px;
+      background-color: #fff;
+      color: #121212;
+      box-shadow: unset !important;
+  }
+  .custom-sub-form label.field__label {
+  }
+  .custom-sub-form button.newsletter-form__button {
+      width: 160px;
+      padding: 8px 40px;
+      font-size: 18px;
+  }  
+}  
+</style>
+
+{% schema %}
+  {
+    "name": "Custom subscribe",
+    "class": "custom-subscribe-section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "textarea",
+        "id": "bottom_des",
+        "label": "Bottom description"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom subscribe"
+      }
+    ]
+  }
+{% endschema %}

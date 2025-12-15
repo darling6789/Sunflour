@@ -1,0 +1,129 @@
+<div class="s-home-why-choose">
+  <div class="s-home-why-choose-heading">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+
+  <div class="s-home-why-choose-row">
+    {% for block in section.blocks %}
+    <div class="s-home-why-choose-block">
+      {{ block.settings.icon }}
+      <h3>{{ block.settings.title }}</h3>
+      <p>{{ block.settings.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.s-home-why-choose-section {
+	width: 100%;
+    background-color: #fffbf7;
+    padding: 30px 40px;
+}
+.s-home-why-choose-heading {
+	width: 100%;
+	max-width: 75%;
+    margin: auto;
+}
+.s-home-why-choose-heading>h2 {
+    margin-top: 0;
+    text-align: center;
+}
+.s-home-why-choose-row {
+    margin-top: 45px;
+	display: flex;
+	align-items: flex-start;
+    justify-content: center;
+}
+.s-home-why-choose-block {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 300px;
+    margin: 0 40px;
+}
+.s-home-why-choose-block svg {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+}
+.s-home-why-choose-block>h3 {
+    text-align: center;
+}
+.s-home-why-choose-block>p {
+    margin-top: 0;
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .s-home-why-choose-section {
+    padding: 20px;
+  }
+  .s-home-why-choose-heading {
+  	max-width: 100%;
+  }
+  .s-home-why-choose-heading>h2 {
+  }
+  .s-home-why-choose-row {
+    margin-top: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .s-home-why-choose-block {
+  	max-width: 300px;
+    margin: 20px 0;
+  }
+  .s-home-why-choose-block svg {
+  }
+  .s-home-why-choose-block>h3 {
+  }
+  .s-home-why-choose-block>p {
+  }  
+}
+  
+</style>
+
+{% schema %}
+  {
+    "name": "S home why choose",
+    "class": "s-home-why-choose-section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image_text",
+        "name": "Image & text",
+        "settings": [
+          {
+            "type": "html",
+            "id": "icon",
+            "label": "Icon image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "S home why choose"
+      }
+    ]
+  }
+{% endschema %}

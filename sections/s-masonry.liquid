@@ -1,0 +1,79 @@
+<div class="masonry-wrap p-width" id="wedding-cakes">
+  <div class="masonry">
+    {% for block in section.blocks %}
+      <div class="item">
+        <img src="{{ block.settings.image | img_url: 'master' }}">
+      </div>
+    {% endfor %}  
+  </div>
+</div>
+
+<style>
+.s-masonry-section {
+  padding: 60px 40px;
+}
+  
+.masonry { /* Masonry container */
+  column-count: 4;
+  column-gap: 1em;
+}
+
+.masonry .item { /* Masonry bricks or child elements */
+  background-color: #eee;
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
+  line-height: 0;
+}  
+
+@media only screen and (max-width: 990px) {
+  .s-masonry-section {
+    padding: 40px 20px;
+  }
+  .masonry {
+    column-gap: 10px;
+  }
+  .masonry .item {
+    margin: 0 0 10px;
+  }
+}
+</style>
+
+{% schema %}
+  {
+    "name": "S masonry",
+    "class": "s-masonry-section",
+    "settings": [
+      
+    ],
+    "presets": [
+      {
+        "name": "S masonry"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Image",
+        "type": "image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

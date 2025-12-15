@@ -1,0 +1,157 @@
+<div class="s-home-reviews">
+  <div class="s-home-reviews-slider">
+    {% for block in section.blocks %}
+      <div class="s-home-review">
+        <p>{{ block.settings.des }}</p>
+        <h3>{{ block.settings.name }}</h3>
+      </div>
+    {% endfor %}  
+  </div>
+
+  <div class="s-review-prev">
+    <svg role="button" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="collection__swiper__arrow collection__swiper__arrow--previous" id="prev-review" aria-label="Previous review" aria-controls="" name="" tabindex="0"><rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="#f4da66"></rect><rect x="0.5" y="0.5" width="39" height="39" rx="19.5" stroke="#f4da66"></rect><path d="M12.6465 19.999L27.353 19.999" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21.334 13.9834L27.3503 19.9997L21.334 26.016" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </div>
+  <div class="s-review-next">
+    <svg role="button" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="collection__swiper__arrow collection__swiper__arrow--next" id="next-review" aria-label="Next review" aria-controls="" name="" tabindex="0"><rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="#f4da66"></rect><rect x="0.5" y="0.5" width="39" height="39" rx="19.5" stroke="#f4da66"></rect><path d="M12.6465 19.999L27.353 19.999" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21.334 13.9834L27.3503 19.9997L21.334 26.016" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </div>
+</div>
+
+<script>
+$('.s-home-reviews-slider').slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  infinite: true,
+  speed: 0,
+  adaptiveHeight: true,
+  prevArrow: '.s-review-prev',
+  nextArrow: '.s-review-next',
+  dots: false
+});
+</script>
+
+<style>
+.s-home-reviews-section {
+	width: 100%;
+	padding: 120px 40px;
+    background-color: #fff5e9;
+}
+.s-home-reviews {
+	max-width: 1200px;
+	margin: auto;
+	background: #7e8b4c;
+    border-radius: 15px;
+    padding: 50px 30px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 700px;
+}
+.s-home-reviews-slider {
+	width: 100%;
+    display: flex;
+    align-items: center;
+}
+.s-home-review {
+	width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.s-home-review p {
+    text-align: center;
+    font-size: 50px;
+    line-height: 110%;
+    max-width: 800px;
+    margin: auto;
+    color: white;
+}
+.s-home-review h3 {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 40px;
+    color: white;
+}
+.s-review-prev {
+  position: absolute;
+  bottom: 30px;
+  right: 80px;
+  transform: rotate(180deg);
+  line-height: 0;
+  display: block;
+  cursor: pointer;
+}
+.s-review-prev svg {
+
+}
+.s-review-next {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  line-height: 0;
+  display: block;
+  cursor: pointer;
+}
+.s-review-next svg {
+
+}
+
+@media only screen and (max-width: 600px) {
+  .s-home-reviews-section {
+  	width: 100%;
+  	padding: 40px 20px;
+  }
+  .s-home-reviews {
+  	max-width: 100%;
+  	margin: auto;
+  	background: #f4e5ca;
+    border-radius: 10px;
+    padding: 20px;
+    height: 400px;
+  }
+  .s-home-reviews-slider {
+  }
+  .s-home-review {
+  }
+  .s-home-review p {
+      font-size: 24px;
+      max-width: 100%;
+  }
+  .s-home-review h3 {
+      font-size: 20px;
+      margin-top: 40px;
+  }
+}
+</style>
+
+{% schema %}
+  {
+    "name": "S home reviews",
+    "tag": "section",
+    "class": "s-home-reviews-section",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "review",
+        "name": "Review",
+        "settings": [
+          {
+            "type": "text",
+            "id": "name",
+            "label": "Name"
+          },
+          {
+            "type": "textarea",
+            "id": "des",
+            "label": "Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "S home reviews"
+      }
+    ]
+  }
+{% endschema %}

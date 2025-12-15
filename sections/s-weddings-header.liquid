@@ -1,0 +1,143 @@
+<div class="lp-Row s-weddings-header">
+    <div class="row row-max"><div>
+    <h1>{{section.settings.heading}}</h1>
+    <p>{{section.settings.description}}</p>
+
+    <div class="s-weddings-header-emails">
+        {% for block in section.blocks %}
+            <a href="mailto:{{ block.settings.email }}" class="s-weddings-header-email" style="background-image: url({{ block.settings.image | img_url: 'large' }})">
+                <div class="s-weddings-header-email-back"></div>
+                <p>{{ block.settings.email }}</p>
+            </a>
+        {% endfor %}  
+    </div>
+</div>
+
+<style>
+.s-weddings-header {
+    height: 450px;
+}
+.s-weddings-header h1 {
+    margin-bottom: 0;
+}
+.s-weddings-header-emails {
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 40px;
+}
+.s-weddings-header-emails .s-weddings-header-email {
+    display: flex;
+    text-decoration: none;
+    min-width: 400px;
+    min-height: 320px;
+    align-items: flex-end;
+    padding: 20px;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.s-weddings-header-email-back {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #ffffff00;
+}
+.s-weddings-header-emails p {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    background: #ffffffdd;
+}
+.s-weddings-header-emails .s-weddings-header-email:hover .s-weddings-header-email-back {
+    background-color: #ffffff88;
+}
+
+@media only screen and (max-width: 990px) {
+    .s-weddings-header {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .s-weddings-header-emails .s-weddings-header-email {
+        min-width: 300px;
+        min-height: 240px;
+    }
+    .s-weddings-header-emails p {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .s-weddings-header {
+        text-align: center;
+    }
+    .s-weddings-header-emails {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .s-weddings-header-emails .s-weddings-header-email {
+        max-width: 100%;
+        min-width: 400px;
+        min-height: 320px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .s-weddings-header-emails .s-weddings-header-email {
+        min-width: 300px;
+        min-height: 240px;
+    }
+}
+
+</style>
+
+{% schema %}
+{
+    "name": "S weddings header",
+    "class": "s-weddings-header-section",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "email",
+            "name": "Email",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "email",
+                    "label": "Email"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "S weddings header"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,202 @@
+<div class="s-footer-locations">
+  <h2>{{ section.settings.heading }}</h2>
+  
+  <div class="s-footer-locations-row">
+    {% for block in section.blocks %}
+      <div class="s-footer-location-item">
+        <h3 onclick="document.location='{{ block.settings.link }}'">{{ block.settings.name }}</h3>
+        <div class="s-footer-location-item-row">
+          {% render 'icon-marker' %}
+          <p>{{ block.settings.address }}</p>
+        </div>
+
+        <div class="s-footer-location-item-row">
+          {% render 'icon-phone' %}
+          <a href="tel:{{ block.settings.phone }}">{{ block.settings.phone }}</a>
+        </div>
+
+        <div class="s-footer-location-item-row">
+          {% render 'icon-email' %}
+          <a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a>
+        </div>
+      </div>
+    {% endfor %}  
+  </div>  
+</div>
+
+<style>
+.s-footer-locations-section {
+  width: 100%;
+  padding: 60px 60px;
+  background: #fff5e9;
+}
+.s-footer-locations {
+  width: 100%;
+}
+.s-footer-locations h2 {
+  text-align: center;
+  margin-top: 0;
+}
+.s-footer-locations-row {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 60px;
+}
+.s-footer-location-item {
+  display: grid;
+  gap: 10px;
+  width: calc(20% - 48px);
+}
+.s-footer-location-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.s-footer-location-item-row svg {
+  display: block;
+  width: 20px;
+  height: auto;
+}
+.s-footer-location-item h3 {
+   margin: 0;
+   font-weight: 600;
+   margin-bottom: 10px;
+   text-decoration: underline;
+   cursor: pointer;
+} 
+.s-footer-location-item p {
+  margin: 0;
+  line-height: 120%;
+  font-size: 16px;
+  width: calc(100% - 30px);
+}
+.s-footer-location-item a {
+  display: block;
+  color: #873c17;
+  word-break: break-word;
+  font-size: 15px;
+  text-decoration: none;
+  line-height: 120%;
+  width: calc(100% - 30px);
+}
+
+@media only screen and (max-width: 990px) {
+  .s-footer-locations-section {
+    padding: 60px 30px;
+  }
+  .s-footer-locations-row {
+    flex-wrap: wrap;  
+    gap: 40px 30px;
+  }
+  .s-footer-location-item {
+    display: grid;
+    gap: 10px;
+    width: calc(33% - 20px);
+  }
+  .s-footer-location-item-row {
+    gap: 10px;
+  }
+  .s-footer-location-item-row svg {
+    width: 20px;
+  }
+  .s-footer-location-item h3 {
+  } 
+  .s-footer-location-item p {
+    margin: 0;
+    font-size: 16px;
+    width: calc(100% - 30px);
+  }
+  .s-footer-location-item a {
+    font-size: 16px;
+    width: calc(100% - 30px);
+  }
+}
+
+@media only screen and (max-width: 990px) {
+  .s-footer-locations-section {
+    padding: 40px 20px;
+  }
+  .s-footer-locations-row {
+    flex-wrap: wrap;  
+    gap: 40px 20px;
+  }
+  .s-footer-location-item {
+    display: grid;
+    gap: 10px;
+    width: calc(50% - 10px);
+  }
+  .s-footer-location-item-row {
+    gap: 10px;
+  }
+  .s-footer-location-item-row svg {
+    width: 20px;
+  }
+  .s-footer-location-item h3 {
+  } 
+  .s-footer-location-item p {
+    margin: 0;
+    font-size: 16px;
+    width: calc(100% - 30px);
+  }
+  .s-footer-location-item a {
+    font-size: 16px;
+    width: calc(100% - 30px);
+  }
+} 
+</style>
+
+{% schema %}
+  {
+    "name": "S footer locations",
+    "class": "s-footer-locations-section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "location",
+        "name": "Location",
+        "settings": [
+          {
+            "type": "text",
+            "id": "name",
+            "label": "Location name"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Location link"
+          },
+          {
+            "type": "text",
+            "id": "address",
+            "label": "Address"
+          },
+          {
+            "type": "text",
+            "id": "phone",
+            "label": "Phone number"
+          },
+          {
+            "type": "text",
+            "id": "email",
+            "label": "Email"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "S footer locations"
+      }
+    ]
+  }
+{% endschema %}

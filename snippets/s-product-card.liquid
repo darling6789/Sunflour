@@ -1,0 +1,57 @@
+<div class="s-product-card">  
+  <div class="s-product-card-image" onclick="window.location='{{ product.url }}'">
+    {% assign first_image = product.featured_image %}
+    {% assign second_image = product.images[1] %}
+    {% assign variant = product.variants.first %}
+
+    <img class="s-product-card-image-1" src="{{ first_image | img_url: 'large' }}" alt="{{ product.title }}">
+    {% if second_image %}
+      <img class="s-product-card-image-2" src="{{ second_image | img_url: 'large' }}" alt="{{ product.title }}">
+    {% else %}
+      <img class="s-product-card-image-2" src="{{ first_image | img_url: 'large' }}" alt="{{ product.title }}">
+    {% endif %}
+  </div>
+
+  <div class="s-product-card-des" onclick="window.location='{{ product.url }}'">
+    <h4>{{ product.title }}</h4>
+    
+    {% if product.compare_at_price > product.price %}
+      <div class="s-product-price">
+        <span class="s-price-sale">{{ product.price | money }}</span>
+        <span class="s-price-regular">{{ product.compare_at_price | money }}</span>
+      </div>
+    {% else %}
+      <div class="s-product-price">
+        <span class="s-price">{{ product.price | money }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="s-product-card-actions">
+    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="s-add-to-cart-form">
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      
+      <button type="submit" 
+              class="s-add-to-cart-btn s-btn"
+              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+              data-product-id="{{ product.id }}"
+              onclick="event.stopPropagation()">
+        <span class="s-btn-text">
+          {% if product.selected_or_first_available_variant.available %}
+            Add to Cart
+          {% else %}
+            Sold Out
+          {% endif %}
+        </span>
+        <div class="s-loading-spinner" style="display: none;">
+          <svg viewBox="0 0 24 24" width="16" height="16">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+              <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+              <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+      </button>
+    </form>
+  </div>
+</div>

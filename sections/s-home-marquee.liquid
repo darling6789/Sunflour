@@ -1,0 +1,147 @@
+<div class="icon-marquee-section" style="background-color: #121212" role="region" aria-label="Scrolling marquee">
+  <div class="icon-marquee-wrapper">
+    <ul class="icon-marquee-content" style="--marquee-width: 2127px;">
+      {% for block in section.blocks %}
+        <li class="icon-marquee-item">
+          {{ block.settings.icon }}
+          <p class="icon-marquee-text text-body-medium" aria-live="polite">{{ block.settings.text }}</p>
+        </li>
+      {% endfor %}
+      {% for block in section.blocks %}
+        <li class="icon-marquee-item">
+          {{ block.settings.icon }}
+          <p class="icon-marquee-text text-body-medium" aria-live="polite">{{ block.settings.text }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+    <ul class="icon-marquee-content" aria-hidden="true">
+      {% for block in section.blocks %}
+        <li class="icon-marquee-item">
+          {{ block.settings.icon }}
+          <p class="icon-marquee-text text-body-medium" aria-live="polite">{{ block.settings.text }}</p>
+        </li>
+      {% endfor %}
+      {% for block in section.blocks %}
+        <li class="icon-marquee-item">
+          {{ block.settings.icon }}
+          <p class="icon-marquee-text text-body-medium" aria-live="polite">{{ block.settings.text }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const marqueeContent = document.querySelector('#shopify-section-{{section.id}} .icon-marquee-content');
+    // Get the actual width by cloning and measuring without animation
+    const clone = marqueeContent.cloneNode(true);
+    clone.style.animation = 'none';
+    clone.style.position = 'absolute';
+    clone.style.visibility = 'hidden';
+    clone.style.width = 'auto';
+    document.body.appendChild(clone);
+    const actualWidth = clone.offsetWidth;
+    document.body.removeChild(clone);
+    marqueeContent.style.setProperty('--marquee-width', actualWidth + 'px');
+  });
+</script>
+<style>
+  #shopify-section-{{section.id}} .icon-marquee-wrapper {
+    --gap: 1rem;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: var(--gap);
+  }
+
+  #shopify-section-{{section.id}} .icon-marquee-content {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-around;
+    gap: var(--gap);
+    min-width: 100%;
+    animation: scroll 45s linear infinite;
+    padding-left: 0;
+    margin: 3px 0;
+  }
+
+  #shopify-section-{{section.id}} .icon-marquee-item {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 0 0 auto;
+    text-align: center;
+    white-space: nowrap;
+    padding-right: 20px;
+  }
+
+  #shopify-section-{{section.id}} .icon-marquee-item svg {
+    width: 22px;
+    height: 20px;
+    object-fit: contain;
+    margin-right: 15px;
+  }
+
+  #shopify-section-{{section.id}} .icon-marquee-item svg path {
+    fill: #fff5e9;
+  }
+
+  #shopify-section-{{section.id}} .icon-marquee-text {
+    font-size: 16px;
+    color: #fff5e9;
+    font-family: "Josefin Slab", serif;
+    font-style: italic;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{section.id}} .icon-marquee-content {
+      animation-play-state: paused !important;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "S home marquee",
+    "class": "s-home-marquee-section icon-marquee",
+    "tag": "section",
+    "settings": [
+    
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "html",
+            "id": "icon",
+            "label": "SVG Icon"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "S home marquee"
+      }
+    ]
+  }
+{% endschema %}

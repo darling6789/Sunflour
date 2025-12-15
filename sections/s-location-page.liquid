@@ -1,0 +1,240 @@
+<div class="locations location-header">
+   <h1 class="row row-max">{{ page.metafields.global.title }}</h1>
+   <div class="location-header-contact row row-max"><p><i style="color: #fff;" class="fas fa-regular fa-phone"></i> <span style="color:#fff !important;">{% if page.metafields.global.phone != '-' %}{{ page.metafields.global.phone }} | {% endif %} <i class="fas fa-regular fa-map-marker-alt"></i> {{ page.metafields.global.address }}</span></p></div>
+   <div class="btnRow">
+     <a class="btn" href="{{ page.metafields.global.get_direction_button_link }}" target="_blank">Get Directions</a>
+   </div>
+</div>
+<div class="row-max w-100">
+  {% render 'breadcrumbs' %} 
+</div>
+<div class="row row-max alignCenter">
+   <h2>{{ page.metafields.global.location_details_heading }}</h2>
+</div>
+<div class="row row-max">
+   <div class="col-6">
+      <p><a title="Home" href="/">Sunflour Baking Company</a> is the Charlotte&nbsp;<strong>bakery &amp; cafe</strong>&nbsp;you have been looking for! Come visit our five&nbsp;locations to get a taste of our fresh brewed coffee or small batch, homemade pastries and breads.</p>
+      <p>Since 2009, Sunflour Baking Company has been a local favorite in the Noda neighborhood as well as for customers all around Charlotte and beyond. People all over the country <a title="Cake Jars" href="/pages/cake-jars">order our Cake Jars</a> every day!</p>
+      <p>We invite you to come to visit our local cafes. They are all great spots to hang out, get work done, catch up with friends or enjoy some quiet time. We are sure you will love our bright, friendly interiors and of course our pastry case.</p>
+   </div>
+   <div class="col-6">
+      {% comment %} <img alt="Bakery in Charlotte, NC - Elizabeth Area" src="{{ page.metafields.global.image }}"> {% endcomment %}
+      <iframe loading="lazy" style="border: 0;" height="450" width="600" src="{{ page.metafields.global.google_map_iframe_src }}" referrerpolicy="no-referrer-when-downgrade" allowfullscreen=""></iframe>
+      <div>
+         <div id="rg-c5" onclick="if(event.target.nodeName.toLowerCase() != 'a') {window.open(this.querySelector('.rg-rl').href);return 0;}">
+            <div class="rg-ac">
+               <div class="rg-sb"></div>
+               <a class="rg-sl" href="https://restaurantguru.com" target="_blank">Restaurant Guru</a> <span>Recommended</span> <a class="rg-rl" href="https://restaurantguru.com/Sunflour-Baking-Company-Charlotte" target="_blank">Sunflour Baking Company</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="row row-max location-image-row">
+  {% unless page.handle == 'charlotte-bakery-noda' %}
+    <img src="{{ page.metafields.global.outside_image }}">
+    <img src="{{ page.metafields.global.inside_image }}">
+    <img src="{{ page.metafields.global.counter_image }}">
+  {% else %}
+    <img src="{{ page.metafields.global.inside_image }}">
+  {% endunless %}
+</div>
+<div class="row row-max">
+   <div class="col-6">
+      <div class="reviewLocation">
+         <div class="star"><img alt="" src="//cdn.shopify.com/s/files/1/0079/6121/5087/files/5star.png?v=1545855048"></div>
+         I love everything about Sunflour. They have coffee in an ice cream cone, because why not? And their pastries are delicious. I love their croissants - so flakey - and they brew pure intentions coffee so of course it's good. They also have a loyalty program where you give your phone number and rack up points that lead to free cups of coffee and such.
+         
+      </div>
+
+   </div>
+
+   <div class="col-6">
+     <!-- <iframe loading="lazy" style="border: 0;" height="450" width="600" src="{{ page.metafields.global.google_map_iframe_src }}" referrerpolicy="no-referrer-when-downgrade" allowfullscreen=""></iframe>
+     <div class="shop-hours">
+        <div class="bp-opening-hours"><span class="bp-title"><span class="bp-title">{{ page.metafields.global.time_opening }}</span></span></div>
+     </div> -->
+     <h2>Location Details:</h2>
+     <div class="bp-address">{{ page.metafields.global.address }}</div>
+     <div class="bp-directions"><a href="{{ page.metafields.global.get_direction_button_link }}" target="_blank">Get directions</a></div>
+     <div class="bp-phone" itemprop="telephone">{% if page.metafields.global.phone != '-' %}{{ page.metafields.global.phone }} {% endif %}</div>
+     <div class="bp-contact bp-contact-email" content="elizabeth@sunflourbakingcompany.com" itemprop="email"><a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a></div>
+     <div data-form-identifier="070a6b44-e6b0-4aac-9afa-bb3858435de8" data-guid="55CCA4D0-4263-78BB-9943-C9D1C757DDA1" style="background: #ffffff none repeat scroll 0px 0px / cover; inset: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; cursor: auto; direction: inherit; float: none; font-size: inherit; font-style: inherit; font-variant: normal; font-weight: inherit; letter-spacing: normal; line-height: inherit; list-style-type: inherit; list-style-position: outside; list-style-image: none; margin: 0px; max-height: none; min-height: 0px; min-width: 0px; opacity: 1; position: static; quotes: '\' \'\'; table-layout: auto; text-align: inherit; text-decoration: inherit; text-indent: 0px; text-transform: none; unicode-bidi: normal; vertical-align: baseline; visibility: inherit; white-space: normal; word-spacing: normal; z-index: auto; box-shadow: none; columns: auto auto; column-gap: normal; column-rule: medium none black; font-feature-settings: normal; overflow: visible; hyphens: manual; perspective: none; perspective-origin: 50% 50%; backface-visibility: visible; text-shadow: none; transition: all 0s ease 0s; transform: translate(0%); transform-origin: 50% 50% 0px; transform-style: flat; word-break: normal; display: block; align-self: flex-start; border-radius: 4px; height: auto; padding: 25px; width: auto; max-width: 600px; color: #000000; font-family: \'Verdana', Geneva, sans-serif; box-sizing: border-box;" class="springbot-embedded springbot-form" data-recaptcha-sitekey="" id="springbot-embedded-form">
+        <form class="location-form" style="background-attachment: scroll; background-color: transparent; background-image: none; background-position-x: 0px; background-position-y: 0px; background-repeat: repeat; bottom: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; cursor: auto; direction: inherit; float: none; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-position: normal; font-weight: inherit; height: auto; left: auto; letter-spacing: normal; line-height: inherit; list-style-type: inherit; list-style-position: outside; list-style-image: none; max-height: none; max-width: none; min-height: 0px; min-width: 0px; opacity: 1; position: static; quotes: '' ''; right: auto; table-layout: auto; text-align: inherit; text-decoration-line: inherit; text-decoration-style: inherit; text-decoration-color: inherit; text-decoration-thickness: inherit; text-indent: 0px; text-transform: none; top: auto; unicode-bidi: normal; vertical-align: baseline; visibility: inherit; white-space: normal; width: auto; word-spacing: normal; z-index: auto; background-origin: padding-box; background-clip: border-box; background-size: cover; border-image-outset: 0; border-image-repeat: stretch; border-image-slice: 100%; border-image-source: none; border-image-width: 1; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; column-count: auto; column-gap: normal; column-rule-width: medium; column-rule-style: none; column-rule-color: black; column-width: auto; font-feature-settings: normal; overflow-x: visible; overflow-y: visible; hyphens: manual; perspective: none; perspective-origin: 50% 50%; backface-visibility: visible; text-shadow: none; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; transform: none; transform-origin: 50% 50% 0px; transform-style: flat; word-break: normal; display: flex; flex-direction: column; box-sizing: border-box; padding: 0px; margin: 0px; border: medium none currentcolor;" name="Embedded">
+           <div style="background-attachment: scroll; background-color: transparent; background-image: none; background-position-x: 0px; background-position-y: 0px; background-repeat: repeat; bottom: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; cursor: auto; direction: inherit; float: none; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-position: normal; font-weight: inherit; height: auto; left: auto; letter-spacing: normal; line-height: inherit; list-style-type: inherit; list-style-position: outside; list-style-image: none; max-height: none; max-width: none; min-height: 0px; min-width: 0px; opacity: 1; position: static; quotes: '' ''; right: auto; table-layout: auto; text-align: inherit; text-decoration-line: inherit; text-decoration-style: inherit; text-decoration-color: inherit; text-decoration-thickness: inherit; text-indent: 0px; text-transform: none; top: auto; unicode-bidi: normal; vertical-align: baseline; visibility: inherit; white-space: normal; width: auto; word-spacing: normal; z-index: auto; background-origin: padding-box; background-clip: border-box; background-size: cover; border-image-outset: 0; border-image-repeat: stretch; border-image-slice: 100%; border-image-source: none; border-image-width: 1; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; column-count: auto; column-gap: normal; column-rule-width: medium; column-rule-style: none; column-rule-color: black; column-width: auto; font-feature-settings: normal; overflow-x: visible; overflow-y: visible; hyphens: manual; perspective: none; perspective-origin: 50% 50%; backface-visibility: visible; text-shadow: none; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; transform: none; transform-origin: 50% 50% 0px; transform-style: flat; word-break: normal; color: #4a4a4a; display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; box-sizing: border-box; padding: 10px; margin: 0px; border: medium none currentcolor;" class="springbot-form-group springbot-form-group--inline springbot-form-group__input" required="true" name="Email" label-value="Sign up" show-label="true"><label style="background-attachment: scroll; background-color: transparent; background-image: none; background-position-x: 0px; background-position-y: 0px; background-repeat: repeat; bottom: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; cursor: auto; direction: inherit; display: inline; float: none; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-position: normal; font-weight: inherit; height: auto; left: auto; letter-spacing: normal; line-height: inherit; list-style-type: inherit; list-style-position: outside; list-style-image: none; max-height: none; max-width: none; min-height: 0px; min-width: 0px; opacity: 1; position: static; quotes: '' ''; right: auto; table-layout: auto; text-align: inherit; text-decoration-line: inherit; text-decoration-style: inherit; text-decoration-color: inherit; text-decoration-thickness: inherit; text-indent: 0px; text-transform: none; top: auto; unicode-bidi: normal; vertical-align: baseline; visibility: inherit; white-space: normal; width: auto; word-spacing: normal; z-index: auto; background-origin: padding-box; background-clip: border-box; background-size: cover; border-image-outset: 0; border-image-repeat: stretch; border-image-slice: 100%; border-image-source: none; border-image-width: 1; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; column-count: auto; column-gap: normal; column-rule-width: medium; column-rule-style: none; column-rule-color: black; column-width: auto; font-feature-settings: normal; overflow-x: visible; overflow-y: visible; hyphens: manual; perspective: none; perspective-origin: 50% 50%; backface-visibility: visible; text-shadow: none; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; transform: none; transform-origin: 50% 50% 0px; transform-style: flat; word-break: normal; color: #000000; box-sizing: border-box; padding: 0px; margin: 0px 8px 0px 0px; border: medium none currentcolor;">10% Off Your <br style="box-sizing: border-box;">First Order</label><input style="background-attachment: scroll; background-image: none; background-position-x: 0px; background-position-y: 0px; background-repeat: repeat; bottom: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; cursor: auto; direction: inherit; display: inline; float: none; font-family: inherit; font-style: inherit; font-variant-caps: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-position: normal; font-weight: inherit; height: auto; left: auto; letter-spacing: normal; line-height: inherit; list-style-type: inherit; list-style-position: outside; list-style-image: none; max-height: none; max-width: none; min-height: 0px; min-width: 0px; opacity: 1; position: static; quotes: '' ''; right: auto; table-layout: auto; text-align: inherit; text-decoration-line: inherit; text-decoration-style: inherit; text-decoration-color: inherit; text-decoration-thickness: inherit; text-indent: 0px; text-transform: none; top: auto; unicode-bidi: normal; visibility: inherit; white-space: normal; width: auto; word-spacing: normal; z-index: auto; background-origin: padding-box; background-clip: border-box; background-size: cover; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; column-count: auto; column-gap: normal; column-rule-width: medium; column-rule-style: none; column-rule-color: black; column-width: auto; font-feature-settings: normal; overflow-x: visible; overflow-y: visible; hyphens: manual; perspective: none; perspective-origin: 50% 50%; backface-visibility: visible; text-shadow: none; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; transform: none; transform-origin: 50% 50% 0px; transform-style: flat; word-break: normal; vertical-align: middle; border-image-outset: 0; border-image-repeat: stretch; border-image-slice: 100%; border-image-source: none; border-image-width: 1; font-size: 16px; background-color: white; flex-shrink: 1; flex-basis: 0%; flex-grow: 1; box-sizing: border-box; padding: 10px 15px 10px 15px; margin: 0px; border: 3px solid gray;" class="springbot-form-input" placeholder="Email" name="Email" required="" type="email"><button style="bottom: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; direction: inherit; display: inline; float: none; font-style: inherit; font-variant-caps: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-position: normal; font-weight: inherit; height: auto; left: auto; letter-spacing: normal; line-height: inherit; list-style-type: inherit; list-style-position: outside; list-style-image: none; max-height: none; max-width: none; min-height: 0px; min-width: 0px; opacity: 1; position: static; quotes: '' ''; right: auto; table-layout: auto; text-indent: 0px; text-transform: none; top: auto; unicode-bidi: normal; vertical-align: baseline; visibility: inherit; white-space: normal; word-spacing: normal; z-index: auto; column-count: auto; column-gap: normal; column-rule-width: medium; column-rule-style: none; column-rule-color: black; column-width: auto; font-feature-settings: normal; overflow-x: visible; overflow-y: visible; hyphens: manual; perspective: none; perspective-origin: 50% 50%; backface-visibility: visible; text-shadow: none; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; transform: none; transform-origin: 50% 50% 0px; transform-style: flat; word-break: normal; cursor: pointer; text-align: center; text-decoration-line: none; text-decoration-style: solid; text-decoration-color: currentcolor; text-decoration-thickness: auto; font-family: Arial, Helvetica, sans-serif; appearance: none; background-position-x: 0%; background-position-y: 0%; background-repeat: repeat; background-attachment: scroll; background-size: auto; background-origin: padding-box; background-clip: border-box; outline-color: initial; outline-style: initial; outline-width: initial; background-image: none; border-image-outset: 0; border-image-repeat: stretch; border-image-slice: 100%; border-image-source: none; border-image-width: 1; border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 14px; box-shadow: 0 0 0 0; background-color: #6a7d21; color: #ffffff; border-radius: 4px; border: medium none currentcolor; width: auto; align-self: stretch; border-top-left-radius: 0px; border-bottom-left-radius: 0px; box-sizing: border-box; padding: 10px 25px 10px 25px; margin: 0px;" class="springbot-button" type="submit">Submit</button></div>
+        </form>
+        <div style="background: #ffffff none repeat scroll 0px 0px / cover; inset: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; cursor: auto; float: none; font-variant: normal; letter-spacing: normal; list-style: outside none disc; margin: 0px; max-height: none; min-height: 0px; min-width: 0px; opacity: 1; quotes: '\' \'\'; table-layout: auto; text-indent: 0px; text-transform: none; unicode-bidi: normal; vertical-align: baseline; visibility: inherit; white-space: normal; word-spacing: normal; z-index: auto; box-shadow: none; columns: auto auto; column-gap: normal; column-rule: medium none black; font-feature-settings: normal; overflow: visible; hyphens: manual; perspective: none; perspective-origin: 50% 50%; backface-visibility: visible; text-shadow: none; transition: all 0s ease 0s; transform: none; transform-origin: 50% 50% 0px; transform-style: flat; word-break: normal; font-size: medium; line-height: 1; direction: ltr; text-align: start; font-style: normal; font-weight: normal; text-decoration: none; align-self: flex-start; border-radius: 4px; height: auto; max-width: 90vw; padding: 25px; width: 600px; position: relative; color: #000000; font-family: \'Verdana', Geneva, sans-serif; box-sizing: border-box; display: none !important;" class="springbot-popup springbot-success" data-delay="10" popup-transition="springbot-popup-opacity">
+           <h1 style="background-position-x: 0px; background-position-y: 0px; font-variant-caps: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-position: normal; text-decoration-line: inherit; text-decoration-style: inherit; text-decoration-color: inherit; text-decoration-thickness: inherit; border-image-outset: 0; border-image-repeat: stretch; border-image-slice: 100%; border-image-source: none; border-image-width: 1; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; column-rule-width: medium; column-rule-style: none; column-rule-color: black; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; background-attachment: scroll; background-color: transparent; background-image: none; background-position: 0 0; background-repeat: repeat; border-radius: 0; bottom: auto; clear: none; clip: auto; counter-increment: none; counter-reset: none; cursor: auto; direction: inherit; float: none; font-family: inherit; font-style: inherit; font-variant: normal; height: auto; left: auto; letter-spacing: normal; line-height: inherit; list-style-type: inherit; list-style-position: outside; list-style-image: none; margin: 0px; max-height: none; max-width: none; min-height: 0; min-width: 0; opacity: 1; outline: invert none medium; overflow: visible; position: static; quotes: '' ''; right: auto; table-layout: auto; text-align: inherit; text-decoration: inherit; text-indent: 0; text-transform: none; top: auto; unicode-bidi: normal; vertical-align: baseline; visibility: inherit; white-space: normal; width: auto; word-spacing: normal; z-index: auto; -webkit-background-origin: padding-box; background-origin: padding-box; -webkit-background-clip: border-box; background-clip: border-box; -webkit-background-size: cover; -moz-background-size: cover; background-size: cover; -webkit-border-image: none; -moz-border-image: none; -o-border-image: none; -webkit-border-radius: 0; -moz-border-radius: 0; -webkit-box-shadow: none; box-shadow: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; -webkit-column-count: auto; -moz-column-count: auto; column-count: auto; -webkit-column-gap: normal; -moz-column-gap: normal; column-gap: normal; -webkit-column-rule: medium none black; -moz-column-rule: medium none black; column-rule: medium none black; -webkit-column-span: 1; -moz-column-span: 1; column-span: 1; -webkit-column-width: auto; -moz-column-width: auto; column-width: auto; font-feature-settings: normal; overflow-x: visible; overflow-y: visible; -webkit-hyphens: manual; -moz-hyphens: manual; hyphens: manual; -webkit-perspective: none; -moz-perspective: none; -ms-perspective: none; -o-perspective: none; perspective: none; -webkit-perspective-origin: 50% 50%; -moz-perspective-origin: 50% 50%; -ms-perspective-origin: 50% 50%; -o-perspective-origin: 50% 50%; perspective-origin: 50% 50%; -webkit-backface-visibility: visible; -moz-backface-visibility: visible; -ms-backface-visibility: visible; -o-backface-visibility: visible; backface-visibility: visible; text-shadow: none; -webkit-transition: all 0s ease 0s; transition: all 0s ease 0s; -webkit-transform: none; -moz-transform: none; -ms-transform: none; -o-transform: none; transform: none; -webkit-transform-origin: 50% 50%; -moz-transform-origin: 50% 50%; -ms-transform-origin: 50% 50%; -o-transform-origin: 50% 50%; transform-origin: 50% 50%; -webkit-transform-style: flat; -moz-transform-style: flat; -ms-transform-style: flat; -o-transform-style: flat; transform-style: flat; word-break: normal; display: block; font-weight: bold; font-size: 2em; padding: 0.67em 0px 0.67em 0px; color: #000000; box-sizing: border-box; border: medium none currentcolor;">Thanks!</h1>
+        </div>
+     </div>
+   </div>
+
+  
+<div class="row row-max">
+  <div style="margin-top: 70px;" class="custom-page intro">
+    <div id="faqSection">
+      <h2>Frequently Asked Questions</h2>
+      <button class="accordion" style="margin-top: 40px;">When are you open?</button>
+      <div class="panel">
+        <p>We are open every day 7am to 4pm.</p>
+      </div>
+      <button class="accordion">Do you ship nationwide?</button>
+      <div class="panel">
+        <p>Yes! We ship select bakery goods <a href="https://sunflourbakingcompany.com/pages/shop">nationwide</a> and offer <a href="https://direct.chownow.com/order/21264/locations" target="_blank">local delivery</a> right from our website. We also offer <a href="https://sunflourbakingcompany.com/pages/catering">Catering services</a>. </p>
+      </div>
+      <button class="accordion">Do you have gift cards?</button>
+      <div class="panel">
+        <p>Yes we do! Gift cards may be purchased and used in our stores. Old school paper only!</p>
+      </div>
+      <button class="accordion">When do you stop serving breakfast?</button>
+      <div class="panel">
+        <p>We don’t! You can get breakfast all day long, no judging.</p>
+      </div>
+      <button class="accordion">Do you offer gluten-free or vegan options?</button>
+      <div class="panel">
+        <p>Yes we do! We regularly stock vegan cookies, muffins, bread and other treats. Gluten free items regularly in stock include cheesecakes, chocolate soufflé cakes, coconut macaroons and other options. Please note: while these items are made without gluten, our bakeries are NOT gluten free facilities so trace levels of gluten are possible.</p>
+      </div>
+      <button class="accordion">Are your products organic?</button>
+      <div class="panel">
+        <p>Some items, such as the coffees and teas, are strictly organic. Most bakery items are not. However, everything is made from scratch, from all natural ingredients. We don’t use any artificial flavorings, preservatives, dough conditioners, bleached or bromated flour.</p>
+      </div>
+      <button class="accordion">Do you make custom cakes?</button>
+      <div class="panel">
+        <p>Absolutely! We make <a href="https://sunflourbakingcompany.com/catering-events/">cakes for weddings</a>, birthdays, graduations and celebrations of all kinds. We make layer cakes, but not “tiered” cakes (different size layers). We also make and ship custom packs of <a href="https://sunflourbakingcompany.com/pages/shop">Cake Jars</a>. </p>
+      </div>
+      <button class="accordion">How far in advance do I need to place an order?</button>
+      <div class="panel">
+        <p>We require 48 hours after having confirmed your request to prepare your order.</p>
+      </div>
+      <button class="accordion">Do you offer day-old bread or pastries?</button>
+      <div class="panel">
+        <p>Yes we do, but we also don’t want to see anyone go hungry. At the end of each day, some of our unsold baked goods are packed up and given to the Salvation Army and other charities who provide food for individuals and families in crisis.</p>
+      </div>
+      <button class="accordion">Where is my favorite pastry today?</button>
+      <div class="panel">
+        <p>Some items are seasonal and are not available year round. Also, to ensure freshness we follow a small batch process so some items may temporarily sell out during the day. Please call ahead to reserve your favorite item if you absolutely cannot do without!</p>
+      </div>
+      <button class="accordion">Is Sunflour a franchise or chain?</button>
+      <div class="panel">
+        <p>No. We are a local, family owned bakery with multiple locations in the Charlotte area. Everything is made fresh onsite and our staff rotate between stores to ensure consistency of products and service.</p>
+      </div>
+      <button class="accordion">Are you hiring?</button>
+      <div class="panel">
+        <p>We are always interested in qualified candidates for any position. <a href="https://sunflourbakingcompany.com/pages/hiring">Please submit your resume here</a>. </p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // <![CDATA[
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+// ]]>
+</script>
+    
+<style>
+  .s-location-section {
+    padding-bottom: 80px;
+  }
+  .location-header {
+    background-image: url({{page.metafields.global.image}});
+    background-repeat: no-repeat;
+    /* background-position: center; */
+    background-size: cover;
+    padding: 40px;
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.5);
+  }
+  .location-header h1 {
+    color: #fff;
+  }
+  .location-header p {
+    max-width: 1024px;
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+    float: none;
+    font-size: 22px;
+  }
+  .location-header span {
+    color: #fff !important;
+    background-color: unset !important;
+  }
+  .location-header p span a {
+    color: #fff !important;
+    font-weight: 400;
+    text-decoration: underline !important;
+  }
+  .location-form {
+    margin-top: 20px !important;
+  }
+  .location-form input {
+    height: 62px !important;
+    outline: none !important;
+  }
+
+  .faq-title h2 {
+    text-align: center;
+  }
+  .locations .btnRow {
+    justify-content: center;
+    column-gap: 20px;
+  }  
+  .locations .btnRow a {
+    margin: 0;
+  }
+
+  .location-image-row {
+    display: flex;
+    column-gap: 21px;
+  }
+  .location-image-row img {
+    display: block;
+    width: calc(33.3% - 14px);
+  }
+
+  @media (max-width: 767px) {
+    .location-header p {
+        font-size: 16px;
+        line-height: 1.7em;
+    }    
+    .row.row-max {
+      padding: 20px;
+    }
+    .location-image-row {
+      flex-wrap: wrap;
+      row-gap: 10px;
+    }
+    .location-image-row img {
+      display: block;
+      width: 100%;
+    }
+  }
+
+</style>
+
+{% schema %}
+  {
+    "name": "S location page",
+    "class": "s-location-section",
+    "tag": "section",
+    "settings": [],
+    "presets": [
+      {
+        "name": "S location page"
+      }
+    ]
+  }
+{% endschema %}
