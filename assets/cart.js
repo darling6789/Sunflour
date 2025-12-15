@@ -90,7 +90,8 @@ class CartItems extends HTMLElement {
 
   onChange(event) {
     // Only validate quantity inputs, not text fields like order notes or gift messages
-    if (event.target.hasAttribute('step') || event.target.dataset.index) {
+    // Quantity inputs have a 'step' attribute, text inputs and textareas do not
+    if (event.target.hasAttribute('step')) {
       this.validateQuantity(event);
     }
   }
