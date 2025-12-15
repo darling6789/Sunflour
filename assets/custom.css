@@ -274,6 +274,54 @@ a.menu-drawer__menu-item {
     margin: 1% !important;
 }
 
+/* Ticket 11: Coffee section prices alignment */
+.coffeeTea-menu + .row.row-max > .col-6 p {
+    padding-right: 10px;
+}
+
+/* Ticket 14: Fix Butter Roll misalignment - ensure proper alignment in bread section */
+.bread-menu + .row.row-max .col-6 span strong {
+    display: inline-block;
+    width: 100%;
+}
+
+/* Ticket 20: Hide coupon entry box on Custom Catering page */
+#discount-code,
+.discount-code,
+.coupon-code,
+[class*="coupon"],
+[class*="discount"],
+[data-discount],
+[data-coupon] {
+    display: none !important;
+}
+
+/* Ticket 21: Site-wide button font consistency - ensure all buttons use consistent font */
+.btn,
+.button,
+button,
+a.btn,
+a.button,
+.s-btn,
+.btnRow a,
+.sc__btn,
+.springbot-button,
+input[type="submit"],
+input[type="button"] {
+    font-family: Josefin Slab, serif !important;
+    font-weight: 400 !important;
+}
+
+/* Ticket 22: Fix section headers alignment on Catering a la carte page */
+.catering-order-form h3,
+.catering-order-form .section-header,
+[class*="catering"] h3,
+[class*="catering"] .section-header {
+    text-align: left !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
 .product .sealsubs-target-element .sls-option[type="radio"]:checked + .sls-custom-radio::after {
     box-shadow: inset 1em 1em #0275ff;
     width: 10px;
