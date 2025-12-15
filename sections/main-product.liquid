@@ -459,8 +459,8 @@
                 {% assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin %}
 
                 <div class="share-buttons">
-                  <button class="wish-btn">
-                    {% render 'icon-wish' %} Save
+                  <button class="wish-btn" data-product-url="{{ product.url }}" data-product-title="{{ product.title | escape }}">
+                    {% render 'icon-wish' %} <span class="wish-label">Save</span>
                   </button>
 
                   <button class="share-btn" data-url="{{ share_url }}">
@@ -469,23 +469,183 @@
                 </div>
               
                 <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                  document.querySelectorAll('.share-btn').forEach(function(button) {
-                    button.addEventListener('click', function () {
-                      const url = button.dataset.url;
-                      navigator.clipboard.writeText(url).then(function () {
-                        const label = button.querySelector('.share-label');
-                        const originalText = label.textContent;
-                        label.textContent = 'Copied';
-                        setTimeout(() => {
-                          label.textContent = originalText;
-                        }, 2000); // Change back after 2 seconds
-                      }).catch(function (err) {
-                        console.error('Failed to copy: ', err);
+                (function() {
+                  'use strict';
+                  
+                  // Function to copy text to clipboard with fallback
+                  function copyToClipboard(text) {
+                    // Try modern clipboard API first
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                      return navigator.clipboard.writeText(text).then(function() {
+                        return true;
+                      }).catch(function() {
+                        // Fall through to fallback method
+                        return fallbackCopyToClipboard(text);
+                      });
+                    } else {
+                      // Use fallback method for older browsers
+                      return fallbackCopyToClipboard(text);
+                    }
+                  }
+                  
+                  // Fallback method for copying to clipboard
+                  function fallbackCopyToClipboard(text) {
+                    return new Promise(function(resolve, reject) {
+                      const textArea = document.createElement('textarea');
+                      textArea.value = text;
+                      textArea.style.position = 'fixed';
+                      textArea.style.left = '-999999px';
+                      textArea.style.top = '0';
+                      document.body.appendChild(textArea);
+                      textArea.focus();
+                      textArea.select();
+                      
+                      try {
+                        const successful = document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        if (successful) {
+                          resolve(true);
+                        } else {
+                          reject(new Error('Copy command failed'));
+                        }
+                      } catch (err) {
+                        document.body.removeChild(textArea);
+                        reject(err);
+                      }
+                    });
+                  }
+                  
+                  // Initialize buttons when DOM is ready
+                  function initButtons() {
+                    // Save button functionality
+                    const saveButtons = document.querySelectorAll('.wish-btn');
+                    saveButtons.forEach(function(button) {
+                      button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const productUrl = button.dataset.productUrl;
+                        const productTitle = button.dataset.productTitle;
+                        const label = button.querySelector('.wish-label');
+                        
+                        // Save to localStorage as a simple wishlist
+                        try {
+                          let savedItems = JSON.parse(localStorage.getItem('sunflour_wishlist') || '[]');
+                          const item = {
+                            url: productUrl,
+                            title: productTitle,
+                            savedAt: new Date().toISOString()
+                          };
+                          
+                          // Check if already saved
+                          const existingIndex = savedItems.findIndex(function(item) {
+                            return item.url === productUrl;
+                          });
+                          
+                          if (existingIndex >= 0) {
+                            // Remove if already saved
+                            savedItems.splice(existingIndex, 1);
+                            if (label) {
+                              const originalText = label.textContent;
+                              label.textContent = 'Saved';
+                              setTimeout(function() {
+                                label.textContent = originalText;
+                              }, 2000);
+                            }
+                          } else {
+                            // Add to wishlist
+                            savedItems.push(item);
+                            if (label) {
+                              const originalText = label.textContent;
+                              label.textContent = 'Saved!';
+                              button.style.borderColor = '#873c17';
+                              button.style.backgroundColor = '#f5f5f5';
+                              setTimeout(function() {
+                                label.textContent = originalText;
+                                button.style.borderColor = '';
+                                button.style.backgroundColor = '';
+                              }, 2000);
+                            }
+                          }
+                          
+                          localStorage.setItem('sunflour_wishlist', JSON.stringify(savedItems));
+                        } catch (err) {
+                          console.error('Failed to save:', err);
+                          // Fallback: just copy URL
+                          if (productUrl) {
+                            copyToClipboard(window.location.origin + productUrl).then(function() {
+                              if (label) {
+                                const originalText = label.textContent;
+                                label.textContent = 'Copied!';
+                                setTimeout(function() {
+                                  label.textContent = originalText;
+                                }, 2000);
+                              }
+                            });
+                          }
+                        }
                       });
                     });
-                  });
-                });
+                    
+                    // Share button functionality
+                    const shareButtons = document.querySelectorAll('.share-btn');
+                    shareButtons.forEach(function(button) {
+                      button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const url = button.dataset.url || window.location.href;
+                        const label = button.querySelector('.share-label');
+                        
+                        // Try native share API first (mobile)
+                        if (navigator.share) {
+                          navigator.share({
+                            title: document.title,
+                            url: url
+                          }).then(function() {
+                            if (label) {
+                              const originalText = label.textContent;
+                              label.textContent = 'Shared!';
+                              setTimeout(function() {
+                                label.textContent = originalText;
+                              }, 2000);
+                            }
+                          }).catch(function(err) {
+                            // User cancelled or error - fall through to copy
+                            if (err.name !== 'AbortError') {
+                              copyUrlToClipboard(url, label);
+                            }
+                          });
+                        } else {
+                          // Use clipboard copy
+                          copyUrlToClipboard(url, label);
+                        }
+                      });
+                    });
+                    
+                    function copyUrlToClipboard(url, label) {
+                      copyToClipboard(url).then(function() {
+                        if (label) {
+                          const originalText = label.textContent;
+                          label.textContent = 'Copied!';
+                          setTimeout(function() {
+                            label.textContent = originalText;
+                          }, 2000);
+                        }
+                      }).catch(function(err) {
+                        console.error('Failed to copy:', err);
+                        // Last resort: show URL in alert
+                        alert('Share this link: ' + url);
+                      });
+                    }
+                  }
+                  
+                  // Initialize when DOM is ready
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initButtons);
+                  } else {
+                    initButtons();
+                  }
+                  
+                  // Also run after a delay to catch dynamically loaded content
+                  setTimeout(initButtons, 500);
+                })();
                 </script>
               
               {%- when 'variant_picker' -%}
