@@ -1,1 +1,237 @@
-{"sections":{"image_banner_imMW3n":{"type":"image-banner","blocks":{"heading_LGWQ3U":{"type":"heading","settings":{"heading":"Wholesale","heading_size":"h1"}},"text_VaDYBQ":{"type":"text","settings":{"text":"Sunflour is also a dedicated wholesale supplier to many businesses in the Charlotte region and beyond. We can deliver breads, brioche buns and muffins, to cakes, cookies and many other types of pastries. We can also tailor customized products to suit your needs. Reach out today for a quote!","text_style":"body"}},"buttons_LwGLf9":{"type":"buttons","settings":{"button_label_1":"Read More","button_link_1":"#shopify-section-template--25131274862884__main","button_style_secondary_1":false,"button_label_2":"Get In Touch","button_link_2":"#shopify-section-template--25131274862884__custom_liquid_UXUHRR","button_style_secondary_2":false}}},"block_order":["heading_LGWQ3U","text_VaDYBQ","buttons_LwGLf9"],"disabled":true,"custom_css":[".banner__box {border-radius: 25px;}"],"name":"t:sections.image-banner.presets.name","settings":{"image":"shopify:\/\/shop_images\/bakery-background.png","image_overlay_opacity":0,"image_height":"medium","image_behavior":"none","desktop_content_position":"middle-center","desktop_content_alignment":"center","show_text_box":true,"color_scheme":"","stack_images_on_mobile":true,"mobile_content_alignment":"center","show_text_below":true}},"main":{"type":"main-page","settings":{"padding_top":0,"padding_bottom":32}},"s_weddings_header_g3RakA":{"type":"s-weddings-header","blocks":{"email_pLLmay":{"type":"email","disabled":true,"settings":{"email":"ballantyne@sunflourbakingcompany.com","image":"shopify:\/\/shop_images\/ballantyne-bakery-charlotte-nc-sunflour.jpg"}},"email_Vjntgi":{"type":"email","disabled":true,"settings":{"email":"harrisburg@sunflourbakingcompany.com","image":"shopify:\/\/shop_images\/harrisburg-bakery-charlotte-nc-sunflour.jpg"}}},"block_order":["email_pLLmay","email_Vjntgi"],"disabled":true,"custom_css":[],"name":"S weddings header","settings":{"heading":"Wholesale Baked Goods","description":"Sunflour is also a dedicated wholesale supplier to many businesses in the Charlotte region and beyond. We can deliver breads, brioche buns and muffins, to cakes, cookies and many other types of pastries. We can also tailor customized products to suit your needs. Reach out today for a quote!\n\n<a style=\"margin-top: 15px;\" class=\"s-btn\" href=\"#shopify-section-template--25131274862884__custom_liquid_UXUHRR\">Send Us Your Details<\/a>"}},"multirow_A4HBTa":{"type":"multirow","blocks":{"row_MDfm7J":{"type":"row","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/english-muffins.jpg","caption":"","heading":"Fresh Pastries In Bulk","text":"<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>","button_label":"Button label","button_link":""}},"row_KzJg7w":{"type":"row","settings":{"image":"shopify:\/\/shop_images\/location-dilworth-03.png","caption":"FRESH PASTRIES","heading":"Shipped Weekly","text":"<p>Our team bakes everything fresh and gets you your order on time. We love being the supplier of fresh breads and pastries to some of the East Coast's best restaurants and food organizations.<\/p>","button_label":"","button_link":""}},"row_g8QJxg":{"type":"row","settings":{"image":"shopify:\/\/shop_images\/location-harrisburg-01.png","caption":"Made & Packaged","heading":"In Harrisburg, NC","text":"<p>Located in the heart of North Carolina, the Sunflour team makes, bakes, and ships everything from our state-of-the-art wholesale production center connected to our <a href=\"\/pages\/harrisburg-nc-bakery\" title=\"Bakery In Harrisburg, NC\">Harrisburg location<\/a>.<\/p>","button_label":"","button_link":""}}},"block_order":["row_MDfm7J","row_KzJg7w","row_g8QJxg"],"name":"t:sections.multirow.presets.name","settings":{"image_height":"medium","desktop_image_width":"medium","image_layout":"alternate-left","heading_size":"h1","text_style":"subtitle","button_style":"primary","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"","row_color_scheme":"","padding_top":36,"padding_bottom":36}},"custom_liquid_UXUHRR":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"custom_liquid":"<div data-paperform-id=\"1v5godxu\"><\/div><script>(function() {var script = document.createElement('script'); script.src = \"https:\/\/paperform.co\/__embed.min.js\"; document.body.appendChild(script); })()<\/script>","color_scheme":"","padding_top":0,"padding_bottom":0}},"multicolumn_g89dP4":{"type":"multicolumn","blocks":{"column_9qeUKR":{"type":"column","settings":{"title":"Local","text":"<p>Feature locally made and sourced products in your business. Everything is made and shipped from Harrisburg, NC. <\/p>","link_label":"","link":""}},"column_4FtHmK":{"type":"column","settings":{"title":"Fresh","text":"<p>Freshly made products in bulk keep your shelves stocked and your customers coming back.<\/p>","link_label":"","link":""}},"column_ypaLqT":{"type":"column","settings":{"title":"Custom","text":"<p>Speak to our team about custom orders or products made specifically to fit your brand or business. <\/p>","link_label":"","link":""}}},"block_order":["column_9qeUKR","column_4FtHmK","column_ypaLqT"],"name":"t:sections.multicolumn.presets.name","settings":{"title":"Why Sunflour?","heading_size":"h1","image_width":"full","image_ratio":"adapt","button_label":"","button_link":"","columns_desktop":3,"column_alignment":"left","background_style":"primary","color_scheme":"","columns_mobile":"1","swipe_on_mobile":true,"padding_top":56,"padding_bottom":56}}},"order":["image_banner_imMW3n","main","s_weddings_header_g3RakA","multirow_A4HBTa","custom_liquid_UXUHRR","multicolumn_g89dP4"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_imMW3n": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_LGWQ3U": {
+          "type": "heading",
+          "settings": {
+            "heading": "Wholesale",
+            "heading_size": "h1"
+          }
+        },
+        "text_VaDYBQ": {
+          "type": "text",
+          "settings": {
+            "text": "Sunflour is also a dedicated wholesale supplier to many businesses in the Charlotte region and beyond. We can deliver breads, brioche buns and muffins, to cakes, cookies and many other types of pastries. We can also tailor customized products to suit your needs. Reach out today for a quote!",
+            "text_style": "body"
+          }
+        },
+        "buttons_LwGLf9": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Read More",
+            "button_link_1": "#shopify-section-template--25131274862884__main",
+            "button_style_secondary_1": false,
+            "button_label_2": "Get In Touch",
+            "button_link_2": "#shopify-section-template--25131274862884__custom_liquid_UXUHRR",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_LGWQ3U",
+        "text_VaDYBQ",
+        "buttons_LwGLf9"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".banner__box {border-radius: 25px;}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/bakery-background.png",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 32
+      }
+    },
+    "s_weddings_header_g3RakA": {
+      "type": "s-weddings-header",
+      "blocks": {
+        "email_pLLmay": {
+          "type": "email",
+          "disabled": true,
+          "settings": {
+            "email": "ballantyne@sunflourbakingcompany.com",
+            "image": "shopify://shop_images/ballantyne-bakery-charlotte-nc-sunflour.jpg"
+          }
+        },
+        "email_Vjntgi": {
+          "type": "email",
+          "disabled": true,
+          "settings": {
+            "email": "harrisburg@sunflourbakingcompany.com",
+            "image": "shopify://shop_images/harrisburg-bakery-charlotte-nc-sunflour.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "email_pLLmay",
+        "email_Vjntgi"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "name": "S weddings header",
+      "settings": {
+        "heading": "Wholesale Baked Goods",
+        "description": "Sunflour is also a dedicated wholesale supplier to many businesses in the Charlotte region and beyond. We can deliver breads, brioche buns and muffins, to cakes, cookies and many other types of pastries. We can also tailor customized products to suit your needs. Reach out today for a quote!\n\n<a style=\"margin-top: 15px;\" class=\"s-btn\" href=\"#shopify-section-template--25131274862884__custom_liquid_UXUHRR\">Send Us Your Details</a>"
+      }
+    },
+    "multirow_A4HBTa": {
+      "type": "multirow",
+      "blocks": {
+        "row_MDfm7J": {
+          "type": "row",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/english-muffins.jpg",
+            "caption": "",
+            "heading": "Fresh Pastries In Bulk",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "button_label": "Button label",
+            "button_link": ""
+          }
+        },
+        "row_KzJg7w": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/location-dilworth-03.png",
+            "caption": "FRESH PASTRIES",
+            "heading": "Shipped Daily",
+            "text": "<p>Our team bakes everything fresh and gets you your order on time. We love being the supplier of fresh breads and pastries to some of the East Coast's best restaurants and food organizations.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_g8QJxg": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/location-harrisburg-01.png",
+            "caption": "Made & Packaged",
+            "heading": "In Harrisburg, NC",
+            "text": "<p>Located in the heart of North Carolina, the Sunflour team makes, bakes, and ships everything from our state-of-the-art wholesale production center connected to our <a href=\"/pages/harrisburg-nc-bakery\" title=\"Bakery In Harrisburg, NC\">Harrisburg location</a>.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_MDfm7J",
+        "row_KzJg7w",
+        "row_g8QJxg"
+      ],
+      "name": "t:sections.multirow.presets.name",
+      "settings": {
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "image_layout": "alternate-left",
+        "heading_size": "h1",
+        "text_style": "subtitle",
+        "button_style": "primary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "row_color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "custom_liquid_UXUHRR": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div data-paperform-id=\"1v5godxu\"></div><script>(function() {var script = document.createElement('script'); script.src = \"https://paperform.co/__embed.min.js\"; document.body.appendChild(script); })()</script>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn_g89dP4": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_9qeUKR": {
+          "type": "column",
+          "settings": {
+            "title": "Local",
+            "text": "<p>Feature locally made and sourced products in your business. Everything is made and shipped from Harrisburg, NC. </p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_4FtHmK": {
+          "type": "column",
+          "settings": {
+            "title": "Fresh",
+            "text": "<p>Freshly made products in bulk keep your shelves stocked and your customers coming back.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_ypaLqT": {
+          "type": "column",
+          "settings": {
+            "title": "Custom",
+            "text": "<p>Speak to our team about custom orders or products made specifically to fit your brand or business. </p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_9qeUKR",
+        "column_4FtHmK",
+        "column_ypaLqT"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "Why Sunflour?",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "image_banner_imMW3n",
+    "main",
+    "s_weddings_header_g3RakA",
+    "multirow_A4HBTa",
+    "custom_liquid_UXUHRR",
+    "multicolumn_g89dP4"
+  ]
+}
