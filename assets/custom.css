@@ -288,7 +288,7 @@ a.menu-drawer__menu-item {
 }
 
 .location-item {
-  border-color: #873c17;
+  border-color: #873c17 !important;
 }
 
 /* Ticket 19: Hide asterisk on Catering page - target common asterisk patterns */
