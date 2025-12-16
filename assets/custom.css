@@ -282,7 +282,6 @@ a.menu-drawer__menu-item {
 /* Ticket 14: Fix Butter Roll misalignment - ensure proper alignment in bread section */
 .bread-menu + .row.row-max .col-6 span {
     display: block;
-    width: 100%;
 }
 .bread-menu + .row.row-max .col-6 span strong {
     display: inline;
