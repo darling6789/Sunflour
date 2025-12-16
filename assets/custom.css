@@ -287,6 +287,10 @@ a.menu-drawer__menu-item {
     display: inline;
 }
 
+.location-item {
+  border-color: #873c17;
+}
+
 /* Ticket 19: Hide asterisk on Catering page - target common asterisk patterns */
 [class*="pagefly"] label span[aria-hidden="true"],
 [class*="catering"] label span[aria-hidden="true"],
