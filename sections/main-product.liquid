@@ -528,29 +528,8 @@
                         const url = button.dataset.url || window.location.href;
                         const label = button.querySelector('.share-label');
                         
-                        // Try native share API first (mobile)
-                        if (navigator.share) {
-                          navigator.share({
-                            title: document.title,
-                            url: url
-                          }).then(function() {
-                            if (label) {
-                              const originalText = label.textContent;
-                              label.textContent = 'Shared!';
-                              setTimeout(function() {
-                                label.textContent = originalText;
-                              }, 2000);
-                            }
-                          }).catch(function(err) {
-                            // User cancelled or error - fall through to copy
-                            if (err.name !== 'AbortError') {
-                              copyUrlToClipboard(url, label);
-                            }
-                          });
-                        } else {
-                          // Use clipboard copy
-                          copyUrlToClipboard(url, label);
-                        }
+                        // Always copy to clipboard (no share dialog)
+                        copyUrlToClipboard(url, label);
                       });
                     });
                     
