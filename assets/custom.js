@@ -8,3 +8,4 @@ document.querySelector(".pro-var-select").addEventListener('change',function(){
   $(".price-item.price-compare").text(cmprice);
 });
 
+

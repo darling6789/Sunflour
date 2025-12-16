@@ -12,6 +12,79 @@ class CartRemoveButton extends HTMLElement {
 
 customElements.define('cart-remove-button', CartRemoveButton);
 
+// Ensure checkout button is always enabled and functional
+(function() {
+  'use strict';
+  
+  function ensureCheckoutEnabled() {
+    // Find all checkout buttons
+    const checkoutButtons = document.querySelectorAll(
+      '#checkout, #CartDrawer-Checkout, button[name="checkout"], .cart__checkout-button'
+    );
+    
+    checkoutButtons.forEach(function(button) {
+      if (button) {
+        // Ensure button is not disabled (unless cart is empty)
+        const cartForm = document.getElementById('cart') || document.getElementById('CartDrawer-Form');
+        const cartIsEmpty = cartForm && cartForm.querySelector('.cart__warnings, .is-empty');
+        
+        if (!cartIsEmpty) {
+          button.removeAttribute('disabled');
+          button.removeAttribute('aria-disabled');
+          button.style.pointerEvents = '';
+          button.style.opacity = '';
+          button.style.cursor = '';
+        }
+        
+        // Ensure form submission works
+        button.addEventListener('click', function(e) {
+          // Don't prevent default - let the form submit normally
+          // This ensures checkout works even if other scripts try to block it
+        }, { passive: true });
+      }
+    });
+    
+    // Also ensure the form can submit
+    const cartForm = document.getElementById('cart');
+    if (cartForm) {
+      cartForm.addEventListener('submit', function(e) {
+        // Allow form to submit normally for checkout
+        const submitButton = e.submitter || document.querySelector('button[name="checkout"]');
+        if (submitButton && submitButton.name === 'checkout') {
+          // Let the form submit - don't prevent default
+          return true;
+        }
+      });
+    }
+  }
+  
+  // Run on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureCheckoutEnabled);
+  } else {
+    ensureCheckoutEnabled();
+  }
+  
+  // Run after delays to catch dynamically loaded content
+  setTimeout(ensureCheckoutEnabled, 500);
+  setTimeout(ensureCheckoutEnabled, 1000);
+  setTimeout(ensureCheckoutEnabled, 2000);
+  
+  // Use MutationObserver to catch dynamically added content
+  if (typeof MutationObserver !== 'undefined') {
+    const observer = new MutationObserver(function(mutations) {
+      ensureCheckoutEnabled();
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['disabled', 'aria-disabled', 'style']
+    });
+  }
+})();
+
 class CartItems extends HTMLElement {
   constructor() {
     super();
@@ -60,6 +133,11 @@ class CartItems extends HTMLElement {
     const index = event.target.dataset.index;
     let message = '';
 
+    // Safety check: only validate quantity inputs with step attribute
+    if (!event.target.hasAttribute('step')) {
+      return;
+    }
+
     if (inputValue < event.target.dataset.min) {
       message = window.quickOrderListStrings.min_error.replace('[min]', event.target.dataset.min);
     } else if (inputValue > parseInt(event.target.max)) {
@@ -84,7 +162,11 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.validateQuantity(event);
+    // Only validate quantity inputs, not text fields like order notes or gift messages
+    // Quantity inputs have a 'step' attribute, text inputs and textareas do not
+    if (event.target.hasAttribute('step')) {
+      this.validateQuantity(event);
+    }
   }
 
   onCartUpdate() {

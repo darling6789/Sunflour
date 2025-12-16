@@ -459,9 +459,12 @@
                 {% assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin %}
 
                 <div class="share-buttons">
-                  <button class="wish-btn">
-                    {% render 'icon-wish' %} Save
+                  {% comment %} Save button - commented out until wishlist app is configured {% endcomment %}
+                  {% comment %}
+                  <button class="wish-btn" data-product-url="{{ product.url }}" data-product-title="{{ product.title | escape }}">
+                    {% render 'icon-wish' %} <span class="wish-label">Save</span>
                   </button>
+                  {% endcomment %}
 
                   <button class="share-btn" data-url="{{ share_url }}">
                     {% render 'icon-share' %} <span class="share-label">Share</span>
@@ -469,23 +472,115 @@
                 </div>
               
                 <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                  document.querySelectorAll('.share-btn').forEach(function(button) {
-                    button.addEventListener('click', function () {
-                      const url = button.dataset.url;
-                      navigator.clipboard.writeText(url).then(function () {
+                (function() {
+                  'use strict';
+                  
+                  // Function to copy text to clipboard with fallback
+                  function copyToClipboard(text) {
+                    // Try modern clipboard API first
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                      return navigator.clipboard.writeText(text).then(function() {
+                        return true;
+                      }).catch(function() {
+                        // Fall through to fallback method
+                        return fallbackCopyToClipboard(text);
+                      });
+                    } else {
+                      // Use fallback method for older browsers
+                      return fallbackCopyToClipboard(text);
+                    }
+                  }
+                  
+                  // Fallback method for copying to clipboard
+                  function fallbackCopyToClipboard(text) {
+                    return new Promise(function(resolve, reject) {
+                      const textArea = document.createElement('textarea');
+                      textArea.value = text;
+                      textArea.style.position = 'fixed';
+                      textArea.style.left = '-999999px';
+                      textArea.style.top = '0';
+                      document.body.appendChild(textArea);
+                      textArea.focus();
+                      textArea.select();
+                      
+                      try {
+                        const successful = document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        if (successful) {
+                          resolve(true);
+                        } else {
+                          reject(new Error('Copy command failed'));
+                        }
+                      } catch (err) {
+                        document.body.removeChild(textArea);
+                        reject(err);
+                      }
+                    });
+                  }
+                  
+                  // Initialize share button when DOM is ready
+                  function initShareButton() {
+                    // Share button functionality
+                    const shareButtons = document.querySelectorAll('.share-btn');
+                    shareButtons.forEach(function(button) {
+                      button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const url = button.dataset.url || window.location.href;
                         const label = button.querySelector('.share-label');
-                        const originalText = label.textContent;
-                        label.textContent = 'Copied';
-                        setTimeout(() => {
-                          label.textContent = originalText;
-                        }, 2000); // Change back after 2 seconds
-                      }).catch(function (err) {
-                        console.error('Failed to copy: ', err);
+                        
+                        // Try native share API first (mobile)
+                        if (navigator.share) {
+                          navigator.share({
+                            title: document.title,
+                            url: url
+                          }).then(function() {
+                            if (label) {
+                              const originalText = label.textContent;
+                              label.textContent = 'Shared!';
+                              setTimeout(function() {
+                                label.textContent = originalText;
+                              }, 2000);
+                            }
+                          }).catch(function(err) {
+                            // User cancelled or error - fall through to copy
+                            if (err.name !== 'AbortError') {
+                              copyUrlToClipboard(url, label);
+                            }
+                          });
+                        } else {
+                          // Use clipboard copy
+                          copyUrlToClipboard(url, label);
+                        }
                       });
                     });
-                  });
-                });
+                    
+                    function copyUrlToClipboard(url, label) {
+                      copyToClipboard(url).then(function() {
+                        if (label) {
+                          const originalText = label.textContent;
+                          label.textContent = 'Copied!';
+                          setTimeout(function() {
+                            label.textContent = originalText;
+                          }, 2000);
+                        }
+                      }).catch(function(err) {
+                        console.error('Failed to copy:', err);
+                        // Last resort: show URL in alert
+                        alert('Share this link: ' + url);
+                      });
+                    }
+                  }
+                  
+                  // Initialize when DOM is ready
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initShareButton);
+                  } else {
+                    initShareButton();
+                  }
+                  
+                  // Also run after a delay to catch dynamically loaded content
+                  setTimeout(initShareButton, 500);
+                })();
                 </script>
               
               {%- when 'variant_picker' -%}

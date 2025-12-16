@@ -7,6 +7,7 @@
   2. Remove ellipsis ("...")
   3. Clean up "Product Title:" backend language
   4. Consolidate tax display
+  5. Hide address information from product descriptions
 {% endcomment %}
 
 <!DOCTYPE html>
@@ -19,33 +20,59 @@
 <body>
 
 <style>
-  /* Hide generic box icons and improve product display */
-  .order-summary__section .product__image,
-  .order-summary__section .product-thumbnail,
-  .order-summary__section img[src*="placeholder"],
-  .order-summary__section .product__image-wrapper img:not([src*="cdn.shopify.com"]),
-  .order-summary__section .product__image img[src=""],
-  .order-summary__section svg[class*="icon"] {
+  /* Hide ALL generic box icons, placeholders, and quantity badges */
+  /* Target order summary area with multiple selector strategies */
+  [class*="order-summary"] .product__image,
+  [class*="order-summary"] .product-thumbnail,
+  [class*="order-summary"] .product__image-wrapper,
+  [class*="order-summary"] [class*="product__image"],
+  [class*="order-summary"] [class*="product-thumbnail"],
+  [class*="order-summary"] img[src*="placeholder"],
+  [class*="order-summary"] img[src=""],
+  [class*="order-summary"] svg[class*="icon"],
+  [class*="order-summary"] svg[class*="box"],
+  [class*="order-summary"] .product__quantity-badge,
+  [class*="order-summary"] .badge,
+  [class*="order-summary"] [class*="badge"],
+  [class*="order-summary"] [class*="quantity-badge"],
+  /* Also target by data attributes and common patterns */
+  [data-order-summary] .product__image,
+  [data-order-summary] svg,
+  /* Target generic box/package icons specifically */
+  svg[viewBox*="0 0 24 24"][class*="icon"],
+  svg[viewBox*="0 0 20 20"][class*="icon"],
+  /* Hide quantity badges on any icon */
+  svg + [class*="badge"] {
     display: none !important;
   }
 
-  /* Hide ellipsis and improve text truncation */
+  /* Hide ellipsis completely */
   .order-summary__section .product__description::after,
-  .order-summary__section .product__title::after {
+  .order-summary__section .product__title::after,
+  .order-summary__section [class*="product__description"]::after,
+  .order-summary__section [class*="product__title"]::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* Improve product title display - allow wrapping but clean */
+  .order-summary__section .product__title,
+  .order-summary__section [class*="product__title"] {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  /* Hide product descriptions that contain addresses */
+  .order-summary__section .product__description[style*="display: none"] {
     display: none !important;
   }
 
-  /* Clean up product title display */
-  .order-summary__section .product__title,
-  .order-summary__section .product__description {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 100%;
-  }
-
-  /* Tax lines will be hidden via JavaScript for detailed breakdowns */
-  .order-summary__section .total-line--taxes {
+  /* Tax lines - will be consolidated via JavaScript */
+  .order-summary__section .total-line--taxes,
+  .order-summary__section [class*="total-line"][class*="tax"] {
     font-size: 14px;
   }
 
@@ -59,89 +86,227 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  /* Hide quantity badges on generic icons */
-  .order-summary__section .product__quantity-badge,
-  .order-summary__section .badge {
+  /* Hide any element containing address patterns */
+  .order-summary__section [data-address],
+  .order-summary__section [class*="address"] {
     display: none !important;
   }
-
-  /* Improve spacing and typography */
-  .order-summary__section {
-    font-family: inherit;
-  }
-
-  .order-summary__section .product__title {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 1.4;
-  }
-
-  /* Address details will be hidden via JavaScript if they appear in product descriptions */
 </style>
 
 <script>
   (function() {
     'use strict';
     
-    // Wait for checkout to load
+    // Comprehensive function to clean up checkout
     function initCheckoutCustomization() {
-      // Clean up product titles - remove "Product Title:" prefix and backend language
-      const productTitles = document.querySelectorAll(
-        '.order-summary__section .product__title, ' +
-        '.order-summary__section .product__description, ' +
-        '.order-summary__section [class*="product__title"], ' +
-        '.order-summary__section [class*="product__description"], ' +
-        '.order-summary__section .product-table__cell, ' +
-        '.order-summary__section td'
-      );
       
-      productTitles.forEach(function(element) {
-        if (element) {
-          let text = element.textContent || element.innerText;
+      // ============================================
+      // 1. HIDE ALL GENERIC BOX ICONS AND BADGES
+      // ============================================
+      // Find order summary section (try multiple selectors)
+      const orderSummary = document.querySelector('.order-summary__section, [class*="order-summary"], [data-order-summary], [id*="order-summary"]') || document.body;
+      
+      // Hide all images and SVGs in order summary that look like generic icons
+      const allImages = orderSummary.querySelectorAll('img, svg');
+      allImages.forEach(function(img) {
+        const src = img.src || img.getAttribute('src') || '';
+        const parent = img.parentElement;
+        const isSVG = img.tagName === 'svg' || img.tagName === 'SVG';
+        
+        // Check if it's a generic icon (SVG without real product image, or placeholder)
+        if (isSVG || 
+            !src || 
+            src.includes('placeholder') || 
+            src === '' ||
+            (src.includes('data:image') && src.length < 100) ||
+            (!src.includes('cdn.shopify.com') && !src.includes('shopifycdn.com') && !src.includes('http'))) {
+          // Hide the icon and its container if it looks like a generic box
+          if (parent && (parent.classList.contains('product__image') || 
+                         parent.classList.contains('product-thumbnail') ||
+                         parent.querySelector('[class*="badge"]'))) {
+            parent.style.display = 'none';
+          } else {
+            img.style.display = 'none';
+          }
+        }
+      });
+
+      // Hide all SVG icons in order summary (additional pass for any missed)
+      const svgIcons = orderSummary.querySelectorAll('svg');
+      svgIcons.forEach(function(svg) {
+        const parent = svg.closest('[class*="product__image"], [class*="product-thumbnail"], [class*="product"]');
+        if (parent) {
+          parent.style.display = 'none';
+        } else {
+          svg.style.display = 'none';
+        }
+      });
+
+      // Hide all quantity badges (try multiple selectors)
+      const badges = orderSummary.querySelectorAll('[class*="badge"], [class*="quantity-badge"], [data-badge]');
+      badges.forEach(function(badge) {
+        // Only hide if it's a quantity badge, not a discount badge
+        const badgeText = badge.textContent || badge.innerText || '';
+        if (badgeText.match(/^\d+$/) || badge.closest('[class*="product"]')) {
+          badge.style.display = 'none';
+        }
+      });
+
+      // ============================================
+      // 2. REMOVE ELLIPSIS AND CLEAN TEXT
+      // ============================================
+      const allTextElements = orderSummary.querySelectorAll('*');
+      
+      allTextElements.forEach(function(element) {
+        if (element.children.length === 0) { // Only process leaf nodes
+          let text = element.textContent || element.innerText || '';
           const originalText = text;
           
-          // Remove "Product Title:" prefix
-          text = text.replace(/^Product\s+Title:\s*/i, '');
-          text = text.replace(/^Title:\s*/i, '');
-          text = text.replace(/Product\s+Title:\s*/gi, '');
-          
-          // Remove ellipsis
+          // Remove ellipsis in all forms
           text = text.replace(/\.\.\./g, '');
           text = text.replace(/…/g, '');
           text = text.replace(/\s*\.\.\.\s*/g, '');
+          text = text.replace(/\s*…\s*/g, '');
           
-          // Remove address information if it leaked into product description
-          text = text.replace(/\d+\s+[A-Z][a-z]+\s+\d+[a-z]*\s+Street[^,]*/gi, '');
-          text = text.replace(/[A-Z][a-z]+,\s*[A-Z][a-z]+\s+[A-Z][a-z]+/g, '');
-          text = text.replace(/\d{5}/g, '');
+          // Remove trailing dashes and clean up
+          text = text.replace(/\s*-\s*$/g, '');
+          text = text.replace(/^\s*-\s*/g, '');
           
           // Clean up extra whitespace
           text = text.replace(/\s+/g, ' ').trim();
           
-          // Only update if text changed and it's not empty
           if (text !== originalText && text.length > 0) {
             element.textContent = text;
           }
         }
       });
 
-      // Consolidate tax display - hide detailed breakdowns and show only "Tax"
-      const allTotalLines = document.querySelectorAll('.order-summary__section .total-line, .order-summary__section [class*="total-line"]');
+      // ============================================
+      // 3. CLEAN UP PRODUCT TITLES - REMOVE BACKEND LANGUAGE
+      // ============================================
+      const productTitles = orderSummary.querySelectorAll(
+        '.product__title, ' +
+        '[class*="product__title"], ' +
+        '.product-table__cell, ' +
+        'td, ' +
+        '[class*="product"]'
+      );
+      
+      productTitles.forEach(function(element) {
+        if (element) {
+          let text = element.textContent || element.innerText || '';
+          const originalText = text;
+          
+          // Remove "Product Title:" prefix in all variations
+          text = text.replace(/^Product\s+Title:\s*/i, '');
+          text = text.replace(/^Title:\s*/i, '');
+          text = text.replace(/Product\s+Title:\s*/gi, '');
+          text = text.replace(/product\s+title:\s*/gi, '');
+          
+          // Remove trailing dashes (like "Brawny Brownies -")
+          text = text.replace(/\s*-\s*$/g, '');
+          text = text.replace(/\s*—\s*$/g, '');
+          text = text.replace(/\s*–\s*$/g, '');
+          
+          // Remove ellipsis
+          text = text.replace(/\.\.\./g, '');
+          text = text.replace(/…/g, '');
+          
+          // Clean up extra whitespace
+          text = text.replace(/\s+/g, ' ').trim();
+          
+          if (text !== originalText && text.length > 0) {
+            element.textContent = text;
+          }
+        }
+      });
+
+      // ============================================
+      // 4. HIDE ADDRESS INFORMATION FROM PRODUCT DESCRIPTIONS
+      // ============================================
+      const descriptions = orderSummary.querySelectorAll(
+        '.product__description, ' +
+        '[class*="product__description"], ' +
+        '[class*="product"]'
+      );
+      
+      descriptions.forEach(function(desc) {
+        if (desc) {
+          const text = desc.textContent || desc.innerText || '';
+          
+          // Hide if it contains address patterns
+          if (text.match(/\d+\s+[A-Z][a-z]+\s+\d+[a-z]*\s+Street/i) ||
+              text.match(/\d+\s+[A-Z][a-z]+\s+[A-Z][a-z]+/i) ||
+              text.includes('Charlotte') ||
+              text.includes('North Carolina') ||
+              text.includes('Mecklenburg') ||
+              text.match(/\d{5}/) ||
+              text.includes('United States') ||
+              (text.includes(',') && text.split(',').length >= 3)) {
+            desc.style.display = 'none';
+          } else {
+            // Clean up any remaining address fragments
+            let cleanText = text;
+            cleanText = cleanText.replace(/\d+\s+[A-Z][a-z]+\s+\d+[a-z]*\s+Street[^,]*/gi, '');
+            cleanText = cleanText.replace(/[A-Z][a-z]+,\s*[A-Z][a-z]+\s+[A-Z][a-z]+/g, '');
+            cleanText = cleanText.replace(/\d{5}/g, '');
+            cleanText = cleanText.replace(/\s+/g, ' ').trim();
+            
+            if (cleanText !== text && cleanText.length > 0) {
+              desc.textContent = cleanText;
+            }
+          }
+        }
+      });
+
+      // ============================================
+      // 5. CONSOLIDATE TAX DISPLAY - SHOW ONLY "Tax"
+      // ============================================
+      const allTotalLines = orderSummary.querySelectorAll(
+        '.total-line, ' +
+        '[class*="total-line"], ' +
+        'tr, ' +
+        '[class*="total"], ' +
+        'li, ' +
+        '[role="row"]'
+      );
+      
       let foundSimpleTaxLine = false;
       const taxLines = [];
+      let totalTaxAmount = 0;
       
-      // First pass: collect all tax lines
+      // First pass: collect all tax-related lines
       allTotalLines.forEach(function(line) {
-        const nameElement = line.querySelector('.total-line__name, [class*="total-line__name"]');
+        const nameElement = line.querySelector('.total-line__name, [class*="total-line__name"], td, [class*="name"]') || line;
+        const priceElement = line.querySelector('.total-line__price, [class*="total-line__price"], [class*="price"]');
+        
         if (nameElement) {
-          const taxText = nameElement.textContent || nameElement.innerText || '';
-          if (taxText.toLowerCase().includes('tax')) {
-            taxLines.push({ line: line, nameElement: nameElement, text: taxText });
+          const taxText = (nameElement.textContent || nameElement.innerText || '').toLowerCase();
+          
+          if (taxText.includes('tax')) {
+            // Extract price if available
+            let price = 0;
+            if (priceElement) {
+              const priceText = priceElement.textContent || priceElement.innerText || '';
+              const priceMatch = priceText.match(/[\d,]+\.?\d*/);
+              if (priceMatch) {
+                price = parseFloat(priceMatch[0].replace(/,/g, ''));
+              }
+            }
+            
+            taxLines.push({ 
+              line: line, 
+              nameElement: nameElement, 
+              text: nameElement.textContent || nameElement.innerText || '',
+              price: price
+            });
+            
+            totalTaxAmount += price;
           }
         }
       });
       
-      // Second pass: hide detailed tax lines, keep one simple "Tax" line
+      // Second pass: hide detailed tax lines, consolidate into one "Tax" line
       taxLines.forEach(function(taxLine, index) {
         const taxText = taxLine.text;
         
@@ -152,12 +317,14 @@
             taxText.includes('County Tax') ||
             taxText.includes('Transportation Tax') ||
             taxText.includes('Public Transportation') ||
-            taxText.includes('Co Public')) {
+            taxText.includes('Co Public') ||
+            taxText.includes('County') ||
+            taxText.includes('State')) {
           taxLine.line.style.display = 'none';
         } else if (!foundSimpleTaxLine) {
           // Keep the first simple tax line and ensure it just says "Tax"
           foundSimpleTaxLine = true;
-          if (taxText.trim() !== 'Tax') {
+          if (taxText.trim().toLowerCase() !== 'tax') {
             taxLine.nameElement.textContent = 'Tax';
           }
         } else {
@@ -166,85 +333,58 @@
         }
       });
 
-      // Hide generic icons and improve product images
-      const productImages = document.querySelectorAll(
-        '.order-summary__section .product__image img, ' +
-        '.order-summary__section .product-thumbnail img, ' +
-        '.order-summary__section img[class*="product"], ' +
-        '.order-summary__section svg[class*="icon"], ' +
-        '.order-summary__section svg[class*="box"]'
-      );
-      
-      productImages.forEach(function(img) {
-        if (img) {
-          const src = img.src || img.getAttribute('src') || '';
-          const parent = img.closest('.product__image, .product-thumbnail, .product__image-wrapper, [class*="product__image"]');
-          
-          // Hide placeholder images, generic box icons, or empty images
-          if (!src || 
-              src.includes('placeholder') || 
-              (src.includes('data:image') && src.length < 100) ||
-              (!src.includes('cdn.shopify.com') && !src.includes('shopifycdn.com'))) {
-            if (parent) {
-              parent.style.display = 'none';
-            } else {
-              img.style.display = 'none';
-            }
-          }
-        }
-      });
-      
-      // Also hide generic SVG icons
-      const svgIcons = document.querySelectorAll('.order-summary__section svg[class*="icon"], .order-summary__section svg[class*="box"]');
-      svgIcons.forEach(function(svg) {
-        const parent = svg.closest('[class*="product__image"], [class*="product-thumbnail"]');
-        if (parent) {
-          parent.style.display = 'none';
-        }
-      });
+      // If no simple tax line was found but we have tax lines, create/update one
+      if (!foundSimpleTaxLine && taxLines.length > 0) {
+        const firstTaxLine = taxLines[0];
+        firstTaxLine.nameElement.textContent = 'Tax';
+        firstTaxLine.line.style.display = '';
+        foundSimpleTaxLine = true;
+        
+        // Hide all other tax lines
+        taxLines.slice(1).forEach(function(taxLine) {
+          taxLine.line.style.display = 'none';
+        });
+      }
+    }
 
-      // Remove ellipsis from product descriptions
-      const descriptions = document.querySelectorAll('.order-summary__section .product__description');
-      descriptions.forEach(function(desc) {
-        if (desc) {
-          let text = desc.textContent || desc.innerText;
-          text = text.replace(/\.\.\./g, '');
-          text = text.replace(/…/g, '');
-          if (text !== (desc.textContent || desc.innerText)) {
-            desc.textContent = text;
-          }
-        }
-      });
-
-      // Hide address information if it's showing in product descriptions
-      descriptions.forEach(function(desc) {
-        if (desc) {
-          const text = desc.textContent || desc.innerText;
-          if (text.includes('2001 East') || 
-              text.includes('Charlotte') || 
-              text.includes('North Carolina') ||
-              text.includes('28204')) {
-            desc.style.display = 'none';
-          }
-        }
-      });
+    // Run immediately and on various events
+    function runCustomization() {
+      initCheckoutCustomization();
     }
 
     // Run on page load
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCheckoutCustomization);
+      document.addEventListener('DOMContentLoaded', runCustomization);
     } else {
-      initCheckoutCustomization();
+      runCustomization();
     }
 
-    // Also run after a short delay to catch dynamically loaded content
-    setTimeout(initCheckoutCustomization, 1000);
-    setTimeout(initCheckoutCustomization, 2000);
+    // Run after delays to catch dynamically loaded content
+    setTimeout(runCustomization, 500);
+    setTimeout(runCustomization, 1000);
+    setTimeout(runCustomization, 2000);
+    setTimeout(runCustomization, 3000);
 
     // Use MutationObserver to catch dynamically added content
     if (typeof MutationObserver !== 'undefined') {
       const observer = new MutationObserver(function(mutations) {
-        initCheckoutCustomization();
+        let shouldRun = false;
+        mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length > 0) {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.nodeType === 1 && (
+                node.classList.contains('order-summary__section') ||
+                node.querySelector('.order-summary__section') ||
+                node.closest('.order-summary__section')
+              )) {
+                shouldRun = true;
+              }
+            });
+          }
+        });
+        if (shouldRun) {
+          setTimeout(runCustomization, 100);
+        }
       });
       
       observer.observe(document.body, {
@@ -252,10 +392,15 @@
         subtree: true
       });
     }
+
+    // Also listen for checkout-specific events
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', runCustomization);
+      window.addEventListener('checkout:updated', runCustomization);
+    }
   })();
 </script>
 
   {{ content_for_layout }}
 </body>
 </html>
-

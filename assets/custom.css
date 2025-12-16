@@ -223,6 +223,7 @@ a.menu-drawer__menu-item {
 
 .s-flyout-heading {
   padding: 0 3rem;
+  font-weight: 600;
 }
 
 /* Product template */
@@ -256,11 +257,96 @@ a.menu-drawer__menu-item {
     width: 0px;
     height: 0px;
 }
+/* Hide subscription details popup tooltip */
+.sls-more-info-popup {
+    display: none !important;
+}
+
+/* Fix twoCol layout - use flexbox instead of float to maintain 2 columns and reduce gap */
+.twoCol {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.twoCol li {
+    float: none !important;
+    width: 48% !important;
+    margin: 1% !important;
+}
+
+/* Ticket 11: Coffee section prices alignment */
+.coffeeTea-menu + .row.row-max > .col-6 p {
+    padding-right: 10px;
+}
+
+/* Ticket 14: Fix Butter Roll misalignment - ensure proper alignment in bread section */
+.bread-menu + .row.row-max .col-6 span {
+    display: block;
+    width: 100%;
+}
+.bread-menu + .row.row-max .col-6 span strong {
+    display: inline;
+}
+
+/* Ticket 19: Hide asterisk on Catering page - target common asterisk patterns */
+[class*="pagefly"] label span[aria-hidden="true"],
+[class*="catering"] label span[aria-hidden="true"],
+.pagefly-container label span[aria-hidden="true"]:last-child {
+    display: none !important;
+}
+
+/* Ticket 20: Hide coupon entry box on Custom Catering page */
+#discount-code,
+.discount-code,
+.coupon-code,
+[class*="coupon"],
+[class*="discount"],
+[data-discount],
+[data-coupon],
+[class*="pagefly"] [class*="coupon"],
+[class*="pagefly"] [class*="discount"],
+[class*="pagefly"] input[type="text"][placeholder*="coupon" i],
+[class*="pagefly"] input[type="text"][placeholder*="discount" i],
+[class*="pagefly"] input[type="text"][placeholder*="code" i],
+[class*="pagefly"] [id*="coupon"],
+[class*="pagefly"] [id*="discount"] {
+    display: none !important;
+}
+
+/* Ticket 21: Site-wide button font consistency - ensure all buttons use consistent font */
+.btn,
+.button,
+button,
+a.btn,
+a.button,
+.s-btn,
+.btnRow a,
+.sc__btn,
+.springbot-button,
+input[type="submit"],
+input[type="button"],
+[class*="pagefly"] button,
+[class*="pagefly"] .button {
+    font-family: Josefin Slab, serif !important;
+    font-weight: 400 !important;
+}
+
+/* Ticket 22: Fix section headers alignment on Catering a la carte page */
+[class*="catering"] h3,
+[class*="catering"] .section-header,
+[class*="pagefly"] h3,
+.pagefly-container h3 {
+    text-align: left !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
 .product .sealsubs-target-element .sls-option[type="radio"]:checked + .sls-custom-radio::after {
     box-shadow: inset 1em 1em #0275ff;
     width: 10px;
     height: 10px;
 }
+
 .product .product-form__submit, .related-bottom form button.add-to-cart-button {
     background-color: #f9d94c;
     color: #000;
