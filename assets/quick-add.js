@@ -34,6 +34,9 @@ if (!customElements.get('quick-add-modal')) {
             this.preprocessHTML(productElement);
             HTMLUpdateUtility.setInnerHTML(this.modalContent, productElement.outerHTML);
 
+            // Move product description after buy_buttons in the modal
+            this.moveDescriptionAfterBuyButtons();
+
             if (window.Shopify && Shopify.PaymentButton) {
               Shopify.PaymentButton.init();
             }
@@ -116,6 +119,32 @@ if (!customElements.get('quick-add-modal')) {
         }
 
         mediaImages.forEach((img) => img.setAttribute('sizes', mediaImageSizes));
+      }
+
+      moveDescriptionAfterBuyButtons() {
+        const productInfo = this.modalContent.querySelector('product-info');
+        if (!productInfo) return;
+
+        const productInfoContainer = productInfo.querySelector('.product__info-container');
+        if (!productInfoContainer) return;
+
+        const description = productInfoContainer.querySelector('.quick-add-description');
+        const productForm = productInfoContainer.querySelector('product-form');
+        
+        if (description && productForm) {
+          // Find the buy_buttons block container (the div that directly contains product-form)
+          const buyButtonsContainer = productForm.parentElement;
+          
+          // Check if description comes before buy_buttons container
+          const allChildren = Array.from(productInfoContainer.children);
+          const descriptionIndex = allChildren.indexOf(description);
+          const buyButtonsIndex = allChildren.indexOf(buyButtonsContainer);
+          
+          if (descriptionIndex !== -1 && buyButtonsIndex !== -1 && descriptionIndex < buyButtonsIndex) {
+            // Description comes before buy_buttons, move it after
+            buyButtonsContainer.parentNode.insertBefore(description, buyButtonsContainer.nextSibling);
+          }
+        }
       }
     }
   );

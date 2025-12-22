@@ -193,7 +193,7 @@
                 </p>
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
-                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+                  <div class="product__description rte quick-add-description" {{ block.shopify_attributes }}>
                     {{ product.description }}
                   </div>
                 {%- endif -%}
@@ -458,7 +458,7 @@
               {%- when 'share' -%}
                 {% assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin %}
 
-                <div class="share-buttons">
+                <div class="share-buttons quick-add-hidden">
                   {% comment %} Save button - commented out until wishlist app is configured {% endcomment %}
                   {% comment %}
                   <button class="wish-btn" data-product-url="{{ product.url }}" data-product-title="{{ product.title | escape }}">

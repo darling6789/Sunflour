@@ -55,6 +55,11 @@
   overflow: hidden;
   max-width: var(--page-width);
   width: calc(100% - 3rem);
+  border-radius: 10px;
+}
+
+#product-grid.product-grid {
+  row-gap: 25px;
 }
 
 @media screen and (min-width: 750px) {
@@ -288,6 +293,19 @@ quick-add-modal .quick-add-hidden,
 quick-add-modal .product__modal-opener:not(.product__modal-opener--image),
 quick-add-modal .product__media-item:not(:first-child) {
   display: none !important;
+}
+
+quick-add-modal .quick-add-description {
+  display: block;
+  margin-top: 1.5rem;
+  max-height: 4.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.5em;
 }
 
 quick-add-modal .slider.slider--mobile {
