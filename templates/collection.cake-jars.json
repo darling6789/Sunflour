@@ -60,11 +60,74 @@
         "padding_top": 40,
         "padding_bottom": 80
       }
+    },
+    "collapsible_content_AKQx9L": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_GP998z": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long do your cake jars stay fresh?",
+            "icon": "check_mark",
+            "row_content": "<p>Because we bake everything from scratch without artificial preservatives, we recommend enjoying your <strong>cake jars</strong> within 7–10 days of arrival if kept refrigerated. For the best tasting experience, allow the jar to come to room temperature for about 30 minutes before serving—this ensures our house-made buttercream is perfectly silky and flavorful.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_8Cipz7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you offer nationwide shipping for your cake jars?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes! We provide reliable delivery across the United States, making it easy to send a sweet surprise to loved ones or colleagues. Each <strong>cake jar</strong> is carefully packaged to ensure it arrives in pristine condition. Whether you are ordering a single treat or a bulk gift, our shipping service brings the authentic Sunflour experience from our Charlotte kitchen directly to any doorstep.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_gGmkdP": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are these cake jars suitable for corporate gifting or large events?",
+            "icon": "check_mark",
+            "row_content": "<p>Absolutely. Our <strong>cake jars</strong> are a sophisticated, no-mess alternative to traditional cakes, making them a premier choice for <a href=\"/pages/corporate-gift\" title=\"Corporate Gift\">corporate gifts,</a> <a href=\"/pages/weddings\" title=\"Weddings\">wedding favors</a>, and holiday celebrations. Their portable nature and elegant presentation in glass jars provide a high-end \"unboxing\" experience that leaves a lasting impression on clients and guests alike.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_aHHjbp": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What makes Sunflour cake jars different from other \"cake in a jar\" products?",
+            "icon": "check_mark",
+            "row_content": "<p>The Sunflour difference lies in our commitment to artisanal quality. While many \"cake in a jar\" options rely on pre-made mixes and shortcuts, our <strong>cake jars</strong> are handmade from basic raw materials in small batches. We use premium, local ingredients and hand-crumble our moist cakes to ensure a perfect harmony of texture and flavor in every spoonful.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_GP998z",
+        "collapsible_row_8Cipz7",
+        "collapsible_row_gGmkdP",
+        "collapsible_row_aHHjbp"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "heading": "Cake Jar FAQs",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "banner",
     "product-grid",
-    "rich_text_3NWaHm"
+    "rich_text_3NWaHm",
+    "collapsible_content_AKQx9L"
   ]
 }
