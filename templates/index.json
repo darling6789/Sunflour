@@ -107,7 +107,7 @@
         "image_443tpV": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/cookie-gift-box-large.jpg",
+            "image": "shopify://shop_images/image.jpg",
             "img_link": "shopify://products/cookie-box"
           }
         },
