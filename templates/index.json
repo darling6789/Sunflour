@@ -83,6 +83,13 @@
             "img_link": "shopify://products/english-muffins"
           }
         },
+        "image_HRLrKF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/bakery-gifts-online-000.webp",
+            "img_link": "shopify://collections/brownies-bars"
+          }
+        },
         "image_EqBNcC": {
           "type": "image",
           "settings": {
@@ -102,13 +109,6 @@
           "settings": {
             "image": "shopify://shop_images/cookie-gift-box-large.jpg",
             "img_link": "shopify://products/cookie-box"
-          }
-        },
-        "image_HRLrKF": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-000.webp",
-            "img_link": "shopify://collections/brownies-bars"
           }
         },
         "image_76RBVK": {
@@ -151,10 +151,10 @@
         "image_XnBA4z",
         "image_9jAkwE",
         "image_iet4CA",
+        "image_HRLrKF",
         "image_EqBNcC",
         "image_YjLHxM",
         "image_443tpV",
-        "image_HRLrKF",
         "image_76RBVK",
         "image_AGFVqB",
         "image_NABN4k",
