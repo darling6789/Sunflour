@@ -225,6 +225,45 @@ for (i = 0; i < acc.length; i++) {
 
 </style>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BakeryOrCafe",
+  "name": {{ page.metafields.global.title | default: shop.name | json }},
+  "url": {{ canonical_url | json }},
+  {%- if page.metafields.global.phone != blank and page.metafields.global.phone != '-' -%}
+  "telephone": {{ page.metafields.global.phone | json }},
+  {%- endif -%}
+  {%- if page.metafields.global.email != blank -%}
+  "email": {{ page.metafields.global.email | json }},
+  {%- endif -%}
+  {%- if page.metafields.global.address != blank -%}
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": {{ page.metafields.global.address | json }},
+    "addressLocality": "Charlotte",
+    "addressRegion": "NC",
+    "addressCountry": "US"
+  },
+  {%- endif -%}
+  {%- if page.metafields.global.time_opening != blank -%}
+  "openingHours": {{ page.metafields.global.time_opening | json }},
+  {%- endif -%}
+  {%- if page.metafields.global.outside_image != blank -%}
+  "image": {{ page.metafields.global.outside_image | json }},
+  {%- elsif page.metafields.global.inside_image != blank -%}
+  "image": {{ page.metafields.global.inside_image | json }},
+  {%- endif -%}
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ request.origin | json }}
+  },
+  "servesCuisine": "Bakery",
+  "priceRange": "$"
+}
+</script>
+
 {% schema %}
   {
     "name": "S location page",
