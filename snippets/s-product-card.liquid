@@ -30,8 +30,14 @@
   <div class="s-product-card-actions">
     <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="s-add-to-cart-form">
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      
-      <button type="submit" 
+
+      <div class="s-quantity-row" onclick="event.stopPropagation()">
+        <button type="button" class="s-qty-btn" onclick="event.stopPropagation(); var i=this.nextElementSibling; i.value=Math.max(1,parseInt(i.value||1)-1);">−</button>
+        <input type="number" name="quantity" value="1" min="1" class="s-qty-input" onclick="event.stopPropagation()">
+        <button type="button" class="s-qty-btn" onclick="event.stopPropagation(); var i=this.previousElementSibling; i.value=parseInt(i.value||1)+1;">+</button>
+      </div>
+
+      <button type="submit"
               class="s-add-to-cart-btn s-btn"
               {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
               data-product-id="{{ product.id }}"
