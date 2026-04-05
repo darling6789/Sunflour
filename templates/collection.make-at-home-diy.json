@@ -43,7 +43,7 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Make-at-Home Baking Kits — Gift the Sunflour Experience</h2><p>Sunflour Baking Company's make-at-home DIY kits bring the scratch-made baking experience out of our Charlotte kitchens and into yours. Each kit contains pre-measured dry ingredients and detailed instructions so you can recreate our signature recipes at home — no professional skills required.</p><p>Baking kits make a genuinely different kind of gift. Instead of something that gets consumed in a sitting, you're giving someone an activity and the confidence that what they make will actually turn out. That's the Sunflour difference: our recipes work because we test them obsessively before we sell them.</p><h3>Cookie Mix Gift Boxes and Baking Kits</h3><p>Our DIY kits are built around our most popular recipes — the cookies, brownies, and seasonal specialties that people order again and again from our bakeries. We package the dry ingredients in a way that looks good as a gift, with the recipe included and all the guesswork removed.</p><p>These kits are a strong choice for the home baker in your life, a cooking-focused gift experience, or a rainy-day activity for families. They ship nationwide and need only basic pantry staples (butter, eggs) to complete.</p><h3>Why DIY Baking Kits Make Great Gifts</h3><ul><li>Pre-measured ingredients from Sunflour's tested recipes</li><li>Ships nationwide — good for out-of-town gifting</li><li>An activity gift, not just a consumable</li><li>Multiple recipe options across flavors and difficulty</li><li>Detailed instructions included in every kit</li></ul>"
+            "text": "<h2>Make-at-Home Baking Kits, Gift the Sunflour Experience</h2><p>Sunflour Baking Company's make-at-home DIY kits bring the scratch-made baking experience out of our Charlotte kitchens and into yours. Each kit contains pre-measured dry ingredients and detailed instructions so you can recreate our signature recipes at home, no professional skills required.</p><p>Baking kits make a genuinely different kind of gift. Instead of something that gets consumed in a sitting, you're giving someone an activity and the confidence that what they make will actually turn out. That's the Sunflour difference: our recipes work because we test them obsessively before we sell them.</p><h3>Cookie Mix Gift Boxes and Baking Kits</h3><p>Our DIY kits are built around our most popular recipes, the cookies, brownies, and seasonal specialties that people order again and again from our bakeries. We package the dry ingredients in a way that looks good as a gift, with the recipe included and all the guesswork removed.</p><p>These kits are a strong choice for the home baker in your life, a cooking-focused gift experience, or a rainy-day activity for families. They ship nationwide and need only basic pantry staples (butter, eggs) to complete.</p><h3>Why DIY Baking Kits Make Great Gifts</h3><ul><li>Pre-measured ingredients from Sunflour's tested recipes</li><li>Ships nationwide, good for out-of-town gifting</li><li>An activity gift, not just a consumable</li><li>Multiple recipe options across flavors and difficulty</li><li>Detailed instructions included in every kit</li></ul>"
           }
         }
       },
@@ -65,7 +65,7 @@
           "settings": {
             "heading": "What do I need to add to the baking kit?",
             "icon": "check_mark",
-            "row_content": "<p>Our DIY kits include all the pre-measured dry ingredients. You'll typically need to add butter and eggs from your pantry — those are listed on the kit packaging. The included instructions walk you through the rest step by step.</p>",
+            "row_content": "<p>Our DIY kits include all the pre-measured dry ingredients. You'll typically need to add butter and eggs from your pantry, those are listed on the kit packaging. The included instructions walk you through the rest step by step.</p>",
             "page": ""
           }
         },
@@ -74,7 +74,7 @@
           "settings": {
             "heading": "Are the baking kits good for beginners?",
             "icon": "check_mark",
-            "row_content": "<p>Yes. Our kits are designed to be beginner-friendly. The instructions are clear, the ingredients are pre-measured, and the recipes are the same ones we've used for years — which means they're tested and reliable. If you can follow a recipe, you can make these work.</p>",
+            "row_content": "<p>Yes. Our kits are designed to be beginner-friendly. The instructions are clear, the ingredients are pre-measured, and the recipes are the same ones we've used for years, which means they're tested and reliable. If you can follow a recipe, you can make these work.</p>",
             "page": ""
           }
         },
@@ -83,7 +83,7 @@
           "settings": {
             "heading": "Do baking kits ship nationwide?",
             "icon": "check_mark",
-            "row_content": "<p>Yes. DIY baking kits ship to all 50 states. Because they contain only dry ingredients, they're easier to ship than our fresh-baked items and have a longer shelf life — typically 3-6 months from the ship date.</p>",
+            "row_content": "<p>Yes. DIY baking kits ship to all 50 states. Because they contain only dry ingredients, they're easier to ship than our fresh-baked items and have a longer shelf life, typically 3-6 months from the ship date.</p>",
             "page": ""
           }
         }
