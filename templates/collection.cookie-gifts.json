@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Send Cookie Gifts Nationwide — Scratch-Made in Charlotte, NC</h2><p>Sunflour Baking Company ships our most popular cookie gifts to all 50 states. Every cookie in this collection is made from scratch in our Charlotte kitchens — buttery, dense, and packed with the kind of flavor that makes them worth mailing across the country.</p><p>Our cookie gift boxes are built for the moments when a store-bought option feels lazy. Whether you're sending a thank you to a client, celebrating a coworker, or just want to ship something genuinely good to a friend, Sunflour's cookie gift boxes arrive looking and tasting like they came from a real bakery — because they did.</p><h3>Cookie Gift Boxes for Every Occasion</h3><p>We carry assorted cookie boxes and specialty gift sets throughout the year. Classic flavors like chocolate chip, snickerdoodle, and double chocolate sit alongside seasonal specials that rotate with the calendar. Each box is packaged for safe transit and includes a freshness seal.</p><p>For bulk gifting — client holiday gifts, employee appreciation boxes, event favors — we accommodate larger orders. Reach out for bulk pricing and lead time requirements.</p><h3>What Makes Sunflour Cookies Worth Shipping</h3><ul><li>Baked fresh to order in small batches</li><li>No mixes, no shortcuts — scratch-made from real ingredients</li><li>Multiple flavor options and assorted gift boxes</li><li>Nationwide shipping with secure packaging</li><li>Charlotte pickup available at five locations</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What cookie flavors are available for gifting?",
+            "icon": "check_mark",
+            "row_content": "<p>We offer a rotating selection of cookie flavors including chocolate chip, snickerdoodle, double chocolate, oatmeal raisin, and seasonal specials. Gift boxes can be a single flavor or an assorted mix — check current availability in the collection above.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How are cookie gifts packaged for shipping?",
+            "icon": "check_mark",
+            "row_content": "<p>Cookie gifts are packaged in bakery boxes with a freshness seal and void fill to prevent movement during transit. We use insulated packaging where appropriate so your cookies arrive in the same condition they left our kitchen.</p>",
+            "page": ""
+          }
+        },
+        "faq_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I send cookies as a corporate gift?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. Cookie gift boxes are one of our most popular corporate gifting options. We can ship individual boxes to multiple addresses or prepare a bulk pickup order for Charlotte-area businesses. Contact us for bulk order inquiries.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "settings": {
+        "caption": "",
+        "heading": "Cookie Gift FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}

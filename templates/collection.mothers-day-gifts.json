@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Mother's Day Bakery Gifts — Send Baked Goods She'll Actually Love</h2><p>Flowers fade. A box of Sunflour baked goods gets remembered. Our Mother's Day gift collection features the scratch-made treats that have made us a Charlotte, NC staple since 2009 — packaged specifically for gifting and ready to ship to your mom wherever she is.</p><p>From our signature cake jars in crowd-pleasing flavors to cookie assortments and pastry gift boxes, we've pulled together everything that lands well as a Mother's Day gift. Everything is baked fresh, packaged carefully for transit, and arrives looking like you put real thought into it — because you went to a real bakery.</p><h3>Ship Baked Goods to Mom Nationwide</h3><p>You don't have to be local to Charlotte to send mom something from Sunflour. We ship nationwide and time deliveries to arrive close to Mother's Day weekend. Order early — our Mother's Day collection typically sells out in the weeks leading up to the holiday.</p><p>Popular Mother's Day picks include our Lemon Cake Jar, Salted Caramel Cake Jar, assorted cookie gift boxes, and pastry pouches. If she has a sweet tooth, these are the things she'll actually finish.</p><h3>Why Sunflour Makes a Better Mother's Day Gift</h3><ul><li>Scratch-made, no artificial preservatives or mixes</li><li>Ships nationwide with careful packaging</li><li>Multiple gift options across price points</li><li>Gift-ready packaging — no additional wrapping needed</li><li>Charlotte pickup available if you're local</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When should I order for Mother's Day delivery?",
+            "icon": "check_mark",
+            "row_content": "<p>We recommend ordering at least 5-7 days before Mother's Day to ensure delivery before the weekend. Our Mother's Day collection tends to sell out — ordering 2 weeks early gives you the best selection and delivery timing flexibility.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What Mother's Day flavors do you recommend?",
+            "icon": "check_mark",
+            "row_content": "<p>Our top picks for Mother's Day are the Lemon Cake Jar, Salted Caramel Cake Jar, and the assorted pastry pouch. These are lighter, crowd-pleasing flavors that tend to go over well. For moms who love chocolate, the Midnight Chocolate Cake Jar or a brownie gift box are both strong choices.</p>",
+            "page": ""
+          }
+        },
+        "faq_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I include a personalized message with a Mother's Day gift?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. At checkout, you'll have the option to add a personalized message. We include it as a printed note with your order so your mom knows it came from you.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "settings": {
+        "caption": "",
+        "heading": "Mother's Day Gift FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}

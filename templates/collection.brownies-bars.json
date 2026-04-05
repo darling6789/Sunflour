@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Brownies & Bars Shipped Nationwide From Charlotte, NC</h2><p>Sunflour Baking Company's brownies and bars are the real thing — dense, fudgy, and made from scratch in our Charlotte, NC kitchens. No box mixes. No shortcuts. Just the same brownie recipes we've been perfecting since we opened, now available to ship anywhere in the country.</p><p>Our brownie gift boxes make it easy to send something genuinely good. Whether it's a thank you, a get-well, a holiday treat, or just a reason to check in, a box of Sunflour brownies lands differently than anything you'd find at a grocery store.</p><h3>Brownie Gift Boxes: What to Expect</h3><p>Each brownie gift box is packed fresh to order and sealed for transit. We use insulated packaging to protect texture and freshness so what arrives at your recipient's door is as good as what comes out of our oven.</p><p>Current brownie offerings include classic fudge brownies, blondies, and specialty bar flavors that rotate seasonally. Vegan and gluten-friendly bar options are available in select formats — check the current collection above for what's in stock.</p><h3>Why Sunflour Brownies Are Worth Sending</h3><ul><li>Scratch-made in small batches, baked fresh to order</li><li>Ships nationwide with insulated packaging</li><li>Vegan and gluten-friendly options available</li><li>Multiple flavors and gift box sizes</li><li>Charlotte pickup at any of our five locations</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you offer vegan or gluten-friendly brownie options?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. We carry vegan blondies and other allergen-aware bar options. Check the current collection for availability, as some specialty items are seasonal or made in limited batches.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How are brownies packaged for shipping?",
+            "icon": "check_mark",
+            "row_content": "<p>Brownies are packaged in bakery boxes with insulation to preserve texture and freshness during transit. We seal each box to prevent air exposure so your brownies arrive fudgy, not dried out.</p>",
+            "page": ""
+          }
+        },
+        "faq_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long do shipped brownies stay fresh?",
+            "icon": "check_mark",
+            "row_content": "<p>Our brownies stay fresh for 5-7 days at room temperature or up to 2 weeks refrigerated. We bake without artificial preservatives, so for the best experience we recommend eating within the first few days of arrival.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "settings": {
+        "caption": "",
+        "heading": "Brownies & Bars FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}

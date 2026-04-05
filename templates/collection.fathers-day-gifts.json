@@ -1,0 +1,100 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Father's Day Bakery Gifts — Shipped Nationwide From Charlotte</h2><p>Skip the tie. Sunflour Baking Company's Father's Day gifts are scratch-made baked goods from our Charlotte, NC bakeries, packaged and shipped directly to your dad wherever he is. Real food, made the right way — a gift that actually gets used.</p><p>Our Father's Day collection pulls from the treats that work for the no-fuss crowd: rich brownie boxes, decadent cake jars in bold flavors like Midnight Chocolate and Salted Caramel, and cookie assortments that don't feel overly precious. Substantial gifts, not decorative ones.</p><h3>Send Baked Goods for Father's Day, Anywhere in the US</h3><p>Father's Day shipping is available to all 50 states. We pack everything for safe transit and time delivery windows around the holiday. Order at least 5-7 days before Father's Day to ensure arrival — and earlier if you want your pick of flavors before the top choices sell out.</p><p>Charlotte-area orders can also be picked up at any of our five locations if you'd rather grab it in person.</p><h3>Father's Day Gift Options From Sunflour</h3><ul><li>Cake jars in bold flavors: Midnight Chocolate, Salted Caramel, Cookies & Cream</li><li>Brownie and bar gift boxes</li><li>Cookie assortments and gift pouches</li><li>Ships nationwide with careful packaging</li><li>Charlotte pickup at five locations</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What are the best Father's Day gifts from Sunflour?",
+            "icon": "check_mark",
+            "row_content": "<p>Our top Father's Day picks are the Midnight Chocolate Cake Jar, Salted Caramel Cake Jar, and a brownie gift box. These are bolder, richer flavors that tend to resonate well as Father's Day gifts. Cookie assortments are also a strong choice for the dad who prefers variety.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When should I order for Father's Day shipping?",
+            "icon": "check_mark",
+            "row_content": "<p>We recommend ordering 5-7 days before Father's Day for delivery timing. Ordering 2 weeks early gives you the most flexibility on flavor selection and shipping windows, especially for popular items that sell out ahead of the holiday.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2"],
+      "settings": {
+        "caption": "",
+        "heading": "Father's Day Gift FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}

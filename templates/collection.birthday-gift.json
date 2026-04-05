@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Birthday Bakery Gifts Shipped Nationwide</h2><p>A birthday deserves something better than a gift card. Sunflour Baking Company's birthday gift collection brings scratch-made baked goods from our Charlotte, NC bakeries directly to your person — wherever they are in the country.</p><p>Our most popular birthday gifts are our signature cake jars: individual-sized hand-layered desserts in flavors like Birthday Cake, Cookies & Cream, Red Velvet, Midnight Chocolate, and Lemon. Each one is baked fresh, sealed for transit, and ready to eat right out of the jar. No plates, no mess — just cake.</p><h3>Send Baked Goods for Any Birthday</h3><p>Whether you're celebrating a milestone birthday for a parent across the country, a friend in another city, or a colleague you want to recognize, Sunflour makes it simple. Order online, ship directly to their address, and skip the search for local bakeries in their zip code.</p><p>Our birthday gift sets combine crowd-pleasing flavors into curated boxes that feel personal without requiring any custom work on your end. If you want to add a note, we include a card slot with every shipped order.</p><h3>Birthday Gifts From Charlotte's Bakery</h3><ul><li>Shipped nationwide in insulated packaging</li><li>Multiple flavors and bundle options</li><li>Cake jars, cookie assortments, and pastry gift sets</li><li>Baked fresh to order in small batches</li><li>Shelf life of 7-10 days refrigerated</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I schedule delivery for a specific birthday date?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. At checkout you can select your preferred ship date. We recommend ordering 3-5 business days ahead to account for transit time and ensure the freshest possible delivery.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What birthday gift flavors do you offer?",
+            "icon": "check_mark",
+            "row_content": "<p>Our birthday cake jars come in Birthday Cake, Cookies & Cream, Red Velvet, Midnight Chocolate, Lemon, French Toast, and Salted Caramel. We also offer cookie assortments and pastry gift sets if you want variety in the box.</p>",
+            "page": ""
+          }
+        },
+        "faq_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do birthday gift orders include a card?",
+            "icon": "check_mark",
+            "row_content": "<p>Every shipped birthday gift includes an option to add a personalized note at checkout. We include the printed note with the package so your recipient knows who it's from.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "settings": {
+        "caption": "",
+        "heading": "Birthday Gift FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}

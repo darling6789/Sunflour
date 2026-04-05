@@ -1,0 +1,100 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Graduation Gifts From Sunflour — Scratch-Made and Shipped Nationwide</h2><p>Graduation is worth celebrating with something better than a gift card. Sunflour Baking Company's graduation gift collection brings our Charlotte, NC scratch-made baked goods directly to the graduate — wherever they're celebrating or heading next.</p><p>Graduation gifts from Sunflour work because they're personal in a way generic gifts aren't: you're sending real food, made the right way, from a bakery that cares about how it tastes. Cake jars arrive ready to eat. Cookie boxes make a solid accompaniment to any graduation party spread. Brownie boxes land well for the graduate who just wants something good.</p><h3>Ship a Graduation Gift Anywhere in the US</h3><p>Whether your graduate is at home in Charlotte or just moved across the country for a new chapter, we can get a Sunflour gift to their door. We ship nationwide with packaging designed to keep everything fresh in transit.</p><p>Popular graduation picks: Birthday Cake Jars (the name fits), assorted cookie gift boxes, and pastry pouches with occasion themes. For large graduation parties, sampler boxes and bulk brownie orders are a good option — contact us for details.</p><h3>Graduation Gift Ideas From Sunflour</h3><ul><li>Cake jars in six flavors — individual-sized, no mess</li><li>Cookie gift boxes for parties and group gifting</li><li>Brownie and bar boxes for a richer option</li><li>Pastry pouches with \"Celebrate\" themed packaging</li><li>Ships nationwide, Charlotte pickup available</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What graduation gifts do you recommend from Sunflour?",
+            "icon": "check_mark",
+            "row_content": "<p>Our top graduation picks are the Birthday Cake Jar (the name applies here too), the assorted cookie gift box, and the Celebrate pastry pouch. For groups or parties, a sampler box or brownie gift box covers more people and gives everyone options.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I send a graduation gift to an out-of-state graduate?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. We ship graduation gifts to all 50 states. Everything is packaged for safe transit so it arrives fresh. You just need a delivery address at checkout, and we'll handle the rest.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2"],
+      "settings": {
+        "caption": "",
+        "heading": "Graduation Gift FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}

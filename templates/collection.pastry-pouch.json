@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Pastry Pouches: The Perfect Thank You Gift</h2><p>Sunflour Baking Company's Pastry Pouches are a curated collection of scratch-made cookies and pastries packaged into a compact, giftable format. They're designed for the moments when you want to say something — thank you, well done, thinking of you — without overthinking the gift.</p><p>Each pouch is filled with a handpicked selection of Sunflour's most beloved baked goods, baked fresh in our Charlotte, NC kitchens. The presentation is clean and professional. The contents are the real thing: buttery cookies, layered brownies, and artisan treats made the same way we've always made them — from scratch, in small batches.</p><h3>Recognition Gifts That Actually Mean Something</h3><p>Pastry pouches work well as recognition gifts for employees, thank-you gifts for clients, or teacher appreciation presents. They ship nationwide and hold up well in transit, making them a reliable choice for remote teams or out-of-town contacts.</p><p>Themed pouches are available for specific occasions: \"You Rock,\" \"Celebrate,\" and \"Bee Well\" each offer a slightly different mix with a message built into the packaging. Pick the tone that fits the moment.</p><h3>Why Pastry Pouches Work as Gifts</h3><ul><li>Ships nationwide in secure, gift-ready packaging</li><li>Multiple occasion themes available</li><li>Scratch-made with no artificial preservatives</li><li>Right-sized for individual recipients — not too much, not too little</li><li>Charlotte pickup available at any of our five locations</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What's included in a pastry pouch?",
+            "icon": "check_mark",
+            "row_content": "<p>Each pastry pouch contains a curated selection of Sunflour's scratch-made cookies, brownies, and baked treats. The exact mix varies by pouch theme, but every pouch is filled with the same quality we serve in our Charlotte locations.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are pastry pouches good for employee recognition programs?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. Our pastry pouches are a popular choice for HR teams and managers looking for a meaningful but practical recognition gift. They ship individually, making it easy to send directly to remote employees. We can also accommodate bulk orders — contact us for details.</p>",
+            "page": ""
+          }
+        },
+        "faq_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long do pastry pouches stay fresh?",
+            "icon": "check_mark",
+            "row_content": "<p>Pastry pouches are best enjoyed within 5-7 days of arrival. We bake everything fresh without artificial preservatives, so freshness is best when you keep them in a cool, dry place or refrigerate them if you plan to wait a few days before gifting.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "settings": {
+        "caption": "",
+        "heading": "Pastry Pouch FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}

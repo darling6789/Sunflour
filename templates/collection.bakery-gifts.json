@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Bakery Gifts Shipped Nationwide — From Charlotte's Sunflour</h2><p>Sunflour Baking Company has been baking from scratch in Charlotte, NC since 2009. Our bakery gifts collection brings that same scratch-made quality to your gift-giving: real baked goods, made by real bakers, packaged for the person on the receiving end — not the shelf.</p><p>Our gift range covers every occasion and every relationship: cake jars for the person who deserves something special, cookie boxes for the office, brownie gifts for the chocolate lover, pastry pouches for a quick thoughtful send, and sampler boxes when you can't pick just one thing. Everything ships nationwide and arrives in packaging that feels like a gift, not a grocery order.</p><h3>What Makes a Sunflour Bakery Gift Different</h3><p>Most gifting options are either too generic or too perishable to ship reliably. Sunflour has spent years figuring out how to get scratch-made baked goods to your recipient in the same condition they leave our kitchen. We use insulated packaging, careful sealing, and intentional box design to protect what's inside.</p><p>Every item in this collection is baked fresh to order in small batches, without mixes or artificial preservatives. The shelf life is real but not indefinite — typically 7-10 days for most items — which is what you'd expect from actual baked goods.</p><h3>Bakery Gift Options From Sunflour</h3><ul><li>Cake jars in six flavors — ships nationwide, no mess</li><li>Cookie gift boxes — multiple sizes and assortments</li><li>Brownie and bar boxes — vegan options available</li><li>Pastry pouches — occasion themes for specific messages</li><li>Sampler boxes — variety packs for groups and households</li><li>Charlotte pickup available at five locations</li></ul>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What are the most popular bakery gifts at Sunflour?",
+            "icon": "check_mark",
+            "row_content": "<p>Our most consistently popular gifts are the cake jar assortments, assorted cookie boxes, and pastry pouches. Cake jars are the most unique item we make — individual-sized, hand-layered, and available in six flavors. They're what most people order when they want to send something that stands out.</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do all bakery gifts ship nationwide?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. All items in this collection are available for nationwide shipping. We pack everything with transit in mind so your gift arrives in the same condition it left our kitchen. Charlotte-area customers can also pick up at any of our five locations.</p>",
+            "page": ""
+          }
+        },
+        "faq_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I order bakery gifts in bulk for a corporate program?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. We work with companies and organizations on bulk gift orders. Contact us directly to discuss volume pricing, lead times, and whether Charlotte pickup or nationwide shipping works better for your distribution needs.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "settings": {
+        "caption": "",
+        "heading": "Bakery Gift FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "seo_content", "faq"]
+}
