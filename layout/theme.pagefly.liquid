@@ -18,8 +18,8 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
 		<link rel="canonical" href="{{ canonical_url }}" />
 	{% endif %}
     
-  {% include 'SEO-All-in-one' %}
-    
+  {%- comment -%} SEO-All-in-one is injected via content_for_header app mechanism — explicit include removed to prevent duplicate schemas {%- endcomment -%}
+
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 	
     {%- if settings.favicon != blank -%}
