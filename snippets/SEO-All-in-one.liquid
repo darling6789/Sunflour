@@ -281,7 +281,7 @@
     "@type": "PostalAddress"
     {%- if shop.address.street != null -%},"streetAddress": "{{shop.address.street}}"{%- endif-%}
     {%- if shop.address.city != null -%},"addressLocality": "{{shop.address.city}}"{%- endif-%}
-    {%- if shop.address.province != null -%},"addressRegion": "{{shop.address.province}}"{%- endif-%}
+    {%- if shop.address.province_code != null -%},"addressRegion": "{{shop.address.province_code}}"{%- endif-%}
     {%- if shop.address.zip != null -%},"postalCode": "{{shop.address.zip}}"{%- endif-%}
 	{%- if shop.address.country_code != null -%},"addressCountry": "{{shop.address.country_code}}"{%- endif-%}
   }{%-endunless-%}
