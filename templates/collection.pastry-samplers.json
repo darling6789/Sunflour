@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Bakery Sampler Boxes, Mixed Pastry Gifts From Sunflour</h2><p>Can't pick just one? Sunflour Baking Company's sampler boxes are built for exactly that problem. Each sampler brings together a curated mix of our most popular baked goods, cookies, brownies, bars, and pastries, packaged together as a single gift you can actually feel good about sending.</p><p>Our samplers are a reliable choice when you want something that works for anyone: the person who has everything, the colleague you don't know well enough to get specific, or the household where everyone has different preferences. A variety box covers the ground a single-item gift can't.</p><h3>What's in a Sunflour Sampler</h3><p>Sampler contents rotate by season but always include a mix of our scratch-made specialties, think chocolate chip cookies alongside fudge brownies, blondies, and a seasonal pastry or two. Everything in the box is baked fresh in our Charlotte, NC kitchens and packed for nationwide shipping.</p><p>Gift-ready packaging is standard. These boxes are designed to be sent directly to the recipient without any additional wrapping on your end.</p><h3>Sampler Boxes for Groups and Gifting</h3><ul><li>Mixed pastry assortments, something for every palate</li><li>Ships nationwide in gift-ready packaging</li><li>Seasonal contents rotate throughout the year</li><li>Great for households, offices, and groups</li><li>Charlotte pickup available at five locations</li></ul>"
+            "text": "<h2>Bakery Sampler Boxes, Mixed Pastry Gifts From Charlotte's Sunflour</h2>\n<p>Not sure which one to pick? Our sampler boxes solve that. Each one brings together a curated mix of Sunflour's most popular baked goods: cookies, brownies, bars, and pastries, packaged as a single gift you can send with confidence.</p>\n<p>Samplers are the reliable choice when you want something that works for anyone. The colleague you do not know well enough to get specific. The household where everyone has different preferences. The client who has everything. A well-curated variety box covers ground that a single-item gift cannot.</p>\n<h3>What Goes Into a Sunflour Sampler</h3>\n<p>Sampler contents rotate by season but always include a mix of our scratch-made specialties: cookies alongside fudge brownies, blondies, and a seasonal pastry or two. Everything is baked fresh in our Charlotte, NC kitchens and packed for nationwide shipping. Gift-ready packaging is standard. No additional wrapping needed on your end.</p>\n<p>For a more focused gift, our <a href=\"/collections/cake-jars\">cake jars</a> are a strong alternative for the person who wants something personal and individual-sized. Our <a href=\"/collections/cookie-gifts\">cookie gift boxes</a> are the right call when you want a full spread of one category. The samplers are for when you want range.</p>\n<h3>Sampler Box Options From Sunflour</h3>\n<ul>\n<li>Mixed pastry assortments, something for every palate</li>\n<li>Ships nationwide in gift-ready packaging</li>\n<li>Seasonal contents rotate throughout the year</li>\n<li>Great for households, offices, and groups</li>\n<li>Charlotte pickup available at five locations</li>\n</ul>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -88,7 +90,11 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
       "settings": {
         "caption": "",
         "heading": "Sampler Box FAQs",
@@ -105,5 +111,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }

@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Make-at-Home Baking Kits, Gift the Sunflour Experience</h2><p>Sunflour Baking Company's make-at-home DIY kits bring the scratch-made baking experience out of our Charlotte kitchens and into yours. Each kit contains pre-measured dry ingredients and detailed instructions so you can recreate our signature recipes at home, no professional skills required.</p><p>Baking kits make a genuinely different kind of gift. Instead of something that gets consumed in a sitting, you're giving someone an activity and the confidence that what they make will actually turn out. That's the Sunflour difference: our recipes work because we test them obsessively before we sell them.</p><h3>Cookie Mix Gift Boxes and Baking Kits</h3><p>Our DIY kits are built around our most popular recipes, the cookies, brownies, and seasonal specialties that people order again and again from our bakeries. We package the dry ingredients in a way that looks good as a gift, with the recipe included and all the guesswork removed.</p><p>These kits are a strong choice for the home baker in your life, a cooking-focused gift experience, or a rainy-day activity for families. They ship nationwide and need only basic pantry staples (butter, eggs) to complete.</p><h3>Why DIY Baking Kits Make Great Gifts</h3><ul><li>Pre-measured ingredients from Sunflour's tested recipes</li><li>Ships nationwide, good for out-of-town gifting</li><li>An activity gift, not just a consumable</li><li>Multiple recipe options across flavors and difficulty</li><li>Detailed instructions included in every kit</li></ul>"
+            "text": "<h2>Make-at-Home Baking Kits, Gift the Sunflour Experience</h2>\n<p>Sunflour Baking Company's make-at-home DIY kits bring the scratch-made baking experience out of our Charlotte kitchens and into yours. Each kit contains pre-measured dry ingredients and detailed instructions so you can recreate our signature recipes at home. No professional skills required, just a willing oven and a few standard pantry staples.</p>\n<p>Baking kits make a genuinely different kind of gift. You are giving someone an activity and the confidence that what they make will actually turn out. We test these recipes the same way we test everything in our bakeries, which is why they work.</p>\n<h3>Cookie Mixes, Muffin Mixes, and More</h3>\n<p>Our DIY kits are built around our most popular recipes: the cookies, muffins, and scones that people order again and again from our bakeries. The dry ingredients are packaged to look good as a gift, with the recipe included and all the guesswork removed. You provide the butter, eggs, and a few basics. The kit handles the rest.</p>\n<p>These are a strong choice for the home baker in your life, a cooking-focused gift, or a slow weekend project. They also pair well alongside a ready-to-eat gift from our <a href=\"/collections/cookie-gifts\">cookie gift collection</a> if you want to give someone both the treat now and the project for later.</p>\n<h3>Why DIY Baking Kits Make Great Gifts</h3>\n<ul>\n<li>Pre-measured dry ingredients from Sunflour's tested recipes</li>\n<li>Ships nationwide, great for out-of-town gifting</li>\n<li>An activity gift, not just a consumable</li>\n<li>Multiple recipe options available</li>\n<li>Detailed instructions included in every kit</li>\n</ul>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -88,7 +90,11 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
       "settings": {
         "caption": "",
         "heading": "Baking Kit FAQs",
@@ -105,5 +111,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }

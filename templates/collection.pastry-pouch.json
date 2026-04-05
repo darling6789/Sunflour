@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Pastry Pouches: The Perfect Thank You Gift</h2><p>Sunflour Baking Company's Pastry Pouches are a curated collection of scratch-made cookies and pastries packaged into a compact, giftable format. They're designed for the moments when you want to say something, thank you, well done, thinking of you, without overthinking the gift.</p><p>Each pouch is filled with a handpicked selection of Sunflour's most beloved baked goods, baked fresh in our Charlotte, NC kitchens. The presentation is clean and professional. The contents are the real thing: buttery cookies, layered brownies, and artisan treats made the same way we've always made them, from scratch, in small batches.</p><h3>Recognition Gifts That Actually Mean Something</h3><p>Pastry pouches work well as recognition gifts for employees, thank-you gifts for clients, or teacher appreciation presents. They ship nationwide and hold up well in transit, making them a reliable choice for remote teams or out-of-town contacts.</p><p>Themed pouches are available for specific occasions: \"You Rock,\" \"Celebrate,\" and \"Bee Well\" each offer a slightly different mix with a message built into the packaging. Pick the tone that fits the moment.</p><h3>Why Pastry Pouches Work as Gifts</h3><ul><li>Ships nationwide in secure, gift-ready packaging</li><li>Multiple occasion themes available</li><li>Scratch-made with no artificial preservatives</li><li>Right-sized for individual recipients, not too much, not too little</li><li>Charlotte pickup available at any of our five locations</li></ul>"
+            "text": "<h2>Pastry Pouches: A Thoughtful Gift, Right-Sized for the Moment</h2>\n<p>Sunflour Baking Company's Pastry Pouches are single large cookies from our Charlotte, NC kitchens, packaged into a compact, gift-ready format designed for the moments when you want to say something specific without overthinking the gift.</p>\n<p>Each pouch is built around one of our from-scratch cookies, baked fresh in small batches with no mixes or shortcuts. The presentation is clean and personal. Themed pouches are available for specific occasions: Bee Well for get-well sends, Celebrate for birthdays and milestones, Thank You for genuine appreciation, and You Rock for the person on your team who earned it.</p>\n<h3>Recognition Gifts That Actually Land</h3>\n<p>Pastry pouches work well as recognition gifts for employees, thank-you gifts for clients, or teacher appreciation presents. They ship nationwide and hold up well in transit, which makes them a reliable choice for remote teams or out-of-town contacts. One cookie, beautifully packaged, says more than a card.</p>\n<p>If you are looking for something with more range, our <a href=\"/collections/cookie-gifts\">cookie gift boxes</a> are a natural next step: same from-scratch quality, more cookies, more variety. The pouches are for the one-person send. The boxes are for the group or the person who deserves something bigger.</p>\n<h3>Pastry Pouch Options From Sunflour</h3>\n<ul>\n<li>Four occasion themes: Bee Well, Celebrate, Thank You, You Rock</li>\n<li>One large from-scratch cookie per pouch</li>\n<li>Ships nationwide in secure, gift-ready packaging</li>\n<li>Charlotte pickup available at any of our five locations</li>\n</ul>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -88,7 +90,11 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
       "settings": {
         "caption": "",
         "heading": "Pastry Pouch FAQs",
@@ -105,5 +111,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }

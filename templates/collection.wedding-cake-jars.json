@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Wedding Cake Jars, Individual Desserts for Weddings and Events</h2><p>Sunflour Baking Company's wedding cake jars are an elegant alternative to traditional wedding cake. Each jar holds a single serving of hand-layered, scratch-made cake, the same quality you'd expect from our Charlotte bakeries, sealed in a glass jar and ready for your guests to enjoy.</p><p>Wedding cake jars have become a popular choice for couples who want to skip the logistics of a tiered cake without sacrificing quality. No cutting, no serving, no waste, just a beautifully presented individual dessert that travels well and impresses every time it's opened.</p><h3>Charlotte Wedding Desserts, Shipped Anywhere</h3><p>We work with Charlotte-area couples directly and also ship wedding cake jars nationwide for destination weddings and remote event orders. Orders are baked fresh and packaged for safe transit. We recommend placing wedding orders at least 2 weeks in advance to ensure availability and preferred flavors.</p><p>Flavor options include Birthday Cake, Cookies & Cream, Red Velvet, Midnight Chocolate, Lemon, and Salted Caramel. Mixed flavor orders are available for larger events.</p><h3>Why Couples Choose Sunflour Wedding Cake Jars</h3><ul><li>Individual portions, no cutting or serving required</li><li>Six flavor options, mix-and-match available</li><li>Ships nationwide for destination weddings</li><li>Charlotte pickup available for local events</li><li>Scratch-made, no artificial preservatives</li><li>Elegant glass jar presentation for gifting or display</li></ul>"
+            "text": "<h2>Wedding Cake Jars, Individual Desserts for Weddings and Events</h2>\n<p>Wedding cake jars are one of the most practical elegant dessert options we offer. Each jar holds a single serving of hand-layered, scratch-made cake from our Charlotte bakeries, sealed in glass and ready for your guests. Individual portions mean no cutting, no serving staff required, and nothing left on a table getting warm. Just a beautiful dessert at each place setting that people look forward to opening.</p>\n<p>Couples choose them because they skip the logistics of a tiered cake without giving up quality. The presentation is strong. The flavors are the same ones that have made our <a href=\"/collections/cake-jars\">cake jars</a> a Charlotte staple.</p>\n<h3>Charlotte Weddings and Destination Events</h3>\n<p>We work with Charlotte-area couples directly and also ship wedding cake jars nationwide for destination weddings and remote event orders. Orders are baked fresh and packaged for safe transit. Place wedding orders at least two weeks in advance to ensure availability and your preferred flavor mix.</p>\n<p>Flavor options include Birthday Cake, Cookies and Cream, Red Velvet, Midnight Chocolate, Lemon Drop, and Salted Caramel. Mixed flavor orders are available for larger events, which most couples prefer so guests can choose what they want.</p>\n<h3>Why Couples Choose Sunflour Wedding Cake Jars</h3>\n<ul>\n<li>Individual portions, no cutting or serving required</li>\n<li>Six flavor options, mix-and-match available</li>\n<li>Ships nationwide for destination weddings</li>\n<li>Charlotte pickup for local events</li>\n<li>Scratch-made, no artificial preservatives</li>\n</ul>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -88,7 +90,11 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
       "settings": {
         "caption": "",
         "heading": "Wedding Cake Jar FAQs",
@@ -105,5 +111,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }

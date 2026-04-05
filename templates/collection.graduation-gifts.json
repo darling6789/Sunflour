@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Graduation Gifts From Sunflour, Scratch-Made and Shipped Nationwide</h2><p>Graduation is worth celebrating with something better than a gift card. Sunflour Baking Company's graduation gift collection brings our Charlotte, NC scratch-made baked goods directly to the graduate, wherever they're celebrating or heading next.</p><p>Graduation gifts from Sunflour work because they're personal in a way generic gifts aren't: you're sending real food, made the right way, from a bakery that cares about how it tastes. Cake jars arrive ready to eat. Cookie boxes make a solid accompaniment to any graduation party spread. Brownie boxes land well for the graduate who just wants something good.</p><h3>Ship a Graduation Gift Anywhere in the US</h3><p>Whether your graduate is at home in Charlotte or just moved across the country for a new chapter, we can get a Sunflour gift to their door. We ship nationwide with packaging designed to keep everything fresh in transit.</p><p>Popular graduation picks: Birthday Cake Jars (the name fits), assorted cookie gift boxes, and pastry pouches with occasion themes. For large graduation parties, sampler boxes and bulk brownie orders are a good option, contact us for details.</p><h3>Graduation Gift Ideas From Sunflour</h3><ul><li>Cake jars in six flavors, individual-sized, no mess</li><li>Cookie gift boxes for parties and group gifting</li><li>Brownie and bar boxes for a richer option</li><li>Pastry pouches with \"Celebrate\" themed packaging</li><li>Ships nationwide, Charlotte pickup available</li></ul>"
+            "text": "<h2>Graduation Gifts Shipped Nationwide From Charlotte's Sunflour</h2>\n<p>Graduation deserves something personal. Sunflour Baking Company's graduation gift collection brings our Charlotte, NC scratch-made baked goods directly to the graduate, wherever they are celebrating or heading next.</p>\n<p>Graduation gifts from Sunflour work because they are real food, made the right way, from a bakery that cares how it tastes. <a href=\"/collections/cake-jars\">Cake jars</a> arrive ready to eat. Cookie gift boxes make a solid addition to any graduation party spread. Brownie boxes land well for the graduate who just wants something genuinely good, no ceremony required.</p>\n<h3>Ship a Graduation Gift Anywhere in the US</h3>\n<p>Whether your graduate is still at home in Charlotte or just moved across the country for the next chapter, we can get a Sunflour gift to their door. We ship nationwide with packaging designed to keep everything fresh in transit.</p>\n<p>Popular graduation picks include Birthday Cake Jars, assorted cookie gift boxes, and Celebrate Pastry Pouches. For large graduation parties and group gifting, <a href=\"/collections/pastry-samplers\">sampler boxes</a> and bulk brownie orders are a strong option. Reach out before placing a large order so we can plan lead time together.</p>\n<h3>Graduation Gift Ideas From Sunflour</h3>\n<ul>\n<li>Cake jars in six flavors, individual-sized</li>\n<li>Cookie gift boxes for parties and group gifting</li>\n<li>Brownie and bar boxes</li>\n<li>Celebrate Pastry Pouches with occasion packaging</li>\n<li>Ships nationwide, Charlotte pickup available</li>\n</ul>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -79,7 +81,10 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2"],
+      "block_order": [
+        "faq_1",
+        "faq_2"
+      ],
       "settings": {
         "caption": "",
         "heading": "Graduation Gift FAQs",
@@ -96,5 +101,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }
