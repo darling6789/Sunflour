@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Father's Day Bakery Gifts, Shipped Nationwide From Charlotte</h2><p>Skip the tie. Sunflour Baking Company's Father's Day gifts are scratch-made baked goods from our Charlotte, NC bakeries, packaged and shipped directly to your dad wherever he is. Real food, made the right way, a gift that actually gets used.</p><p>Our Father's Day collection pulls from the treats that work for the no-fuss crowd: rich brownie boxes, decadent cake jars in bold flavors like Midnight Chocolate and Salted Caramel, and cookie assortments that don't feel overly precious. Substantial gifts, not decorative ones.</p><h3>Send Baked Goods for Father's Day, Anywhere in the US</h3><p>Father's Day shipping is available to all 50 states. We pack everything for safe transit and time delivery windows around the holiday. Order at least 5-7 days before Father's Day to ensure arrival, and earlier if you want your pick of flavors before the top choices sell out.</p><p>Charlotte-area orders can also be picked up at any of our five locations if you'd rather grab it in person.</p><h3>Father's Day Gift Options From Sunflour</h3><ul><li>Cake jars in bold flavors: Midnight Chocolate, Salted Caramel, Cookies & Cream</li><li>Brownie and bar gift boxes</li><li>Cookie assortments and gift pouches</li><li>Ships nationwide with careful packaging</li><li>Charlotte pickup at five locations</li></ul>"
+            "text": "<h2>Father's Day Bakery Gifts, Shipped Nationwide From Charlotte</h2>\n<p>Skip the tie. Sunflour Baking Company's Father's Day gifts are scratch-made baked goods from our Charlotte, NC bakeries, packaged and shipped directly to your dad wherever he is. Real food, made the right way, a gift that actually gets finished.</p>\n<p>Our Father's Day collection pulls from the treats that work for the no-fuss crowd: rich brownie boxes, decadent <a href=\"/collections/cake-jars\">cake jars</a> in bold flavors like Midnight Chocolate and Salted Caramel, and cookie assortments that are substantial rather than dainty. These are gifts meant to be eaten.</p>\n<h3>Send Baked Goods for Father's Day Anywhere in the US</h3>\n<p>Father's Day shipping is available to all 50 states. We pack everything for safe transit, so what arrives is as good as what left our oven. Order at least five to seven days before Father's Day to ensure arrival, and earlier if you want first pick of flavors before the most popular options sell out.</p>\n<p>Charlotte-area orders can be picked up at any of our five locations if you would rather grab it in person.</p>\n<h3>Father's Day Gift Options From Sunflour</h3>\n<ul>\n<li>Cake jars in bold flavors: Midnight Chocolate, Salted Caramel, Cookies and Cream</li>\n<li>Brownie and bar gift boxes</li>\n<li>Cookie assortments and pastry gift pouches</li>\n<li>Ships nationwide, Charlotte pickup available</li>\n</ul>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -79,7 +81,10 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2"],
+      "block_order": [
+        "faq_1",
+        "faq_2"
+      ],
       "settings": {
         "caption": "",
         "heading": "Father's Day Gift FAQs",
@@ -96,5 +101,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }

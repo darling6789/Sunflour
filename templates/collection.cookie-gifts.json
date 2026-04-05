@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Send Cookie Gifts Nationwide, Scratch-Made in Charlotte, NC</h2><p>Sunflour Baking Company ships our most popular cookie gifts to all 50 states. Every cookie in this collection is made from scratch in our Charlotte kitchens, buttery, dense, and packed with the kind of flavor that makes them worth mailing across the country.</p><p>Our cookie gift boxes are built for the moments when a store-bought option feels lazy. Whether you're sending a thank you to a client, celebrating a coworker, or just want to ship something genuinely good to a friend, Sunflour's cookie gift boxes arrive looking and tasting like they came from a real bakery, because they did.</p><h3>Cookie Gift Boxes for Every Occasion</h3><p>We carry assorted cookie boxes and specialty gift sets throughout the year. Classic flavors like chocolate chip, snickerdoodle, and double chocolate sit alongside seasonal specials that rotate with the calendar. Each box is packaged for safe transit and includes a freshness seal.</p><p>For bulk gifting, client holiday gifts, employee appreciation boxes, event favors, we accommodate larger orders. Reach out for bulk pricing and lead time requirements.</p><h3>What Makes Sunflour Cookies Worth Shipping</h3><ul><li>Baked fresh to order in small batches</li><li>No mixes, no shortcuts, scratch-made from real ingredients</li><li>Multiple flavor options and assorted gift boxes</li><li>Nationwide shipping with secure packaging</li><li>Charlotte pickup available at five locations</li></ul>"
+            "text": "<h2>Cookie Gift Boxes, Scratch-Made in Charlotte and Shipped Nationwide</h2>\n<p>Sunflour Baking Company ships our most popular cookie gifts to all 50 states. Every cookie in this collection is made from scratch in our Charlotte kitchens: buttery, dense, and packed with the kind of flavor that makes them worth mailing across the country.</p>\n<p>Our cookie gift boxes are built for the moments when a store-bought option feels lazy. Whether you are sending a thank you to a client, celebrating a coworker, or want to ship something genuinely good to a friend, Sunflour's cookie gift boxes arrive looking and tasting like they came from a real bakery. Because they did.</p>\n<h3>Cookie Boxes for Any Occasion</h3>\n<p>We carry assorted cookie boxes and specialty gift sets throughout the year. Classic flavors like chocolate chip, double chocolate, peanut butter, and oatmeal raisin sit alongside seasonal specials that rotate with the calendar. Each box is packaged for safe transit and sealed for freshness. Cookies stay fresh up to seven days at room temperature.</p>\n<p>For bulk gifting, client holiday boxes, employee appreciation sends, or event favors, we accommodate larger orders. <a href=\"/pages/contact\">Reach out</a> for bulk pricing and lead time requirements before placing a large order.</p>\n<h3>Want More Than Cookies?</h3>\n<p>Our <a href=\"/collections/pastry-samplers\">sampler boxes</a> pair cookies with brownies and seasonal pastries for a broader spread. <a href=\"/collections/pastry-pouch\">Pastry pouches</a> are the right call for individual sends with an occasion theme built in. Either way, we have what you need.</p>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -88,7 +90,11 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
       "settings": {
         "caption": "",
         "heading": "Cookie Gift FAQs",
@@ -105,5 +111,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }

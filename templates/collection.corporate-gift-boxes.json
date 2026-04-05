@@ -43,11 +43,13 @@
         "text_block": {
           "type": "text",
           "settings": {
-            "text": "<h2>Corporate Gift Boxes From Charlotte's Favorite Bakery</h2><p>When you need a gift that stands out, Sunflour Baking Company's corporate gift boxes deliver the kind of impression that lasts. We're a scratch-made bakery based in Charlotte, NC, and we ship our signature baked goods nationwide, making it easy to send your team, clients, or partners something genuinely memorable.</p><p>Our corporate gift boxes are built around the products that have made Sunflour a Charlotte staple: hand-layered cake jars, rich brownies, cookie assortments, and pastry pouches. Every item is baked in small batches without artificial preservatives, packaged for safe transit, and ready to ship directly to individual addresses or a central office location.</p><h3>Bulk Corporate Gifting, Charlotte Pickup Available</h3><p>Need 20 boxes or 200? We accommodate bulk corporate orders with flexible lead times. Charlotte-area businesses can also arrange local pickup from any of our five locations. Whether it's a holiday gift program, client appreciation campaign, or employee recognition send, our corporate gift boxes make the logistics simple and the experience premium.</p><p>Custom packaging and branded inserts are available for select orders, contact us to discuss options for your team.</p><h3>Why Companies Choose Sunflour</h3><ul><li>Nationwide shipping with careful packaging for perishables</li><li>Scratch-made, no artificial preservatives</li><li>Bulk pricing available for large orders</li><li>Charlotte pickup at five locations</li><li>Allergen-aware options including vegan and gluten-friendly items</li></ul>"
+            "text": "<h2>Corporate Gift Boxes From Charlotte's Sunflour Baking Company</h2>\n<p>Corporate gifts do not have to be forgettable. Sunflour Baking Company's corporate gift boxes are built around scratch-made baked goods from our Charlotte, NC bakeries: real food, made the right way, packaged for the person on the receiving end.</p>\n<p>Our corporate gift boxes draw from the products that have made Sunflour a Charlotte staple since 2009: hand-layered <a href=\"/collections/cake-jars\">cake jars</a>, rich brownies, <a href=\"/collections/cookie-gifts\">cookie assortments</a>, and pastry pouches. Everything is baked in small batches without artificial preservatives, packaged for safe transit, and ready to ship directly to individual addresses or a central office location.</p>\n<h3>Bulk Orders, Charlotte Pickup, and Custom Options</h3>\n<p>We accommodate bulk corporate orders with flexible lead times. Charlotte-area businesses can arrange local pickup from any of our five locations. Whether it is a holiday gift program, client appreciation campaign, or employee recognition send, our team can handle the logistics.</p>\n<p>Custom packaging and branded inserts are available for select orders. Contact us to discuss options and lead times before placing a large order so we can make sure everything is ready when you need it.</p>\n<h3>Why Companies Choose Sunflour</h3>\n<ul>\n<li>Nationwide shipping with careful packaging for perishables</li>\n<li>Baked fresh to order in small batches, no artificial preservatives</li>\n<li>Bulk pricing available for large orders</li>\n<li>Charlotte pickup at five locations</li>\n<li>Vegan and gluten-friendly options available</li>\n</ul>"
           }
         }
       },
-      "block_order": ["text_block"],
+      "block_order": [
+        "text_block"
+      ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "left",
@@ -88,7 +90,11 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
       "settings": {
         "caption": "",
         "heading": "Corporate Gifting FAQs",
@@ -105,5 +111,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "seo_content", "faq"]
+  "order": [
+    "banner",
+    "product-grid",
+    "seo_content",
+    "faq"
+  ]
 }
