@@ -270,8 +270,9 @@
   "@type": "{{str_type}}"
   {%-unless shop.name == '' -%},"name": "{{ shop.name }}"{%-endunless-%}
   {%-unless shop.url == '' -%},"url": "{{ shop.url }}"{%-endunless-%}
-  {%-unless img_url == blank -%},"logo": "{{ img_url | remove: "\" }}"{%-endunless-%}
-  {%-unless img_url == blank -%},"image": "{{ img_url | remove: "\" }}"{%-endunless-%}
+  {%- assign _schema_img = img_url | default: 'https://cdn.shopify.com/s/files/1/0079/6121/5087/files/Logo_725908c7-bc96-4eac-acfd-a64eed932c35.png' -%}
+  ,"logo": "{{ _schema_img | remove: "\" }}"
+  ,"image": "{{ _schema_img | remove: "\" }}"
   {%-unless shop.description == '' -%},"description": "{{shop.description}}" {%-endunless-%}
   {%- if str_price != null %},"priceRange":"{{str_price}}"{%- endif %}
   {%- if shop.phone != null -%},"telephone": "{{shop.phone}}"{%-endif-%}
@@ -282,7 +283,7 @@
     {%- if shop.address.city != null -%},"addressLocality": "{{shop.address.city}}"{%- endif-%}
     {%- if shop.address.province != null -%},"addressRegion": "{{shop.address.province}}"{%- endif-%}
     {%- if shop.address.zip != null -%},"postalCode": "{{shop.address.zip}}"{%- endif-%}
-	{%- if shop.address.country != null -%},"addressCountry": "{{shop.address.country}}"{%- endif-%}
+	{%- if shop.address.country_code != null -%},"addressCountry": "{{shop.address.country_code}}"{%- endif-%}
   }{%-endunless-%}
   {%-unless shop.latitude == '' and shop.longitude == '' -%}
   ,"geo": {
