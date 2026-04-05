@@ -233,12 +233,12 @@
         "image_3W8zdE": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-000-11.webp",
+            "image": "shopify://shop_images/bakery-gifts-online-000-6.webp",
             "link": "",
-            "text": "Cake Jars",
-            "des": "Cake Jars are one of our signature products and available to ship nationwide anytime. Mix and match flavors to create your own bundles.",
+            "text": "Pastry Bundles",
+            "des": "Mix and match flavors to create your own bundles.",
             "btn_text": "Shop Now",
-            "btn_link": "https://sunflourbakingcompany.com/collections/cake-jars"
+            "btn_link": "shopify://products/cookie-pretzel-box"
           }
         },
         "image_xNPFNW": {
