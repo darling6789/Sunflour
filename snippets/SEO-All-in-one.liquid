@@ -377,7 +377,34 @@ var spProductSchemaJson = {
               "reviewBody": metafield["reviews"]["recent"][0]["body"]
       }, 
         {%- endif -%}
-
+    ,"shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "US"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0,
+          "maxValue": 1,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 2,
+          "maxValue": 5,
+          "unitCode": "DAY"
+        }
+      }
+    }
+    ,"hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "US",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+      "merchantReturnLink": "https://sunflourbakingcompany.com/pages/return-policy"
+    }
 }
 
 var el = document.createElement('script');
