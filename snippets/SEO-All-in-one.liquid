@@ -255,11 +255,12 @@
 	,"logo": "{{ img_url | remove: "\" }}"
   	{%- endunless -%}
 
-    {%- unless c_s_url == blank -%}
-	,"sameAs" : [
-		{{ c_s_url }}
-	]
-	{%- endunless -%}
+    {%- assign _sa = '' -%}
+    {%- if settings.social_instagram_link != blank -%}{%- unless _sa == '' -%}{%- assign _sa = _sa | append: ',' -%}{%- endunless -%}{%- assign _sa = _sa | append: '"' | append: settings.social_instagram_link | append: '"' -%}{%- endif -%}
+    {%- if settings.social_facebook_link != blank -%}{%- unless _sa == '' -%}{%- assign _sa = _sa | append: ',' -%}{%- endunless -%}{%- assign _sa = _sa | append: '"' | append: settings.social_facebook_link | append: '"' -%}{%- endif -%}
+    {%- if settings.social_pinterest_link != blank -%}{%- unless _sa == '' -%}{%- assign _sa = _sa | append: ',' -%}{%- endunless -%}{%- assign _sa = _sa | append: '"' | append: settings.social_pinterest_link | append: '"' -%}{%- endif -%}
+    {%- if settings.social_twitter_link != blank -%}{%- unless _sa == '' -%}{%- assign _sa = _sa | append: ',' -%}{%- endunless -%}{%- assign _sa = _sa | append: '"' | append: settings.social_twitter_link | append: '"' -%}{%- endif -%}
+    {%- unless _sa == '' -%},"sameAs": [{{ _sa }}]{%- endunless -%}
 }
 </script>
 
