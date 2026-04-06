@@ -59,13 +59,18 @@
 </div>
 
 <style>
+  /* ── Section wrapper ─────────────────────────────────────── */
   .gifting-collection {
+    width: 100%;
     padding-top: 24px;
     padding-bottom: 60px;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
   }
   .gifting-intro-text {
     font-size: 1rem;
-    color: rgba(var(--color-foreground), 0.7);
+    color: rgba(var(--color-foreground), 0.65);
     margin: 0 0 40px;
   }
   .gifting-group {
@@ -74,7 +79,7 @@
   .gifting-group__header {
     border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
     padding-bottom: 10px;
-    margin-bottom: 24px;
+    margin-bottom: 0;
   }
   .gifting-group__title {
     font-size: 1.25rem;
@@ -85,6 +90,146 @@
     font-size: 0.875rem;
     color: rgba(var(--color-foreground), 0.6);
     margin: 0;
+  }
+
+  /* ── Product grid ────────────────────────────────────────── */
+  .s-all-products-wrap {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px 20px;
+  }
+
+  /* ── Product card ────────────────────────────────────────── */
+  .s-product-card {
+    display: block;
+    width: calc(25% - 15px);
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .s-product-card-image {
+    width: 100%;
+    min-height: 300px;
+    position: relative;
+    line-height: 0;
+  }
+  .s-product-card-image-1,
+  .s-product-card-image-2 {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+  }
+  .s-product-card-image-2 { opacity: 0; }
+  .s-product-card:hover .s-product-card-image-1 { opacity: 0; }
+  .s-product-card:hover .s-product-card-image-2 { opacity: 1; }
+
+  .s-product-card-des {
+    width: 100%;
+    position: absolute;
+    padding: 16px 20px;
+    bottom: 60px;
+    left: 0;
+    background: #ffffffcc;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .s-product-card-des h4 { margin: 0; font-weight: 600; }
+  .s-product-price { line-height: 1; }
+
+  /* ── ATC actions ─────────────────────────────────────────── */
+  .s-product-card-actions {
+    width: fit-content;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+  }
+  .s-quantity-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #873c17;
+    border-radius: 40px;
+    overflow: hidden;
+    width: fit-content;
+    margin: 0 auto 10px;
+  }
+  .s-qty-btn {
+    background: transparent;
+    border: none;
+    color: #873c17;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .s-qty-btn:hover { background: #873c17; color: #fff; }
+  .s-qty-input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid #873c17;
+    border-right: 1px solid #873c17;
+    font-size: 14px;
+    height: 36px;
+    padding: 0;
+    -moz-appearance: textfield;
+    outline: none;
+    background: transparent;
+  }
+  .s-qty-input::-webkit-inner-spin-button,
+  .s-qty-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .s-add-to-cart-btn.s-btn {
+    background-color: #873c17;
+    color: #fff;
+    text-decoration: none;
+    max-width: 320px;
+    height: 44px;
+    padding: 0 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 400 !important;
+    border: none;
+    font-size: 14px;
+  }
+  .s-loading-spinner { display: none; }
+
+  /* ── Tablet ──────────────────────────────────────────────── */
+  @media only screen and (max-width: 990px) {
+    .gifting-collection { padding-left: 20px; padding-right: 20px; }
+    .s-all-products-wrap { gap: 30px 15px; }
+    .s-product-card { width: calc(33.3% - 10px); border-radius: 15px; }
+    .s-product-card-image { min-height: 250px; }
+  }
+
+  /* ── Mobile ──────────────────────────────────────────────── */
+  @media only screen and (max-width: 600px) {
+    .gifting-collection { padding-left: 16px; padding-right: 16px; padding-bottom: 40px; }
+    .s-all-products-wrap { gap: 20px 10px; }
+    .s-product-card { width: calc(50% - 5px); border-radius: 15px; }
+    .s-product-card-image { min-height: 220px; }
   }
 </style>
 
