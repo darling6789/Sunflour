@@ -1,141 +1,90 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Gifting Collection — groups products by tag using the site's standard card and grid styling.
+  Groups are pipe-delimited internally, tilde-delimited between groups to avoid comma conflicts.
+{%- endcomment -%}
+
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'quick-add.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
-<div class="gifting-collection page-width section-{{ section.id }}-padding">
+<div class="gifting-collection s-collection-products-section">
+  <div class="p-width">
 
-  <div class="gifting-intro">
-    <p class="gifting-intro__sub">Mix and match individual items to build your own gift box. Everything ships nationwide.</p>
-  </div>
+    <p class="gifting-intro-text">Mix and match individual items from our kitchen to build your own gift box. Everything ships nationwide.</p>
 
-  {%- comment -%} Group definitions: Label | tag | description {%- endcomment -%}
-  {%- assign groups = "Cookies|individual-cookie|9 flavors, all baked from scratch in our Charlotte kitchen.,Breakfast Baked Goods|breakfast-collection|Freshly baked morning favorites that ship well.,Coffee and Tea|coffee-tea-collection|A natural pairing with anything else in the cart.,Brownies and Treats|brownie-collection|For the person who wants something rich and different." | split: "," -%}
+    {%- comment -%}
+      Group format: Label|tag|description
+      Groups separated by ~ to avoid comma conflicts in descriptions
+    {%- endcomment -%}
+    {%- assign groups = "Cookies|individual-cookie|Nine flavors baked fresh daily~Breakfast Baked Goods|breakfast-collection|Freshly baked morning favorites that ship well~Coffee and Tea|coffee-tea-collection|A natural pairing with anything else in the cart~Brownies and Treats|brownie-collection|For the person who wants something rich and different" | split: "~" -%}
 
-  {%- for group_def in groups -%}
-    {%- assign parts = group_def | split: "|" -%}
-    {%- assign group_label = parts[0] -%}
-    {%- assign group_tag = parts[1] -%}
-    {%- assign group_desc = parts[2] -%}
+    {%- for group_def in groups -%}
+      {%- assign parts = group_def | split: "|" -%}
+      {%- assign group_label = parts[0] -%}
+      {%- assign group_tag   = parts[1] -%}
+      {%- assign group_desc  = parts[2] -%}
 
-    {%- comment -%} Only render group if it has products {%- endcomment -%}
-    {%- assign group_has_products = false -%}
-    {%- for product in collection.products -%}
-      {%- if product.tags contains group_tag and product.available -%}
-        {%- assign group_has_products = true -%}
-        {%- break -%}
+      {%- assign group_has_products = false -%}
+      {%- for product in collection.products -%}
+        {%- if product.tags contains group_tag -%}
+          {%- assign group_has_products = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if group_has_products -%}
+      <div class="gifting-group">
+        <div class="gifting-group__header">
+          <h2 class="gifting-group__title">{{ group_label }}</h2>
+          {%- if group_desc != blank -%}
+            <p class="gifting-group__desc">{{ group_desc }}</p>
+          {%- endif -%}
+        </div>
+
+        <div class="s-all-products-wrap">
+          {%- for product in collection.products -%}
+            {%- if product.tags contains group_tag -%}
+              {% render 's-product-card', product: product %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
       {%- endif -%}
     {%- endfor -%}
 
-    {%- if group_has_products -%}
-    <div class="gifting-group">
-      <div class="gifting-group__header">
-        <h2 class="gifting-group__title">{{ group_label }}</h2>
-        {%- if group_desc != blank -%}
-          <p class="gifting-group__desc">{{ group_desc }}</p>
-        {%- endif -%}
-      </div>
-
-      <div class="gifting-group__grid">
-        {%- for product in collection.products -%}
-          {%- if product.tags contains group_tag -%}
-          {%- assign current_variant = product.selected_or_first_available_variant -%}
-          <div class="gifting-card">
-            <a class="gifting-card__image-link" href="{{ product.url }}">
-              {%- if product.featured_image -%}
-                <img
-                  src="{{ product.featured_image | image_url: width: 400 }}"
-                  alt="{{ product.featured_image.alt | escape }}"
-                  loading="lazy"
-                  width="400"
-                  height="400"
-                  class="gifting-card__img"
-                >
-              {%- else -%}
-                <div class="gifting-card__img gifting-card__img--placeholder"></div>
-              {%- endif -%}
-            </a>
-
-            <div class="gifting-card__info">
-              <a class="gifting-card__title" href="{{ product.url }}">{{ product.title }}</a>
-              <span class="gifting-card__price">{{ product.price | money }}</span>
-            </div>
-
-            {%- if current_variant.available -%}
-            <div class="gifting-card__atc">
-              <product-form data-hide-errors="true">
-                {%- form 'product', product, id: product.id, class: 'gifting-atc-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                  <input type="hidden" name="id" value="{{ current_variant.id }}">
-                  <input type="hidden" name="quantity" value="1">
-                  <button
-                    type="submit"
-                    name="add"
-                    class="gifting-atc-btn button button--full-width button--secondary"
-                    aria-label="{{ 'products.product.add_to_cart' | t | default: 'Add to cart' }} - {{ product.title | escape }}"
-                  >
-                    <span>Add to Cart</span>
-                    <div class="loading__spinner hidden">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="32" stroke-dashoffset="32"><animate attributeName="stroke-dashoffset" dur="0.6s" repeatCount="indefinite" values="32;0"/></circle></svg>
-                    </div>
-                  </button>
-                {%- endform -%}
-              </product-form>
-            </div>
-            {%- else -%}
-            <div class="gifting-card__atc">
-              <button class="gifting-atc-btn button button--full-width button--secondary" disabled>Sold Out</button>
-            </div>
-            {%- endif -%}
-          </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </div>
-    {%- endif -%}
-  {%- endfor -%}
-
+  </div>
 </div>
 
 <style>
-  .gifting-collection { padding-top: 40px; padding-bottom: 60px; }
-
-  .gifting-intro { margin-bottom: 40px; }
-  .gifting-intro__sub { color: rgba(var(--color-foreground), 0.7); font-size: 1.05rem; margin: 0; }
-
-  .gifting-group { margin-bottom: 52px; }
-  .gifting-group__header { margin-bottom: 20px; border-bottom: 1px solid rgba(var(--color-foreground), 0.1); padding-bottom: 12px; }
-  .gifting-group__title { font-size: 1.3rem; margin: 0 0 4px; }
-  .gifting-group__desc { font-size: 0.9rem; color: rgba(var(--color-foreground), 0.65); margin: 0; }
-
-  .gifting-group__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
+  .gifting-collection {
+    padding-top: 24px;
+    padding-bottom: 60px;
   }
-
-  .gifting-card { display: flex; flex-direction: column; gap: 8px; }
-  .gifting-card__image-link { display: block; border-radius: 8px; overflow: hidden; }
-  .gifting-card__img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+  .gifting-intro-text {
+    font-size: 1rem;
+    color: rgba(var(--color-foreground), 0.7);
+    margin: 0 0 40px;
   }
-  .gifting-card__img--placeholder { background: rgba(var(--color-foreground), 0.06); }
-  .gifting-card__image-link:hover .gifting-card__img { transform: scale(1.03); }
-
-  .gifting-card__info { display: flex; flex-direction: column; gap: 2px; }
-  .gifting-card__title { font-size: 0.85rem; font-weight: 500; color: rgb(var(--color-foreground)); text-decoration: none; line-height: 1.3; }
-  .gifting-card__title:hover { text-decoration: underline; }
-  .gifting-card__price { font-size: 0.85rem; color: rgba(var(--color-foreground), 0.75); }
-
-  .gifting-atc-btn { font-size: 0.8rem; padding: 8px 12px; margin-top: 4px; }
-
-  @media (max-width: 749px) {
-    .gifting-group__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .gifting-group__title { font-size: 1.1rem; }
+  .gifting-group {
+    margin-bottom: 56px;
+  }
+  .gifting-group__header {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+  }
+  .gifting-group__title {
+    font-size: 1.25rem;
+    margin: 0 0 4px;
+    font-weight: 600;
+  }
+  .gifting-group__desc {
+    font-size: 0.875rem;
+    color: rgba(var(--color-foreground), 0.6);
+    margin: 0;
   }
 </style>
 
@@ -145,6 +94,6 @@
   "class": "gifting-section",
   "tag": "section",
   "settings": [],
-  "presets": [{"name": "Gifting Product Groups"}]
+  "presets": [{ "name": "Gifting Product Groups" }]
 }
 {% endschema %}
