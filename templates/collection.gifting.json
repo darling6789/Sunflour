@@ -1,0 +1,46 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "gifting-groups": {
+      "type": "gifting-collection",
+      "settings": {}
+    },
+    "seo_content": {
+      "type": "rich-text",
+      "blocks": {
+        "text_block": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Build Your Own Gift From Sunflour's Charlotte Kitchen</h2><p>Every item in this collection ships nationwide from our Charlotte, NC bakeries, baked fresh from scratch without mixes or shortcuts. Add what you want, as much as you want. There are no minimum orders for individual items.</p><p>For pre-built gift boxes and occasion-themed pouches, see our <a href=\"/collections/cookie-gifts\">Cookie Gifts collection</a>. For bulk orders or a custom gifting program for your team, visit our <a href=\"/pages/corporate-gift\">corporate gifting page</a>.</p>"
+          }
+        }
+      },
+      "block_order": ["text_block"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": ["banner", "gifting-groups", "seo_content"]
+}
