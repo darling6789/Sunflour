@@ -80,7 +80,7 @@
         {% endif %}
       >
         {% comment %} Gift order button - optional, does not block checkout {% endcomment %}
-        <a href="/cart" class="s-btn" style="text-transform: unset; margin: 20px auto; display: block;">Make This a Gift Order</a>
+        <a href="/cart" class="s-btn" style="text-transform: unset; margin: 20px auto; display: flex; align-items: center; justify-content: center; text-align: center; max-width: 90%; padding: 14px 24px; border-radius: 999px; background-color: #e2c44d; color: #222; font-weight: 600; text-decoration: none;">Make This a Gift Order</a>
         <form
           action="{{ routes.cart_url }}"
           id="CartDrawer-Form"
