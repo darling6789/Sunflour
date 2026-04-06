@@ -47,10 +47,6 @@
   endif
 -%}
 
-{# ============================================================
-   SECTION 1: HERO
-   ============================================================ #}
-
 <div class="loc-hero" style="background-image: url({{ page.metafields.global.image }});">
   <div class="loc-hero__overlay">
     <div class="loc-hero__content">
@@ -60,10 +56,6 @@
     </div>
   </div>
 </div>
-
-{# ============================================================
-   SECTION 2: ESSENTIALS CARD
-   ============================================================ #}
 
 <div class="loc-essentials">
   <div class="loc-essentials__card">
@@ -133,10 +125,6 @@
   </div>
 </div>
 
-{# ============================================================
-   SECTION 3: SOCIAL PROOF
-   ============================================================ #}
-
 <div class="loc-social-proof">
   <div class="loc-social-proof__inner">
     <div class="loc-stars" aria-label="5 out of 5 stars">
@@ -156,18 +144,12 @@
   </div>
 </div>
 
-{# ============================================================
-   SECTION 4: FAQ + NEWSLETTER
-   ============================================================ #}
-
 <div class="loc-bottom-grid">
 
-  {# --- FAQ --- #}
-  <div class="loc-faq">
+    <div class="loc-faq">
     <h2 class="loc-faq__title">Frequently Asked Questions</h2>
 
-    {# --- Location-specific questions --- #}
-    {%- case loc_slug -%}
+      {%- case loc_slug -%}
 
       {%- when 'elizabeth' -%}
         <button class="accordion">When do you bake fresh daily at the 7th Street location?</button>
@@ -251,7 +233,6 @@
 
     {%- endcase -%}
 
-    {# --- Shared questions (all locations) --- #}
     <button class="accordion">Do you ship nationwide?</button>
     <div class="panel"><p>Yes. We ship select bakery goods <a href="/pages/shop">nationwide</a>, including our <a href="/pages/cake-jars">Cake Jars</a> and specialty baked goods. We also offer <a href="/pages/catering">catering services</a> and local delivery.</p></div>
 
@@ -265,7 +246,6 @@
     <div class="panel"><p>No. We are a local, family-owned bakery with five locations in the Charlotte area. Everything is made fresh onsite and our staff rotate between stores to ensure consistency of products and service.</p></div>
   </div>
 
-  {# --- Newsletter Placeholder --- #}
   <div class="loc-newsletter">
     <div class="loc-newsletter__inner">
       <h3 class="loc-newsletter__title">Join the Sunflour Family!</h3>
@@ -284,10 +264,6 @@
 
 </div>
 
-{# ============================================================
-   SCRIPTS
-   ============================================================ #}
-
 <script>
 (function() {
   var acc = document.querySelectorAll('.loc-faq .accordion');
@@ -304,10 +280,6 @@
   }
 })();
 </script>
-
-{# ============================================================
-   STYLES
-   ============================================================ #}
 
 <style>
   /* ---- Hero ---- */
@@ -627,10 +599,6 @@
     }
   }
 </style>
-
-{# ============================================================
-   STRUCTURED DATA
-   ============================================================ #}
 
 <script type="application/ld+json">
 {
