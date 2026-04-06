@@ -97,12 +97,10 @@
         </div>
       {%- endif -%}
 
-      {%- if page.metafields.global.time_opening != blank -%}
-        <div class="loc-info-row loc-info-row--hours">
-          <span class="loc-info-row__icon"><i class="fas fa-clock" aria-hidden="true"></i></span>
-          <span class="loc-info-row__text loc-hours-text">{{ page.metafields.global.time_opening }}</span>
-        </div>
-      {%- endif -%}
+      <div class="loc-info-row">
+        <span class="loc-info-row__icon"><i class="fas fa-clock" aria-hidden="true"></i></span>
+        <span class="loc-info-row__text">Mon &ndash; Sun: 7:00 AM &ndash; 4:00 PM</span>
+      </div>
 
       {%- if loc_parking != blank -%}
         <div class="loc-info-row">
@@ -375,17 +373,6 @@
   }
   .loc-info-row__text a:hover {
     color: #c0392b;
-  }
-  .loc-hours-text p,
-  .loc-hours-text ul {
-    margin: 0;
-    padding-left: 0;
-  }
-  .loc-hours-text ul {
-    list-style: none;
-    margin-top: 4px;
-    font-size: 13px;
-    color: #555;
   }
   .loc-btn-cluster {
     display: flex;
