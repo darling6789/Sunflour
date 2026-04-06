@@ -52,8 +52,34 @@
     <div class="loc-hero__content">
       <h1 class="loc-hero__h1">{{ loc_h1 }}</h1>
       <h2 class="loc-hero__h2">{{ page.metafields.global.title }}</h2>
-      <p class="loc-hero__tagline">Fresh, Artisanal Quality, and Community, Baked Daily.</p>
+      <p class="loc-hero__tagline">From-Scratch Quality and Community, Baked Daily.</p>
     </div>
+  </div>
+</div>
+
+<div class="loc-breadcrumbs">
+  {% render 'breadcrumbs' %}
+</div>
+
+<div class="loc-description">
+  <div class="loc-description__inner">
+    {%- case loc_slug -%}
+      {%- when 'elizabeth' -%}
+        <p>Since 2009, Sunflour Baking Company on 7th Street has been the Elizabeth neighborhood's go-to spot for from-scratch pastries, fresh-brewed coffee, and a warm place to start the day. Just steps from Independence Park, our original Charlotte bakery was built on the idea that great food brings people together.</p>
+        <p>Stop in for a flakey croissant, a breakfast sandwich made to order, or one of our signature cinnamon buns. Every item is baked in small batches right here, every morning, using all-natural ingredients. Whether you are grabbing coffee on your way to work, settling in with your laptop, or picking up a custom cake for the weekend, the Elizabeth cafe has room for you.</p>
+      {%- when 'dilworth' -%}
+        <p>Our Dilworth bakery on East Boulevard brings the same from-scratch quality that Charlotte has loved since 2009 to one of the city's most walkable neighborhoods. Tucked into the heart of Dilworth, this cafe is a favorite for morning regulars, weekend brunch crowds, and anyone looking for a real pastry and a good cup of coffee.</p>
+        <p>Everything is baked fresh daily in small batches with all-natural ingredients. Grab a seat inside, order a breakfast sandwich or one of our signature croissants, and settle in. The Dilworth location also handles custom cake orders and catering for events across the Charlotte area.</p>
+      {%- when 'ballantyne' -%}
+        <p>Sunflour Baking Company in Ballantyne puts from-scratch baked goods and fresh-brewed coffee within easy reach of south Charlotte. Located in the Conlan Circle shopping center, this cafe is a go-to for Ballantyne families, remote workers, and anyone who appreciates a real bakery.</p>
+        <p>Every croissant, muffin, and cinnamon bun is baked right here each morning using all-natural ingredients. We handle custom cakes for birthdays, graduations, and celebrations of all kinds. Stop in before your morning commute or stay a while with free WiFi and plenty of seating.</p>
+      {%- when 'harrisburg' -%}
+        <p>Our Harrisburg bakery on NC-49 brings Sunflour's from-scratch baking to Cabarrus County. This location serves the Harrisburg, Concord, and northeast Charlotte communities with the same quality we have been known for since 2009.</p>
+        <p>Every pastry, bread, and breakfast item is baked fresh each morning in small batches using all-natural ingredients. The cafe has a comfortable atmosphere with free WiFi, making it a great spot to work, meet friends, or just enjoy a quiet coffee. We also offer custom cakes, catering, and our signature Cake Jars that ship nationwide.</p>
+      {%- when 'noda' -%}
+        <p>Our newest location on Jordan Place brings Sunflour's from-scratch baking to Charlotte's arts district. The NoDa cafe fits right into the neighborhood's creative energy, with a welcoming atmosphere and the same quality that has made Sunflour a Charlotte staple since 2009.</p>
+        <p>Everything is baked fresh daily in small batches using all-natural ingredients. Grab a croissant and a coffee before hitting the NoDa galleries, or settle in with free WiFi and get some work done. We handle custom cake orders, catering, and ship our signature Cake Jars nationwide.</p>
+    {%- endcase -%}
   </div>
 </div>
 
@@ -123,6 +149,22 @@
   </div>
 </div>
 
+{%- if page.metafields.global.outside_image != blank or page.metafields.global.inside_image != blank or page.metafields.global.counter_image != blank -%}
+<div class="loc-gallery">
+  <div class="loc-gallery__inner">
+    {%- if page.metafields.global.outside_image != blank -%}
+      <img src="{{ page.metafields.global.outside_image }}" alt="Sunflour Baking Company {{ loc_neighborhood }} exterior" loading="lazy" width="600" height="400">
+    {%- endif -%}
+    {%- if page.metafields.global.inside_image != blank -%}
+      <img src="{{ page.metafields.global.inside_image }}" alt="Inside Sunflour Baking Company {{ loc_neighborhood }}" loading="lazy" width="600" height="400">
+    {%- endif -%}
+    {%- if page.metafields.global.counter_image != blank -%}
+      <img src="{{ page.metafields.global.counter_image }}" alt="Bakery counter at Sunflour {{ loc_neighborhood }}" loading="lazy" width="600" height="400">
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}
+
 <div class="loc-social-proof">
   <div class="loc-social-proof__inner">
     <div class="loc-stars" aria-label="5 out of 5 stars">
@@ -133,7 +175,18 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#e8a020" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
     </div>
     <blockquote class="loc-social-proof__quote">
-      "The coffee in an ice cream cone is unique, and the pastries are incredibly delicious, especially the flakey croissants. The loyalty program is a great local perk, making you feel right at home with free coffee points."
+      {%- case loc_slug -%}
+        {%- when 'elizabeth' -%}
+          "The coffee in an ice cream cone is unique, and the pastries are incredibly delicious, especially the flakey croissants. The loyalty program is a great local perk, making you feel right at home with free coffee points."
+        {%- when 'dilworth' -%}
+          "Their breakfast sandwich is always so good, and the Kicking Chicken is hands down my favorite. So flavorful and always hits the spot. Never disappoints!"
+        {%- when 'ballantyne' -%}
+          "Love this place! I had the vegan whole wheat raspberry muffin for breakfast and picked up the key lime pie for my hubby for dessert. Excellent!"
+        {%- when 'harrisburg' -%}
+          "This place has the best cupcakes in Charlotte! I stop in frequently just to pick up a cupcake. Everything is always fresh and the staff are so friendly."
+        {%- when 'noda' -%}
+          "Such a cute shop! Everything is delicious and the service is always friendly. The pastries are fresh and the coffee is great. Already our new favorite bakery in the neighborhood."
+      {%- endcase -%}
     </blockquote>
     <p class="loc-social-proof__attribution">— Google Review</p>
     <a class="loc-social-proof__cta" href="{{ page.metafields.global.get_direction_button_link }}" target="_blank" rel="noopener">
@@ -264,6 +317,47 @@
 
 </div>
 
+<div class="loc-other-locations">
+  <h2 class="loc-other-locations__title">Visit Our Other Locations</h2>
+  <div class="loc-other-locations__grid">
+    {%- unless loc_slug == 'elizabeth' -%}
+      <a class="loc-other-locations__card" href="/pages/charlotte-bakery-elizabeth">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-elizabeth-01.png?v=1695426306" alt="Sunflour Elizabeth" loading="lazy">
+        <span class="loc-other-locations__name">Elizabeth</span>
+        <span class="loc-other-locations__address">2001 E 7th Street, Charlotte</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'dilworth' -%}
+      <a class="loc-other-locations__card" href="/pages/charlotte-bakery-dilworth">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-dilworth-01.png?v=1695426324" alt="Sunflour Dilworth" loading="lazy">
+        <span class="loc-other-locations__name">Dilworth</span>
+        <span class="loc-other-locations__address">220 East Boulevard, Charlotte</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'ballantyne' -%}
+      <a class="loc-other-locations__card" href="/pages/ballantyne-bakery">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-ballantyne-01.png?v=1695426323" alt="Sunflour Ballantyne" loading="lazy">
+        <span class="loc-other-locations__name">Ballantyne</span>
+        <span class="loc-other-locations__address">14021 Conlan Circle, Charlotte</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'harrisburg' -%}
+      <a class="loc-other-locations__card" href="/pages/harrisburg-nc-bakery">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-harrisburg-01.png?v=1695426322" alt="Sunflour Harrisburg" loading="lazy">
+        <span class="loc-other-locations__name">Harrisburg</span>
+        <span class="loc-other-locations__address">5040 NC-49, Harrisburg</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'noda' -%}
+      <a class="loc-other-locations__card" href="/pages/charlotte-bakery-noda">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/noda.jpg?v=1689624685" alt="Sunflour NoDa" loading="lazy">
+        <span class="loc-other-locations__name">NoDa</span>
+        <span class="loc-other-locations__address">515 Jordan Place, Charlotte</span>
+      </a>
+    {%- endunless -%}
+  </div>
+</div>
+
 <script>
 (function() {
   var acc = document.querySelectorAll('.loc-faq .accordion');
@@ -324,6 +418,29 @@
     color: rgba(255,255,255,0.88);
     font-size: clamp(15px, 1.6vw, 20px);
     margin: 0;
+  }
+
+  /* ---- Breadcrumbs ---- */
+  .loc-breadcrumbs {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 12px 24px;
+  }
+
+  /* ---- Location Description ---- */
+  .loc-description {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+  .loc-description__inner {
+    max-width: 800px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444;
+  }
+  .loc-description__inner p {
+    margin: 0 0 14px;
   }
 
   /* ---- Essentials Card ---- */
@@ -402,6 +519,25 @@
   }
   .loc-btn i {
     margin-right: 6px;
+  }
+
+  /* ---- Photo Gallery ---- */
+  .loc-gallery {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 16px;
+  }
+  .loc-gallery__inner {
+    display: flex;
+    gap: 16px;
+  }
+  .loc-gallery__inner img {
+    flex: 1;
+    width: calc(33.3% - 11px);
+    height: 260px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
   }
 
   /* ---- Social Proof ---- */
@@ -562,6 +698,49 @@
     margin: 12px 0 0;
   }
 
+  /* ---- Other Locations ---- */
+  .loc-other-locations {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+    text-align: center;
+  }
+  .loc-other-locations__title {
+    font-size: clamp(20px, 2.2vw, 28px);
+    margin: 0 0 28px;
+  }
+  .loc-other-locations__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .loc-other-locations__card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s;
+  }
+  .loc-other-locations__card:hover {
+    transform: translateY(-4px);
+  }
+  .loc-other-locations__card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  .loc-other-locations__name {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .loc-other-locations__address {
+    font-size: 13px;
+    color: #777;
+  }
+
   /* ---- Responsive ---- */
   @media (max-width: 860px) {
     .loc-essentials__card {
@@ -578,6 +757,16 @@
     }
     .loc-newsletter {
       order: -1;
+    }
+    .loc-gallery__inner {
+      flex-wrap: wrap;
+    }
+    .loc-gallery__inner img {
+      width: 100%;
+      height: 220px;
+    }
+    .loc-other-locations__grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (max-width: 480px) {
@@ -608,16 +797,53 @@
   {%- if page.metafields.global.address != blank -%}
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": {{ page.metafields.global.address | json }},
-    {%- if loc_handle == 'harrisburg-nc-bakery' -%}
+    {%- if loc_slug == 'elizabeth' -%}
+    "streetAddress": "2001 E 7th Street",
+    "addressLocality": "Charlotte",
+    "postalCode": "28204",
+    {%- elsif loc_slug == 'dilworth' -%}
+    "streetAddress": "220 East Boulevard",
+    "addressLocality": "Charlotte",
+    "postalCode": "28203",
+    {%- elsif loc_slug == 'ballantyne' -%}
+    "streetAddress": "14021 Conlan Circle",
+    "addressLocality": "Charlotte",
+    "postalCode": "28277",
+    {%- elsif loc_slug == 'harrisburg' -%}
+    "streetAddress": "5040 NC-49",
     "addressLocality": "Harrisburg",
+    "postalCode": "28075",
+    {%- elsif loc_slug == 'noda' -%}
+    "streetAddress": "515 Jordan Place",
+    "addressLocality": "Charlotte",
+    "postalCode": "28205",
     {%- else -%}
+    "streetAddress": {{ page.metafields.global.address | json }},
     "addressLocality": "Charlotte",
     {%- endif -%}
     "addressRegion": "NC",
     "addressCountry": "US"
   },
   {%- endif -%}
+  "geo": {
+    "@type": "GeoCoordinates",
+    {%- if loc_slug == 'elizabeth' -%}
+    "latitude": 35.2124,
+    "longitude": -80.8193
+    {%- elsif loc_slug == 'dilworth' -%}
+    "latitude": 35.2109,
+    "longitude": -80.8593
+    {%- elsif loc_slug == 'ballantyne' -%}
+    "latitude": 35.0560,
+    "longitude": -80.8562
+    {%- elsif loc_slug == 'harrisburg' -%}
+    "latitude": 35.3217,
+    "longitude": -80.6619
+    {%- elsif loc_slug == 'noda' -%}
+    "latitude": 35.2429,
+    "longitude": -80.8122
+    {%- endif -%}
+  },
   "openingHours": "Mo-Su 07:00-16:00",
   {%- if page.metafields.global.outside_image != blank -%}
   "image": {{ page.metafields.global.outside_image | json }},
