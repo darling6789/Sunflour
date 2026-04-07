@@ -563,6 +563,64 @@
     tabs[0].setAttribute('aria-selected', 'true');
     applyFilters();
   });
+
+  /* ─── AJAX Add to Cart ─────────────────────────────────────────────────── */
+  document.querySelectorAll('form[data-ajax-cart]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('.s-add-to-cart-btn');
+      var btnText = btn.querySelector('.s-btn-text');
+      var spinner = btn.querySelector('.s-loading-spinner');
+      var originalText = btnText.textContent.trim();
+
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      spinner.style.display = '';
+
+      var formData = {
+        items: [{
+          id: parseInt(form.querySelector('[name="id"]').value),
+          quantity: parseInt(form.querySelector('[name="quantity"]').value) || 1
+        }]
+      };
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        spinner.style.display = 'none';
+        btnText.style.display = '';
+        btnText.textContent = 'Added!';
+        btn.disabled = false;
+
+        /* Update cart count in header */
+        fetch('/cart.js')
+          .then(function (r) { return r.json(); })
+          .then(function (cart) {
+            var counters = document.querySelectorAll('.cart-count-bubble span[aria-hidden="true"], .cart-count');
+            counters.forEach(function (el) { el.textContent = cart.item_count; });
+            var bubbles = document.querySelectorAll('.cart-count-bubble');
+            bubbles.forEach(function (el) { el.classList.remove('hidden'); });
+          });
+
+        /* Reset button text after 1.5s */
+        setTimeout(function () {
+          btnText.textContent = originalText;
+          form.querySelector('[name="quantity"]').value = 1;
+        }, 1500);
+      })
+      .catch(function () {
+        spinner.style.display = 'none';
+        btnText.style.display = '';
+        btnText.textContent = 'Error';
+        btn.disabled = false;
+        setTimeout(function () { btnText.textContent = originalText; }, 2000);
+      });
+    });
+  });
 })();
 </script>
 
