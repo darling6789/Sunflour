@@ -1,5 +1,5 @@
-<div class="s-product-card">  
-  <div class="s-product-card-image" onclick="window.location='{{ product.url }}'">
+<div class="s-product-card">
+  <a href="{{ product.url }}" class="s-product-card-image">
     {% assign first_image = product.featured_image %}
     {% assign second_image = product.images[1] %}
     {% assign variant = product.variants.first %}
@@ -10,54 +10,55 @@
     {% else %}
       <img class="s-product-card-image-2" src="{{ first_image | img_url: 'large' }}" alt="{{ product.title }}">
     {% endif %}
-  </div>
+  </a>
 
-  <div class="s-product-card-des" onclick="window.location='{{ product.url }}'">
-    <h4>{{ product.title }}</h4>
-    
-    {% if product.compare_at_price > product.price %}
-      <div class="s-product-price">
-        <span class="s-price-sale">{{ product.price | money }}</span>
-        <span class="s-price-regular">{{ product.compare_at_price | money }}</span>
-      </div>
-    {% else %}
-      <div class="s-product-price">
-        <span class="s-price">{{ product.price | money }}</span>
-      </div>
-    {% endif %}
-  </div>
+  <div class="s-product-card-info">
+    <a href="{{ product.url }}" class="s-product-card-des">
+      <h4>{{ product.title }}</h4>
 
-  <div class="s-product-card-actions">
-    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="s-add-to-cart-form">
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
-      <div class="s-quantity-row" onclick="event.stopPropagation()">
-        <button type="button" class="s-qty-btn" onclick="event.stopPropagation(); var i=this.nextElementSibling; i.value=Math.max(1,parseInt(i.value||1)-1);">−</button>
-        <input type="number" name="quantity" value="1" min="1" class="s-qty-input" onclick="event.stopPropagation()">
-        <button type="button" class="s-qty-btn" onclick="event.stopPropagation(); var i=this.previousElementSibling; i.value=parseInt(i.value||1)+1;">+</button>
-      </div>
-
-      <button type="submit"
-              class="s-add-to-cart-btn s-btn"
-              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
-              data-product-id="{{ product.id }}"
-              onclick="event.stopPropagation()">
-        <span class="s-btn-text">
-          {% if product.selected_or_first_available_variant.available %}
-            Add to Cart
-          {% else %}
-            Sold Out
-          {% endif %}
-        </span>
-        <div class="s-loading-spinner" style="display: none;">
-          <svg viewBox="0 0 24 24" width="16" height="16">
-            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="31.416" stroke-dashoffset="31.416">
-              <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
-              <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
-            </circle>
-          </svg>
+      {% if product.compare_at_price > product.price %}
+        <div class="s-product-price">
+          <span class="s-price-sale">{{ product.price | money }}</span>
+          <span class="s-price-regular">{{ product.compare_at_price | money }}</span>
         </div>
-      </button>
-    </form>
+      {% else %}
+        <div class="s-product-price">
+          <span class="s-price">{{ product.price | money }}</span>
+        </div>
+      {% endif %}
+    </a>
+
+    <div class="s-product-card-actions">
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="s-add-to-cart-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        <div class="s-quantity-row">
+          <button type="button" class="s-qty-btn" onclick="var i=this.nextElementSibling; i.value=Math.max(1,parseInt(i.value||1)-1);">−</button>
+          <input type="number" name="quantity" value="1" min="1" class="s-qty-input">
+          <button type="button" class="s-qty-btn" onclick="var i=this.previousElementSibling; i.value=parseInt(i.value||1)+1;">+</button>
+        </div>
+
+        <button type="submit"
+                class="s-add-to-cart-btn s-btn"
+                {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+                data-product-id="{{ product.id }}">
+          <span class="s-btn-text">
+            {% if product.selected_or_first_available_variant.available %}
+              Add to Cart
+            {% else %}
+              Sold Out
+            {% endif %}
+          </span>
+          <div class="s-loading-spinner" style="display: none;">
+            <svg viewBox="0 0 24 24" width="16" height="16">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+                <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+                <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </div>
+        </button>
+      </form>
+    </div>
   </div>
 </div>
