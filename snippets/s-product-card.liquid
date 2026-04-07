@@ -29,7 +29,7 @@
     </a>
 
     <div class="s-product-card-actions">
-      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="s-add-to-cart-form">
+      <form class="s-add-to-cart-form" data-ajax-cart>
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
         <div class="s-quantity-row">
