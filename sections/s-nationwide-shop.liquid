@@ -612,18 +612,16 @@
       btnText.textContent = 'Added!';
       btn.disabled = false;
 
-      /* Update cart count bubble in header */
-      fetch('/cart.js')
+      /* Re-render cart icon bubble via Shopify Section Rendering API */
+      fetch('/?sections=cart-icon-bubble')
         .then(function (r) { return r.json(); })
-        .then(function (cart) {
-          document.querySelectorAll('.cart-count-bubble span[aria-hidden="true"], .cart-count').forEach(function (el) {
-            el.textContent = cart.item_count;
-          });
-          document.querySelectorAll('.cart-count-bubble').forEach(function (el) {
-            el.classList.remove('hidden');
-          });
-          /* Notify theme cart drawer/notification if present */
-          document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+        .then(function (data) {
+          var sectionEl = document.getElementById('shopify-section-cart-icon-bubble');
+          if (sectionEl && data['cart-icon-bubble']) {
+            var parsed = new DOMParser().parseFromString(data['cart-icon-bubble'], 'text/html');
+            var inner = parsed.querySelector('.shopify-section');
+            if (inner) sectionEl.innerHTML = inner.innerHTML;
+          }
         });
 
       setTimeout(function () {
