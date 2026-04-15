@@ -541,8 +541,15 @@
       activeCat = tab.dataset.cat;
       applyFilters();
 
-      /* Scroll tab into view on mobile */
-      tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      /* Scroll page back to top after filter change */
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      /* Scroll active tab into view horizontally (tabs container only, no page scroll) */
+      var tabsContainer = document.querySelector('.s-nation-tabs');
+      if (tabsContainer) {
+        var scrollLeft = tab.offsetLeft - (tabsContainer.offsetWidth / 2) + (tab.offsetWidth / 2);
+        tabsContainer.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
+      }
     });
   });
 
@@ -564,61 +571,72 @@
     applyFilters();
   });
 
-  /* ─── AJAX Add to Cart ─────────────────────────────────────────────────── */
-  document.querySelectorAll('form[data-ajax-cart]').forEach(function (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = form.querySelector('.s-add-to-cart-btn');
-      var btnText = btn.querySelector('.s-btn-text');
-      var spinner = btn.querySelector('.s-loading-spinner');
-      var originalText = btnText.textContent.trim();
+  /* ─── AJAX Add to Cart (event delegation — survives any DOM re-renders) ── */
+  document.addEventListener('submit', function (e) {
+    var form = e.target.closest('form[data-ajax-cart]');
+    if (!form) return;
+    e.preventDefault();
 
-      btn.disabled = true;
-      btnText.style.display = 'none';
-      spinner.style.display = '';
+    var btn = form.querySelector('.s-add-to-cart-btn');
+    var btnText = btn.querySelector('.s-btn-text');
+    var spinner = btn.querySelector('.s-loading-spinner');
+    var originalText = btnText.textContent.trim();
 
-      var formData = {
-        items: [{
-          id: parseInt(form.querySelector('[name="id"]').value),
-          quantity: parseInt(form.querySelector('[name="quantity"]').value) || 1
-        }]
-      };
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    spinner.style.display = '';
 
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        spinner.style.display = 'none';
-        btnText.style.display = '';
-        btnText.textContent = 'Added!';
-        btn.disabled = false;
+    var payload = {
+      items: [{
+        id: parseInt(form.querySelector('[name="id"]').value, 10),
+        quantity: parseInt(form.querySelector('[name="quantity"]').value, 10) || 1
+      }]
+    };
 
-        /* Update cart count in header */
-        fetch('/cart.js')
-          .then(function (r) { return r.json(); })
-          .then(function (cart) {
-            var counters = document.querySelectorAll('.cart-count-bubble span[aria-hidden="true"], .cart-count');
-            counters.forEach(function (el) { el.textContent = cart.item_count; });
-            var bubbles = document.querySelectorAll('.cart-count-bubble');
-            bubbles.forEach(function (el) { el.classList.remove('hidden'); });
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (res) {
+      if (!res.ok) {
+        return res.json().then(function (err) {
+          throw new Error(err.description || err.message || 'Could not add item');
+        });
+      }
+      return res.json();
+    })
+    .then(function () {
+      spinner.style.display = 'none';
+      btnText.style.display = '';
+      btnText.textContent = 'Added!';
+      btn.disabled = false;
+
+      /* Update cart count bubble in header */
+      fetch('/cart.js')
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          document.querySelectorAll('.cart-count-bubble span[aria-hidden="true"], .cart-count').forEach(function (el) {
+            el.textContent = cart.item_count;
           });
+          document.querySelectorAll('.cart-count-bubble').forEach(function (el) {
+            el.classList.remove('hidden');
+          });
+          /* Notify theme cart drawer/notification if present */
+          document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+        });
 
-        /* Reset button text after 1.5s */
-        setTimeout(function () {
-          btnText.textContent = originalText;
-          form.querySelector('[name="quantity"]').value = 1;
-        }, 1500);
-      })
-      .catch(function () {
-        spinner.style.display = 'none';
-        btnText.style.display = '';
-        btnText.textContent = 'Error';
-        btn.disabled = false;
-        setTimeout(function () { btnText.textContent = originalText; }, 2000);
-      });
+      setTimeout(function () {
+        btnText.textContent = originalText;
+        form.querySelector('[name="quantity"]').value = 1;
+      }, 1500);
+    })
+    .catch(function (err) {
+      spinner.style.display = 'none';
+      btnText.style.display = '';
+      btnText.textContent = (err && err.message) ? err.message : 'Error — try again';
+      btn.disabled = false;
+      setTimeout(function () { btnText.textContent = originalText; }, 2500);
     });
   });
 })();
