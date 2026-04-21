@@ -38,13 +38,45 @@
         "padding_bottom": 36
       }
     },
+    "reviews_cake_jars": {
+      "type": "s-home-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "name": "Peggy",
+            "des": "The cupcake jar was a hit with the recipient I bought it for. I tasted one too and it was a very delicious and moist cake."
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "name": "Emily in Charlotte, NC",
+            "des": "The cake jars were AMAZING and such a big hit! The lids were absolutely adorable and the cakes were delicious. I will definitely be ordering from you again for future events."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "name": "Abigail in Albemarle, VA",
+            "des": "Your cupcakes in jars really cheered up my brother when he was in the hospital last month. I wish we could go to your bakery in person!"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {}
+    },
     "rich_text_3NWaHm": {
       "type": "rich-text",
       "blocks": {
         "text_xyYB4n": {
           "type": "text",
           "settings": {
-            "text": "<h2><strong>The Ultimate Gift: Signature Cake Jars by Sunflour Baking Company</strong></h2><p>Welcome to <a href=\"/\" title=\"/\">Sunflour Baking Company</a>, where our passion for authentic, scratch-made pastries is reimagined in our signature <strong>cake jars</strong>. These portable desserts offer a sophisticated way to enjoy our most beloved recipes anytime, anywhere. Imagine the indulgence of a decadent slice of cake, layered with velvety frosting and premium fillings, all elegantly sealed in a charming glass jar. At Sunflour, we believe every occasion deserves a touch of artisanal sweetness, and our <strong>cake jars</strong> are meticulously crafted to deliver that experience directly to your door.</p><h3><strong>The Sunflour Secret: Why We Make the Best Cake Jars</strong></h3><p>At Sunflour, we don’t just bake—we curate edible moments of joy. Our <strong>cake jars</strong> are prepared with the same integrity and premium, local ingredients that have made our Charlotte, NC, bakeries a local staple since 2009.</p><p>Unlike mass-produced treats, our process is purely artisanal:</p><ul><li><strong>From-Scratch Foundations:</strong> We start with tender, moist cakes baked in small batches—never from a mix.</li><li><strong>Hand-Crumbled & Layered:</strong> Each cake is crumbled by hand and lovingly layered with our house-made buttercreams.</li><li><strong>Sealed for Excellence:</strong> Every dessert jar is a miniature masterpiece, packed to the brim and sealed to ensure peak freshness upon arrival.</li></ul><p>We are proud to offer a unique treat that captures the warmth of a neighborhood bakery and the refined quality of a gourmet gift.</p><h3><strong>Elegant Gifting Made Simple: Nationwide Cake Jar Delivery</strong></h3><p>Whether you are celebrating a milestone or sending a \"just because\" surprise, our <strong>birthday cake jars</strong> serve as the ultimate personal party favor. They offer a polished, no-mess alternative to traditional cakes, making them the ideal choice for corporate gifting, holidays, or long-distance celebrations.</p><p>Our reliable delivery service makes it effortless to send a taste of Sunflour across the country. From thoughtful corporate packages to heartfelt personal presents, our <strong>cake jars</strong> ensure your recipients feel celebrated, regardless of the distance.</p><p><strong>Explore our collection today and share the gift of a perfect, personal-sized cake jar.</strong></p>"
+            "text": "<h2>Cake Jars Shipped Nationwide From Charlotte's Sunflour</h2>\n<p>Our cake jars are individual-sized desserts built the same way we build everything at Sunflour: from scratch, in small batches, with real ingredients and no shortcuts. Moist cake, hand-crumbled and layered with house-made buttercream, sealed in a glass jar and ready to ship anywhere in the country.</p>\n<p>Six flavors to choose from: Birthday Cake, Cookies and Cream, Red Velvet, Midnight Chocolate, Lemon Drop, and Salted Caramel. Vegan and gluten-free versions are available in select flavors for anyone who needs them.</p>\n<h3>Built for Gifting and Shipping</h3>\n<p>Cake jars were designed to travel. They arrive sealed, in gift-ready packaging that needs no extra wrapping on your end. Recipients open the jar and enjoy. No cutting, no plating, no mess.</p>\n<p>They are one of our most-sent gifts for birthdays, anniversaries, get-wells, and just-because moments. If you are celebrating someone too far away to drop off something in person, these are the answer. They also work beautifully as <a href=\"/collections/wedding-cake-jars\">wedding favors and event desserts</a>, where individual portions are practical as well as personal.</p>\n<h3>Charlotte Pickup at Five Locations</h3>\n<p>If you are local, you can grab cake jars at any of our Charlotte shops: Elizabeth, Dilworth, Ballantyne, Harrisburg, and NoDa. Same from-scratch quality, no shipping wait. A good option when you want to grab something same-day or build your own assortment in person.</p>"
           }
         }
       },
@@ -69,34 +101,34 @@
           "settings": {
             "heading": "How long do your cake jars stay fresh?",
             "icon": "check_mark",
-            "row_content": "<p>Because we bake everything from scratch without artificial preservatives, we recommend enjoying your <strong>cake jars</strong> within 7–10 days of arrival if kept refrigerated. For the best tasting experience, allow the jar to come to room temperature for about 30 minutes before serving—this ensures our house-made buttercream is perfectly silky and flavorful.</p>",
+            "row_content": "<p>Because we bake everything from scratch without artificial preservatives, enjoy your cake jars within seven to ten days of arrival when kept refrigerated. For the best texture, let the jar sit at room temperature for fifteen to thirty minutes before you eat. The buttercream softens and the cake loosens up in a way that makes a real difference. Worth the wait.</p>",
             "page": ""
           }
         },
         "collapsible_row_8Cipz7": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Do you offer nationwide shipping for your cake jars?",
+            "heading": "Do you ship cake jars nationwide?",
             "icon": "check_mark",
-            "row_content": "<p>Yes! We provide reliable delivery across the United States, making it easy to send a sweet surprise to loved ones or colleagues. Each <strong>cake jar</strong> is carefully packaged to ensure it arrives in pristine condition. Whether you are ordering a single treat or a bulk gift, our shipping service brings the authentic Sunflour experience from our Charlotte kitchen directly to any doorstep.</p>",
+            "row_content": "<p>Yes. We ship to all 50 states. Each cake jar is packaged carefully to arrive in the same condition it left our Charlotte kitchen. Whether you are ordering one jar or a dozen, we handle the shipping logistics so you can focus on the occasion.</p>",
             "page": ""
           }
         },
         "collapsible_row_gGmkdP": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Are these cake jars suitable for corporate gifting or large events?",
+            "heading": "Are cake jars good for corporate gifting or large events?",
             "icon": "check_mark",
-            "row_content": "<p>Absolutely. Our <strong>cake jars</strong> are a sophisticated, no-mess alternative to traditional cakes, making them a premier choice for <a href=\"/pages/corporate-gift\" title=\"Corporate Gift\">corporate gifts,</a> <a href=\"/pages/weddings\" title=\"Weddings\">wedding favors</a>, and holiday celebrations. Their portable nature and elegant presentation in glass jars provide a high-end \"unboxing\" experience that leaves a lasting impression on clients and guests alike.</p>",
+            "row_content": "<p>They are one of our most popular corporate gift options and a strong choice for <a href=\"/collections/wedding-cake-jars\">weddings and events</a>. Individual portions mean no cutting or serving, and the glass jar presentation holds up well visually whether you are setting them at place settings or shipping them to individual addresses. Reach out if you are working on a large order so we can plan lead time together.</p>",
             "page": ""
           }
         },
         "collapsible_row_aHHjbp": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "What makes Sunflour cake jars different from other \"cake in a jar\" products?",
+            "heading": "What makes Sunflour cake jars different from other cake-in-a-jar products?",
             "icon": "check_mark",
-            "row_content": "<p>The Sunflour difference lies in our commitment to artisanal quality. While many \"cake in a jar\" options rely on pre-made mixes and shortcuts, our <strong>cake jars</strong> are handmade from basic raw materials in small batches. We use premium, local ingredients and hand-crumble our moist cakes to ensure a perfect harmony of texture and flavor in every spoonful.</p>",
+            "row_content": "<p>We bake the cake from scratch in small batches, crumble it by hand, and layer it with buttercream made in our Charlotte kitchens. No pre-made mixes, no tub frosting. The flavor difference between a from-scratch cake jar and a shortcut version is immediate once you taste them. That is the only thing that distinguishes ours.</p>",
             "page": ""
           }
         }
@@ -144,6 +176,7 @@
   "order": [
     "banner",
     "product-grid",
+    "reviews_cake_jars",
     "rich_text_3NWaHm",
     "image_banner_rKRKFU",
     "collapsible_content_AKQx9L"
