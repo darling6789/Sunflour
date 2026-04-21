@@ -65,14 +65,14 @@
         "image_XnBA4z": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-017.webp",
+            "image": "shopify://shop_images/bakery-gifts-online-011.webp",
             "img_link": "shopify://products/cinnamon-rolls"
           }
         },
         "image_9jAkwE": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-000-11.webp",
+            "image": "shopify://shop_images/five-flavors-cake-jars-nationwide-shipping-1.jpg",
             "img_link": "shopify://collections/cake-jars"
           }
         },
@@ -107,7 +107,7 @@
         "image_443tpV": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-000-8.webp",
+            "image": "shopify://shop_images/image.jpg",
             "img_link": "shopify://products/cookie-box"
           }
         },
@@ -121,7 +121,7 @@
         "image_AGFVqB": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-000-6.webp",
+            "image": "shopify://shop_images/CookiePretzelBoxLarge.jpg",
             "img_link": "shopify://collections/cookies"
           }
         },
@@ -142,8 +142,8 @@
         "image_fbXg3i": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-000-9.webp",
-            "img_link": "shopify://products/cookie-brownie-box"
+            "image": "shopify://shop_images/bakery-gifts-online-009.webp",
+            "img_link": "shopify://products/cookie-pretzel-box"
           }
         }
       },
@@ -233,12 +233,12 @@
         "image_3W8zdE": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bakery-gifts-online-000-6.webp",
+            "image": "shopify://shop_images/five-flavors-cake-jars-nationwide-shipping-1.jpg",
             "link": "",
-            "text": "Pastry Bundles",
-            "des": "Mix and match flavors to create your own bundles.",
+            "text": "Cake Jars",
+            "des": "Cake Jars are one of our signature products and available to ship nationwide anytime. Mix and match flavors to create your own bundles.",
             "btn_text": "Shop Now",
-            "btn_link": "shopify://products/cookie-pretzel-box"
+            "btn_link": "https://sunflourbakingcompany.com/collections/cake-jars"
           }
         },
         "image_xNPFNW": {

@@ -1,0 +1,10 @@
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-page page-width page-width--narrow" style="padding-top: 36px; padding-bottom: 36px;">
+  <h1 class="main-page-title page-title h0">
+    {{ policy.title | escape }}
+  </h1>
+  <div class="rte">
+    {{ policy.body }}
+  </div>
+</div>
