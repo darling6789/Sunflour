@@ -336,7 +336,6 @@ input[type="submit"],
 input[type="button"],
 [class*="pagefly"] button,
 [class*="pagefly"] .button {
-    font-family: Josefin Slab, serif !important;
     font-weight: 700 !important;
 }
 
