@@ -422,25 +422,23 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 420px;
+    min-height: 520px;
     display: flex;
     align-items: center;
   }
   .loc-hero__overlay {
     width: 100%;
-    min-height: 420px;
-    background-color: rgba(0, 0, 0, 0.25);
+    min-height: 520px;
+    background: linear-gradient(160deg, rgba(15,20,5,0.80) 0%, rgba(30,40,10,0.55) 55%, rgba(15,20,5,0.76) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 24px;
+    padding: 70px 24px;
   }
   .loc-hero__content {
     max-width: 760px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.52);
-    padding: 40px 48px;
-    border-radius: 6px;
+    padding: 0 24px;
   }
   .loc-hero__h1 {
     color: #fff;
@@ -448,6 +446,7 @@
     line-height: 1.15;
     margin: 0 0 12px;
     font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.40);
   }
   .loc-hero__h2 {
     color: #f5e6c8;
@@ -459,6 +458,7 @@
     color: rgba(255,255,255,0.88);
     font-size: clamp(15px, 1.6vw, 20px);
     margin: 0;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.30);
   }
 
   /* ---- Breadcrumbs ---- */
@@ -779,6 +779,7 @@
   @media (max-width: 480px) {
     .loc-hero__overlay {
       padding: 48px 16px;
+      min-height: 520px;
     }
     .loc-essentials {
       padding: 32px 16px;
