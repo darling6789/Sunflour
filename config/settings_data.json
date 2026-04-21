@@ -111,7 +111,7 @@
     "brand_description": "<p></p>",
     "brand_image_width": 100,
     "social_facebook_link": "https://facebook.com/sunflourbaking",
-    "social_instagram_link": "",
+    "social_instagram_link": "https://www.instagram.com/sunflourbakingcompany/",
     "social_youtube_link": "",
     "social_tiktok_link": "",
     "social_twitter_link": "https://twitter.com/sunflourbaking",
@@ -209,6 +209,13 @@
           "secondary_button_label": "#121212",
           "shadow": "#121212"
         }
+      }
+    },
+    "blocks": {
+      "pagefly-page-builder": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
       }
     }
   },

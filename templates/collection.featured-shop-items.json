@@ -9,12 +9,13 @@
  */
 {
   "sections": {
-    "pf-26200102": {
-      "type": "pf-26200102",
-      "settings": {}
+    "nationwide-shop": {
+      "type": "s-nationwide-shop",
+      "settings": {
+        "heading": "Ship Sunflour Nationwide",
+        "subheading": "Send the perfect gift or treat yourself. We deliver nationwide."
+      }
     }
   },
-  "order": [
-    "pf-26200102"
-  ]
+  "order": ["nationwide-shop"]
 }

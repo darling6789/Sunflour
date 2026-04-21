@@ -27,8 +27,8 @@ h2 {
 }
 
 a.s-btn, .btnRow a {
-  background-color: rgba(249, 217, 76, 1.00);
-  color: #000000;
+  background-color: #e8c84a;
+  color: #2b2b1e;
   text-decoration: none;
   max-width: 320px;
   height: 50px;
@@ -37,7 +37,7 @@ a.s-btn, .btnRow a {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 40px;
+  border-radius: 50px;
   line-height: normal;
   cursor: pointer;
   font-weight: 700 !important;
@@ -47,7 +47,7 @@ a.s-btn, .btnRow a {
 }
 
 .s-btn:hover, .btnRow a:hover {
-  background-color: #efb914;
+  background-color: #d4b035;
   color: #000000 !important;
 }
 .s-btn:before, .s-btn:after {
@@ -67,8 +67,8 @@ h2.banner__heading {
 }
 
 .quick-add__submit.button {
-  background-color: #f9d94c;
-  color: #000;
+  background-color: #e8c84a;
+  color: #2b2b1e;
   text-decoration: none;
   max-width: 320px;
   height: 50px;
@@ -77,7 +77,7 @@ h2.banner__heading {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 40px;
+  border-radius: 50px;
   /* line-height: 120%; */
   cursor: pointer;
   font-weight: 400 !important;
@@ -88,7 +88,7 @@ h2.banner__heading {
   box-shadow: none !important;
 }
 .quick-add__submit.button:hover {
-  background-color: #efb914;
+  background-color: #d4b035;
   color: #000 !important;
 }
 .card--standard div.card__inner {
@@ -336,8 +336,7 @@ input[type="submit"],
 input[type="button"],
 [class*="pagefly"] button,
 [class*="pagefly"] .button {
-    font-family: Josefin Slab, serif !important;
-    font-weight: 400 !important;
+    font-weight: 700 !important;
 }
 
 /* Yellow action buttons — bold and legible (overrides Ticket 21 font-weight for CTA buttons) */
@@ -385,12 +384,12 @@ a.s-btn, .btnRow a,
 }
 
 .product .product-form__submit, .related-bottom form button.add-to-cart-button {
-    background-color: #f9d94c;
+    background-color: #e8c84a;
     color: #000;
     border-radius: 10px;
 }
 .product .product-form__submit:hover, .related-bottom form button.add-to-cart-button:hover {
-    background-color: #efb914;
+    background-color: #d4b035;
 }
 .product .product-form__submit:before, .product .product-form__submit:after {
     box-shadow: none !important;
