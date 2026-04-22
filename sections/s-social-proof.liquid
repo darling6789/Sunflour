@@ -1,9 +1,9 @@
 <div class="s-social-proof">
-  <div class="s-social-proof-left">
+  <div class="s-social-proof-left scroll-trigger animate--fade-in">
     <h2>{{ section.settings.heading }}</h2>
     {% for block in section.blocks %}
       {% if forloop.index == 1 %}
-        <div class="s-sp s-sp{{ forloop.index }}">
+        <div class="s-sp s-sp{{ forloop.index }} scroll-trigger animate--slide-in" data-cascade>
           <h3>{{ block.settings.name }}</h3>
           <p>{{ block.settings.text }}</p>
         </div>
@@ -13,11 +13,11 @@
   <div class="s-social-proof-right">
     {% for block in section.blocks %}
       {% if forloop.index > 1 %}
-        <div class="s-sp s-sp{{ forloop.index }}">
+        <div class="s-sp s-sp{{ forloop.index }} scroll-trigger animate--slide-in" data-cascade>
           <h3>{{ block.settings.name }}</h3>
           <p>{{ block.settings.text }}</p>
         </div>
-      {% endif %}  
+      {% endif %}
     {% endfor %}
   </div>
 </div>

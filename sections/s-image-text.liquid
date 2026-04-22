@@ -1,10 +1,10 @@
 <div class="s-image-text p-width p-m-width">
-  <div class="s-image-text-image">
+  <div class="s-image-text-image scroll-trigger animate--fade-in">
     <img src="{{ section.settings.image | img_url: 'master' }}">
   </div>
 
   <div class="s-image-text-text">
-    <div class="s-image-text-text-body">
+    <div class="s-image-text-text-body scroll-trigger animate--slide-in">
       <h2>{{ section.settings.heading }}</h2>
       <p>{{ section.settings.text }}</p>
       {% if section.settings.btn_text != blank %}

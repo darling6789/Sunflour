@@ -1,12 +1,12 @@
 <div class="s-blog-posts p-width p-m-width">
-  <div class="s-blog-posts-header">
+  <div class="s-blog-posts-header scroll-trigger animate--fade-in">
     <h2>{{ section.settings.heading }}</h2>
   </div>
 
   <div class="s-blog-posts-row-wrap">
     <div class="s-blog-posts-row">
       {% for article in section.settings.blog.articles limit: section.settings.post_limit %}
-      <a href="{{ article.url }}" class="s-blog-post">
+      <a href="{{ article.url }}" class="s-blog-post scroll-trigger animate--slide-in" data-cascade>
         <div class="s-blog-post-image">
           <img src="{{ article.image | img_url: 'large' }}">
         </div>
