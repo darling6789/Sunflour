@@ -18,10 +18,28 @@
   <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     {{ page.title | escape }}
   </h1>
-  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="rte">
     {{ page.content }}
   </div>
 </div>
+
+{% if settings.animations_reveal_on_scroll %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var rte = document.querySelector('.section-{{ section.id }}-padding .rte');
+    if (!rte) return;
+    var children = rte.children;
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].tagName === 'STYLE' || children[i].tagName === 'SCRIPT') continue;
+      children[i].classList.add('scroll-trigger', 'animate--fade-in');
+    }
+    if (typeof initializeScrollAnimationTrigger === 'function') {
+      initializeScrollAnimationTrigger(rte);
+    }
+  });
+</script>
+{% endif %}
 
 {% schema %}
 {
