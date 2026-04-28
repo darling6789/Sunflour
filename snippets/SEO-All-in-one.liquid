@@ -140,27 +140,36 @@ setTimeout(function(){ document.body.appendChild(el); }, 200);
 </script>
 {%- endif -%}
 
-{%- comment -%} Article schema {%- endcomment -%}
+{%- comment -%} Article + Breadcrumb schema {%- endcomment -%}
 {%- if request.page_type == 'article' -%}
+  {%- liquid
+    assign article_word_count = article.content | strip_html | split: ' ' | size
+    assign article_minutes = article_word_count | divided_by: 220 | at_least: 1
+    assign article_author_name = 'Sunflour Team'
+    assign article_author_url = shop.url | append: '/pages/about-us'
+  -%}
 <script type="application/ld+json">
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "BlogPosting",
   "mainEntityOfPage": {{ canonical_url | json }},
   "headline": {{ article.title | json }},
   "image": {
     "@type": "ImageObject",
     {%- if article.image -%}
-    "url": "https:{{ article | img_url: '1024x1024' }}",
+      "url": "https:{{ article.image | image_url: width: 1600 }}",
+      "width": "{{ article.image.width }}",
+      "height": "{{ article.image.height }}"
     {%- else -%}
-    "url": "{{ _schema_img }}",
+      "url": "{{ _schema_img }}",
+      "width": "1024",
+      "height": "1024"
     {%- endif -%}
-    "height": "1024",
-    "width": "1024"
   },
   "author": {
-    "@type": "Person",
-    "name": {{ article.author | json }}
+    "@type": "Organization",
+    "name": {{ article_author_name | json }},
+    "url": {{ article_author_url | json }}
   },
   "publisher": {
     "@type": "Organization",
@@ -170,10 +179,43 @@ setTimeout(function(){ document.body.appendChild(el); }, 200);
       "url": "{{ _schema_img }}"
     }
   },
-  "datePublished": "{{ article.created_at }}",
-  "dateModified": "{{ article.published_at }}",
+  "datePublished": "{{ article.created_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+  "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
   "description": {{ article.excerpt_or_content | strip_html | truncate: 300 | json }},
-  "articleBody": {{ article.content | strip_html | json }}
+  "inLanguage": "en-US",
+  "articleSection": {{ blog.title | json }},
+  "wordCount": {{ article_word_count }},
+  "timeRequired": "PT{{ article_minutes }}M"
+  {%- if article.tags.size > 0 -%}
+  ,"keywords": {{ article.tags | join: ', ' | json }}
+  {%- endif -%}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": "{{ shop.url }}{{ blog.url }}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ article.title | json }},
+      "item": "{{ shop.url }}{{ article.url }}"
+    }
+  ]
 }
 </script>
 {%- endif -%}

@@ -1,0 +1,36 @@
+{% comment %}
+  End-of-article author bio. Single house author "Sunflour Team".
+  Editable via theme settings: author_bio_avatar (image) and author_bio_text (richtext).
+  Falls back to sensible defaults if settings are blank so the block still renders.
+{% endcomment %}
+
+{%- liquid
+  assign bio_avatar = settings.author_bio_avatar
+  assign bio_text = settings.author_bio_text
+  assign default_bio = '<p>Sunflour Baking Company has been crafting fresh-baked treats in Charlotte, North Carolina since 2010. Our team of bakers shares recipes, tips, and stories from five neighborhood bakeries.</p>'
+  if bio_text == blank
+    assign bio_text = default_bio
+  endif
+-%}
+
+<aside class="article-author-bio" aria-label="About the author">
+  <div class="article-author-bio__inner">
+    {%- if bio_avatar != blank -%}
+      <div class="article-author-bio__avatar">
+        <img
+          src="{{ bio_avatar | image_url: width: 160 }}"
+          srcset="{{ bio_avatar | image_url: width: 160 }} 1x, {{ bio_avatar | image_url: width: 320 }} 2x"
+          alt="Sunflour Team"
+          width="80"
+          height="80"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+    {%- endif -%}
+    <div class="article-author-bio__body">
+      <p class="article-author-bio__name">By <a href="{{ shop.url }}/pages/about-us">Sunflour Team</a></p>
+      <div class="article-author-bio__text rte">{{ bio_text }}</div>
+    </div>
+  </div>
+</aside>

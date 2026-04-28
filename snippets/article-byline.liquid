@@ -1,0 +1,38 @@
+{% comment %}
+  Article byline: house author, publish date, reading time, optional updated date.
+
+  Accepts:
+  - article: {Object} required
+
+  Reading time: 220 wpm.
+  Shows "Updated" only when article.updated_at is at least 2 days after article.published_at.
+{% endcomment %}
+
+{%- liquid
+  assign byline_word_count = article.content | strip_html | split: ' ' | size
+  assign byline_minutes = byline_word_count | divided_by: 220 | at_least: 1
+  assign published_date_seconds = article.published_at | date: '%s' | times: 1
+  assign updated_date_seconds = article.updated_at | date: '%s' | times: 1
+  assign updated_delta = updated_date_seconds | minus: published_date_seconds
+-%}
+
+<div class="article-byline caption-with-letter-spacing" itemprop="author" itemscope itemtype="https://schema.org/Organization">
+  <span class="article-byline__author">
+    By <a href="{{ shop.url }}/pages/about-us" itemprop="url"><span itemprop="name">Sunflour Team</span></a>
+  </span>
+  <span class="article-byline__divider" aria-hidden="true">&middot;</span>
+  <time class="article-byline__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}" itemprop="datePublished">
+    {{- article.published_at | date: '%b %-d, %Y' -}}
+  </time>
+  {%- if updated_delta > 172800 -%}
+    <span class="article-byline__divider" aria-hidden="true">&middot;</span>
+    <span class="article-byline__updated">
+      Updated
+      <time datetime="{{ article.updated_at | date: '%Y-%m-%d' }}" itemprop="dateModified">
+        {{- article.updated_at | date: '%b %-d, %Y' -}}
+      </time>
+    </span>
+  {%- endif -%}
+  <span class="article-byline__divider" aria-hidden="true">&middot;</span>
+  <span class="article-byline__reading-time">{{ byline_minutes }} min read</span>
+</div>

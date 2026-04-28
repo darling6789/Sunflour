@@ -1,0 +1,31 @@
+{% comment %}
+  Article tag chips. Filters out auto-generated/internal tags.
+
+  Accepts:
+  - article: {Object} required
+  - blog: {Object} required
+{% endcomment %}
+
+{%- if article.tags.size > 0 -%}
+  {%- assign filtered_tags = '' -%}
+  {%- for tag in article.tags -%}
+    {%- assign tag_first = tag | slice: 0, 1 -%}
+    {%- comment -%} Skip tags starting with _, ., or # — common Shopify auto-tag conventions {%- endcomment -%}
+    {%- unless tag_first == '_' or tag_first == '.' or tag_first == '#' -%}
+      {%- assign filtered_tags = filtered_tags | append: tag | append: '||' -%}
+    {%- endunless -%}
+  {%- endfor -%}
+
+  {%- if filtered_tags != '' -%}
+    {%- assign tag_array = filtered_tags | split: '||' -%}
+    <ul class="article-tags" aria-label="Tags">
+      {%- for tag in tag_array -%}
+        {%- if tag != blank -%}
+          <li class="article-tags__item">
+            <a class="article-tags__link" href="{{ blog.url }}/tagged/{{ tag | handle }}" rel="tag">{{ tag }}</a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endif -%}

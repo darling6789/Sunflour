@@ -1,0 +1,22 @@
+{% comment %}
+  Key takeaways box. AI-snippet bait — a compact summary AI engines love to extract.
+  Renders only when the block has content.
+
+  Accepts:
+  - block: {Object} a `key_takeaways` block with `content` (richtext) and optional `heading` settings.
+{% endcomment %}
+
+{%- if block.settings.content != blank -%}
+  <aside
+    class="article-key-takeaways"
+    aria-labelledby="key-takeaways-heading"
+    {{ block.shopify_attributes }}
+  >
+    <h2 id="key-takeaways-heading" class="article-key-takeaways__heading">
+      {{ block.settings.heading | default: 'Key takeaways' | escape }}
+    </h2>
+    <div class="article-key-takeaways__content rte">
+      {{ block.settings.content }}
+    </div>
+  </aside>
+{%- endif -%}

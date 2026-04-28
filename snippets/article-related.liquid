@@ -1,0 +1,65 @@
+{% comment %}
+  Related posts from the same blog, excluding the current article.
+  Prefers articles that share at least one tag; falls back to most recent.
+  Shows up to 3.
+{% endcomment %}
+
+{%- liquid
+  assign related = ''
+  assign related_count = 0
+  assign max_related = 3
+-%}
+
+{%- if article.tags.size > 0 -%}
+  {%- for candidate in blog.articles -%}
+    {%- if related_count >= max_related -%}{%- break -%}{%- endif -%}
+    {%- if candidate.id == article.id -%}{%- continue -%}{%- endif -%}
+    {%- assign shares_tag = false -%}
+    {%- for tag in candidate.tags -%}
+      {%- if article.tags contains tag -%}
+        {%- assign shares_tag = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if shares_tag -%}
+      {%- assign related = related | append: candidate.id | append: ',' -%}
+      {%- assign related_count = related_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if related_count < max_related -%}
+  {%- for candidate in blog.articles -%}
+    {%- if related_count >= max_related -%}{%- break -%}{%- endif -%}
+    {%- if candidate.id == article.id -%}{%- continue -%}{%- endif -%}
+    {%- assign already_id = candidate.id | append: ',' -%}
+    {%- unless related contains already_id -%}
+      {%- assign related = related | append: candidate.id | append: ',' -%}
+      {%- assign related_count = related_count | plus: 1 -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if related_count > 0 -%}
+  {%- assign related_ids = related | split: ',' -%}
+  <section class="article-related" aria-labelledby="article-related-heading">
+    <h2 id="article-related-heading" class="article-related__heading">Keep reading</h2>
+    <div class="article-related__grid">
+      {%- for candidate in blog.articles -%}
+        {%- assign cid = candidate.id | append: '' -%}
+        {%- if related_ids contains cid -%}
+          {% render 'article-card',
+            blog: blog,
+            article: candidate,
+            show_image: true,
+            show_date: true,
+            show_author: false,
+            show_excerpt: false,
+            media_aspect_ratio: 1.66,
+            lazy_load: true
+          %}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}

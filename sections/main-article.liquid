@@ -1,4 +1,9 @@
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+{{ 'article-enhancements.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width page-width--narrow article-breadcrumbs">
+  {% render 'breadcrumbs' %}
+</div>
 
 <article class="article-template">
   {%- for block in section.blocks -%}
@@ -43,32 +48,31 @@
 
       {%- when 'title' -%}
         <header
-          class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+          class="page-width page-width--narrow article-template__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
           {{ block.shopify_attributes }}
         >
-          <h1
-            class="article-template__title"
-          >
+          <h1 class="article-template__title">
             {{ article.title | escape }}
           </h1>
-          {%- if block.settings.blog_show_date -%}
-            <span class="circle-divider caption-with-letter-spacing">
-              {{- article.published_at | time_tag: format: 'date' -}}
-            </span>
-          {%- endif -%}
-          {%- if block.settings.blog_show_author -%}
-            <span class="caption-with-letter-spacing">
-              <span>{{ article.author }}</span>
-            </span>
-          {%- endif -%}
+          {% render 'article-byline', article: article %}
+          {% render 'article-tags', article: article, blog: blog %}
         </header>
 
+      {%- when 'key_takeaways' -%}
+        <div class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {% render 'article-key-takeaways', block: block %}
+        </div>
+
       {%- when 'content' -%}
+        {%- assign processed_content = article.content | replace: '<img ', '<img loading="lazy" decoding="async" ' -%}
         <div
           class="article-template__content page-width page-width--narrow rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {{ block.shopify_attributes }}
         >
-          {{ article.content }}
+          <div class="page-width page-width--narrow article-template__toc-wrapper">
+            {% render 'article-toc' %}
+          </div>
+          {{ processed_content }}
         </div>
 
       {%- when 'share' -%}
@@ -81,6 +85,18 @@
         </div>
     {%- endcase -%}
   {%- endfor -%}
+
+  <div class="page-width page-width--narrow">
+    {% render 'article-faq', section: section %}
+  </div>
+
+  <div class="page-width page-width--narrow">
+    {% render 'article-author-bio' %}
+  </div>
+
+  <div class="page-width page-width--narrow article-related-wrapper">
+    {% render 'article-related', article: article, blog: blog %}
+  </div>
 
   <div class="article-template__back element-margin-top center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
@@ -348,6 +364,25 @@
       ]
     },
     {
+      "type": "key_takeaways",
+      "name": "Key takeaways",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Key takeaways"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "info": "Bullet list with 3-5 short takeaways. Used as AI-snippet bait."
+        }
+      ]
+    },
+    {
       "type": "content",
       "name": "t:sections.main-article.blocks.content.name",
       "limit": 1
@@ -362,6 +397,23 @@
           "id": "share_label",
           "label": "t:sections.main-article.blocks.share.settings.text.label",
           "default": "t:sections.main-article.blocks.share.settings.text.default"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
         }
       ]
     }

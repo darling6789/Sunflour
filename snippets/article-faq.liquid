@@ -1,0 +1,51 @@
+{% comment %}
+  Renders FAQ section + FAQPage JSON-LD when one or more `faq_item` blocks exist.
+  Reads section.blocks (filtered by type 'faq_item').
+
+  Each faq_item block has:
+    - question: text
+    - answer: richtext
+{% endcomment %}
+
+{%- assign faq_blocks = section.blocks | where: 'type', 'faq_item' -%}
+
+{%- if faq_blocks.size > 0 -%}
+  <section class="article-faq" aria-labelledby="article-faq-heading">
+    <h2 id="article-faq-heading" class="article-faq__heading">Frequently asked questions</h2>
+    <div class="article-faq__list">
+      {%- for fblock in faq_blocks -%}
+        {%- if fblock.settings.question != blank and fblock.settings.answer != blank -%}
+          <details class="article-faq__item" {{ fblock.shopify_attributes }}>
+            <summary class="article-faq__question">{{ fblock.settings.question | escape }}</summary>
+            <div class="article-faq__answer rte">{{ fblock.settings.answer }}</div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+
+  {%- capture faq_jsonld -%}
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign first_q = true -%}
+        {%- for fblock in faq_blocks -%}
+          {%- if fblock.settings.question != blank and fblock.settings.answer != blank -%}
+            {%- unless first_q -%},{%- endunless -%}
+            {%- assign first_q = false -%}
+            {
+              "@type": "Question",
+              "name": {{ fblock.settings.question | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ fblock.settings.answer | strip_html | strip_newlines | json }}
+              }
+            }
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  {%- endcapture -%}
+  <script type="application/ld+json">{{ faq_jsonld }}</script>
+{%- endif -%}
