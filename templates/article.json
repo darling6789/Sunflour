@@ -43,9 +43,21 @@
         "content"
       ],
       "settings": {}
+    },
+    "s_blog_posts_pRqFa4": {
+      "type": "s-blog-posts",
+      "name": "S blog posts",
+      "settings": {
+        "blog": "",
+        "heading": "",
+        "post_limit": 6,
+        "btn_text": "View all articles",
+        "btn_link": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "s_blog_posts_pRqFa4"
   ]
 }
