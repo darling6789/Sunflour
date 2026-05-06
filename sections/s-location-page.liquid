@@ -18,7 +18,7 @@
   elsif loc_handle == 'charlotte-bakery-dilworth'
     assign loc_h1           = 'Welcome to Your Dilworth Community Bakery'
     assign loc_neighborhood = 'Dilworth'
-    assign loc_parking      = 'Street parking on East Boulevard and nearby side streets. Easily walkable from the Dilworth neighborhood.'
+    assign loc_parking      = 'We have a large lot with free parking adjacent to the building!'
     assign loc_street       = 'East Boulevard'
     assign loc_slug         = 'dilworth'
     assign loc_landmarks    = 'Situated on East Boulevard in the heart of Dilworth, steps from Latta Park, Freedom Park, and the Little Sugar Creek Greenway. A short walk from South End and easy to reach from Uptown Charlotte.'
@@ -39,7 +39,7 @@
   elsif loc_handle == 'charlotte-bakery-noda'
     assign loc_h1           = 'Welcome to Your NoDa Community Bakery'
     assign loc_neighborhood = 'NoDa'
-    assign loc_parking      = 'Street parking available on Jordan Place. Close to the NoDa light rail station.'
+    assign loc_parking      = 'Free parking is available in the parking deck inside our building. Street parking is also available on Jordan Place, with the NoDa light rail station nearby.'
     assign loc_street       = 'Jordan Place'
     assign loc_slug         = 'noda'
     assign loc_landmarks    = "Located on Jordan Place in Charlotte's NoDa arts district, steps from the 36th Street light rail station, NoDa Brewing, and the Neighborhood Theatre. Walkable from North Davidson Street and easy to reach from Plaza Midwood and University City."
@@ -274,7 +274,7 @@
         <div class="panel"><p>We regularly stock GF cheesecakes, chocolate soufflé cakes, and coconut macaroons at this location. Note: while these items are made without gluten, our bakeries are not dedicated GF facilities, so trace levels of gluten are possible.</p></div>
 
         <button class="accordion">How do I place a custom cake order for the Elizabeth location?</button>
-        <div class="panel"><p>Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+17049005268">{{ page.metafields.global.phone }}</a>. We require at least 48 hours notice for standard orders, and 1 to 2 months for elaborate cakes.</p></div>
+        <div class="panel"><p>Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+17049005268">{{ page.metafields.global.phone }}</a>. We require more than 48 hours notice to prepare your order.</p></div>
 
       {%- when 'dilworth' -%}
         <button class="accordion">When do you bake fresh daily on East Boulevard?</button>
@@ -290,7 +290,7 @@
         <div class="panel"><p>We regularly stock GF cheesecakes, chocolate soufflé cakes, and coconut macaroons at this location. Note: while these items are made without gluten, our bakeries are not dedicated GF facilities, so trace levels of gluten are possible.</p></div>
 
         <button class="accordion">Can I order a custom cake from the Dilworth location?</button>
-        <div class="panel"><p>Yes. Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+17043325222">{{ page.metafields.global.phone }}</a>. We require at least 48 hours notice for standard orders, and 1 to 2 months for elaborate cakes.</p></div>
+        <div class="panel"><p>Yes. Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+17043325222">{{ page.metafields.global.phone }}</a>. We require more than 48 hours notice to prepare your order.</p></div>
 
       {%- when 'ballantyne' -%}
         <button class="accordion">When do you bake fresh daily at the Ballantyne location?</button>
@@ -306,7 +306,7 @@
         <div class="panel"><p>We regularly stock GF cheesecakes, chocolate soufflé cakes, and coconut macaroons at this location. Note: while these items are made without gluten, our bakeries are not dedicated GF facilities, so trace levels of gluten are possible.</p></div>
 
         <button class="accordion">Can I order a custom cake from the Ballantyne location?</button>
-        <div class="panel"><p>Yes. Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+19802378881">{{ page.metafields.global.phone }}</a>. We require at least 48 hours notice for standard orders, and 1 to 2 months for elaborate cakes.</p></div>
+        <div class="panel"><p>Yes. Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+19802378881">{{ page.metafields.global.phone }}</a>. We require more than 48 hours notice to prepare your order.</p></div>
 
       {%- when 'harrisburg' -%}
         <button class="accordion">When do you bake fresh daily on NC-49?</button>
@@ -322,7 +322,7 @@
         <div class="panel"><p>We regularly stock GF cheesecakes, chocolate soufflé cakes, and coconut macaroons at this location. Note: while these items are made without gluten, our bakeries are not dedicated GF facilities, so trace levels of gluten are possible.</p></div>
 
         <button class="accordion">Can I order a custom cake from the Harrisburg location?</button>
-        <div class="panel"><p>Yes. Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+19802588000">{{ page.metafields.global.phone }}</a>. We require at least 48 hours notice for standard orders, and 1 to 2 months for elaborate cakes.</p></div>
+        <div class="panel"><p>Yes. Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+19802588000">{{ page.metafields.global.phone }}</a>. We require more than 48 hours notice to prepare your order.</p></div>
 
       {%- when 'noda' -%}
         <button class="accordion">When do you bake fresh daily at the NoDa location?</button>
@@ -338,7 +338,7 @@
         <div class="panel"><p>We regularly stock GF cheesecakes, chocolate soufflé cakes, and coconut macaroons at this location. Note: while these items are made without gluten, our bakeries are not dedicated GF facilities, so trace levels of gluten are possible.</p></div>
 
         <button class="accordion">How do I place a custom cake order at the NoDa location?</button>
-        <div class="panel"><p>Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+17049007305">{{ page.metafields.global.phone }}</a>. We require at least 48 hours notice for standard orders, and 1 to 2 months for elaborate cakes.</p></div>
+        <div class="panel"><p>Email <a href="mailto:{{ page.metafields.global.email }}">{{ page.metafields.global.email }}</a> or call <a href="tel:+17049007305">{{ page.metafields.global.phone }}</a>. We require more than 48 hours notice to prepare your order.</p></div>
 
     {%- endcase -%}
 
@@ -349,7 +349,7 @@
     <div class="panel"><p>Yes, everything. We bake in small batches daily using all-natural ingredients with no artificial flavorings, preservatives, dough conditioners, or bleached or bromated flour.</p></div>
 
     <button class="accordion">How far in advance do I need to place an order?</button>
-    <div class="panel"><p>We require at least 48 hours after confirming your request to prepare your order. For elaborate cakes and large catering orders, one to two months in advance is recommended.</p></div>
+    <div class="panel"><p>We require more than 48 hours notice to prepare your order.</p></div>
 
     <button class="accordion">Is Sunflour a franchise or chain?</button>
     <div class="panel"><p>No. We are a local, family-owned bakery with five locations in the Charlotte area. Everything is made fresh onsite and our staff rotate between stores to ensure consistency of products and service.</p></div>
@@ -918,7 +918,7 @@
       "name": "How far in advance do I need to place an order?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "We require at least 48 hours after confirming your request to prepare your order. For elaborate cakes and large catering orders, one to two months in advance is recommended."
+        "text": "We require more than 48 hours notice to prepare your order."
       }
     },
     {
@@ -946,4 +946,5 @@
   ]
 }
 {% endschema %}
+
 
