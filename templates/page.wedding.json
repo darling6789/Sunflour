@@ -19,17 +19,83 @@
     "s_masonry_A3UgAj": {
       "type": "s-masonry",
       "blocks": {
-        "image_gync9R": { "type": "image", "settings": { "image": "shopify://shop_images/cascading_florals.jpg", "text": "" } },
-        "image_Cjwii9": { "type": "image", "settings": { "image": "shopify://shop_images/cake_with_dog_accent.jpg", "text": "" } },
-        "image_LYKDPg": { "type": "image", "settings": { "image": "shopify://shop_images/IMG-6073.jpg", "text": "" } },
-        "image_8ixFiD": { "type": "image", "settings": { "image": "shopify://shop_images/2_tier_with_mini_desserts.jpg", "text": "" } },
-        "image_4tVUTY": { "type": "image", "settings": { "image": "shopify://shop_images/Wild_flower_wedding.jpg", "text": "" } },
-        "image_4VAqhk": { "type": "image", "settings": { "image": "shopify://shop_images/gold_flake_cake-setup.jpg", "text": "" } },
-        "image_t7eNnh": { "type": "image", "settings": { "image": "shopify://shop_images/Design-of-the-cake.jpg", "text": "" } },
-        "image_LtNLdM": { "type": "image", "settings": { "image": "shopify://shop_images/Size-of-the-cake.jpg", "text": "" } },
-        "image_YrDYkU": { "type": "image", "settings": { "image": "shopify://shop_images/KevynDixonPhotography_SeparkTastingJanuary2023-283-1.jpg", "text": "" } },
-        "image_YyHA4t": { "type": "image", "settings": { "image": "shopify://shop_images/Multi_Cake_Display.jpg", "text": "" } },
-        "image_idLj4j": { "type": "image", "settings": { "image": "shopify://shop_images/KevynDixonPhotography_SeparkTastingJanuary2023-291.jpg", "text": "" } }
+        "image_gync9R": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/cascading_florals.jpg",
+            "text": ""
+          }
+        },
+        "image_Cjwii9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/cake_with_dog_accent.jpg",
+            "text": ""
+          }
+        },
+        "image_LYKDPg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG-6073.jpg",
+            "text": ""
+          }
+        },
+        "image_8ixFiD": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2_tier_with_mini_desserts.jpg",
+            "text": ""
+          }
+        },
+        "image_4tVUTY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Wild_flower_wedding.jpg",
+            "text": ""
+          }
+        },
+        "image_4VAqhk": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/gold_flake_cake-setup.jpg",
+            "text": ""
+          }
+        },
+        "image_t7eNnh": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Design-of-the-cake.jpg",
+            "text": ""
+          }
+        },
+        "image_LtNLdM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Size-of-the-cake.jpg",
+            "text": ""
+          }
+        },
+        "image_YrDYkU": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/KevynDixonPhotography_SeparkTastingJanuary2023-283-1.jpg",
+            "text": ""
+          }
+        },
+        "image_YyHA4t": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Multi_Cake_Display.jpg",
+            "text": ""
+          }
+        },
+        "image_idLj4j": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/KevynDixonPhotography_SeparkTastingJanuary2023-291.jpg",
+            "text": ""
+          }
+        }
       },
       "block_order": [
         "image_gync9R",
@@ -57,11 +123,23 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "wedding_seo_text": {
+      "type": "custom-liquid",
+      "custom_css": [],
+      "name": "Wedding SEO Text",
+      "settings": {
+        "custom_liquid": "<div class=\"row row-max\" id=\"wedding-info\" style=\"margin-top:40px; padding-top:40px; border-top:1px solid #eee;\">\n  <h2>Wedding Cakes in Charlotte, NC</h2>\n  <p>Sunflour Baking Company designs custom wedding cakes for couples across the Charlotte metro area from our <a href=\"/pages/ballantyne-bakery\">Ballantyne</a> and <a href=\"/pages/harrisburg-nc-bakery\">Harrisburg</a> bakery locations. We specialize in tiered buttercream cakes, fondant designs, semi-naked floral cakes, cake jar favors, and full dessert tables for receptions and rehearsal dinners.</p>\n\n  <h3>Wedding Cake Tastings</h3>\n  <p>We host in-person tastings at Ballantyne and Harrisburg by appointment. A standard tasting includes four cake flavors and four buttercream pairings, plus time to walk through design ideas, guest count, delivery logistics, and pricing. We recommend scheduling tastings 3 to 6 months before your wedding date \u2014 popular Saturday dates book up first. Tastings are $25 per couple and credited toward your final cake order.</p>\n\n  <h3>Cake Sizing &amp; Pricing</h3>\n  <p>Tiered wedding cakes start at $7 per serving for buttercream designs and $8 to $10 per serving for fondant, sculpted, or fully custom work. A typical three-tier cake serves 75 to 100 guests; four-tier cakes serve up to 150. We can also build dessert-display setups with a smaller cutting cake plus <a href=\"/pages/cake-jars\">cake jars</a>, cupcakes, or mini pastries to feed larger guest counts more affordably. Custom designs \u2014 sculpted shapes, gold leaf, painted detail, sugar florals \u2014 are quoted individually based on design complexity.</p>\n\n  <h3>Cake Jar &amp; Cookie Favors</h3>\n  <p>Our <a href=\"/collections/wedding-cake-jars\">wedding cake jars</a> are a Charlotte favorite for guest favors. Each jar is a single-serve layered cake in eight standard flavors, sealed with a branded ribbon and your custom label if you want one. Minimum order is 24 jars at $9 each, with custom labels adding $1.50 per jar. Decorated sugar cookies and French macarons are also available as table favors with three weeks lead time.</p>\n\n  <h3>Dietary Accommodations</h3>\n  <p>We make tiered cakes, cake jars, and dessert table items in vegan, gluten-free, and vegan-and-gluten-free (VGF) versions. Mixed-tier cakes \u2014 for example, a vegan top tier with traditional lower tiers \u2014 are common for us. Please note dietary needs on your inquiry form so we can build the right tasting and quote. We do not guarantee allergen-free preparation, but we can help you avoid the most common allergens.</p>\n\n  <h3>Service Area &amp; Delivery</h3>\n  <p>We deliver wedding cakes throughout the greater Charlotte metro: Uptown, South End, Plaza Midwood, Myers Park, SouthPark, Ballantyne, Huntersville, Concord, Harrisburg, Davidson, and Fort Mill, SC. Delivery includes white-glove setup at your venue and is priced based on distance and cake complexity. Pickup is available at Ballantyne and Harrisburg for couples who prefer to handle transport.</p>\n\n  <h3>How to Request a Wedding Cake Quote</h3>\n  <p>Send us your wedding date, venue, guest count, and any design references using the inquiry form below. We'll follow up within two business days with availability, pricing, and a tasting invite. For Charlotte-area couples on a tight timeline, contact <a href=\"/pages/ballantyne-bakery\">Ballantyne</a> or <a href=\"/pages/harrisburg-nc-bakery\">Harrisburg</a> directly to check rush availability.</p>\n</div>",
+        "color_scheme": "",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
     }
   },
   "order": [
     "main",
     "s_masonry_A3UgAj",
+    "wedding_seo_text",
     "custom_liquid_X6MiT4"
   ]
 }
