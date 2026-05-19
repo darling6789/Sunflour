@@ -1,281 +1,173 @@
 {%- comment -%}
-  Gifting Collection — three fixed sections:
-    1. Gift Boxes (product_type: "Gift Box")
+  Gifting Collection — three fixed sections using the site's standard card-product snippet:
+    1. Gift Boxes (product.type == "Gift Box")
     2. Pastry Pouches (tag: "pastry-pouch")
     3. Build Your Own (everything else in the collection)
 {%- endcomment -%}
 
-{{ 'component-rating.css' | asset_url | stylesheet_tag }}
-{{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
-{{ 'quick-add.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<div class="gifting-collection page-width">
+  <p class="gifting-intro-text">Pre-built gift boxes, themed pastry pouches, or individual items to mix and match. All baked from scratch in our Charlotte kitchen and shipped nationwide.</p>
 
-<div class="gifting-collection s-collection-products-section">
-  <div class="p-width">
+  {%- assign shown_handles = "" -%}
+  {%- assign skip_card_styles = false -%}
 
-    <p class="gifting-intro-text">Pre-built gift boxes, themed pastry pouches, or individual items to mix and match. All baked from scratch in our Charlotte kitchen and shipped nationwide.</p>
-
-    {%- assign shown_handles = "" -%}
-
-    {%- comment -%} ── Group 1: Gift Boxes ─────────────────────────── {%- endcomment -%}
-    {%- assign has_gift_boxes = false -%}
-    {%- for product in collection.products -%}
-      {%- if product.type == "Gift Box" -%}
-        {%- assign has_gift_boxes = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-
-    {%- if has_gift_boxes -%}
-    <div class="gifting-group">
-      <div class="gifting-group__header">
-        <h2 class="gifting-group__title">Gift Boxes</h2>
-        <p class="gifting-group__desc">Pre-built boxes ready to send. Curated mixes from our bakery.</p>
-      </div>
-      <div class="s-all-products-wrap">
-        {%- for product in collection.products -%}
-          {%- if product.type == "Gift Box" -%}
-            {% render 's-product-card', product: product %}
-            {%- assign shown_handles = shown_handles | append: "|" | append: product.handle -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </div>
+  {%- comment -%} ── Group 1: Gift Boxes ─────────────────────────── {%- endcomment -%}
+  {%- assign has_gift_boxes = false -%}
+  {%- for product in collection.products -%}
+    {%- if product.type == "Gift Box" -%}
+      {%- assign has_gift_boxes = true -%}
+      {%- break -%}
     {%- endif -%}
+  {%- endfor -%}
 
-    {%- comment -%} ── Group 2: Pastry Pouches ─────────────────────── {%- endcomment -%}
-    {%- assign has_pouches = false -%}
-    {%- for product in collection.products -%}
-      {%- if product.tags contains "pastry-pouch" -%}
-        {%- assign has_pouches = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-
-    {%- if has_pouches -%}
-    <div class="gifting-group">
-      <div class="gifting-group__header">
-        <h2 class="gifting-group__title">Pastry Pouches</h2>
-        <p class="gifting-group__desc">Smaller themed sets. Pick the message, we'll handle the bake.</p>
-      </div>
-      <div class="s-all-products-wrap">
-        {%- for product in collection.products -%}
-          {%- if product.tags contains "pastry-pouch" -%}
-            {%- assign key = "|" | append: product.handle -%}
-            {%- unless shown_handles contains key -%}
-              {% render 's-product-card', product: product %}
-              {%- assign shown_handles = shown_handles | append: "|" | append: product.handle -%}
-            {%- endunless -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
+  {%- if has_gift_boxes -%}
+  <div class="gifting-group">
+    <div class="gifting-group__header">
+      <h2 class="gifting-group__title">Gift Boxes</h2>
+      <p class="gifting-group__desc">Pre-built boxes ready to send. Curated mixes from our bakery.</p>
     </div>
+    <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
+      {%- for product in collection.products -%}
+        {%- if product.type == "Gift Box" -%}
+          <li class="grid__item">
+            {% render 'card-product',
+              card_product: product,
+              media_aspect_ratio: 'square',
+              show_secondary_image: true,
+              quick_add: 'standard',
+              skip_styles: skip_card_styles,
+              section_id: section.id
+            %}
+          </li>
+          {%- assign skip_card_styles = true -%}
+          {%- assign shown_handles = shown_handles | append: "|" | append: product.handle -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Group 2: Pastry Pouches ─────────────────────── {%- endcomment -%}
+  {%- assign has_pouches = false -%}
+  {%- for product in collection.products -%}
+    {%- if product.tags contains "pastry-pouch" -%}
+      {%- assign has_pouches = true -%}
+      {%- break -%}
     {%- endif -%}
+  {%- endfor -%}
 
-    {%- comment -%} ── Group 3: Build Your Own (everything else) ───── {%- endcomment -%}
-    {%- assign has_others = false -%}
-    {%- for product in collection.products -%}
-      {%- assign key = "|" | append: product.handle -%}
-      {%- unless shown_handles contains key -%}
-        {%- assign has_others = true -%}
-        {%- break -%}
-      {%- endunless -%}
-    {%- endfor -%}
-
-    {%- if has_others -%}
-    <div class="gifting-group">
-      <div class="gifting-group__header">
-        <h2 class="gifting-group__title">Build Your Own</h2>
-        <p class="gifting-group__desc">Mix and match individual items from our kitchen. No minimums.</p>
-      </div>
-      <div class="s-all-products-wrap">
-        {%- for product in collection.products -%}
+  {%- if has_pouches -%}
+  <div class="gifting-group">
+    <div class="gifting-group__header">
+      <h2 class="gifting-group__title">Pastry Pouches</h2>
+      <p class="gifting-group__desc">Smaller themed sets. Pick the message, we'll handle the bake.</p>
+    </div>
+    <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
+      {%- for product in collection.products -%}
+        {%- if product.tags contains "pastry-pouch" -%}
           {%- assign key = "|" | append: product.handle -%}
           {%- unless shown_handles contains key -%}
-            {% render 's-product-card', product: product %}
+            <li class="grid__item">
+              {% render 'card-product',
+                card_product: product,
+                media_aspect_ratio: 'square',
+                show_secondary_image: true,
+                quick_add: 'standard',
+                skip_styles: skip_card_styles,
+                section_id: section.id
+              %}
+            </li>
+            {%- assign skip_card_styles = true -%}
+            {%- assign shown_handles = shown_handles | append: "|" | append: product.handle -%}
           {%- endunless -%}
-        {%- endfor -%}
-      </div>
-    </div>
-    {%- endif -%}
-
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
   </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Group 3: Build Your Own (everything else) ───── {%- endcomment -%}
+  {%- assign has_others = false -%}
+  {%- for product in collection.products -%}
+    {%- assign key = "|" | append: product.handle -%}
+    {%- unless shown_handles contains key -%}
+      {%- assign has_others = true -%}
+      {%- break -%}
+    {%- endunless -%}
+  {%- endfor -%}
+
+  {%- if has_others -%}
+  <div class="gifting-group">
+    <div class="gifting-group__header">
+      <h2 class="gifting-group__title">Build Your Own</h2>
+      <p class="gifting-group__desc">Mix and match individual items from our kitchen. No minimums.</p>
+    </div>
+    <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
+      {%- for product in collection.products -%}
+        {%- assign key = "|" | append: product.handle -%}
+        {%- unless shown_handles contains key -%}
+          <li class="grid__item">
+            {% render 'card-product',
+              card_product: product,
+              media_aspect_ratio: 'square',
+              show_secondary_image: true,
+              quick_add: 'standard',
+              skip_styles: skip_card_styles,
+              section_id: section.id
+            %}
+          </li>
+          {%- assign skip_card_styles = true -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+  {%- endif -%}
+
 </div>
 
 <style>
-  /* ── Section wrapper ─────────────────────────────────────── */
   .gifting-collection {
-    width: 100%;
     padding-top: 24px;
     padding-bottom: 60px;
-    padding-left: 40px;
-    padding-right: 40px;
-    box-sizing: border-box;
   }
   .gifting-intro-text {
     font-size: 1rem;
-    color: rgba(var(--color-foreground), 0.65);
+    color: rgba(var(--color-foreground), 0.7);
     margin: 0 0 40px;
+    max-width: 720px;
   }
   .gifting-group {
     margin-bottom: 56px;
   }
+  .gifting-group:last-child {
+    margin-bottom: 0;
+  }
   .gifting-group__header {
     border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
     padding-bottom: 10px;
-    margin-bottom: 0;
+    margin-bottom: 30px;
   }
   .gifting-group__title {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     margin: 0 0 4px;
     font-weight: 600;
   }
   .gifting-group__desc {
-    font-size: 0.875rem;
-    color: rgba(var(--color-foreground), 0.6);
+    font-size: 0.9375rem;
+    color: rgba(var(--color-foreground), 0.65);
     margin: 0;
   }
 
-  /* ── Product grid ────────────────────────────────────────── */
-  .s-all-products-wrap {
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px 20px;
-  }
-
-  /* ── Product card ────────────────────────────────────────── */
-  .s-product-card {
-    display: block;
-    width: calc(25% - 15px);
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .s-product-card-image {
-    width: 100%;
-    min-height: 300px;
-    position: relative;
-    line-height: 0;
-  }
-  .s-product-card-image-1,
-  .s-product-card-image-2 {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease;
-  }
-  .s-product-card-image-2 { opacity: 0; }
-  .s-product-card:hover .s-product-card-image-1 { opacity: 0; }
-  .s-product-card:hover .s-product-card-image-2 { opacity: 1; }
-
-  .s-product-card-des {
-    width: 100%;
-    position: absolute;
-    padding: 16px 20px;
-    bottom: 60px;
-    left: 0;
-    background: #ffffffcc;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  .s-product-card-des h4 { margin: 0; font-weight: 600; }
-  .s-product-price { line-height: 1; }
-
-  /* ── ATC actions ─────────────────────────────────────────── */
-  .s-product-card-actions {
-    width: fit-content;
-    text-align: center;
-    margin: auto;
-    margin-top: 20px;
-  }
-  .s-quantity-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #873c17;
-    border-radius: 40px;
-    overflow: hidden;
-    width: fit-content;
-    margin: 0 auto 10px;
-  }
-  .s-qty-btn {
-    background: transparent;
-    border: none;
-    color: #873c17;
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-  .s-qty-btn:hover { background: #873c17; color: #fff; }
-  .s-qty-input {
-    width: 40px;
-    text-align: center;
-    border: none;
-    border-left: 1px solid #873c17;
-    border-right: 1px solid #873c17;
-    font-size: 14px;
-    height: 36px;
-    padding: 0;
-    -moz-appearance: textfield;
-    outline: none;
-    background: transparent;
-  }
-  .s-qty-input::-webkit-inner-spin-button,
-  .s-qty-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-
-  .s-add-to-cart-btn.s-btn {
-    background-color: #873c17;
-    color: #fff;
-    text-decoration: none;
-    max-width: 320px;
-    height: 44px;
-    padding: 0 30px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 40px;
-    cursor: pointer;
-    font-weight: 400 !important;
-    border: none;
-    font-size: 14px;
-  }
-  .s-loading-spinner { display: none; }
-
-  /* ── Tablet ──────────────────────────────────────────────── */
-  @media only screen and (max-width: 990px) {
-    .gifting-collection { padding-left: 20px; padding-right: 20px; }
-    .s-all-products-wrap { gap: 30px 15px; }
-    .s-product-card { width: calc(33.3% - 10px); border-radius: 15px; }
-    .s-product-card-image { min-height: 250px; }
-  }
-
-  /* ── Mobile ──────────────────────────────────────────────── */
   @media only screen and (max-width: 600px) {
-    .gifting-collection { padding-left: 16px; padding-right: 16px; padding-bottom: 40px; }
-    .s-all-products-wrap { gap: 20px 10px; }
-    .s-product-card { width: calc(50% - 5px); border-radius: 15px; }
-    .s-product-card-image { min-height: 220px; }
+    .gifting-collection {
+      padding-bottom: 40px;
+    }
+    .gifting-group {
+      margin-bottom: 40px;
+    }
+    .gifting-group__title {
+      font-size: 1.25rem;
+    }
   }
 </style>
 
