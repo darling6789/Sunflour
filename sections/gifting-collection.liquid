@@ -1,6 +1,8 @@
 {%- comment -%}
-  Gifting Collection — groups products by tag using the site's standard card and grid styling.
-  Groups are pipe-delimited internally, tilde-delimited between groups to avoid comma conflicts.
+  Gifting Collection — three fixed sections:
+    1. Gift Boxes (product_type: "Gift Box")
+    2. Pastry Pouches (tag: "pastry-pouch")
+    3. Build Your Own (everything else in the collection)
 {%- endcomment -%}
 
 {{ 'component-rating.css' | asset_url | stylesheet_tag }}
@@ -13,47 +15,91 @@
 <div class="gifting-collection s-collection-products-section">
   <div class="p-width">
 
-    <p class="gifting-intro-text">Mix and match individual items from our kitchen to build your own gift box. Everything ships nationwide.</p>
+    <p class="gifting-intro-text">Pre-built gift boxes, themed pastry pouches, or individual items to mix and match. All baked from scratch in our Charlotte kitchen and shipped nationwide.</p>
 
-    {%- comment -%}
-      Group format: Label|tag|description
-      Groups separated by ~ to avoid comma conflicts in descriptions
-    {%- endcomment -%}
-    {%- assign groups = "Cookies|individual-cookie|Nine flavors baked fresh daily~Breakfast Baked Goods|breakfast-collection|Freshly baked morning favorites that ship well~Coffee and Tea|coffee-tea-collection|A natural pairing with anything else in the cart~Brownies and Treats|brownie-collection|For the person who wants something rich and different" | split: "~" -%}
+    {%- assign shown_handles = "" -%}
 
-    {%- for group_def in groups -%}
-      {%- assign parts = group_def | split: "|" -%}
-      {%- assign group_label = parts[0] -%}
-      {%- assign group_tag   = parts[1] -%}
-      {%- assign group_desc  = parts[2] -%}
-
-      {%- assign group_has_products = false -%}
-      {%- for product in collection.products -%}
-        {%- if product.tags contains group_tag -%}
-          {%- assign group_has_products = true -%}
-          {%- break -%}
-        {%- endif -%}
-      {%- endfor -%}
-
-      {%- if group_has_products -%}
-      <div class="gifting-group">
-        <div class="gifting-group__header">
-          <h2 class="gifting-group__title">{{ group_label }}</h2>
-          {%- if group_desc != blank -%}
-            <p class="gifting-group__desc">{{ group_desc }}</p>
-          {%- endif -%}
-        </div>
-
-        <div class="s-all-products-wrap">
-          {%- for product in collection.products -%}
-            {%- if product.tags contains group_tag -%}
-              {% render 's-product-card', product: product %}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </div>
+    {%- comment -%} ── Group 1: Gift Boxes ─────────────────────────── {%- endcomment -%}
+    {%- assign has_gift_boxes = false -%}
+    {%- for product in collection.products -%}
+      {%- if product.product_type == "Gift Box" -%}
+        {%- assign has_gift_boxes = true -%}
+        {%- break -%}
       {%- endif -%}
     {%- endfor -%}
+
+    {%- if has_gift_boxes -%}
+    <div class="gifting-group">
+      <div class="gifting-group__header">
+        <h2 class="gifting-group__title">Gift Boxes</h2>
+        <p class="gifting-group__desc">Pre-built boxes ready to send. Curated mixes from our bakery.</p>
+      </div>
+      <div class="s-all-products-wrap">
+        {%- for product in collection.products -%}
+          {%- if product.product_type == "Gift Box" -%}
+            {% render 's-product-card', product: product %}
+            {%- assign shown_handles = shown_handles | append: "|" | append: product.handle -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+    {%- comment -%} ── Group 2: Pastry Pouches ─────────────────────── {%- endcomment -%}
+    {%- assign has_pouches = false -%}
+    {%- for product in collection.products -%}
+      {%- if product.tags contains "pastry-pouch" -%}
+        {%- assign has_pouches = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_pouches -%}
+    <div class="gifting-group">
+      <div class="gifting-group__header">
+        <h2 class="gifting-group__title">Pastry Pouches</h2>
+        <p class="gifting-group__desc">Smaller themed sets. Pick the message, we'll handle the bake.</p>
+      </div>
+      <div class="s-all-products-wrap">
+        {%- for product in collection.products -%}
+          {%- if product.tags contains "pastry-pouch" -%}
+            {%- assign key = "|" | append: product.handle -%}
+            {%- unless shown_handles contains key -%}
+              {% render 's-product-card', product: product %}
+              {%- assign shown_handles = shown_handles | append: "|" | append: product.handle -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+    {%- comment -%} ── Group 3: Build Your Own (everything else) ───── {%- endcomment -%}
+    {%- assign has_others = false -%}
+    {%- for product in collection.products -%}
+      {%- assign key = "|" | append: product.handle -%}
+      {%- unless shown_handles contains key -%}
+        {%- assign has_others = true -%}
+        {%- break -%}
+      {%- endunless -%}
+    {%- endfor -%}
+
+    {%- if has_others -%}
+    <div class="gifting-group">
+      <div class="gifting-group__header">
+        <h2 class="gifting-group__title">Build Your Own</h2>
+        <p class="gifting-group__desc">Mix and match individual items from our kitchen. No minimums.</p>
+      </div>
+      <div class="s-all-products-wrap">
+        {%- for product in collection.products -%}
+          {%- assign key = "|" | append: product.handle -%}
+          {%- unless shown_handles contains key -%}
+            {% render 's-product-card', product: product %}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
 
   </div>
 </div>
