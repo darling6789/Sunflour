@@ -3595,3 +3595,20 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+
+/* === Product card title typography override (custom) === */
+.card__heading,
+.card__heading.h5 {
+  font-size: calc(var(--font-heading-scale) * 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+@media only screen and (min-width: 750px) {
+  .card__heading,
+  .card__heading.h5 {
+    font-size: calc(var(--font-heading-scale) * 1.95rem);
+  }
+}
