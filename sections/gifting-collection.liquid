@@ -22,7 +22,7 @@
     {%- comment -%} ── Group 1: Gift Boxes ─────────────────────────── {%- endcomment -%}
     {%- assign has_gift_boxes = false -%}
     {%- for product in collection.products -%}
-      {%- if product.product_type == "Gift Box" -%}
+      {%- if product.type == "Gift Box" -%}
         {%- assign has_gift_boxes = true -%}
         {%- break -%}
       {%- endif -%}
@@ -36,7 +36,7 @@
       </div>
       <div class="s-all-products-wrap">
         {%- for product in collection.products -%}
-          {%- if product.product_type == "Gift Box" -%}
+          {%- if product.type == "Gift Box" -%}
             {% render 's-product-card', product: product %}
             {%- assign shown_handles = shown_handles | append: "|" | append: product.handle -%}
           {%- endif -%}
