@@ -13,7 +13,7 @@
             <div class="customProduct">
                <a href="https://sunflourbakingcompany.com/collections/cake-jars">
                   <div class="cupCakeBox" style="text-align: center;">
-                     <div class="cupcake"><img src="https://sunflourbakingcompany.com/cdn/shop/files/bakery-gifts-online-000-11_large.webp?v=1775403147" alt="Cake Jar - Cupcake in a Mason Jar - Buy online" /></div>
+                     <div class="cupcake"><img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/popular-flavors-cake-jars-nationwide-shipping-1.jpg?v=1766423950" alt="Cake Jar - Cupcake in a Mason Jar - Buy online" /></div>
                      <h3>Cake Jars ~ New Flavors!</h3>                    
                   </div>
                </a>
@@ -29,10 +29,10 @@
                </a>
             </div>
             <div class="customProduct">
-               <a href="https://sunflourbakingcompany.com/collections/cookie-gift-boxes">
+               <a href="https://sunflourbakingcompany.com/collections/muffins">
                   <div class="cupCakeBox" style="text-align: center;">
-                     <div class="cupcake"><img src="https://sunflourbakingcompany.com/cdn/shop/files/bakery-gifts-online-000-10.webp?v=1775400676&width=1346" alt="Buy Cookie and Brownie Bundles Online" /></div>
-                     <h3>Cookie Bundles</h3>
+                     <div class="cupcake"><img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/Blueberry_Muffin_Single-min_98f99291-c41d-4afe-97e6-217b0d08dd25.jpg?v=1765273283" alt="Muffins Buy Muffins Online" /></div>
+                     <h3>Jumbo Muffins</h3>
                      <!-- <p class="product-title" style="text-align: center;"><span class="h4 grid-view-item__title product-card__title">Cake Jars</span><br/>$9.95</p>
                      <span class="buyNow">ORDER NOW</span> -->
                   </div>
@@ -136,11 +136,11 @@
     	width: 100%;
         overflow-x: hidden;
     }
-    
+
     .shop-wrap>.grid>.grid__item {
     	max-width: 100%;
     }
-    
+
     .collection .grid__item {
     	max-width: 100%;
         width: 100%;
@@ -148,10 +148,10 @@
 
     .shop-page-full #otherProducts {
         display: flex;
-        flex-wrap: wrap;      
+        flex-wrap: wrap;
         gap: 0;
     }
-  
+
     .shop-page-full #otherProducts .customProduct {
         width: 100%;
     }
@@ -162,6 +162,86 @@
     }
   }
 </style>
+
+<script>
+  (function () {
+    var STORAGE_KEY = 'sunflour-shop-state';
+    var SCROLL_RESTORE_KEY = 'sunflour-shop-pending-scroll';
+    var MAX_AGE_MS = 30 * 60 * 1000;
+
+    function safeGet(key) {
+      try { return sessionStorage.getItem(key); } catch (e) { return null; }
+    }
+    function safeSet(key, value) {
+      try { sessionStorage.setItem(key, value); } catch (e) {}
+    }
+    function safeRemove(key) {
+      try { sessionStorage.removeItem(key); } catch (e) {}
+    }
+
+    function captureStateOnProductClick(event) {
+      var link = event.target.closest && event.target.closest('a[href*="/products/"]');
+      if (!link) return;
+      var state = {
+        url: window.location.pathname + window.location.search,
+        scrollY: window.scrollY || window.pageYOffset || 0,
+        timestamp: Date.now()
+      };
+      safeSet(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function restoreStateOnLoad() {
+      var pendingScroll = safeGet(SCROLL_RESTORE_KEY);
+      if (pendingScroll !== null) {
+        safeRemove(SCROLL_RESTORE_KEY);
+        var y = parseInt(pendingScroll, 10);
+        if (!isNaN(y)) {
+          setTimeout(function () { window.scrollTo(0, y); }, 250);
+        }
+        return;
+      }
+
+      var raw = safeGet(STORAGE_KEY);
+      if (!raw) return;
+      var state;
+      try { state = JSON.parse(raw); } catch (e) { safeRemove(STORAGE_KEY); return; }
+      if (!state || !state.url || Date.now() - state.timestamp > MAX_AGE_MS) {
+        safeRemove(STORAGE_KEY);
+        return;
+      }
+
+      var currentPath = window.location.pathname;
+      var savedPath = state.url.split('?')[0];
+      if (currentPath !== savedPath) {
+        safeRemove(STORAGE_KEY);
+        return;
+      }
+
+      var currentFull = window.location.pathname + window.location.search;
+      if (currentFull !== state.url) {
+        safeSet(SCROLL_RESTORE_KEY, String(state.scrollY));
+        safeRemove(STORAGE_KEY);
+        window.location.replace(state.url);
+        return;
+      }
+
+      safeRemove(STORAGE_KEY);
+      setTimeout(function () { window.scrollTo(0, state.scrollY); }, 250);
+    }
+
+    document.addEventListener('click', captureStateOnProductClick, true);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', restoreStateOnLoad);
+    } else {
+      restoreStateOnLoad();
+    }
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  })();
+</script>
 
 {% schema %}
 {
