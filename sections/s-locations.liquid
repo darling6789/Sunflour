@@ -42,26 +42,26 @@
 }
 .s-locations {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     gap: 15px;
 }
 .s-locations .s-location-image {
     text-decoration: none;
     line-height: 0;
-    display: block;
     border-radius: 1rem;
     overflow: hidden; /* Hides parts of the image that extend beyond the container during transform */
-    display: inline-block; /* Adjust as needed for layout */
+    flex: 1 1 0;
+    min-width: 0;
+    aspect-ratio: 4 / 3;
 }
 .s-locations .s-location-image img {
     display: block;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 1rem;
     transition: transform 0.3s ease-in-out; /* Smooth transition for transform properties */
-    display: block; /* Removes extra space below the image */
-    max-width: 100%; /* Ensures image scales within its container */
-    height: auto;
 }
 
 .s-locations .s-location-image img:hover {
@@ -98,7 +98,9 @@
       gap: 10px;
   }
   .s-locations .s-location-image {
-      width: calc(50% - 5px);    
+      flex: 0 0 calc(50% - 5px);
+      width: calc(50% - 5px);
+      aspect-ratio: 4 / 3;
   }
   .s-locations .s-location-image img {
   }
