@@ -548,35 +548,35 @@
         "location_H4gzde": {
           "type": "location",
           "settings": {
-            "image": "shopify://shop_images/elizabeth-bakery-charlotte-nc-sunflour.jpg",
+            "image": "shopify://shop_images/location-elizabeth-01.png",
             "link": "shopify://pages/charlotte-bakery-elizabeth"
           }
         },
         "location_PpDzyU": {
           "type": "location",
           "settings": {
-            "image": "shopify://shop_images/dilworth-bakery-charlotte-nc-sunflour.jpg",
+            "image": "shopify://shop_images/location-dilworth-01.png",
             "link": "shopify://pages/charlotte-bakery-dilworth"
           }
         },
         "location_pdNa4r": {
           "type": "location",
           "settings": {
-            "image": "shopify://shop_images/harrisburg-bakery-charlotte-nc-sunflour.jpg",
+            "image": "shopify://shop_images/location-harrisburg-01.png",
             "link": "shopify://pages/harrisburg-nc-bakery"
           }
         },
         "location_rNzpNr": {
           "type": "location",
           "settings": {
-            "image": "shopify://shop_images/ballantyne-bakery-charlotte-nc-sunflour.jpg",
+            "image": "shopify://shop_images/location-ballantyne-01.png",
             "link": "shopify://pages/ballantyne-bakery"
           }
         },
         "location_KKqyGq": {
           "type": "location",
           "settings": {
-            "image": "shopify://shop_images/noda-menu_09022a9a-149e-4b3e-aa0a-ad3d26b4d4c6.jpg",
+            "image": "shopify://shop_images/noda.jpg",
             "link": "shopify://pages/charlotte-bakery-noda"
           }
         }
