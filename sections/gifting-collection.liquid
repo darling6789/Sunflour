@@ -5,6 +5,8 @@
     3. Build Your Own (everything else in the collection)
 {%- endcomment -%}
 
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quick-add-bulk.js' | asset_url }}" defer="defer"></script>
@@ -138,10 +140,11 @@
     padding-bottom: 60px;
   }
   .gifting-intro-text {
-    font-size: 1rem;
-    color: rgba(var(--color-foreground), 0.7);
+    font-size: 1.7rem;
+    line-height: 1.5;
+    color: rgba(var(--color-foreground), 0.78);
     margin: 0 0 40px;
-    max-width: 720px;
+    max-width: 760px;
   }
   .gifting-group {
     margin-bottom: 56px;
@@ -151,18 +154,25 @@
   }
   .gifting-group__header {
     border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
-    padding-bottom: 10px;
+    padding-bottom: 12px;
     margin-bottom: 30px;
   }
   .gifting-group__title {
-    font-size: 1.5rem;
-    margin: 0 0 4px;
+    font-size: 2.2rem;
+    margin: 0 0 6px;
     font-weight: 600;
   }
   .gifting-group__desc {
-    font-size: 0.9375rem;
-    color: rgba(var(--color-foreground), 0.65);
+    font-size: 1.5rem;
+    line-height: 1.45;
+    color: rgba(var(--color-foreground), 0.7);
     margin: 0;
+  }
+  .gifting-collection .card-wrapper .card__content {
+    padding-top: 1.2rem;
+  }
+  .gifting-collection .card-wrapper .quick-add {
+    margin-top: 1.4rem;
   }
 
   @media only screen and (max-width: 600px) {
@@ -172,8 +182,14 @@
     .gifting-group {
       margin-bottom: 40px;
     }
+    .gifting-intro-text {
+      font-size: 1.5rem;
+    }
     .gifting-group__title {
-      font-size: 1.25rem;
+      font-size: 1.8rem;
+    }
+    .gifting-group__desc {
+      font-size: 1.35rem;
     }
   }
 </style>
