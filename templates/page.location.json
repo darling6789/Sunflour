@@ -14,14 +14,6 @@
       "name": "S location page",
       "settings": {}
     },
-    "custom_subscribe_location": {
-      "type": "custom-subscribe",
-      "settings": {
-        "heading": "Get 15% Off Your Next Order",
-        "description": "Join our email list to stay updated on our latest treats, events, and exclusive offers. Plus, get 15% off your next purchase as a welcome gift!",
-        "bottom_des": "We will email you your 15% off coupon code right away."
-      }
-    },
     "s_collection_products_location": {
       "type": "s-collection-products",
       "settings": {
@@ -39,7 +31,6 @@
   },
   "order": [
     "s_location_page_ifcU8W",
-    "custom_subscribe_location",
     "s_collection_products_location",
     "s_location_other_locations_new"
   ]

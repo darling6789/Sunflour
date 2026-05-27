@@ -228,6 +228,49 @@
   </div>
 </div>
 
+<div class="loc-inline-subscribe">
+  <div class="loc-inline-subscribe__inner">
+    <h2 class="loc-inline-subscribe__heading">Get 15% Off Your Next Order</h2>
+    <p class="loc-inline-subscribe__desc">Join our email list to stay updated on our latest treats, events, and exclusive offers. Plus, get 15% off your next purchase as a welcome gift!</p>
+    <div class="loc-inline-subscribe__form">
+      {% form 'customer', class: 'newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="field">
+          <input
+            id="NewsletterForm--location-inline"
+            type="email"
+            name="contact[email]"
+            class="field__input"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}autofocus aria-invalid="true"{% endif %}
+            placeholder="Your email address"
+            required
+          >
+          <label class="field__label" for="NewsletterForm--location-inline">Your email address</label>
+          <button type="submit" class="newsletter-form__button field__button" name="commit" aria-label="Subscribe">
+            <span class="svg-wrapper">Subscribe</span>
+          </button>
+        </div>
+        {%- if form.errors -%}
+          <small class="newsletter-form__message form__message">
+            {{- form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email -}}
+          </small>
+        {%- endif -%}
+        {%- if form.posted_successfully? -%}
+          <h3 class="newsletter-form__message newsletter-form__message--success form__message" tabindex="-1" autofocus>
+            {{- 'newsletter.success' | t }}
+          </h3>
+        {%- endif -%}
+      {% endform %}
+    </div>
+    <p class="loc-inline-subscribe__footer-note">We will email you your 15% off coupon code right away.</p>
+  </div>
+</div>
+
 <div class="loc-description">
   <div class="loc-description__inner">
     {%- case loc_slug -%}
@@ -616,6 +659,67 @@
   }
   .loc-social-proof__cta:hover {
     color: #922b21;
+  }
+
+  /* ---- Inline Subscribe (after testimonials) ---- */
+  .loc-inline-subscribe {
+    background: #556b2f;
+    padding: 52px 24px;
+    text-align: center;
+  }
+  .loc-inline-subscribe__inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .loc-inline-subscribe__heading {
+    font-size: clamp(22px, 2.5vw, 30px);
+    color: #fff;
+    margin: 0 0 12px;
+  }
+  .loc-inline-subscribe__desc {
+    color: rgba(255,255,255,0.88);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+  .loc-inline-subscribe__form .field {
+    display: flex;
+    gap: 0;
+    border-radius: 50px;
+    overflow: hidden;
+    background: #fff;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .loc-inline-subscribe__form .field__input {
+    flex: 1;
+    border: none;
+    padding: 14px 20px;
+    font-size: 15px;
+    background: transparent;
+    outline: none;
+  }
+  .loc-inline-subscribe__form .field__label {
+    display: none;
+  }
+  .loc-inline-subscribe__form .newsletter-form__button {
+    background: #e8a020;
+    color: #fff;
+    border: none;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0 50px 50px 0;
+    transition: background 0.2s;
+  }
+  .loc-inline-subscribe__form .newsletter-form__button:hover {
+    background: #c8880e;
+  }
+  .loc-inline-subscribe__footer-note {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    margin: 16px 0 0;
   }
 
   /* ---- FAQ (full-width, centered) ---- */
