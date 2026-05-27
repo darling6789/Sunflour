@@ -14,6 +14,14 @@
       {% render 'card-product', card_product: product %}
     {% endfor %}
   </div>
+
+  {%- if section.settings.button_label != blank -%}
+    <div class="s-all-products-bottom-btn" style="text-align: center; margin-top: 40px;">
+      <a href="{{ section.settings.button_link }}" class="s-btn" style="background-color: #873c17; color: #fff; padding: 12px 32px; border-radius: 40px; text-decoration: none; font-weight: 600; display: inline-block;">
+        {{ section.settings.button_label }}
+      </a>
+    </div>
+  {%- endif -%}
 </div>
 
 <style>
@@ -263,6 +271,17 @@
       "id": "limit",
       "label": "Max products to show",
       "default": 16
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Browse Our Online Shop"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
     }
   ],
   "presets": [
