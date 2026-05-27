@@ -1,0 +1,118 @@
+{%- liquid
+  assign loc_handle = page.handle
+  if loc_handle == 'charlotte-bakery-elizabeth'
+    assign loc_slug = 'elizabeth'
+  elsif loc_handle == 'charlotte-bakery-dilworth'
+    assign loc_slug = 'dilworth'
+  elsif loc_handle == 'ballantyne-bakery'
+    assign loc_slug = 'ballantyne'
+  elsif loc_handle == 'harrisburg-nc-bakery'
+    assign loc_slug = 'harrisburg'
+  elsif loc_handle == 'charlotte-bakery-noda'
+    assign loc_slug = 'noda'
+  endif
+-%}
+
+<div class="loc-other-locations">
+  <h2 class="loc-other-locations__title">Visit Our Other Locations</h2>
+  <div class="loc-other-locations__grid">
+    {%- unless loc_slug == 'elizabeth' -%}
+      <a class="loc-other-locations__card" href="/pages/charlotte-bakery-elizabeth">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-elizabeth-01.png?v=1695426306" alt="Sunflour Elizabeth" loading="lazy">
+        <span class="loc-other-locations__name">Elizabeth</span>
+        <span class="loc-other-locations__address">2001 E 7th Street, Charlotte</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'dilworth' -%}
+      <a class="loc-other-locations__card" href="/pages/charlotte-bakery-dilworth">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-dilworth-01.png?v=1695426324" alt="Sunflour Dilworth" loading="lazy">
+        <span class="loc-other-locations__name">Dilworth</span>
+        <span class="loc-other-locations__address">220 East Boulevard, Charlotte</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'ballantyne' -%}
+      <a class="loc-other-locations__card" href="/pages/ballantyne-bakery">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-ballantyne-01.png?v=1695426323" alt="Sunflour Ballantyne" loading="lazy">
+        <span class="loc-other-locations__name">Ballantyne</span>
+        <span class="loc-other-locations__address">14021 Conlan Circle, Charlotte</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'harrisburg' -%}
+      <a class="loc-other-locations__card" href="/pages/harrisburg-nc-bakery">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/location-harrisburg-01.png?v=1695426322" alt="Sunflour Harrisburg" loading="lazy">
+        <span class="loc-other-locations__name">Harrisburg</span>
+        <span class="loc-other-locations__address">5040 NC-49, Harrisburg</span>
+      </a>
+    {%- endunless -%}
+    {%- unless loc_slug == 'noda' -%}
+      <a class="loc-other-locations__card" href="/pages/charlotte-bakery-noda">
+        <img src="https://cdn.shopify.com/s/files/1/0079/6121/5087/files/noda.jpg?v=1689624685" alt="Sunflour NoDa" loading="lazy">
+        <span class="loc-other-locations__name">NoDa</span>
+        <span class="loc-other-locations__address">515 Jordan Place, Charlotte</span>
+      </a>
+    {%- endunless -%}
+  </div>
+</div>
+
+<style>
+  /* ---- Other Locations ---- */
+  .loc-other-locations {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+    text-align: center;
+  }
+  .loc-other-locations__title {
+    font-size: clamp(20px, 2.2vw, 28px);
+    margin: 0 0 28px;
+  }
+  .loc-other-locations__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .loc-other-locations__card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s;
+  }
+  .loc-other-locations__card:hover {
+    transform: translateY(-4px);
+  }
+  .loc-other-locations__card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  .loc-other-locations__name {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .loc-other-locations__address {
+    font-size: 13px;
+    color: #777;
+  }
+  
+  @media (max-width: 768px) {
+    .loc-other-locations__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Location Other Locations",
+  "tag": "section",
+  "presets": [
+    {
+      "name": "Location Other Locations"
+    }
+  ]
+}
+{% endschema %}

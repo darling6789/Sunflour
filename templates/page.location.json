@@ -25,17 +25,22 @@
     "s_collection_products_location": {
       "type": "s-collection-products",
       "settings": {
-        "collection": "bakery-gifts",
+        "collection": "cake-jars",
         "heading": "Ship Sunflour Goods Nationwide",
         "limit": 8,
         "button_label": "Browse Our Online Shop",
         "button_link": "shopify:\/\/pages\/shop"
       }
+    },
+    "s_location_other_locations_new": {
+      "type": "s-location-other-locations",
+      "settings": {}
     }
   },
   "order": [
     "s_location_page_ifcU8W",
     "custom_subscribe_location",
-    "s_collection_products_location"
+    "s_collection_products_location",
+    "s_location_other_locations_new"
   ]
 }
