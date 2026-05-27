@@ -10,8 +10,8 @@
   </div>
   
   <div class="s-all-products-wrap">
-    {% for product in collection.products %}
-      {% render 'card-product', card_product: product %}
+    {% for product in collection.products limit: section.settings.limit %}
+      {% render 's-product-card', product: product %}
     {% endfor %}
   </div>
 
