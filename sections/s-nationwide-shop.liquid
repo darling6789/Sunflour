@@ -492,6 +492,44 @@
   var activeCat  = 'all';
   var vgfOnly    = false;
 
+  /* ─── URL state persistence ─────────────────────────────────────────────── */
+  function readStateFromUrl() {
+    var params = new URLSearchParams(window.location.search);
+    var cat = params.get('cat') || 'all';
+    var validCats = Array.prototype.map.call(tabs, function (t) { return t.dataset.cat; });
+    if (validCats.indexOf(cat) === -1) cat = 'all';
+    return {
+      cat: cat,
+      vgf: params.get('vgf') === '1'
+    };
+  }
+
+  function writeStateToUrl() {
+    var params = new URLSearchParams(window.location.search);
+    if (activeCat && activeCat !== 'all') {
+      params.set('cat', activeCat);
+    } else {
+      params.delete('cat');
+    }
+    if (vgfOnly) {
+      params.set('vgf', '1');
+    } else {
+      params.delete('vgf');
+    }
+    var qs = params.toString();
+    var newUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+    history.replaceState(null, '', newUrl);
+  }
+
+  function syncUiToState() {
+    tabs.forEach(function (t) {
+      var isActive = t.dataset.cat === activeCat;
+      t.classList.toggle('s-nation-tab--active', isActive);
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    vgfInput.checked = vgfOnly;
+  }
+
   /* Offset sticky bar below site header */
   function setFilterBarTop() {
     var header = document.querySelector('.header-wrapper') ||
@@ -543,6 +581,7 @@
       tab.setAttribute('aria-selected', 'true');
       activeCat = tab.dataset.cat;
       applyFilters();
+      writeStateToUrl();
 
       /* Scroll page back to top after filter change */
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -559,6 +598,7 @@
   vgfInput.addEventListener('change', function () {
     vgfOnly = vgfInput.checked;
     applyFilters();
+    writeStateToUrl();
   });
 
   resetBtn.addEventListener('click', function () {
@@ -572,6 +612,25 @@
     tabs[0].classList.add('s-nation-tab--active');
     tabs[0].setAttribute('aria-selected', 'true');
     applyFilters();
+    writeStateToUrl();
+  });
+
+  /* Restore filter state from URL on load (covers Back without bfcache, shared links) */
+  var initial = readStateFromUrl();
+  activeCat = initial.cat;
+  vgfOnly = initial.vgf;
+  syncUiToState();
+  applyFilters();
+
+  /* Re-sync UI when restored from bfcache (back/forward cache) — URL is source of truth */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+      var s = readStateFromUrl();
+      activeCat = s.cat;
+      vgfOnly = s.vgf;
+      syncUiToState();
+      applyFilters();
+    }
   });
 
   /* ─── AJAX Add to Cart (event delegation — survives any DOM re-renders) ── */
