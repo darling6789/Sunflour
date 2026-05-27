@@ -25,7 +25,7 @@
     "s_collection_products_location": {
       "type": "s-collection-products",
       "settings": {
-        "collection": "cake-jars",
+        "collection": "breakfast-pastries",
         "heading": "Ship Sunflour Goods Nationwide",
         "limit": 8,
         "button_label": "Browse Our Online Shop",
