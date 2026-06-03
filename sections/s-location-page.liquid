@@ -230,8 +230,8 @@
 
 <div class="loc-inline-subscribe">
   <div class="loc-inline-subscribe__inner">
-    <h2 class="loc-inline-subscribe__heading">Get 15% Off Your Online Order</h2>
-    <p class="loc-inline-subscribe__desc">Join our email list to stay updated on our latest treats, events, and exclusive offers. Plus, get 15% off your online order as a welcome gift!</p>
+    <h2 class="loc-inline-subscribe__heading">Get 15% Off Your Next Online Order</h2>
+    <p class="loc-inline-subscribe__desc">Join our email list to stay updated on our latest treats, events, and exclusive offers. Plus, get 15% off your next <strong>online purchase</strong> as a welcome gift!</p>
     <div class="loc-inline-subscribe__form">
       {% form 'customer', class: 'newsletter-form' %}
         <input type="hidden" name="contact[tags]" value="newsletter">
@@ -684,40 +684,34 @@
   }
   .loc-inline-subscribe__form .field {
     display: flex;
-    align-items: stretch;
-    gap: 0;
-    border-radius: 50px;
-    overflow: hidden;
-    background: #fff;
+    gap: 8px;
     max-width: 480px;
     margin: 0 auto;
-    position: relative;
+    align-items: center;
   }
   .loc-inline-subscribe__form .field__input {
     flex: 1;
     border: none;
     padding: 14px 20px;
     font-size: 15px;
-    background: transparent;
+    background: #fff;
     outline: none;
+    border-radius: 50px;
+    min-width: 0;
   }
   .loc-inline-subscribe__form .field__label {
     display: none;
   }
-  .loc-inline-subscribe__form .newsletter-form__button,
-  .loc-inline-subscribe__form .field__button {
-    position: static;
-    width: auto;
-    height: auto;
-    flex: 0 0 auto;
-    background: #fed94c;
-    color: #121212;
+  .loc-inline-subscribe__form .newsletter-form__button {
+    flex-shrink: 0;
+    background: #e8a020;
+    color: #fff;
     border: none;
-    padding: 14px 28px;
+    padding: 14px 24px;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    border-radius: 0;
+    border-radius: 50px;
     transition: background 0.2s;
     white-space: nowrap;
   }
