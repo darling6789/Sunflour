@@ -1,0 +1,102 @@
+{%- comment -%}
+  Routes ALL newsletter signups (forms with class "newsletter-form") into Klaviyo
+  via the Client Subscriptions API instead of Shopify's customer form.
+
+  - Catches every newsletter form sitewide (location pages, footer, newsletter
+    section, email-signup banner, custom-subscribe) with one delegated listener.
+  - Subscribes the email to the Newsletter list, which triggers the welcome flow.
+  - Progressive enhancement: if this script fails to load, forms fall back to
+    their native Shopify customer-form submission.
+
+  Klaviyo identifiers (public, safe to expose client-side):
+    company_id (public API key): RtWKt2
+    Newsletter list id:          V9FgNi
+  Contact/inquiry forms (form 'contact') are NOT affected (no newsletter-form class).
+{%- endcomment -%}
+<script>
+  (function () {
+    var COMPANY_ID = 'RtWKt2';
+    var LIST_ID = 'V9FgNi'; // Newsletter
+    var ENDPOINT = 'https://a.klaviyo.com/client/subscriptions?company_id=' + COMPANY_ID;
+    var REVISION = '2026-04-15';
+
+    function isValidEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    function setMessage(form, text, isError) {
+      var el = form.querySelector('.klaviyo-subscribe__message');
+      if (!el) {
+        el = document.createElement('p');
+        el.className = 'klaviyo-subscribe__message newsletter-form__message form__message';
+        el.setAttribute('tabindex', '-1');
+        form.appendChild(el);
+      }
+      el.classList.toggle('newsletter-form__message--success', !isError);
+      el.textContent = text;
+      try { el.focus(); } catch (e) {}
+    }
+
+    function onSubmit(e) {
+      var form = e.target;
+      if (!form || typeof form.matches !== 'function' || !form.matches('form.newsletter-form')) return;
+
+      var emailInput = form.querySelector('input[type="email"], input[name="contact[email]"]');
+      if (!emailInput) return; // no email field -> let it submit natively
+
+      e.preventDefault();
+
+      var email = (emailInput.value || '').trim();
+      if (!isValidEmail(email)) {
+        setMessage(form, 'Please enter a valid email address.', true);
+        try { emailInput.focus(); } catch (err) {}
+        return;
+      }
+
+      var button = form.querySelector('[type="submit"]');
+      if (button) { button.disabled = true; button.setAttribute('aria-busy', 'true'); }
+
+      var source = 'Website signup';
+      try { source = (document.title || 'Website') + ' (' + window.location.pathname + ')'; } catch (err) {}
+
+      var payload = {
+        data: {
+          type: 'subscription',
+          attributes: {
+            custom_source: source,
+            profile: {
+              data: {
+                type: 'profile',
+                attributes: {
+                  email: email,
+                  subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } }
+                }
+              }
+            }
+          },
+          relationships: { list: { data: { type: 'list', id: LIST_ID } } }
+        }
+      };
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', revision: REVISION },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        if (res.status === 202) {
+          var fieldWrap = form.querySelector('.field, .newsletter-form__field-wrapper');
+          if (fieldWrap) { fieldWrap.style.display = 'none'; }
+          setMessage(form, 'Thanks for subscribing! Check your inbox — your welcome offer is on the way.', false);
+        } else {
+          if (button) { button.disabled = false; button.removeAttribute('aria-busy'); }
+          setMessage(form, 'Sorry, something went wrong. Please try again.', true);
+        }
+      }).catch(function () {
+        if (button) { button.disabled = false; button.removeAttribute('aria-busy'); }
+        setMessage(form, 'Sorry, something went wrong. Please try again.', true);
+      });
+    }
+
+    document.addEventListener('submit', onSubmit, true);
+  })();
+</script>
