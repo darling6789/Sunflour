@@ -719,6 +719,12 @@
     border-radius: 50px;
     transition: background 0.2s;
     white-space: nowrap;
+    /* Override base.css .field__button (absolute 4.4rem square w/ overflow:hidden)
+       which otherwise pins this button to the corner and clips the "Subscribe" text */
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
   }
   .loc-inline-subscribe__form .newsletter-form__button:hover,
   .loc-inline-subscribe__form .field__button:hover {
