@@ -1,0 +1,30 @@
+{%- comment -%}
+  Sunflour "What's Inside" card.
+  Renders an itemized bundle contents list from the product metafield
+  custom.bundle_contents (list.single_line_text_field).
+  Self-guarding: outputs nothing when the metafield is empty, so it is safe
+  to include on the shared product template — only bundles render anything.
+  Placed in the buy box (above Add to Cart) via a custom_liquid block.
+{%- endcomment -%}
+{%- liquid
+  assign sf_items = product.metafields.custom.bundle_contents.value
+-%}
+{%- if sf_items != blank and sf_items.size > 0 -%}
+  <div
+    data-sf-block="whats-inside"
+    style="background-color:#ffefda;border-radius:12px;padding:20px 22px;margin:0 0 20px;font-family:'Assistant',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
+  >
+    <h3 style="margin:0 0 8px;font-family:'Josefin Slab',Georgia,'Times New Roman',serif;font-size:1.25rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#231f20;">
+      What&#39;s Inside
+    </h3>
+    <div style="width:48px;height:3px;background-color:#231f20;margin:0 0 14px;border-radius:2px;"></div>
+    <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px;">
+      {%- for item in sf_items -%}
+        <li style="display:flex;align-items:flex-start;gap:10px;flex:1 1 220px;margin:0;color:#231f20;font-size:0.95rem;line-height:1.4;">
+          <span style="color:#231f20;font-weight:700;flex-shrink:0;line-height:1.4;">&#10003;</span>
+          <span>{{ item | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}

@@ -47,6 +47,12 @@
         "description": {
           "type": "description",
           "settings": {}
+        },
+        "whats_inside_card": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'whats-inside' %}"
+          }
         }
       },
       "block_order": [
@@ -54,6 +60,7 @@
         "price",
         "variant_picker",
         "quantity_selector",
+        "whats_inside_card",
         "buy_buttons",
         "share",
         "description"
