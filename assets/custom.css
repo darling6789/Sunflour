@@ -586,3 +586,108 @@ section.section.faq-section {
   margin: 0;
 }
 
+
+/* ============================================================
+   Sunflour store management: reusable page components
+   Used on order-now, geo/menu pages (vegan, gluten free, bread)
+   ============================================================ */
+
+.sf-wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.sf-lead { font-size: 19px; line-height: 1.6; color: #4a4a3f; max-width: 760px; }
+.sf-center { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* Ordering-method / feature card grid */
+.sf-ways {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 40px 0;
+  padding: 0;
+  list-style: none;
+}
+.sf-way {
+  display: flex;
+  flex-direction: column;
+  background: #fffdf7;
+  border: 1px solid #efe7d3;
+  border-radius: 16px;
+  padding: 30px 28px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  transition: transform .15s ease, box-shadow .15s ease;
+  margin: 0;
+}
+.sf-way:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.09); }
+.sf-way__icon { font-size: 32px; line-height: 1; margin-bottom: 14px; }
+.sf-way h3 { margin: 0 0 10px; font-size: 24px; }
+.sf-way p { margin: 0 0 22px; color: #4a4a3f; font-size: 16px; line-height: 1.55; }
+
+/* Brand buttons (self-contained so page bodies stay clean) */
+.sf-btn {
+  display: inline-block;
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 13px 28px;
+  border-radius: 999px;
+  font-family: 'Josefin Slab', serif;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none !important;
+  background: #fed94c;
+  color: #2b2b1e !important;
+  border: 2px solid #fed94c;
+  transition: background .15s ease, border-color .15s ease;
+}
+.sf-btn:hover { background: #efc63a; border-color: #efc63a; color: #2b2b1e !important; }
+.sf-btn--ghost {
+  background: transparent;
+  color: #5c6834 !important;
+  border: 2px solid #6f7d3f;
+}
+.sf-btn--ghost:hover { background: #6f7d3f; color: #fff !important; }
+
+/* CTA band for content pages */
+.sf-cta {
+  background: #fdf6e6;
+  border: 1px solid #f0e6cf;
+  border-radius: 16px;
+  padding: 32px 30px;
+  margin: 40px 0;
+  text-align: center;
+}
+.sf-cta h2, .sf-cta h3 { margin: 0 0 10px; }
+.sf-cta p { margin: 0 auto 22px; color: #4a4a3f; max-width: 620px; }
+.sf-cta__btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.sf-cta__btns .sf-btn { margin-top: 0; align-self: center; }
+
+/* Location chips */
+.sf-locations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0 40px;
+  padding: 0;
+  list-style: none;
+}
+.sf-locations li { margin: 0; }
+.sf-locations a {
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: #6f7d3f;
+  color: #fff !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-family: 'Josefin Slab', serif;
+  transition: background .15s ease;
+}
+.sf-locations a:hover { background: #5c6834; }
+
+/* Page intro band */
+.sf-intro { text-align: center; margin: 0 auto 10px; }
+.sf-intro h1 { margin: 0 0 12px; }
+.sf-section-title { text-align: center; margin: 48px 0 6px; }
+
+@media screen and (max-width: 749px) {
+  .sf-way { padding: 24px 22px; }
+  .sf-lead { font-size: 17px; }
+}
