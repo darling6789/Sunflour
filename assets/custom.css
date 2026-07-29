@@ -706,6 +706,10 @@ section.section.faq-section {
   margin: 0 auto;
   padding-left: 2rem;
   padding-right: 2rem;
+  /* .custom-page zeroes padding-bottom !important in global.css, which left
+     page content butting against the following section (e.g. the email
+     signup banner). Restore breathing room. */
+  padding-bottom: 5.2rem !important;
 }
 
 @media screen and (min-width: 750px) {
