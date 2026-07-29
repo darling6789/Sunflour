@@ -691,3 +691,26 @@ section.section.faq-section {
   .sf-way { padding: 24px 22px; }
   .sf-lead { font-size: 17px; }
 }
+
+/* ------------------------------------------------------------
+   Fix: default content pages (main-page / .custom-page) were
+   rendering full-width with zero horizontal padding because
+   global.css sets `.page-width--narrow { padding: 0 }` and
+   `.custom-page.page-width { max-width: 100% }`. That made body
+   text run to the viewport edge (and clip). Restore a sensible
+   reading container with padding. Scoped to .custom-page so blog
+   articles and other templates are unaffected.
+   ------------------------------------------------------------ */
+.custom-page.page-width {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .custom-page.page-width {
+    padding-left: 3.6rem;
+    padding-right: 3.6rem;
+  }
+}
